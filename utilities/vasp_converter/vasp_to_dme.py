@@ -1,5 +1,5 @@
 # Python script to convert VASP output {vasprun.xml, WAVECAR} to 
-# a compact version to be read by dm-electron.
+# a compact version to be read by EXCEED-DM.
 
 # If all-electron reconstruction is requested (default) POTCAR
 # is also needed.
@@ -136,7 +136,7 @@ def create_input(
     use_pawpy,
     cutoff
 ):
-    """Create input for DOCTOR using VASP outputs"""
+    """Create input for EXCEED-DM using VASP outputs"""
     import h5py
     import warnings
     
