@@ -1,6 +1,7 @@
 # EXCEED-DM (EXtended Calculation of Electronic Excitations for Direct detection of Dark Matter)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![DOI](https://zenodo.org/badge/354900532.svg)](https://zenodo.org/badge/latestdoi/354900532)
 
 **NOTICE: This program is in active development and the code, as well as required inputs and outputs, are subject to change. Star and watch the repository to stay up to date!**
 
@@ -101,3 +102,7 @@ If installed correctly you should see something similar to,
 ## Attribution
 
 If you use `EXCEED-DM` in your work, please cite,
+
+[![DOI](https://zenodo.org/badge/354900532.svg)](https://zenodo.org/badge/latestdoi/354900532)
+
+along with,
