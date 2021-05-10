@@ -1,0 +1,9 @@
+build/
+data/
+*.mod
+*.o
+./utilites/binned_wfc/*.hdf5
+./utilities/binned_wfc/binned_wfc
+myTODO.md
+.ipynb_checkpoints
+__pycache__

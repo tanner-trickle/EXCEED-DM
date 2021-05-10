@@ -1,0 +1,128 @@
+# fobos file (FOrtran Building OptionS) is a makefile for FoBiS.py
+# which automatically makes and builds a Fortran program with any
+# dependancy structure
+
+# variables
+[common-variables]
+$FLAGS-DEBUG = -fbounds-check 
+                -Wall 
+                -pedantic 
+                -Wextra 
+                -fimplicit-none 
+                -fcheck=all 
+                -fbacktrace
+                -O0
+                -g
+
+$hdf5_inc_dir_local = /mnt/hdf5/include
+$hdf5_lib_dir_local = /mnt/hdf5/lib
+$fftw_inc_dir_local = /usr/local/include
+
+$hdf5_inc_dir_lrc = /global/software/sl-7.x86_64/modules/gcc/7.4.0/hdf5/1.10.5-gcc-s/include
+$hdf5_lib_dir_lrc = /global/software/sl-7.x86_64/modules/gcc/7.4.0/hdf5/1.10.5-gcc-s/lib
+$fftw_inc_dir_lrc = /global/software/sl-7.x86_64/modules/gcc/7.4.0/fftw/3.3.8-gcc/include
+
+$hdf5_inc_dir_caltech_hpc = /central/home/ttrickle/hdf5-1.12.0/hdf5/include
+$hdf5_lib_dir_caltech_hpc = /central/home/ttrickle/hdf5-1.12.0/hdf5/lib 
+$fftw_inc_dir_caltech_hpc = /central/software/FFTW/3.3.8/include
+
+# all specific paths should be placed above this line
+
+[modes]
+modes = local-gnu local-debug-gnu
+        lrc-gnu
+        caltech-gnu
+
+[template-gnu]
+colors = True
+quiet  = False
+fc     = gfortran
+mpi    = True
+src       = ../../src/
+            ./
+target    = ./binned_wfc.f90
+
+[template-intel]
+colors = True
+quiet  = False
+fc     = gfortran
+mpi    = True
+src       = ../../src/
+            ./
+target    = ./binned_wfc.f90
+
+[local-gnu]
+template = template-gnu
+help      = Local machine build compiled with gfortran. Optimized.
+cflags    = -c -Ofast
+lflags    = -Ofast
+include   = $hdf5_inc_dir_local $fftw_inc_dir_local
+libs      = $hdf5_lib_dir_local/libhdf5_fortran.a 
+            $hdf5_lib_dir_local/libhdf5hl_fortran.a
+            $hdf5_lib_dir_local/libhdf5_hl.a
+            $hdf5_lib_dir_local/libhdf5.a
+            -lz
+            -ldl
+            -lfftw3
+output    = binned_wfc
+
+[local-debug-gnu]
+template = template-gnu
+help     = Local machine build compiled with gfortran with most debug options turned on.
+cflags   = -c $FLAGS-DEBUG
+lflags   = $FLAGS-DEBUG
+include  = $hdf5_inc_dir_local 
+           $fftw_inc_dir_local
+libs     = $hdf5_lib_dir_local/libhdf5_fortran.a 
+            $hdf5_lib_dir_local/libhdf5hl_fortran.a
+            $hdf5_lib_dir_local/libhdf5_hl.a
+            $hdf5_lib_dir_local/libhdf5.a
+            -lz
+            -ldl
+            -lfftw3
+output   = binned_wfc-debug
+
+[caltech-gnu]
+template  = template-gnu
+help      = Build to run on the Caltech HPC compiled with gfortran. Optimized.
+cflags    = -c -Ofast
+lflags    = -Ofast
+include   = $hdf5_inc_dir_caltech_hpc $fftw_inc_dir_caltech_hpc
+libs      = $hdf5_lib_dir_caltech_hpc/libhdf5_fortran.a 
+            $hdf5_lib_dir_caltech_hpc/libhdf5hl_fortran.a
+            $hdf5_lib_dir_caltech_hpc/libhdf5_hl.a
+            $hdf5_lib_dir_caltech_hpc/libhdf5.a
+            -lz
+            -ldl
+            -lfftw3
+output    = binned_wfc
+
+[lrc-gnu]
+template  = template-gnu
+help      = Build to run on Lawrencium cluster compiled with gfortran. Optimized
+cflags    = -c -Ofast
+lflags    = -Ofast
+include   = $hdf5_inc_dir_lrc $fftw_inc_dir_lrc
+libs      = $hdf5_lib_dir_lrc/libhdf5hl_fortran.a
+            $hdf5_lib_dir_lrc/libhdf5_fortran.a 
+            $hdf5_lib_dir_lrc/libhdf5_hl.a
+            $hdf5_lib_dir_lrc/libhdf5.a
+            -lz
+            -ldl
+            -lfftw3
+output    = binned_wfc
+
+[lrc-intel]
+template  = template-intel
+help      = Build to run on Lawrencium cluster compiled with intel. Optimized
+cflags    = -c -Ofast
+lflags    = -Ofast
+include   = $hdf5_inc_dir_lrc $fftw_inc_dir_lrc
+libs      = $hdf5_lib_dir_lrc/libhdf5hl_fortran.a
+            $hdf5_lib_dir_lrc/libhdf5_fortran.a 
+            $hdf5_lib_dir_lrc/libhdf5_hl.a
+            $hdf5_lib_dir_lrc/libhdf5.a
+            -lz
+            -ldl
+            -lfftw3
+output    = binned_wfc

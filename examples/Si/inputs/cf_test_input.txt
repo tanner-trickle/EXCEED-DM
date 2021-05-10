@@ -1,0 +1,56 @@
+&control
+    process   = 'scatter',
+    calc_mode = 'cf',
+    overwrite_output = .TRUE.
+/
+
+&io
+    out_folder      = '/mnt/c/Users/Tanner/Desktop/dm-electron/examples/Si/outputs',
+    run_description = 'cf_test',
+    sto_wf_filename = '/mnt/c/Users/Tanner/Desktop/dm-electron/examples/RHF_wf_data.hdf5', 
+    core_elec_config_filename = '/mnt/c/Users/Tanner/Desktop/dm-electron/examples/Si/core/Si_core_elec_config_RHF.hdf5'
+/
+
+&material
+    mat_name        = 'Si'
+    pc_vol_A        = 40.888 
+    rho_T_g_per_cm3 = 2.281  
+    band_gap        = 1.11 
+/
+
+&particle_physics
+	n_mX          = 4,
+    n_extra_mX    = 2,
+    log_mmin      = 7,
+    log_mmax      = 10,
+	n_FDM         = 2,
+    FDMPower_min  = 0,
+    FDMPower_max  = 2
+/
+
+&extra_mX
+    mX_2(1) = 1D7,
+    mX_2(2) = 1D8
+/
+
+&numerics
+    q_bin_width = 1D3,
+    E_bin_width = 1,
+    n_E_bins = 500,
+    E_bin_threshold = 1
+    n_init = 14, 
+    n_fin = 100,
+    n_kf_theta = 4, 
+    n_kf_phi = 4,
+    n_ki_theta = 4,
+    n_ki_phi = 4,
+    n_ki = 100,
+    ki_s = 100D0,
+    ki_min = 100D0
+/
+
+&Zeff
+    Zeff_type = 'one'
+/
+
+!

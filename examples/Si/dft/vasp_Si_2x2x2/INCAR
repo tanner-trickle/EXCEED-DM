@@ -1,0 +1,10 @@
+  SYSTEM = Si
+  ICORELEVEL = 1      ! Print core levels
+  NBANDS     = 64    ! No. bands
+  PREC    = Accurate  ! Precision level
+  ALGO    = Normal      ! SCF minimisation algorithm; 38/48 combo
+  ENCUT   = 1000       ! Plane-wave cutoff
+  EDIFF   = 1E-08     ! SCF energy convergence
+  ISYM = -1
+  ISMEAR = 0          ! Gaussian smearing; metals:1
+  SIGMA  = 0.01       ! Smearing value in eV; metals:0.2

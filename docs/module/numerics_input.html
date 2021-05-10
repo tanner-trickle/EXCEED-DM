@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="EXtended Calculation of Electronic Excitations for Direct detection of Dark Matter.">
+    
+    <meta name="author" content="Tanner Trickle" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>numerics_input &ndash; EXCEED-DM</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.1.0</small></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+        
+            <li><a href="../program/exdm.html">Program</a></li>
+      
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../program/exdm.html">Program</a></li>
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>numerics_input 
+    <small>Module</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title=" 4.1% of total for modules and submodules.">109 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/numerics_input.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/numerics_input.f90.html'>numerics_input.f90</a></li>
+    
+  
+     <li class="active">numerics_input</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
+  <div id="vars-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-q_bin_width">q_bin_width</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_q_bins">n_q_bins</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-e_bin_width">E_bin_width</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_e_bins">n_E_bins</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-e_bin_threshold">E_bin_threshold</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-ef_max">Ef_max</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_init~2">n_init</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_fin~2">n_fin</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_fft_grid_input">n_FFT_grid_input</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-q_s_fft">q_s_FFT</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_kf_theta">n_kf_theta</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_kf_phi">n_kf_phi</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_ki_theta">n_ki_theta</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_ki_phi">n_ki_phi</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-ki_s">ki_s</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_ki">n_ki</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-ki_min">ki_min</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-0">Subroutines</a></h3></div>
+  <div class="list-group">
+    <div id="subs-0" class="panel-collapse collapse">
+      
+      <a class="list-group-item" href="../module/numerics_input.html#proc-load_numerics">load_numerics</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#proc-print_numerics">print_numerics</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#proc-save_numerics">save_numerics</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <p>Variables relating to binning and other numerics</p>
+      <br>
+    
+  
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Uses</h3>
+      </div>
+      <ul class="list-group">
+      
+      <li class="list-group-item">
+  <ul class="list-inline">
+    
+    <li>hdf5</li>
+    
+    <li>h5lt</li>
+    
+    <li><a href='../module/prec.html'>prec</a></li>
+    
+  </ul>
+      </li>
+      
+      
+      
+      </ul>
+    </div>
+    
+
+    
+    
+
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
+  <div id="vars-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-q_bin_width">q_bin_width</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_q_bins">n_q_bins</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-e_bin_width">E_bin_width</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_e_bins">n_E_bins</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-e_bin_threshold">E_bin_threshold</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-ef_max">Ef_max</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_init~2">n_init</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_fin~2">n_fin</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_fft_grid_input">n_FFT_grid_input</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-q_s_fft">q_s_FFT</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_kf_theta">n_kf_theta</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_kf_phi">n_kf_phi</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_ki_theta">n_ki_theta</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_ki_phi">n_ki_phi</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-ki_s">ki_s</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-n_ki">n_ki</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#variable-ki_min">ki_min</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-1">Subroutines</a></h3></div>
+  <div class="list-group">
+    <div id="subs-1" class="panel-collapse collapse">
+      
+      <a class="list-group-item" href="../module/numerics_input.html#proc-load_numerics">load_numerics</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#proc-print_numerics">print_numerics</a>
+      
+      <a class="list-group-item" href="../module/numerics_input.html#proc-save_numerics">save_numerics</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
+    
+    <section>
+    <h2>Variables</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-q_bin_width"></span>real(kind=dp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>q_bin_width</strong></td><td> =</td><td>1.0e3_dp</td><td><p>width of momuntum bins</p>
+<p>Units : eV</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_q_bins"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>n_q_bins</strong></td><td> =</td><td>0</td><td><p>Number of q bins, with bin width q_bin_width, to save</p>
+<p>Note: momentum transfers greater than n_q_bins*q_bin_width
+ will be stored in the last, extra bin</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-e_bin_width"></span>real(kind=dp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>E_bin_width</strong></td><td> =</td><td>1.0_dp</td><td><p>Width of the energy bins</p>
+<p>Units : eV</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_e_bins"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>n_E_bins</strong></td><td> =</td><td>0</td><td><p>Number of E bins, with bin width E_bin_width, to save</p>
+<p>Note: energy transfers greater than n_E_bins*E_bin_width
+ will be stored in the last, extra bin</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-e_bin_threshold"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>E_bin_threshold</strong></td><td> =</td><td>1</td><td><p>smallest E bin added to total rate calculation
+ default : 1 - include all bins</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ef_max"></span>real(kind=dp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>Ef_max</strong></td><td> =</td><td>60.0_dp</td><td><p>maximum final state energy to include in calculations</p>
+<p>Units : eV</p>
+<p>TODO : E_cut is a more appropriate name</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_init~2"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>n_init</strong></td><td></td><td></td><td><p>number of initial states</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_fin~2"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>n_fin</strong></td><td></td><td></td><td><p>number of final states</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_fft_grid_input"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>n_FFT_grid_input</strong>(3)</td><td> =</td><td>[0, 0, 0]</td><td><p>Default size of the FFT, used to extend core
+ calculation by making the size of the FFT larger</p>
+<p>Note : only used in calculations which use the FFT</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-q_s_fft"></span>real(kind=dp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>q_s_FFT</strong></td><td> =</td><td>2151.0_dp/2.0_dp</td><td><p>Units : eV</p>
+<p>q_max_FFT = q_s_FFT*N_FFT</p>
+<p>Minimum eigenvalue of k_red_to_xyz matrix</p>
+<p>Note : only used in calculations which use the FFT</p>
+<p>TODO : do not hard code this in</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_kf_theta"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>n_kf_theta</strong></td><td> =</td><td>1</td><td><p>Number of theta points in integration of kf</p>
+<p>Note : only used in free calculatinos</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_kf_phi"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>n_kf_phi</strong></td><td> =</td><td>1</td><td><p>Number of phi points in integration of kf</p>
+<p>Note : only used in free calculatinos</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_ki_theta"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>n_ki_theta</strong></td><td> =</td><td>1</td><td><p>Number of theta points in integration of ki</p>
+<p>Note : only used in core -&gt; free calculatinos</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_ki_phi"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>n_ki_phi</strong></td><td> =</td><td>1</td><td><p>Number of phi points in integration of ki</p>
+<p>Note : only used in core -&gt; free calculatinos</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ki_s"></span>real(kind=dp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>ki_s</strong></td><td> =</td><td>100.0_dp</td><td><p>Scale parameter for k_i momentum to integrate over in core -&gt; free calculation</p>
+<p>maximum initial electron momentum  = ki_s * Z * alpha * m_e</p>
+<p>Generally want this to be &gt;&gt; Z alpha m_e, the scale factor of the electron wave functions</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_ki"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>n_ki</strong></td><td> =</td><td>2</td><td><p>Number of radial points in integration of ki</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ki_min"></span>real(kind=dp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>ki_min</strong></td><td> =</td><td>1.0e3_dp</td><td><p>Minimum electron momentum </p>
+<p>Units : eV</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
+    <br>
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    <section>
+    <h2>Subroutines</h2>
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-load_numerics"></span><h3>
+public subroutine <a href='../proc/load_numerics.html'>load_numerics</a>(filename, verbose)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>filename</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>logical,</td>
+  <td></td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>verbose</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-print_numerics"></span><h3>
+public subroutine <a href='../proc/print_numerics.html'>print_numerics</a>(verbose)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>logical,</td>
+  <td></td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>verbose</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-save_numerics"></span><h3>
+public subroutine <a href='../proc/save_numerics.html'>save_numerics</a>(filename, verbose)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>filename</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>logical,</td>
+  <td></td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>verbose</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  </div>
+  </div>
+
+    
+    </section>    
+    <br>
+    
+    
+    
+    </div>
+  </div>
+
+  
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2021-05-10T13:52:57.233972 
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>
