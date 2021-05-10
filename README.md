@@ -87,7 +87,7 @@ If installed correctly you should see something similar to,
 - Input files needed for example calculations can be found in `examples/`.
 - Output files of example calculations can be found in `examples/<material name>/outputs/` and here:
     - Si/Ge - [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4737654.svg)](https://doi.org/10.5281/zenodo.4737654) 
-- Documentation can be found [here](https://ttrickle.github.io/EXCEED-DM), as well as the `docs/` folder.
+- Documentation can be found [here](https://tanner-trickle.github.io/EXCEED-DM), as well as the `docs/` folder.
 - Larger DFT input files can be found here: 
     - Si/Ge - [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4735777.svg)](https://doi.org/10.5281/zenodo.4735777)
 
