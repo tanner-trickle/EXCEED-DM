@@ -106,3 +106,13 @@ If you use `EXCEED-DM` in your work, please cite,
 [![DOI](https://zenodo.org/badge/354900532.svg)](https://zenodo.org/badge/latestdoi/354900532)
 
 along with,
+
+    @article{griffin2021extended,
+      title={Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets}, 
+      author={Sinéad M. Griffin and Katherine Inzani and Tanner Trickle and Zhengkang Zhang and Kathryn M. Zurek},
+      year={2021},
+      eprint={2105.05253},
+      archivePrefix={arXiv},
+      primaryClass={hep-ph}
+    }
+
