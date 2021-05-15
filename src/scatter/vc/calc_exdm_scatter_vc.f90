@@ -1,4 +1,4 @@
-module calc_dme_scatter_vc
+module calc_exdm_scatter_vc
     !! Holds the subroutine which calculates the binned rate for the vc calculation
 
     use prec

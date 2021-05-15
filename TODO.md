@@ -10,4 +10,3 @@
 
 - Use target symmetries to simplify the calculation.
 
-## Completed (additions to v0.1.0)

@@ -11,7 +11,7 @@ program exdm
     use io_input
     use material_input
 
-    use dme_scatter
+    use exdm_scatter
 
     implicit none
 
@@ -19,6 +19,8 @@ program exdm
         !! Open MPI, processor ID
     integer :: n_proc
         !! Open MPI, number of processors
+    character(len=64) :: n_proc_str
+        !! Number of processors in string format
     integer :: root_process = 0
         !! Open MPI, root processor ID 
     integer :: err
@@ -33,17 +35,17 @@ program exdm
 
     if (proc_id .eq. root_process) then 
 
+        write(n_proc_str, *) n_proc
+
         print*
-        print*, '--------------------'
+        print*, '----------------------------------------'
         print*
-        print*, '   EXCEED-DM - v', version
+        print*, '    EXCEED-DM - v', version
         print*
-        print*, '--------------------'
+        print*, '    Running on ', trim(adjustl(n_proc_str)), ' processors'
+        print*, '    Compiled with ', compiler_version()
         print*
-        print*, 'Running on ', n_proc, 'processors'
-        print*, 'Compiled with ', compiler_version()
-        print*
-        print*, '----------'
+        print*, '----------------------------------------'
         print*
 
         ! prints output information
@@ -78,9 +80,11 @@ program exdm
 
     else
 
-        print*, '!!! ERROR !!!'
+        print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
         print*
         print*, '    Process : ', trim(process), ' is not implemented.'
+        print*
+        print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
         print*
 
         stop
@@ -90,17 +94,7 @@ program exdm
     ! save input data common to all processes
     if ( proc_id .eq. root_process ) then
 
-        if ( verbose ) then
-            print*, 'Saving input data...'
-            print*
-        end if
-
         call save_material(out_filename, verbose=verbose)
-
-        if ( verbose ) then
-            print*, '----------'
-            print*
-        end if
 
     end if
 
@@ -111,10 +105,15 @@ program exdm
 
         if ( verbose ) then
 
-            print*, 'Run time : '
-            print*, trim(pretty_time_format(time(2) - time(1)))
+            print*, '----------------------------------------'
+            print*, '    ------'
+            print*, '    Timing'
+            print*, '    ------'
             print*
-            print*, '----------'
+            print*, '        Run time : '
+            print*, '        ', trim(pretty_time_format(time(2) - time(1)))
+            print*
+            print*, '----------------------------------------'
             print*
 
         end if

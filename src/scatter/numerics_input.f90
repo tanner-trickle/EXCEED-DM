@@ -84,7 +84,7 @@ module numerics_input
     real(dp) :: ki_s = 100.0_dp
         !! Scale parameter for k_i momentum to integrate over in core -> free calculation
         !!
-        !! maximum initial electron momentum  = ki_s * Z * alpha * m_e
+        !! maximum initial electron momentum = ki_s * Z * alpha * m_e
         !!
         !! Generally want this to be >> Z alpha m_e, the scale factor of the electron wave functions
 
@@ -128,27 +128,56 @@ contains
 
         integer :: error
 
+        if ( verbose ) then
+
+            print*, 'Loading numerics parameters...'
+            print*
+
+        end if
+
         inquire(file = trim(filename), exist = file_exists)
 
         if ( file_exists ) then
 
             open(100, file = trim(filename), iostat = error)
-
             read(100, nml=numerics, iostat=error)
-
             close(100)
 
+            if ( error .ne. 0 ) then
+
+                if ( verbose ) then
+
+                    print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+                    print*
+                    print*, '    Problem reading numerics namelist.'
+                    print*
+                    print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+                    print*
+
+                end if
+
+                stop
+
+            end if
+
             call print_numerics(verbose=verbose)
+
+            if ( verbose ) then
+
+                print*, '----------------------------------------'
+                print*
+
+            end if
 
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   Input file for numerics parameters : ', trim(filename), ' does NOT exist.'
+                print*, '    Input file for numerics parameters : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
@@ -165,17 +194,29 @@ contains
 
         logical, optional :: verbose
 
+        character(len=64) :: n_E_bins_str
+        character(len=64) :: n_q_bins_str
+
         if ( verbose ) then
 
-            print*, 'Numerics'
+            write(n_E_bins_str, *) n_E_bins
+            write(n_q_bins_str, *) n_q_bins
+
+            print*, '----------------------------------------'
+            print*, '    --------'
+            print*, '    Numerics'
+            print*, '    --------'
             print*
-            print*, '   Number of E bins = ', n_E_bins, ' + 1'
-            print*, '   Energy bin width = ', E_bin_width, 'eV'
+            print*, '        Number of initial states = ', n_init
+            print*, '        Number of final states   = ', n_fin
             print*
-            print*, '   Number of q bins = ', n_q_bins, ' + 1'
-            print*, '   q bin width      = ', q_bin_width/1.0e3_dp, 'keV'
+            print*, '        Number of E bins = ', trim(adjustl(n_E_bins_str)), ' + 1'
+            print*, '        Energy bin width = ', E_bin_width, ' eV'
             print*
-            print*, '----------'
+            print*, '        Number of q bins = ', trim(adjustl(n_q_bins_str)), ' + 1'
+            print*, '        q bin width      = ', q_bin_width/1.0e3_dp, ' keV'
+            print*
+            print*, '        Ef_max = ', Ef_max, ' eV'
             print*
 
         end if
@@ -200,7 +241,7 @@ contains
 
         if ( verbose ) then
 
-            print*, '    Saving numerics...'
+            print*, 'Saving numerics...'
             print*
 
         end if
@@ -234,20 +275,15 @@ contains
             call h5fclose_f(file_id, error)
             call h5close_f(error)
 
-            if ( verbose ) then
-                print*, '----------'
-                print*
-            end if
-
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   Output file : ', trim(filename), ' does NOT exist.'
+                print*, '    Output file : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if

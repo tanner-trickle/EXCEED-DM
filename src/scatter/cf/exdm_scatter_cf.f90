@@ -1,9 +1,10 @@
-module dme_scatter_cf
+module exdm_scatter_cf
     !! Compute the scattering rate from core to free states
 
     use prec
     use math_mod
 
+    use control_input
     use numerics_input
     use material_input
     use particle_physics_scatter
@@ -11,7 +12,7 @@ module dme_scatter_cf
     use transition
     use Zeff_input
 
-    use calc_dme_scatter_cf
+    use calc_exdm_scatter_cf
 
 contains
 
@@ -47,8 +48,14 @@ contains
         real(dp) :: ki_angular_mesh(n_ki_theta*n_ki_phi, 2)
         real(dp) :: kf_angular_mesh(n_kf_theta*n_kf_phi, 2)
 
+        if ( verbose ) then
+
+            print*, 'Starting c -> f scattering rate calculation...'
+            print*
+
+        end if
+
         ! calculation setup
-        
         call load_core_elec_config(trim(core_elec_config_filename), verbose=verbose)
         call load_core_sto_data(trim(sto_wf_filename), verbose=verbose)
 
@@ -88,8 +95,17 @@ contains
 
             if ( verbose ) then
 
-                print*, 'Calculating rate...'
+                print*, 'Calculating transition rates...'
                 print*
+
+            end if
+
+            ! time calculation
+
+            if ( ( proc_id == root_process ) .and. ( timer ) ) then
+
+                call time_exdm_scatter_cf_calc(log_omega_table, &
+                   ki_angular_mesh, kf_angular_mesh, verbose = verbose)
 
             end if
 
@@ -111,30 +127,97 @@ contains
 
             end do
 
+            if ( verbose ) then
+
+                print*, 'Done calculating transition rates!'
+                print*
+
+            end if
+
         else
 
             if ( verbose ) then
 
-                print*, '!!! WARNING !!!'
+                print*, '~~~ WARNING ~~~~~~~~~~~~~~~~~~~~~~~~~~~'
                 print*
                 print*, '   No mass in mX is large enough to warrant the c -> f calculation'
                 print*, '   with the specified Ef_max. Skipping c -> f calculation.'
                 print*
-                print*, '!!!!!!!!!!!!!!!'
+                print*, '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
                 print*
 
             end if
 
         end if
 
-        if ( verbose ) then
-            print*, '----------'
-            print*
-        end if
-
         if ( proc_id == root_process ) then
 
             call save_core_electrons(out_filename, verbose = verbose)
+
+        end if
+
+    end subroutine
+
+    subroutine time_exdm_scatter_cf_calc(log_omega_table, &
+            ki_angular_mesh, kf_angular_mesh, verbose)
+        !! Times the v -> f scattering rate calculation
+        use timing 
+        use mpi
+
+        implicit none
+
+        real(dp) :: log_omega_table(n_fin, 2)
+        real(dp) :: log_omegas(2)
+
+        real(dp) :: ki_angular_mesh(:, :)
+        real(dp) :: kf_angular_mesh(:, :)
+
+        integer :: tran_id
+
+        logical, optional :: verbose
+        real(dp) :: b_rate(n_q_bins + 1, n_E_bins + 1, n_mX, n_FDM, n_time)
+
+        integer :: init_id, fin_id
+
+        if ( verbose ) then
+
+            print*, 'Timing c -> f calculation...'
+            print*
+
+        end if
+
+        ! one of the jobs which takes longer
+        tran_id = job_table(12, n_tran_per_proc)
+
+        init_id = tran_to_init_fin_id(tran_id, 1)
+        fin_id = tran_to_init_fin_id(tran_id, 2)
+
+        log_omegas = log_omega_table(fin_id, :)
+
+        time(3) = MPI_Wtime()
+
+        call dme_scatter_cf_calc(b_rate,& 
+            init_id, log_omegas, n_ki, ki_angular_mesh, kf_angular_mesh, verbose = verbose)
+
+        time(4) = MPI_Wtime()
+
+        if ( verbose ) then
+
+            print*, '----------------------------------------'
+            print*, '    -------------'
+            print*, '    Timing (TEST)'
+            print*, '    -------------'
+            print*
+            print*, '        (TEST) Run time : '
+            print*, '            ', trim(pretty_time_format(time(4) - time(3)))
+            print*
+            print*, '        Expected run time for whole calculation :'
+            print*, '            ', trim(pretty_time_format(&
+                n_tran_per_proc*(time(4) - time(3))&
+                ))
+            print*
+            print*, '----------------------------------------'
+            print*
 
         end if
 

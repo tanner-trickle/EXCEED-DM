@@ -181,11 +181,6 @@ module DFT_parameters
             call h5fclose_f(file_id, error)
             call h5close_f(error)
 
-            if ( verbose ) then
-                print*, '----------'
-                print*
-            end if
-
         else
 
             if ( verbose ) then
@@ -288,13 +283,13 @@ module DFT_parameters
 
             call check_DFT_parameters(verbose)
 
+            call print_DFT_parameters(filename, verbose=verbose)
+
             ! find how much the wave function coefficients were expanded
             call get_PW_cutoffs(verbose=verbose)
 
-            call print_DFT_parameters(filename, verbose=verbose)
-
             if ( verbose ) then
-                print*, '----------'
+                print*, '----------------------------------------'
                 print*
             end if
 
@@ -302,11 +297,11 @@ module DFT_parameters
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   DFT input file : ', trim(filename), ' does NOT exist.'
+                print*, '    Input file for DFT parameters : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
@@ -329,6 +324,11 @@ module DFT_parameters
         real(dp) :: i_3_2pi(3, 3) 
 
         real(dp) :: eps_val
+
+        if ( verbose ) then
+            print*, 'Running preliminary checks on DFT data...'
+            print*
+        end if
 
         i_3_2pi = 0.0_dp
 
@@ -379,26 +379,41 @@ module DFT_parameters
 
         logical, optional :: verbose
 
+        character(len=64) :: n_k_str
+        character(len=64) :: n_in_G_str
+        character(len=64) :: n_val_str
+        character(len=64) :: n_cond_str
+
+        write(n_k_str, *) n_k
+        write(n_val_str, *) n_val
+        write(n_cond_str, *) n_cond
+        write(n_in_G_str, *) n_in_G
+
         if ( verbose ) then
 
-            print*, '    DFT input filename : ', trim(filename)
+            print*, '----------------------------------------'
+            print*, '    ---------'
+            print*, '    DFT Input'
+            print*, '    ---------'
             print*
-            print*, '    Number of k points    = ', n_k
+            print*, '        Filename : ', trim(filename)
             print*
-            print*, '    Number of valence bands     = ', n_val
-            print*, '    Number of conduction bands  = ', n_cond 
+            print*, '        Primitive lattice vectors (Ang) : '
+            print*, '            a1 = ', a_vecs_A(1, :)
+            print*, '            a2 = ', a_vecs_A(2, :)
+            print*, '            a3 = ', a_vecs_A(3, :)
             print*
-            print*, '    Number of G points    = ', n_in_G
+            print*, '        Reciprocal lattice vectors Ang^(-1) : '
+            print*, '            b1 = ', b_vecs_A(1, :) 
+            print*, '            b2 = ', b_vecs_A(2, :)
+            print*, '            b3 = ', b_vecs_A(3, :)
             print*
-            print*, '    Primitive lattice vectors : '
-            print*, '        a1 = ', a_vecs_A(1, :), 'Ang'
-            print*, '        a2 = ', a_vecs_A(2, :), 'Ang'
-            print*, '        a3 = ', a_vecs_A(3, :), 'Ang'
+            print*, '        Number of valence bands     = ', trim(adjustl(n_val_str))
+            print*, '        Number of conduction bands  = ', trim(adjustl(n_cond_str))
             print*
-            print*, '    Reciprocal lattice vectors : '
-            print*, '        b1 = ', b_vecs_A(1, :), 'Ang^(-1)'
-            print*, '        b2 = ', b_vecs_A(2, :), 'Ang^(-1)'
-            print*, '        b3 = ', b_vecs_A(3, :), 'Ang^(-1)'
+            print*, '        Number of k points          = ', trim(adjustl(n_k_str))
+            print*
+            print*, '        Number of G points          = ', trim(adjustl(n_in_G_str))
             print*
 
         end if
@@ -548,9 +563,9 @@ module DFT_parameters
 
         if ( verbose ) then
 
-           print*, '    Plane wave expansion parameters : '
-           print*, '        E_PW_cut = ', E_PW_cut, 'eV'
-           print*, '        q_PW_cut = ', q_PW_cut/1.0e3_dp, 'keV'
+           print*, '        Plane wave expansion parameters : '
+           print*, '            E_PW_cut = ', E_PW_cut, 'eV'
+           print*, '            q_PW_cut = ', q_PW_cut/1.0e3_dp, 'keV'
            print*
 
         end if
@@ -575,7 +590,7 @@ module DFT_parameters
 
         if ( verbose ) then
 
-            print*, 'Performed scisscor correction.'
+            print*, 'Performed scissor correction.'
             print*
 
         end if
