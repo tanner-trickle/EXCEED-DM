@@ -1,4 +1,4 @@
-module calc_dme_scatter_vf
+module calc_exdm_scatter_vf
 
     use prec
     use constants

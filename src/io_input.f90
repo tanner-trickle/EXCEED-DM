@@ -32,6 +32,28 @@ module io_input
                     core_elec_config_filename
 contains
 
+    subroutine print_io(verbose)
+
+        implicit none
+
+        logical, optional :: verbose
+
+        if ( verbose ) then
+
+            print*, '----------------------------------------'
+            print*, '    ---'
+            print*, '    I/O'
+            print*, '    ---'
+            print*
+            print*, '        DFT input            : ', trim(DFT_input_filename)
+            print*, '        STO coefficients     : ', trim(sto_wf_filename)
+            print*, '        Core electron config : ', trim(core_elec_config_filename)
+            print*
+
+        end if
+
+    end subroutine
+
     subroutine load_io(filename, verbose)
         !! Loads the io namelist
         implicit none
@@ -44,15 +66,35 @@ contains
 
         integer :: error
 
+        if ( verbose ) then
+            print*, 'Loading IO parameters...'
+            print*
+        end if
+
         inquire(file = trim(filename), exist = file_exists)
 
         if ( file_exists ) then
 
             open(100, file = trim(filename), iostat = error)
-
             read(100, nml=io, iostat=error)
-
             close(100)
+
+            if ( error .ne. 0 ) then
+
+                if ( verbose ) then
+
+                    print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+                    print*
+                    print*, '    Problem reading IO namelist.'
+                    print*
+                    print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+                    print*
+
+                end if
+
+                stop
+
+            end if
 
             if ( trim(out_filename) .eq. '') then
                 if ( trim(run_description) .eq. '' ) then
@@ -62,15 +104,24 @@ contains
                 end if
             end if
 
+            call print_io(verbose = verbose)
+
+            if ( verbose ) then
+
+                print*, '----------------------------------------'
+                print*
+
+            end if
+
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   Input file for io parameters : ', trim(filename), ' does NOT exist.'
+                print*, '    Input file for IO parameters : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
@@ -106,6 +157,13 @@ contains
         real(dp) :: r
         character(len=64) :: rand_num_str
 
+        if ( verbose ) then
+
+            print*, 'Creating output file...'
+            print*
+
+        end if
+
         inquire(file = filename, exist = file_exists)
 
         if ( ( .not. file_exists ) .or. ( overwrite_output ) ) then
@@ -115,11 +173,11 @@ contains
 
             if ( (error .ne. 0) .and. verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
                 print*, '   Could not create output file : ', trim(filename)
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
                 stop
@@ -133,7 +191,7 @@ contains
 
             if ( verbose ) then
 
-                print*, '!! WARNING !!'
+                print*, '~~~ WARNING ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
                 print*
                 print*, '   Output file : ', trim(filename), ' already exists.'
                 print*
@@ -148,7 +206,7 @@ contains
 
                 print*, '   Attempting to set output filename to : ', trim(out_filename)
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
                 print*
 
             end if

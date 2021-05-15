@@ -1,4 +1,4 @@
-module calc_dme_scatter_cf
+module calc_exdm_scatter_cf
     !! Holds the subroutine which calculates the binned rate for the cf calculation
 
     use prec
@@ -34,8 +34,8 @@ contains
         real(dp) :: log_omegas(2)
         integer :: ki_cut
 
-        real(dp) :: ki_angular_mesh(n_ki_theta*n_ki_phi, 2)
-        real(dp) :: kf_angular_mesh(n_kf_theta*n_kf_phi, 2)
+        real(dp) :: ki_angular_mesh(:, :)
+        real(dp) :: kf_angular_mesh(:, :)
 
         real(dp) :: Ei, Ef, omega, log_omega
         real(dp) :: omega_1, omega_2, E1, E2
@@ -102,12 +102,12 @@ contains
                         fermi_val = 2.0_dp*pi*Zeff*(alpha_EM*m_elec/kf_mag)
                         fermi_factor = fermi_val*(1.0_dp - exp(-fermi_val))**(-1)
 
-                        do ki = 1, ki_cut
+                        do ki = 1 + n_ki - ki_cut, n_ki
 
                             ki_mag = (ki_max/ki_min)**((ki - 1.0_dp)/(n_ki - 1.0_dp))*ki_min
                             jac_ki = (1.0_dp/n_ki)*ki_mag**3*log10(ki_max/ki_min)
 
-                            do a = 1, n_ki_theta*n_ki_phi
+                            do a = 1, size(ki_angular_mesh, 1)
 
                                 ki_theta = ki_angular_mesh(a, 1)
                                 ki_phi = ki_angular_mesh(a, 2)
@@ -118,7 +118,7 @@ contains
 
                                 f_sq = abs(core_sto_wf_FT(init_id, ki_vec))**2
 
-                                do b = 1, n_kf_theta*n_kf_phi
+                                do b = 1, size(kf_angular_mesh, 1)
 
                                     kf_theta = kf_angular_mesh(b, 1)
                                     kf_phi = kf_angular_mesh(b, 2)

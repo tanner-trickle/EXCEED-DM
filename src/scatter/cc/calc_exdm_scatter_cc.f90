@@ -1,4 +1,4 @@
-module calc_dme_scatter_cc
+module calc_exdm_scatter_cc
     !! Holds the subroutine which calculates the binned rate for the cc calculation
 
     use prec

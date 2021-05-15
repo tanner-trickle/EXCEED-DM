@@ -1,4 +1,4 @@
-module dme_scatter
+module exdm_scatter
     !! Perform DM-electron scattering rate calculations
 
     use mpi
@@ -13,10 +13,10 @@ module dme_scatter
     use in_med_scr
     use transition
 
-    use dme_scatter_vc
-    use dme_scatter_cc
-    use dme_scatter_vf
-    use dme_scatter_cf
+    use exdm_scatter_vc
+    use exdm_scatter_cc
+    use exdm_scatter_vf
+    use exdm_scatter_cf
 
     implicit none
 
@@ -88,6 +88,11 @@ contains
 
         integer :: t, i
 
+        if ( verbose ) then
+            print*, 'Starting scattering rate calculation...'
+            print*
+        end if
+
         call load_particle_physics_scatter(nml_filename, verbose = verbose)
         call load_numerics(nml_filename, verbose = verbose)
         call load_in_med_scr(nml_filename, verbose = verbose)
@@ -106,12 +111,13 @@ contains
 
                     if ( verbose ) then
 
-                        print*, '!!! WARNING !!!'
+                        print*, '~~~ WARNING ~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
                         print*
-                        print*, '   Attempting to store more than 10 GB of data in binned_rate_if. If this is unwanted behavior'
-                        print*, '   set save_binned_rate_if = .FALSE. in the control namelist.'
+                        print*, '    Attempting to store more than 10 GB of data in binned_rate_if. If this is unwanted behavior'
+                        print*, '    set save_binned_rate_if = .FALSE. in the control namelist.'
                         print*
-                        print*, '!!!!!!!!!!!!!!!'
+                        print*, '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+                        print*
 
                     end if
 
@@ -160,16 +166,24 @@ contains
 
             if ( verbose ) then
 
-                print*, 'Calculation mode : ', trim(calc_mode), ' is not a valid option. Options are : '
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+                print*
+                print*, '    Calculation mode : ', trim(calc_mode), ' is not a valid option. Options are : '
+                print*
                 
                 do i = 1, size(calc_modes_list)
 
-                    print*, '    ', trim(calc_modes_list(i))
+                    print*, '        ', trim(calc_modes_list(i))
                     print* 
 
                 end do
 
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+                print*
+
             end if
+
+            stop
 
         end if
 
@@ -287,7 +301,7 @@ contains
 
         if ( verbose ) then
 
-            print*, '    Saving scattering rates...'
+            print*, 'Saving scattering rates...'
             print*
 
         end if
@@ -414,20 +428,15 @@ contains
             call h5fclose_f(file_id, error)
             call h5close_f(error)
 
-            if ( verbose ) then
-                print*, '----------'
-                print*
-            end if
-
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   Output file : ', trim(filename), ' does NOT exist.'
+                print*, '    Output file : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
