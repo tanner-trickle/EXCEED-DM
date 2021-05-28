@@ -9,6 +9,58 @@ module math_mod
 
 contains
 
+    function pauli_spin_matrix(i) result(mat)
+        !! Returns the ith Pauli spin matrix. Assume 0th Pauli matrix is the identity
+
+        implicit none
+
+        integer :: i
+
+        complex(dp) :: mat(2, 2)
+
+        mat = (0.0_dp, 0.0_dp)
+
+        select case ( i )
+
+            case ( 0 )
+
+                mat(1, 1) = (1.0_dp, 0.0_dp)
+                mat(1, 2) = (0.0_dp, 0.0_dp)
+                mat(2, 1) = (0.0_dp, 0.0_dp)
+                mat(2, 2) = (1.0_dp, 0.0_dp)
+
+            case ( 1 )
+
+                mat(1, 1) = (0.0_dp, 0.0_dp)
+                mat(1, 2) = (1.0_dp, 0.0_dp)
+                mat(2, 1) = (1.0_dp, 0.0_dp)
+                mat(2, 2) = (0.0_dp, 0.0_dp)
+
+            case ( 2 )
+
+                mat(1, 1) = (0.0_dp, 0.0_dp)
+                mat(1, 2) = -ii
+                mat(2, 1) = ii
+                mat(2, 2) = (0.0_dp, 0.0_dp)
+                
+            case ( 3 )
+
+                mat(1, 1) = (1.0_dp, 0.0_dp)
+                mat(1, 2) = (0.0_dp, 0.0_dp)
+                mat(2, 1) = (0.0_dp, 0.0_dp)
+                mat(2, 2) = (-1.0_dp, 0.0_dp)
+
+            case default
+
+                mat(1, 1) = (1.0_dp, 0.0_dp)
+                mat(1, 2) = (0.0_dp, 0.0_dp)
+                mat(2, 1) = (0.0_dp, 0.0_dp)
+                mat(2, 2) = (1.0_dp, 0.0_dp)
+
+        end select
+
+    end function
+
     function integrate_power_law(b, x1, x2, x_s) result(integral)
         !!
         !! = int_{x1}^{x2} (x/x_s)^b dx = x1 * int_{1}^{x2/x1} (x1/x_s)^b y^b dy
