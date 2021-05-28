@@ -45,6 +45,9 @@ contains
         complex(dp), allocatable :: wfc_FT_i(:, :)
         complex(dp), allocatable :: wfc_FT_f(:, :)
 
+        complex(dp), allocatable :: wfc_FT_i_s(:, :, :)
+        complex(dp), allocatable :: wfc_FT_f_s(:, :, :)
+
         if ( verbose ) then
 
             print*, 'Starting v -> c scattering rate calculation...'
@@ -94,15 +97,24 @@ contains
 
         end if
 
-        allocate(wfc_FT_i(n_k, n_in_G))
-        allocate(wfc_FT_f(n_k, n_in_G))
-
         ! do calculation
 
         if ( verbose ) then
 
             print*, 'Calculating transition rates...'
             print*
+
+        end if
+
+        if ( include_spin ) then
+
+            allocate(wfc_FT_i_s(n_k, n_in_G, 2))
+            allocate(wfc_FT_f_s(n_k, n_in_G, 2))
+
+        else
+            
+            allocate(wfc_FT_i(n_k, n_in_G))
+            allocate(wfc_FT_f(n_k, n_in_G))
 
         end if
 
@@ -115,12 +127,26 @@ contains
                 val_id = tran_to_init_fin_id(tran_id, 1)
                 cond_id = tran_to_init_fin_id(tran_id, 2) + n_val
 
-                call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i)
-                call get_in_wfc_FT(DFT_input_filename, cond_id, wfc_FT_f)
+                if ( include_spin ) then
 
-                call dme_scatter_vc_calc(binned_rate_t(:, :, :, :, :, t),& 
-                    wfc_FT_i, wfc_FT_f, val_id, cond_id, n_FFT_grid, n_k, &
-                    wfc_fft_plan, Tif_FFT_plan, verbose = verbose)
+                    call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i_s)
+                    call get_in_wfc_FT(DFT_input_filename, cond_id, wfc_FT_f_s)
+
+                    call dme_scatter_vc_calc(binned_rate_t(:, :, :, :, :, t),& 
+                        wfc_FT_i_s, wfc_FT_f_s, val_id, cond_id, n_FFT_grid, n_k, &
+                        wfc_fft_plan, Tif_FFT_plan, verbose = verbose)
+
+                else
+
+                    call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i)
+                    call get_in_wfc_FT(DFT_input_filename, cond_id, wfc_FT_f)
+
+                    call dme_scatter_vc_calc(binned_rate_t(:, :, :, :, :, t),& 
+                        wfc_FT_i, wfc_FT_f, val_id, cond_id, n_FFT_grid, n_k, &
+                        wfc_fft_plan, Tif_FFT_plan, verbose = verbose)
+
+                end if
+
             end if
 
         end do
@@ -162,6 +188,9 @@ contains
         complex(dp), allocatable :: wfc_FT_i(:, :)
         complex(dp), allocatable :: wfc_FT_f(:, :)
 
+        complex(dp), allocatable :: wfc_FT_i_s(:, :, :)
+        complex(dp), allocatable :: wfc_FT_f_s(:, :, :)
+
         integer :: val_id, cond_id
 
         if ( verbose ) then
@@ -171,22 +200,48 @@ contains
 
         end if
 
-        allocate(wfc_FT_i(n_k, n_in_G))
-        allocate(wfc_FT_f(n_k, n_in_G))
+        if ( include_spin ) then
+
+            allocate(wfc_FT_i_s(n_k, n_in_G, 2))
+            allocate(wfc_FT_f_s(n_k, n_in_G, 2))
+
+        else
+            
+            allocate(wfc_FT_i(n_k, n_in_G))
+            allocate(wfc_FT_f(n_k, n_in_G))
+
+        end if
 
         val_id = tran_to_init_fin_id(tran_id, 1)
         cond_id = tran_to_init_fin_id(tran_id, 2) + n_val
 
-        call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i)
-        call get_in_wfc_FT(DFT_input_filename, cond_id, wfc_FT_f)
+        if ( include_spin ) then
 
-        time(3) = MPI_Wtime()
+            call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i_s)
+            call get_in_wfc_FT(DFT_input_filename, cond_id, wfc_FT_f_s)
 
-        call dme_scatter_vc_calc(b_rate,& 
-            wfc_FT_i, wfc_FT_f, val_id, cond_id, n_FFT_grid, 1, &
-            wfc_fft_plan, Tif_FFT_plan, verbose = verbose)
+            time(3) = MPI_Wtime()
+            
+            call dme_scatter_vc_calc(b_rate,& 
+                wfc_FT_i_s, wfc_FT_f_s, val_id, cond_id, n_FFT_grid, 1, &
+                wfc_fft_plan, Tif_FFT_plan, verbose = verbose)
 
-        time(4) = MPI_Wtime()
+            time(4) = MPI_Wtime()
+
+        else
+
+            call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i)
+            call get_in_wfc_FT(DFT_input_filename, cond_id, wfc_FT_f)
+
+            time(3) = MPI_Wtime()
+
+            call dme_scatter_vc_calc(b_rate,& 
+                wfc_FT_i, wfc_FT_f, val_id, cond_id, n_FFT_grid, 1, &
+                wfc_fft_plan, Tif_FFT_plan, verbose = verbose)
+
+            time(4) = MPI_Wtime()
+
+        end if
 
         if ( verbose ) then
 

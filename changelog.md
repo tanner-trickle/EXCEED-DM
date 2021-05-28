@@ -1,3 +1,11 @@
+v0.1.2
+---
+
+- Added functionality for spin dependent (two component) wave functions!
+  - Automatically detect whether input DFT data has spin dependence.
+  - Valence -> conduction transition rates can be computed with spin dependent wave functions.
+  - Added example input file for Si which has spin dependent wave functions.
+
 v0.1.1
 ---
 

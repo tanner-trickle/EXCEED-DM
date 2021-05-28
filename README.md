@@ -61,7 +61,7 @@ If installed correctly you should see something similar to,
 
          --------------------
 
-            EXCEED-DM - v0.1.0
+            EXCEED-DM - v0.1.2
 
          --------------------
 
