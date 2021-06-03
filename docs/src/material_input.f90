@@ -58,6 +58,27 @@ module material_input
 
 contains
 
+    subroutine print_material(verbose)
+
+        implicit none
+
+        logical, optional :: verbose
+
+        if ( verbose ) then
+            print*, '----------------------------------------'
+            print*, '    --------'
+            print*, '    Material'
+            print*, '    --------'
+            print*
+            print*, '        Name      : ', trim(mat_name)
+            print*, '        Band gap  : ', band_gap, ' eV'
+            print*, '        Density   : ', rho_T_g_per_cm3, ' g/cm^3'
+            print*, '        PC volume : ', pc_vol_A, ' Ang^3'
+            print*
+        end if
+
+    end subroutine
+
     subroutine load_material(filename, verbose)
         implicit none
 
@@ -69,6 +90,11 @@ contains
 
         integer :: error
 
+        if ( verbose ) then
+            print*, 'Loading material parameters...'
+            print*
+        end if
+
         inquire(file = trim(filename), exist = file_exists)
 
         if ( file_exists ) then
@@ -79,19 +105,45 @@ contains
 
             close(100)
 
+            if ( error .ne. 0 ) then
+
+                if ( verbose ) then
+
+                    print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+                    print*
+                    print*, '    Problem reading material namelist.'
+                    print*
+                    print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+                    print*
+
+                end if
+
+                stop
+
+            end if
+
             rho_T = g_to_eV*inv_cm_to_eV**3*rho_T_g_per_cm3  
             m_T = kg_to_eV*m_T_kg 
             pc_vol = Ang_to_inv_eV**3*pc_vol_A 
+
+            call print_material(verbose = verbose)
+
+            if ( verbose ) then
+
+                print*, '----------------------------------------'
+                print*
+
+            end if
 
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   Input file for material parameters : ', trim(filename), ' does NOT exist.'
+                print*, '    Input file for material parameters : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
@@ -120,7 +172,7 @@ contains
 
         if ( verbose ) then
 
-            print*, '    Saving material parameters...'
+            print*, 'Saving material parameters...'
             print*
 
         end if
@@ -148,20 +200,15 @@ contains
             call h5fclose_f(file_id, error)
             call h5close_f(error)
 
-            if ( verbose ) then
-                print*, '----------'
-                print*
-            end if
-
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   Output file : ', trim(filename), ' does NOT exist.'
+                print*, '    Output file : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if

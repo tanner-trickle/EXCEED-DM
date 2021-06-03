@@ -1,0 +1,56 @@
+&control
+    process          = 'scatter',
+    calc_mode        = 'vc',
+    overwrite_output = .TRUE.
+/
+
+&io
+    out_folder         = './examples/Si/outputs',
+    run_description    = 'vc_tff_spin_test',
+    DFT_input_filename = './examples/Si/dft/Si_2x2x2_AE_spin.hdf5',
+/
+
+&material
+    mat_name        = 'Si'
+    pc_vol_A        = 40.888 
+    rho_T_g_per_cm3 = 2.281  
+    band_gap        = 1.11 
+/
+
+&particle_physics
+	n_mX          = 4,
+    n_extra_mX    = 2,
+    log_mmin      = 7,
+    log_mmax      = 10,
+	n_FDM         = 5,
+    FDMPower_min  = -2,
+    FDMPower_max  = 2
+/
+
+&tff
+    tff_id = 2, 2
+/
+
+&extra_mX
+    mX_2(1) = 1D7,
+    mX_2(2) = 1D8
+/
+
+&numerics
+    q_bin_width = 1D3,
+    E_bin_width = 1,
+    n_E_bins = 100,
+    E_bin_threshold = 1
+    n_init = 4, 
+    n_fin = 60
+/
+
+&in_medium
+    screen_type = 'analytic'
+    di_e0 = 11.3,
+    di_q_tf = 4.134D3,
+    di_omega_p = 16.6,
+    di_alpha = 1.563
+/
+
+!
