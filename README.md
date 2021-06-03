@@ -61,7 +61,7 @@ If installed correctly you should see something similar to,
 
          --------------------
 
-            EXCEED-DM - v0.1.2
+            EXCEED-DM - v0.1.3
 
          --------------------
 
@@ -113,12 +113,12 @@ If you use `EXCEED-DM` in your work, please cite,
 along with,
 
     @article{Griffin:2021znd,
-    author = "Griffin, Sin\'ead M. and Inzani, Katherine and Trickle, Tanner and Zhang, Zhengkang and Zurek, Kathryn M.",
-    title = "{Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets}",
-    eprint = "2105.05253",
-    archivePrefix = "arXiv",
-    primaryClass = "hep-ph",
-    month = "5",
-    year = "2021"
+        author = "Griffin, Sin\'ead M. and Inzani, Katherine and Trickle, Tanner and Zhang, Zhengkang and Zurek, Kathryn M.",
+        title = "{Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets}",
+        eprint = "2105.05253",
+        archivePrefix = "arXiv",
+        primaryClass = "hep-ph",
+        month = "5",
+        year = "2021"
     }
 
