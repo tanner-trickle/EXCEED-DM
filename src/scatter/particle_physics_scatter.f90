@@ -146,23 +146,6 @@ contains
             read(100, nml=particle_physics, iostat=error)
             rewind(100)
 
-            if ( error .ne. 0 ) then
-
-                if ( verbose ) then
-
-                    print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-                    print*
-                    print*, '    Problem reading particle physics namelist.'
-                    print*
-                    print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-                    print*
-
-                end if
-
-                stop
-
-            end if
-
             rhoX = inv_cm_to_eV**3*1.0e9_dp*rhoX_GeV_per_cm3
             v0 = km_per_sec_to_none*v0_km_per_sec 
             vE = km_per_sec_to_none*vE_km_per_sec

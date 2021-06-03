@@ -27,6 +27,23 @@ module Zeff_input
 
 contains
 
+    subroutine print_Zeff(verbose)
+        implicit none
+
+        logical, optional :: verbose
+
+        if ( verbose ) then
+            print*, '----------------------------------------'
+            print*, '    ----'
+            print*, '    Zeff'
+            print*, '    ----'
+            print*
+            print*, '        Type  : ', trim(Zeff_type)
+            print*
+        end if
+
+    end subroutine
+
     subroutine load_Zeff_parameters(filename, verbose)
 
         implicit none
@@ -39,25 +56,56 @@ contains
 
         integer :: error
 
+        if ( verbose ) then
+
+            print*, 'Loading Zeff parameters...'
+            print*
+
+        end if
+
         inquire(file = trim(filename), exist = file_exists)
 
         if ( file_exists ) then
 
             open(100, file = trim(filename), iostat = error)
-
             read(100, nml=Zeff, iostat=error)
-
             close(100)
+
+            if ( error .ne. 0 ) then
+
+                if ( verbose ) then
+
+                    print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+                    print*
+                    print*, '    Problem reading Zeff namelist.'
+                    print*
+                    print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+                    print*
+
+                end if
+
+                stop
+
+            end if
+
+            call print_Zeff(verbose = verbose)
+
+            if ( verbose ) then
+
+                print*, '----------------------------------------'
+                print*
+
+            end if
 
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
                 print*, '   Input file for Zeff parameters : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
