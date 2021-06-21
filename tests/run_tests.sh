@@ -13,10 +13,15 @@ files=(\
     "Si/inputs/cc_scatter_example.txt"\
     "Si/inputs/cf_scatter_example.txt"\
     "Si/inputs/vf_scatter_example.txt"\
+    "Si/inputs/ps_absorp_example.txt"\
+    "Si/inputs/vector_absorp_example.txt"\
+    "Si/inputs/scalar_absorp_example.txt"\
 )
 
 # files=(\
-#     "Si/inputs/vf_scatter_example.txt"\
+#     "Si/inputs/ps_absorp_example.txt"\
+#     "Si/inputs/vector_absorp_example.txt"\
+#     "Si/inputs/scalar_absorp_example.txt"\
 # )
 
 for file in "${files[@]}"; do
