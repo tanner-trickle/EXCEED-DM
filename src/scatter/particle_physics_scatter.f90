@@ -97,21 +97,23 @@ contains
         logical, optional :: verbose
 
         if ( verbose ) then
-            print*, 'Dark Matter properties'
+            print*, '----------------------------------------'
+            print*, '    -----------'
+            print*, '    Dark Matter'
+            print*, '    -----------'
             print*
-            print*, '   Masses : ', mX
+            print*, '        Density : ', rhoX_GeV_per_cm3, ' GeV/cm^3'
+            print*, '        Masses : ', mX
             print* 
-            print*, '   -d log F_DM / d log q : ', FDMPowerList
+            print*, '        Mediator Form Factors (-d log F_DM / d log q) : ', FDMPowerList
             print* 
-            print*, '   Velocity distribution parameters : '
-            print*, '       v0   = ', v0_km_per_sec, ' km/sec'
-            print*, '       vE   = ', vE_km_per_sec, ' km/sec'
-            print*, '       vEsc = ', vEsc_km_per_sec, ' km/sec'
+            print*, '        Halo Velocity Distribution Parameters : '
+            print*, '            v0   = ', v0_km_per_sec, ' km/sec'
+            print*, '            vE   = ', vE_km_per_sec, ' km/sec'
+            print*, '            vEsc = ', vEsc_km_per_sec, ' km/sec'
             print* 
-            print*, '   Times : ', timeOfDayList
+            print*, '        Time of day : ', timeOfDayList
             print* 
-            print*, '----------'
-            print*
         end if
 
     end subroutine
@@ -127,6 +129,13 @@ contains
         logical :: file_exists
 
         integer :: error
+
+        if ( verbose ) then
+
+            print*, 'Loading particle physics parameters...'
+            print*
+
+        end if
 
         inquire(file = trim(filename), exist = file_exists)
 
@@ -162,15 +171,22 @@ contains
 
             call print_particle_physics_scatter(verbose=verbose)
 
+            if ( verbose ) then
+
+                print*, '----------------------------------------'
+                print*
+
+            end if
+
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   Input file for material parameters : ', trim(filename), ' does NOT exist.'
+                print*, '    Input file for particle physics parameters : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
@@ -200,7 +216,7 @@ contains
 
         if ( verbose ) then
 
-            print*, '    Saving particle physics parameters...'
+            print*, 'Saving particle physics parameters...'
             print*
 
         end if
@@ -244,20 +260,20 @@ contains
             call h5fclose_f(file_id, error)
             call h5close_f(error)
 
-            if ( verbose ) then
-                print*, '----------'
-                print*
-            end if
+            ! if ( verbose ) then
+            !     print*, '----------'
+            !     print*
+            ! end if
 
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
                 print*, '   Output file : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if

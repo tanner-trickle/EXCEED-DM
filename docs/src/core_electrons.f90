@@ -84,7 +84,7 @@ contains
 
         if ( verbose ) then
 
-            print*, 'Saving core electrons...'
+            print*, 'Saving core electron configuration...'
             print*
 
         end if
@@ -120,20 +120,15 @@ contains
             call h5fclose_f(file_id, error)
             call h5close_f(error)
 
-            if ( verbose ) then
-                print*, '----------'
-                print*
-            end if
-
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   Output file : ', trim(filename), ' does NOT exist.'
+                print*, '    Output file : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
@@ -516,7 +511,7 @@ contains
             call print_core_elec_config(filename, verbose=verbose)
 
             if ( verbose ) then
-                print*, '----------'
+                print*, '----------------------------------------'
                 print*
             end if
 
@@ -524,13 +519,13 @@ contains
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   Core electron configuration file : '
-                print*,  '    ', trim(filename)
-                print*,  ' does NOT exist.'
+                print*, '    Core electron configuration file : '
+                print*, '    ', trim(filename)
+                print*, '    does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
@@ -551,27 +546,32 @@ contains
 
         if ( verbose ) then
 
-            print*, '   Core electron configuration filename : ', trim(filename) 
+            print*, '----------------------------------------'
+            print*, '    ---------------------------'
+            print*, '    Core Electron Configuration'
+            print*, '    ---------------------------'
             print*
-            print*, '   Number of atoms = ', n_atoms
-            print*, '   Proton numbers = ', Z_list
-            print*, '   Number of core states = ', n_core_states
+            print*, '        Core electron configuration filename : ', trim(filename) 
             print*
-            print*, '   Equilibrium positions (reduced) : '
+            print*, '        Number of atoms = ', n_atoms
+            print*, '        Proton numbers = ', Z_list
+            print*, '        Number of core states = ', n_core_states
+            print*
+            print*, '        Equilibrium positions (reduced) : '
             do n = 1, n_atoms
-                print*, '       atom # = ', n, ', ', eq_pos_red(n, :)
+                print*, '            atom # = ', n, ', ', eq_pos_red(n, :)
             end do
             print*
-            print*, '   Core electron configuration : '
+            print*, '        Core electron configuration : '
             do n = 1, n_core_states
                 
-                print*, '       atom = ', core_elec_conf(n, 1)
-                print*, '       n    = ', core_elec_conf(n, 2)
-                print*, '       l    = ', core_elec_conf(n, 3)
-                print*, '       m    = ', core_elec_conf(n, 4)
-                print*, '       n_s  = ', core_elec_conf(n, 5)
+                print*, '            atom = ', core_elec_conf(n, 1)
+                print*, '            n    = ', core_elec_conf(n, 2)
+                print*, '            l    = ', core_elec_conf(n, 3)
+                print*, '            m    = ', core_elec_conf(n, 4)
+                print*, '            n_s  = ', core_elec_conf(n, 5)
                 print* 
-                print*, '       energy = ', core_energy(n), 'eV'
+                print*, '            energy = ', core_energy(n), 'eV'
                 print*
 
             end do
@@ -680,7 +680,7 @@ contains
             call print_sto_data(verbose=verbose)
 
             if ( verbose ) then
-                print*, '----------'
+                print*, '----------------------------------------'
                 print*
             end if
 
@@ -688,13 +688,13 @@ contains
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   STO wf data file : '
-                print*,  '    ', trim(filename)
-                print*,  ' does NOT exist.'
+                print*, '    STO wave function coefficient file : '
+                print*, '    ', trim(filename)
+                print*, '    does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
@@ -732,24 +732,32 @@ contains
 
         logical, optional :: verbose
         integer :: n
+        integer :: a
 
         if ( verbose ) then
 
-            print*, '   Core electron STO wf parameters : '
+            print*, '----------------------------------------'
+            print*, '    -------------------'
+            print*, '    STO WF Coefficients'
+            print*, '    -------------------'
+            print*
             do n = 1, n_core_states
+
+                if ( core_elec_conf(n, 4) == 0 ) then
                 
-                print*, '       atom = ', core_elec_conf(n, 1)
-                print*, '       n    = ', core_elec_conf(n, 2)
-                print*, '       l    = ', core_elec_conf(n, 3)
-                print*, '       m    = ', core_elec_conf(n, 4)
-                print*, '       n_s  = ', core_elec_conf(n, 5)
-                print* 
-                print*, '       n_j = ', core_sto_nj_list(n)
-                print*, '       n_lj = ', core_sto_data(n, 1, :)
-                print*, '       Z_lj = ', core_sto_data(n, 2, :)
-                print*, '       N0_lj = ', core_sto_data(n, 3, :)
-                print*, '       C_lnj = ', core_sto_data(n, 4, :)
-                print*
+                    print*, '        atom = ', core_elec_conf(n, 1)
+                    print*, '        n    = ', core_elec_conf(n, 2)
+                    print*, '        l    = ', core_elec_conf(n, 3)
+                    ! print*, '    m    = ', core_elec_conf(n, 4)
+                    print* 
+                    print*, '            Number of coefficients = ', core_sto_nj_list(n)
+                    print*, '            n_lj = ', core_sto_data(n, 1, :)
+                    print*, '            Z_lj = ', core_sto_data(n, 2, :)
+                    print*, '            N0_lj = ', core_sto_data(n, 3, :)
+                    print*, '            C_lnj = ', core_sto_data(n, 4, :)
+                    print*
+
+                end if
 
             end do
 

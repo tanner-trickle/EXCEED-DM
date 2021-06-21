@@ -273,4 +273,10 @@ quiet  = False
 colors = True
 rule   = ford EXCEED-DM-docs.md
 
+[rule-tests]
+help   = Run all of the tests in the tests folder.
+quiet  = False
+colors = True
+rule   = time -p ./tests/run_tests.sh 
+
 ###############################################################################

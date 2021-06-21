@@ -1,13 +1,13 @@
 &control
-    process   = 'scatter',
-    calc_mode = 'vc',
+    process          = 'scatter',
+    calc_mode        = 'vc',
     overwrite_output = .TRUE.
 /
 
 &io
-    out_folder      = '/mnt/c/Users/Tanner/Desktop/dm-electron/examples/Si/outputs',
-    run_description = 'vc_test',
-    DFT_input_filename = '/mnt/c/Users/Tanner/Desktop/dm-electron/examples/Si/dft/Si_2x2x2_AE.hdf5',
+    out_folder         = './examples/Si/outputs',
+    run_description    = 'vc_test',
+    DFT_input_filename = './examples/Si/dft/Si_2x2x2_AE.hdf5',
 /
 
 &material
@@ -18,7 +18,7 @@
 /
 
 &particle_physics
-	n_mX          = 30,
+	n_mX          = 4,
     n_extra_mX    = 2,
     log_mmin      = 7,
     log_mmax      = 10,

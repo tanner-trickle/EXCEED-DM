@@ -31,6 +31,25 @@ module control_input
 
 contains
 
+    subroutine print_control(verbose)
+        implicit none
+
+        logical, optional :: verbose
+
+        if ( verbose ) then
+            print*, '----------------------------------------'
+            print*, '    -------'
+            print*, '    Control'
+            print*, '    -------'
+            print*
+            print*, '        Physics process  : ', trim(process)
+            print*, '        Calculation mode : ', trim(calc_mode)
+            print*, '        Timing?          : ', timer
+            print*
+        end if
+
+    end subroutine
+
     subroutine load_control(filename, verbose)
         !! Loads the control variables
         implicit none
@@ -43,23 +62,28 @@ contains
 
         integer :: error
 
+        if ( verbose ) then
+            print*, 'Loading control parameters...'
+            print*
+        end if
+
         inquire(file = trim(filename), exist = file_exists)
 
         if ( file_exists ) then
 
             open(100, file = trim(filename), iostat = error)
-
             read(100, nml=control, iostat=error)
+            close(100)
 
             if ( error .ne. 0 ) then
 
                 if ( verbose ) then
 
-                    print*, '!! ERROR !!'
+                    print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                     print*
-                    print*, '    Problem with control namelist.'
+                    print*, '    Problem reading control namelist.'
                     print*
-                    print*, '!!!!!!!!!!!'
+                    print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                     print*
 
                 end if
@@ -68,17 +92,24 @@ contains
 
             end if
 
-            close(100)
+            call print_control(verbose = verbose)
+
+            if ( verbose ) then
+
+                print*, '----------------------------------------'
+                print*
+
+            end if
 
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   Input file for control parameters : ', trim(filename), ' does NOT exist.'
+                print*, '    Input file for control parameters : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
