@@ -34,6 +34,35 @@ module in_med_scr
 
 contains
 
+    subroutine print_in_med(verbose)
+        implicit none
+
+        logical, optional :: verbose
+
+        if ( verbose ) then
+
+            print*, '----------------------------------------'
+            print*, '    ---------'
+            print*, '    In-Medium'
+            print*, '    ---------'
+            print*
+            print*, '        Include screen? : ', include_screen
+            print*, '        Screen type     : ', trim(screen_type)
+            print*
+            if ( trim(screen_type) == 'analytic' ) then
+
+                print*, '        e_0      : ', di_e0
+                print*, '        alpha    : ', di_alpha
+                print*, '        q_TF     : ', di_q_tf/1.0e3_dp, 'keV'
+                print*, '        omega_p  : ', di_omega_p, 'eV'
+                print*
+
+            end if
+
+        end if
+
+    end subroutine
+
     subroutine load_in_med_scr(filename, verbose)
 
         implicit none
@@ -46,25 +75,39 @@ contains
 
         integer :: error
 
+        if ( verbose ) then
+
+            print*, 'Loading in-medium screening parameters...'
+            print*
+
+        end if
+
         inquire(file = trim(filename), exist = file_exists)
 
         if ( file_exists ) then
 
             open(100, file = trim(filename), iostat = error)
-
             read(100, nml=in_medium, iostat=error)
-
             close(100)
+
+            call print_in_med(verbose = verbose)
+
+            if ( verbose ) then
+
+                print*, '----------------------------------------'
+                print*
+
+            end if
 
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   Input file for in medium effects : ', trim(filename), ' does NOT exist.'
+                print*, '    Input file for in medium parameters : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
@@ -92,7 +135,7 @@ contains
 
         if ( verbose ) then
 
-            print*, '    Saving screening parameters...'
+            print*, 'Saving screening parameters...'
             print*
 
         end if
@@ -124,20 +167,16 @@ contains
             call h5fclose_f(file_id, error)
             call h5close_f(error)
 
-            if ( verbose ) then
-                print*, '----------'
-                print*
-            end if
-
         else
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   Output file : ', trim(filename), ' does NOT exist.'
+                print*, '    Output file : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+                print*
                 print*
 
             end if

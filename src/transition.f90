@@ -36,6 +36,13 @@ contains
 
         integer :: i, j, tran_id, id, f
 
+        if ( verbose ) then
+
+            print*, 'Configuring jobs for processors...'
+            print*
+
+        end if
+
         n_tran = n_init*n_fin
 
         allocate(tran_to_init_fin_id(n_tran, 2))
@@ -59,38 +66,7 @@ contains
         end if 
 
         allocate(job_table(n_proc, n_tran_per_proc))
-        
-        if ( verbose ) then             
-            
-            if ( mod(n_tran, n_proc) .eq. 0 ) then 
-        
-                print*, 'Equal processor load.'
-                print*
-            
-            else if ( n_tran_per_proc .eq. 1 ) then 
 
-                print*, 'Number of processors is greater than the number of i -> f',&
-                        ' transitions. Consider lowering the number of processors.'
-                print*
-                print*, 'Number of transitions = ', n_tran
-                print*
-
-            else
-
-                print*, 'Unequal processor load. Some processors will be given null jobs.'
-                print*
-                print*, 'Number of transitions = ', n_tran
-                print*
-
-            end if 
-
-            print*, 'Number of calculations per processor = ', n_tran_per_proc
-            print*   
-            print*, '----------'
-            print*
-            
-        end if
-        
         tran_id = 0
         
         do j = 1, n_tran_per_proc
@@ -106,6 +82,40 @@ contains
 
             end do
         end do  
+        
+        if ( verbose ) then             
+
+            print*, '----------------------------------------'
+            print*
+            
+            if ( mod(n_tran, n_proc) .eq. 0 ) then 
+        
+                print*, '    Equal processor load.'
+                print*
+            
+            else if ( n_tran_per_proc .eq. 1 ) then 
+
+                print*, '    Number of processors is greater than the number of i -> f',&
+                        '    transitions. Consider lowering the number of processors.'
+                print*
+                print*, '    Number of transitions = ', n_tran
+                print*
+
+            else
+
+                print*, '    Unequal processor load. Some processors will be given null jobs.'
+                print*
+                print*, '    Number of transitions = ', n_tran
+                print*
+
+            end if 
+
+            print*, '    Number of calculations per processor = ', n_tran_per_proc
+            print*   
+            print*, '----------------------------------------'
+            print*
+            
+        end if
 
     end subroutine
 

@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.1.0</small></a>
+          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.0</small></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title="11.1% of total for source files.">304 statements</a>
+    title=" 7.8% of total for source files.">354 statements</a>
      </li> 
      
      
@@ -386,244 +386,244 @@
 <a name="ln-123"></a>        <span class="c">!! </span>
 <a name="ln-124"></a>        <span class="c">!! Units : eV</span>
 <a name="ln-125"></a>
-<a name="ln-126"></a>    <span class="k">contains</span>
+<a name="ln-126"></a>    <span class="c">!!! experimental</span>
 <a name="ln-127"></a>
-<a name="ln-128"></a><span class="k">    subroutine </span><span class="n">save_DFT_parameters</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
-<a name="ln-129"></a>        <span class="c">!! Saves some of the DFT input variables to filename</span>
-<a name="ln-130"></a>        <span class="k">implicit none</span>
-<a name="ln-131"></a>
-<a name="ln-132"></a><span class="k">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">filename</span>
-<a name="ln-133"></a>
-<a name="ln-134"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HID_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">group_id</span>
-<a name="ln-135"></a>
-<a name="ln-136"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
-<a name="ln-137"></a>        <span class="kt">logical</span> <span class="kd">::</span> <span class="n">file_exists</span>
-<a name="ln-138"></a>
-<a name="ln-139"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims1</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<a name="ln-140"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<a name="ln-141"></a>
-<a name="ln-142"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">error</span>
-<a name="ln-143"></a>
-<a name="ln-144"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
-<a name="ln-145"></a>
-<a name="ln-146"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Saving DFT parameters...&#39;</span>
-<a name="ln-147"></a>            <span class="k">print</span><span class="o">*</span>
-<a name="ln-148"></a>
-<a name="ln-149"></a>        <span class="k">end if</span>
+<a name="ln-128"></a>    <span class="kt">logical</span> <span class="kd">::</span> <span class="n">include_spin</span> <span class="o">=</span> <span class="p">.</span><span class="n">FALSE</span><span class="p">.</span>
+<a name="ln-129"></a>
+<a name="ln-130"></a>    <span class="k">interface </span><span class="n">get_in_wfc_FT</span>
+<a name="ln-131"></a>        <span class="k">module procedure </span><span class="n">get_in_wfc_FT_no_spin</span>
+<a name="ln-132"></a>        <span class="k">module procedure </span><span class="n">get_in_wfc_FT_spin</span>
+<a name="ln-133"></a>    <span class="k">end interface</span>
+<a name="ln-134"></a>
+<a name="ln-135"></a><span class="k">    contains</span>
+<a name="ln-136"></a>
+<a name="ln-137"></a><span class="k">    subroutine </span><span class="n">save_DFT_parameters</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+<a name="ln-138"></a>        <span class="c">!! Saves some of the DFT input variables to filename</span>
+<a name="ln-139"></a>        <span class="k">implicit none</span>
+<a name="ln-140"></a>
+<a name="ln-141"></a><span class="k">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">filename</span>
+<a name="ln-142"></a>
+<a name="ln-143"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HID_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">group_id</span>
+<a name="ln-144"></a>
+<a name="ln-145"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
+<a name="ln-146"></a>        <span class="kt">logical</span> <span class="kd">::</span> <span class="n">file_exists</span>
+<a name="ln-147"></a>
+<a name="ln-148"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims1</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a name="ln-149"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 <a name="ln-150"></a>
-<a name="ln-151"></a>        <span class="c">! make sure the file exists</span>
-<a name="ln-152"></a>        <span class="k">inquire</span><span class="p">(</span><span class="k">file</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">exist</span> <span class="o">=</span> <span class="n">file_exists</span><span class="p">)</span>
-<a name="ln-153"></a>
-<a name="ln-154"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">file_exists</span> <span class="p">)</span> <span class="k">then</span>
-<a name="ln-155"></a>
-<a name="ln-156"></a><span class="k">            call </span><span class="n">h5open_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-<a name="ln-157"></a>            <span class="k">call </span><span class="n">h5fopen_f</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">H5F_ACC_RDWR_F</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-158"></a>
-<a name="ln-159"></a>            <span class="k">call </span><span class="n">h5gcreate_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters&#39;</span><span class="p">,</span> <span class="n">group_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-160"></a>
-<a name="ln-161"></a>            <span class="c">! write data</span>
-<a name="ln-162"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/n_val&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
-<a name="ln-163"></a>                <span class="n">n_val</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-164"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/n_cond&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
-<a name="ln-165"></a>                <span class="n">n_cond</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-166"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/n_bands&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
-<a name="ln-167"></a>                <span class="n">n_bands</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-168"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/n_k&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
-<a name="ln-169"></a>                <span class="n">n_k</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-170"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/n_in_G&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
-<a name="ln-171"></a>                <span class="n">n_in_G</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-172"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/E_PW_cut&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
-<a name="ln-173"></a>                <span class="n">E_PW_cut</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-174"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/q_PW_cut&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
-<a name="ln-175"></a>                <span class="n">q_PW_cut</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-176"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/k_red_to_xyz&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims2</span><span class="p">),</span> <span class="n">dims2</span><span class="p">,&amp;</span>
-<a name="ln-177"></a>                <span class="n">k_red_to_xyz</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-178"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/red_to_xyz&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims2</span><span class="p">),</span> <span class="n">dims2</span><span class="p">,&amp;</span>
-<a name="ln-179"></a>                <span class="n">red_to_xyz</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-180"></a>
-<a name="ln-181"></a>            <span class="k">call </span><span class="n">h5fclose_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-182"></a>            <span class="k">call </span><span class="n">h5close_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-<a name="ln-183"></a>
-<a name="ln-184"></a>            <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
-<a name="ln-185"></a><span class="k">                print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;----------&#39;</span>
-<a name="ln-186"></a>                <span class="k">print</span><span class="o">*</span>
-<a name="ln-187"></a>            <span class="k">end if</span>
-<a name="ln-188"></a>
-<a name="ln-189"></a><span class="k">        else</span>
-<a name="ln-190"></a>
-<a name="ln-191"></a><span class="k">            if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-151"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">error</span>
+<a name="ln-152"></a>
+<a name="ln-153"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-154"></a>
+<a name="ln-155"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Saving DFT parameters...&#39;</span>
+<a name="ln-156"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-157"></a>
+<a name="ln-158"></a>        <span class="k">end if</span>
+<a name="ln-159"></a>
+<a name="ln-160"></a>        <span class="c">! make sure the file exists</span>
+<a name="ln-161"></a>        <span class="k">inquire</span><span class="p">(</span><span class="k">file</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">exist</span> <span class="o">=</span> <span class="n">file_exists</span><span class="p">)</span>
+<a name="ln-162"></a>
+<a name="ln-163"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">file_exists</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-164"></a>
+<a name="ln-165"></a><span class="k">            call </span><span class="n">h5open_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<a name="ln-166"></a>            <span class="k">call </span><span class="n">h5fopen_f</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">H5F_ACC_RDWR_F</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-167"></a>
+<a name="ln-168"></a>            <span class="k">call </span><span class="n">h5gcreate_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters&#39;</span><span class="p">,</span> <span class="n">group_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-169"></a>
+<a name="ln-170"></a>            <span class="c">! write data</span>
+<a name="ln-171"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/n_val&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
+<a name="ln-172"></a>                <span class="n">n_val</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-173"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/n_cond&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
+<a name="ln-174"></a>                <span class="n">n_cond</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-175"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/n_bands&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
+<a name="ln-176"></a>                <span class="n">n_bands</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-177"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/n_k&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
+<a name="ln-178"></a>                <span class="n">n_k</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-179"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/n_in_G&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
+<a name="ln-180"></a>                <span class="n">n_in_G</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-181"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/E_PW_cut&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
+<a name="ln-182"></a>                <span class="n">E_PW_cut</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-183"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/q_PW_cut&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims1</span><span class="p">),</span> <span class="n">dims1</span><span class="p">,&amp;</span>
+<a name="ln-184"></a>                <span class="n">q_PW_cut</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-185"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/k_red_to_xyz&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims2</span><span class="p">),</span> <span class="n">dims2</span><span class="p">,&amp;</span>
+<a name="ln-186"></a>                <span class="n">k_red_to_xyz</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-187"></a>            <span class="k">call </span><span class="n">h5ltmake_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;DFT_parameters/red_to_xyz&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">dims2</span><span class="p">),</span> <span class="n">dims2</span><span class="p">,&amp;</span>
+<a name="ln-188"></a>                <span class="n">red_to_xyz</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-189"></a>
+<a name="ln-190"></a>            <span class="k">call </span><span class="n">h5fclose_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-191"></a>            <span class="k">call </span><span class="n">h5close_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
 <a name="ln-192"></a>
-<a name="ln-193"></a><span class="k">                print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!! ERROR !!&#39;</span>
-<a name="ln-194"></a>                <span class="k">print</span><span class="o">*</span>
-<a name="ln-195"></a>                <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;   Output file : &#39;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s1">&#39; does NOT exist.&#39;</span>
-<a name="ln-196"></a>                <span class="k">print</span><span class="o">*</span>
-<a name="ln-197"></a>                <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!!!!!!!!!!!&#39;</span>
+<a name="ln-193"></a>        <span class="k">else</span>
+<a name="ln-194"></a>
+<a name="ln-195"></a><span class="k">            if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-196"></a>
+<a name="ln-197"></a><span class="k">                print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!! ERROR !!&#39;</span>
 <a name="ln-198"></a>                <span class="k">print</span><span class="o">*</span>
-<a name="ln-199"></a>
-<a name="ln-200"></a>            <span class="k">end if</span>
-<a name="ln-201"></a>
-<a name="ln-202"></a><span class="k">            stop</span>
+<a name="ln-199"></a>                <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;   Output file : &#39;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s1">&#39; does NOT exist.&#39;</span>
+<a name="ln-200"></a>                <span class="k">print</span><span class="o">*</span>
+<a name="ln-201"></a>                <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!!!!!!!!!!!&#39;</span>
+<a name="ln-202"></a>                <span class="k">print</span><span class="o">*</span>
 <a name="ln-203"></a>
-<a name="ln-204"></a><span class="k">        end if</span>
+<a name="ln-204"></a>            <span class="k">end if</span>
 <a name="ln-205"></a>
-<a name="ln-206"></a><span class="k">    end subroutine</span>
+<a name="ln-206"></a><span class="k">            stop</span>
 <a name="ln-207"></a>
-<a name="ln-208"></a><span class="k">    subroutine </span><span class="n">load_DFT_parameters</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
-<a name="ln-209"></a>        <span class="c">!! Loads the DFT input file</span>
-<a name="ln-210"></a>        <span class="k">implicit none</span>
+<a name="ln-208"></a><span class="k">        end if</span>
+<a name="ln-209"></a>
+<a name="ln-210"></a><span class="k">    end subroutine</span>
 <a name="ln-211"></a>
-<a name="ln-212"></a><span class="k">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">filename</span>
-<a name="ln-213"></a>
-<a name="ln-214"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HID_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">file_id</span>
+<a name="ln-212"></a><span class="k">    subroutine </span><span class="n">load_DFT_parameters</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+<a name="ln-213"></a>        <span class="c">!! Loads the DFT input file</span>
+<a name="ln-214"></a>        <span class="k">implicit none</span>
 <a name="ln-215"></a>
-<a name="ln-216"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
-<a name="ln-217"></a>        <span class="kt">logical</span> <span class="kd">::</span> <span class="n">file_exists</span>
-<a name="ln-218"></a>
-<a name="ln-219"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<a name="ln-220"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<a name="ln-221"></a>
-<a name="ln-222"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">error</span>
-<a name="ln-223"></a>
-<a name="ln-224"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">g</span><span class="p">,</span> <span class="n">k</span>
+<a name="ln-216"></a><span class="k">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">filename</span>
+<a name="ln-217"></a>
+<a name="ln-218"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HID_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">file_id</span>
+<a name="ln-219"></a>
+<a name="ln-220"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
+<a name="ln-221"></a>        <span class="kt">logical</span> <span class="kd">::</span> <span class="n">file_exists</span>
+<a name="ln-222"></a>
+<a name="ln-223"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a name="ln-224"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <a name="ln-225"></a>
-<a name="ln-226"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-226"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">error</span>
 <a name="ln-227"></a>
-<a name="ln-228"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Loading DFT input file...&#39;</span>
-<a name="ln-229"></a>            <span class="k">print</span><span class="o">*</span>
-<a name="ln-230"></a>
-<a name="ln-231"></a>        <span class="k">end if</span>
-<a name="ln-232"></a>
-<a name="ln-233"></a>        <span class="c">! make sure the file exists</span>
-<a name="ln-234"></a>        <span class="k">inquire</span><span class="p">(</span><span class="k">file</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">exist</span> <span class="o">=</span> <span class="n">file_exists</span><span class="p">)</span>
-<a name="ln-235"></a>
-<a name="ln-236"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">file_exists</span> <span class="p">)</span> <span class="k">then</span>
-<a name="ln-237"></a>
-<a name="ln-238"></a><span class="k">            call </span><span class="n">h5open_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-<a name="ln-239"></a>            <span class="k">call </span><span class="n">h5fopen_f</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">H5F_ACC_RDONLY_F</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-240"></a>
-<a name="ln-241"></a>            <span class="c">! read the data</span>
-<a name="ln-242"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;n_k&#39;</span><span class="p">,</span> <span class="n">n_k</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-243"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;n_val&#39;</span><span class="p">,</span> <span class="n">n_val</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-244"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;n_cond&#39;</span><span class="p">,</span> <span class="n">n_cond</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-245"></a>            <span class="n">n_bands</span> <span class="o">=</span> <span class="n">n_val</span> <span class="o">+</span> <span class="n">n_cond</span>
+<a name="ln-228"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">g</span><span class="p">,</span> <span class="n">k</span>
+<a name="ln-229"></a>
+<a name="ln-230"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">wfc_data_rank</span>
+<a name="ln-231"></a>
+<a name="ln-232"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-233"></a>
+<a name="ln-234"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Loading DFT input file...&#39;</span>
+<a name="ln-235"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-236"></a>
+<a name="ln-237"></a>        <span class="k">end if</span>
+<a name="ln-238"></a>
+<a name="ln-239"></a>        <span class="c">! make sure the file exists</span>
+<a name="ln-240"></a>        <span class="k">inquire</span><span class="p">(</span><span class="k">file</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">exist</span> <span class="o">=</span> <span class="n">file_exists</span><span class="p">)</span>
+<a name="ln-241"></a>
+<a name="ln-242"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">file_exists</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-243"></a>
+<a name="ln-244"></a><span class="k">            call </span><span class="n">h5open_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<a name="ln-245"></a>            <span class="k">call </span><span class="n">h5fopen_f</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">H5F_ACC_RDONLY_F</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
 <a name="ln-246"></a>
-<a name="ln-247"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;n_in_G&#39;</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-248"></a>
-<a name="ln-249"></a>            <span class="k">allocate</span><span class="p">(</span><span class="n">in_G_grid_red</span><span class="p">(</span><span class="n">n_in_G</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>        
-<a name="ln-250"></a>            <span class="n">dims2</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_in_G</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<a name="ln-251"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;in_G_grid_red&#39;</span><span class="p">,</span> <span class="n">in_G_grid_red</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-247"></a>            <span class="c">! read the data</span>
+<a name="ln-248"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;n_k&#39;</span><span class="p">,</span> <span class="n">n_k</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-249"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;n_val&#39;</span><span class="p">,</span> <span class="n">n_val</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-250"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;n_cond&#39;</span><span class="p">,</span> <span class="n">n_cond</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-251"></a>            <span class="n">n_bands</span> <span class="o">=</span> <span class="n">n_val</span> <span class="o">+</span> <span class="n">n_cond</span>
 <a name="ln-252"></a>
-<a name="ln-253"></a>            <span class="n">dims2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<a name="ln-254"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;a_vecs_A&#39;</span><span class="p">,</span> <span class="n">a_vecs_A</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-255"></a>            <span class="n">a_vecs</span> <span class="o">=</span> <span class="n">Ang_to_inv_eV</span><span class="o">*</span><span class="n">a_vecs_A</span>
-<a name="ln-256"></a>            <span class="n">red_to_xyz</span> <span class="o">=</span> <span class="nb">transpose</span><span class="p">(</span><span class="n">a_vecs</span><span class="p">)</span>
-<a name="ln-257"></a>
-<a name="ln-258"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;b_vecs_A&#39;</span><span class="p">,</span> <span class="n">b_vecs_A</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-259"></a>            <span class="n">b_vecs</span> <span class="o">=</span> <span class="n">inv_Ang_to_eV</span><span class="o">*</span><span class="n">b_vecs_A</span>
-<a name="ln-260"></a>            <span class="n">k_red_to_xyz</span> <span class="o">=</span> <span class="nb">transpose</span><span class="p">(</span><span class="n">b_vecs</span><span class="p">)</span>
-<a name="ln-261"></a>
-<a name="ln-262"></a>            <span class="c">! convert reduced coordinates to xyz</span>
-<a name="ln-263"></a>            <span class="k">allocate</span><span class="p">(</span><span class="n">in_G_grid_xyz</span><span class="p">(</span><span class="n">n_in_G</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<a name="ln-264"></a>            <span class="k">do </span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_in_G</span>
-<a name="ln-265"></a>                <span class="n">in_G_grid_xyz</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">:)</span> <span class="o">=</span> <span class="nb">matmul</span><span class="p">(</span><span class="n">k_red_to_xyz</span><span class="p">,</span> <span class="n">in_G_grid_red</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">:))</span>
-<a name="ln-266"></a>            <span class="k">end do</span>
+<a name="ln-253"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;n_in_G&#39;</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-254"></a>
+<a name="ln-255"></a>            <span class="k">allocate</span><span class="p">(</span><span class="n">in_G_grid_red</span><span class="p">(</span><span class="n">n_in_G</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>        
+<a name="ln-256"></a>            <span class="n">dims2</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_in_G</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<a name="ln-257"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_int_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;in_G_grid_red&#39;</span><span class="p">,</span> <span class="n">in_G_grid_red</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-258"></a>
+<a name="ln-259"></a>            <span class="n">dims2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<a name="ln-260"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;a_vecs_A&#39;</span><span class="p">,</span> <span class="n">a_vecs_A</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-261"></a>            <span class="n">a_vecs</span> <span class="o">=</span> <span class="n">Ang_to_inv_eV</span><span class="o">*</span><span class="n">a_vecs_A</span>
+<a name="ln-262"></a>            <span class="n">red_to_xyz</span> <span class="o">=</span> <span class="nb">transpose</span><span class="p">(</span><span class="n">a_vecs</span><span class="p">)</span>
+<a name="ln-263"></a>
+<a name="ln-264"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;b_vecs_A&#39;</span><span class="p">,</span> <span class="n">b_vecs_A</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-265"></a>            <span class="n">b_vecs</span> <span class="o">=</span> <span class="n">inv_Ang_to_eV</span><span class="o">*</span><span class="n">b_vecs_A</span>
+<a name="ln-266"></a>            <span class="n">k_red_to_xyz</span> <span class="o">=</span> <span class="nb">transpose</span><span class="p">(</span><span class="n">b_vecs</span><span class="p">)</span>
 <a name="ln-267"></a>
-<a name="ln-268"></a><span class="k">            allocate</span><span class="p">(</span><span class="n">k_weight</span><span class="p">(</span><span class="n">n_k</span><span class="p">))</span>
-<a name="ln-269"></a>            <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_k</span><span class="p">]</span>
-<a name="ln-270"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;k_weight&#39;</span><span class="p">,</span> <span class="n">k_weight</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> 
-<a name="ln-271"></a>
-<a name="ln-272"></a>            <span class="k">allocate</span><span class="p">(</span><span class="n">k_grid_red</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<a name="ln-273"></a>            <span class="n">dims2</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_k</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<a name="ln-274"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;k_red&#39;</span><span class="p">,</span> <span class="n">k_grid_red</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> 
-<a name="ln-275"></a>
-<a name="ln-276"></a>            <span class="k">allocate</span><span class="p">(</span><span class="n">k_grid_xyz</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<a name="ln-277"></a>            <span class="k">do </span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_k</span>
-<a name="ln-278"></a>                <span class="n">k_grid_xyz</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">:)</span> <span class="o">=</span> <span class="nb">matmul</span><span class="p">(</span><span class="n">k_red_to_xyz</span><span class="p">,</span> <span class="n">k_grid_red</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">:))</span>
-<a name="ln-279"></a>            <span class="k">end do</span>
-<a name="ln-280"></a>
-<a name="ln-281"></a><span class="k">            allocate</span><span class="p">(</span><span class="n">energy_bands_raw</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_bands</span><span class="p">))</span>
-<a name="ln-282"></a>            <span class="k">allocate</span><span class="p">(</span><span class="n">energy_bands</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_bands</span><span class="p">))</span>
-<a name="ln-283"></a>            <span class="n">dims2</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_bands</span><span class="p">]</span>
-<a name="ln-284"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;energy_bands_raw&#39;</span><span class="p">,</span> <span class="n">energy_bands_raw</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> 
-<a name="ln-285"></a>
-<a name="ln-286"></a>            <span class="k">call </span><span class="n">h5fclose_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-287"></a>            <span class="k">call </span><span class="n">h5close_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-<a name="ln-288"></a>
-<a name="ln-289"></a>            <span class="k">call </span><span class="n">check_DFT_parameters</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
-<a name="ln-290"></a>
-<a name="ln-291"></a>            <span class="c">! find how much the wave function coefficients were expanded</span>
-<a name="ln-292"></a>            <span class="k">call </span><span class="n">get_PW_cutoffs</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+<a name="ln-268"></a>            <span class="c">! convert reduced coordinates to xyz</span>
+<a name="ln-269"></a>            <span class="k">allocate</span><span class="p">(</span><span class="n">in_G_grid_xyz</span><span class="p">(</span><span class="n">n_in_G</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<a name="ln-270"></a>            <span class="k">do </span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_in_G</span>
+<a name="ln-271"></a>                <span class="n">in_G_grid_xyz</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">:)</span> <span class="o">=</span> <span class="nb">matmul</span><span class="p">(</span><span class="n">k_red_to_xyz</span><span class="p">,</span> <span class="n">in_G_grid_red</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">:))</span>
+<a name="ln-272"></a>            <span class="k">end do</span>
+<a name="ln-273"></a>
+<a name="ln-274"></a><span class="k">            allocate</span><span class="p">(</span><span class="n">k_weight</span><span class="p">(</span><span class="n">n_k</span><span class="p">))</span>
+<a name="ln-275"></a>            <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_k</span><span class="p">]</span>
+<a name="ln-276"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;k_weight&#39;</span><span class="p">,</span> <span class="n">k_weight</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> 
+<a name="ln-277"></a>
+<a name="ln-278"></a>            <span class="k">allocate</span><span class="p">(</span><span class="n">k_grid_red</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<a name="ln-279"></a>            <span class="n">dims2</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_k</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<a name="ln-280"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;k_red&#39;</span><span class="p">,</span> <span class="n">k_grid_red</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> 
+<a name="ln-281"></a>
+<a name="ln-282"></a>            <span class="k">allocate</span><span class="p">(</span><span class="n">k_grid_xyz</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<a name="ln-283"></a>            <span class="k">do </span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_k</span>
+<a name="ln-284"></a>                <span class="n">k_grid_xyz</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">:)</span> <span class="o">=</span> <span class="nb">matmul</span><span class="p">(</span><span class="n">k_red_to_xyz</span><span class="p">,</span> <span class="n">k_grid_red</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">:))</span>
+<a name="ln-285"></a>            <span class="k">end do</span>
+<a name="ln-286"></a>
+<a name="ln-287"></a><span class="k">            allocate</span><span class="p">(</span><span class="n">energy_bands_raw</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_bands</span><span class="p">))</span>
+<a name="ln-288"></a>            <span class="k">allocate</span><span class="p">(</span><span class="n">energy_bands</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_bands</span><span class="p">))</span>
+<a name="ln-289"></a>            <span class="n">dims2</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_bands</span><span class="p">]</span>
+<a name="ln-290"></a>            <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;energy_bands_raw&#39;</span><span class="p">,</span> <span class="n">energy_bands_raw</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> 
+<a name="ln-291"></a>
+<a name="ln-292"></a>            <span class="k">call </span><span class="n">h5ltget_dataset_ndims_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;in_wfc_FT_c/1&#39;</span><span class="p">,</span> <span class="n">wfc_data_rank</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
 <a name="ln-293"></a>
-<a name="ln-294"></a>            <span class="k">call </span><span class="n">print_DFT_parameters</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
-<a name="ln-295"></a>
-<a name="ln-296"></a>            <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
-<a name="ln-297"></a><span class="k">                print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;----------&#39;</span>
-<a name="ln-298"></a>                <span class="k">print</span><span class="o">*</span>
-<a name="ln-299"></a>            <span class="k">end if</span>
+<a name="ln-294"></a>            <span class="k">if</span> <span class="p">(</span> <span class="n">wfc_data_rank</span> <span class="o">==</span> <span class="mi">3</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-295"></a><span class="k">                </span><span class="n">include_spin</span> <span class="o">=</span> <span class="p">.</span><span class="n">TRUE</span><span class="p">.</span>
+<a name="ln-296"></a>            <span class="k">end if</span>
+<a name="ln-297"></a>
+<a name="ln-298"></a><span class="k">            call </span><span class="n">h5fclose_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-299"></a>            <span class="k">call </span><span class="n">h5close_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
 <a name="ln-300"></a>
-<a name="ln-301"></a><span class="k">        else</span>
+<a name="ln-301"></a>            <span class="k">call </span><span class="n">check_DFT_parameters</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
 <a name="ln-302"></a>
-<a name="ln-303"></a><span class="k">            if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-303"></a>            <span class="k">call </span><span class="n">print_DFT_parameters</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
 <a name="ln-304"></a>
-<a name="ln-305"></a><span class="k">                print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!! ERROR !!&#39;</span>
-<a name="ln-306"></a>                <span class="k">print</span><span class="o">*</span>
-<a name="ln-307"></a>                <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;   DFT input file : &#39;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s1">&#39; does NOT exist.&#39;</span>
-<a name="ln-308"></a>                <span class="k">print</span><span class="o">*</span>
-<a name="ln-309"></a>                <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!!!!!!!!!!!&#39;</span>
+<a name="ln-305"></a>            <span class="c">! find how much the wave function coefficients were expanded</span>
+<a name="ln-306"></a>            <span class="k">call </span><span class="n">get_PW_cutoffs</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+<a name="ln-307"></a>
+<a name="ln-308"></a>            <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-309"></a><span class="k">                print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;----------------------------------------&#39;</span>
 <a name="ln-310"></a>                <span class="k">print</span><span class="o">*</span>
-<a name="ln-311"></a>
-<a name="ln-312"></a>            <span class="k">end if</span>
-<a name="ln-313"></a>
-<a name="ln-314"></a><span class="k">            stop</span>
-<a name="ln-315"></a>
-<a name="ln-316"></a><span class="k">        end if</span>
-<a name="ln-317"></a>
-<a name="ln-318"></a><span class="k">    end subroutine</span>
-<a name="ln-319"></a>
-<a name="ln-320"></a><span class="k">    subroutine </span><span class="n">check_DFT_parameters</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
-<a name="ln-321"></a>        <span class="c">!! Check the values of of the input file to make sure they make sense</span>
-<a name="ln-322"></a>
-<a name="ln-323"></a>        <span class="k">implicit none</span>
-<a name="ln-324"></a>
-<a name="ln-325"></a><span class="k">        </span><span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
-<a name="ln-326"></a>        
-<a name="ln-327"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">4.0_dp</span><span class="o">*</span><span class="nb">datan</span><span class="p">(</span><span class="mf">1.0_dp</span><span class="p">)</span>
-<a name="ln-328"></a>
-<a name="ln-329"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">i_3_2pi</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> 
-<a name="ln-330"></a>
-<a name="ln-331"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">eps_val</span>
-<a name="ln-332"></a>
-<a name="ln-333"></a>        <span class="n">i_3_2pi</span> <span class="o">=</span> <span class="mf">0.0_dp</span>
+<a name="ln-311"></a>            <span class="k">end if</span>
+<a name="ln-312"></a>
+<a name="ln-313"></a><span class="k">        else</span>
+<a name="ln-314"></a>
+<a name="ln-315"></a><span class="k">            if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-316"></a>
+<a name="ln-317"></a><span class="k">                print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&#39;</span>
+<a name="ln-318"></a>                <span class="k">print</span><span class="o">*</span>
+<a name="ln-319"></a>                <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    Input file for DFT parameters : &#39;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s1">&#39; does NOT exist.&#39;</span>
+<a name="ln-320"></a>                <span class="k">print</span><span class="o">*</span>
+<a name="ln-321"></a>                <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&#39;</span>
+<a name="ln-322"></a>                <span class="k">print</span><span class="o">*</span>
+<a name="ln-323"></a>
+<a name="ln-324"></a>            <span class="k">end if</span>
+<a name="ln-325"></a>
+<a name="ln-326"></a><span class="k">            stop</span>
+<a name="ln-327"></a>
+<a name="ln-328"></a><span class="k">        end if</span>
+<a name="ln-329"></a>
+<a name="ln-330"></a><span class="k">    end subroutine</span>
+<a name="ln-331"></a>
+<a name="ln-332"></a><span class="k">    subroutine </span><span class="n">check_DFT_parameters</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
+<a name="ln-333"></a>        <span class="c">!! Check the values of of the input file to make sure they make sense</span>
 <a name="ln-334"></a>
-<a name="ln-335"></a>        <span class="n">i_3_2pi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span>
-<a name="ln-336"></a>        <span class="n">i_3_2pi</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span>
-<a name="ln-337"></a>        <span class="n">i_3_2pi</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span>
-<a name="ln-338"></a>
-<a name="ln-339"></a>        <span class="c">! a_i . b_j = 2*pi delta_ij</span>
-<a name="ln-340"></a>        <span class="n">eps_val</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">matmul</span><span class="p">(</span><span class="nb">transpose</span><span class="p">(</span><span class="n">k_red_to_xyz</span><span class="p">),</span> <span class="n">red_to_xyz</span><span class="p">)</span> <span class="o">-</span> <span class="n">i_3_2pi</span><span class="p">)</span><span class="o">/</span><span class="mf">3.0_dp</span><span class="p">)</span>
-<a name="ln-341"></a>
-<a name="ln-342"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">eps_val</span> <span class="o">&gt;</span> <span class="mf">1e-3_dp</span> <span class="p">)</span> <span class="k">then</span>
-<a name="ln-343"></a>
-<a name="ln-344"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!! ERROR !!&#39;</span>
-<a name="ln-345"></a>            <span class="k">print</span><span class="o">*</span>
-<a name="ln-346"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;   Basis vectors are not orthonormalized correctly. a_i . b_j != 2 pi delta_ij&#39;</span>
+<a name="ln-335"></a>        <span class="k">implicit none</span>
+<a name="ln-336"></a>
+<a name="ln-337"></a><span class="k">        </span><span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
+<a name="ln-338"></a>        
+<a name="ln-339"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">4.0_dp</span><span class="o">*</span><span class="nb">datan</span><span class="p">(</span><span class="mf">1.0_dp</span><span class="p">)</span>
+<a name="ln-340"></a>
+<a name="ln-341"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">i_3_2pi</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> 
+<a name="ln-342"></a>
+<a name="ln-343"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">eps_val</span>
+<a name="ln-344"></a>
+<a name="ln-345"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-346"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Running preliminary checks on DFT data...&#39;</span>
 <a name="ln-347"></a>            <span class="k">print</span><span class="o">*</span>
-<a name="ln-348"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!!!!!!!!!!!&#39;</span>
-<a name="ln-349"></a>            <span class="k">print</span><span class="o">*</span>
-<a name="ln-350"></a>
-<a name="ln-351"></a>            <span class="k">stop</span>
-<a name="ln-352"></a>
-<a name="ln-353"></a><span class="k">        end if</span>
-<a name="ln-354"></a>
-<a name="ln-355"></a>        <span class="c">! sum_k k_weight(k) = 2</span>
-<a name="ln-356"></a>
-<a name="ln-357"></a>        <span class="n">eps_val</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">k_weight</span><span class="p">)</span> <span class="o">-</span> <span class="mf">2.0_dp</span>
+<a name="ln-348"></a>        <span class="k">end if</span>
+<a name="ln-349"></a>
+<a name="ln-350"></a><span class="k">        </span><span class="n">i_3_2pi</span> <span class="o">=</span> <span class="mf">0.0_dp</span>
+<a name="ln-351"></a>
+<a name="ln-352"></a>        <span class="n">i_3_2pi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span>
+<a name="ln-353"></a>        <span class="n">i_3_2pi</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span>
+<a name="ln-354"></a>        <span class="n">i_3_2pi</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span>
+<a name="ln-355"></a>
+<a name="ln-356"></a>        <span class="c">! a_i . b_j = 2*pi delta_ij</span>
+<a name="ln-357"></a>        <span class="n">eps_val</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">matmul</span><span class="p">(</span><span class="nb">transpose</span><span class="p">(</span><span class="n">k_red_to_xyz</span><span class="p">),</span> <span class="n">red_to_xyz</span><span class="p">)</span> <span class="o">-</span> <span class="n">i_3_2pi</span><span class="p">)</span><span class="o">/</span><span class="mf">3.0_dp</span><span class="p">)</span>
 <a name="ln-358"></a>
 <a name="ln-359"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">eps_val</span> <span class="o">&gt;</span> <span class="mf">1e-3_dp</span> <span class="p">)</span> <span class="k">then</span>
 <a name="ln-360"></a>
 <a name="ln-361"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!! ERROR !!&#39;</span>
 <a name="ln-362"></a>            <span class="k">print</span><span class="o">*</span>
-<a name="ln-363"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;   Sum of k weights != 2&#39;</span>
+<a name="ln-363"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;   Basis vectors are not orthonormalized correctly. a_i . b_j != 2 pi delta_ij&#39;</span>
 <a name="ln-364"></a>            <span class="k">print</span><span class="o">*</span>
 <a name="ln-365"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!!!!!!!!!!!&#39;</span>
 <a name="ln-366"></a>            <span class="k">print</span><span class="o">*</span>
@@ -632,232 +632,314 @@
 <a name="ln-369"></a>
 <a name="ln-370"></a><span class="k">        end if</span>
 <a name="ln-371"></a>
-<a name="ln-372"></a><span class="k">    end subroutine</span>
+<a name="ln-372"></a>        <span class="c">! sum_k k_weight(k) = 2</span>
 <a name="ln-373"></a>
-<a name="ln-374"></a><span class="k">    subroutine </span><span class="n">print_DFT_parameters</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
-<a name="ln-375"></a>        <span class="c">!! Prints variables defined in this moudle</span>
-<a name="ln-376"></a>        <span class="k">implicit none</span>
+<a name="ln-374"></a>        <span class="n">eps_val</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">k_weight</span><span class="p">)</span> <span class="o">-</span> <span class="mf">2.0_dp</span>
+<a name="ln-375"></a>
+<a name="ln-376"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">eps_val</span> <span class="o">&gt;</span> <span class="mf">1e-3_dp</span> <span class="p">)</span> <span class="k">then</span>
 <a name="ln-377"></a>
-<a name="ln-378"></a><span class="k">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">filename</span>
-<a name="ln-379"></a>
-<a name="ln-380"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
-<a name="ln-381"></a>
-<a name="ln-382"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
-<a name="ln-383"></a>
-<a name="ln-384"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    DFT input filename : &#39;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-<a name="ln-385"></a>            <span class="k">print</span><span class="o">*</span>
-<a name="ln-386"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    Number of k points    = &#39;</span><span class="p">,</span> <span class="n">n_k</span>
-<a name="ln-387"></a>            <span class="k">print</span><span class="o">*</span>
-<a name="ln-388"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    Number of valence bands     = &#39;</span><span class="p">,</span> <span class="n">n_val</span>
-<a name="ln-389"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    Number of conduction bands  = &#39;</span><span class="p">,</span> <span class="n">n_cond</span> 
-<a name="ln-390"></a>            <span class="k">print</span><span class="o">*</span>
-<a name="ln-391"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    Number of G points    = &#39;</span><span class="p">,</span> <span class="n">n_in_G</span>
-<a name="ln-392"></a>            <span class="k">print</span><span class="o">*</span>
-<a name="ln-393"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    Primitive lattice vectors : &#39;</span>
-<a name="ln-394"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        a1 = &#39;</span><span class="p">,</span> <span class="n">a_vecs_A</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">:),</span> <span class="s1">&#39;Ang&#39;</span>
-<a name="ln-395"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        a2 = &#39;</span><span class="p">,</span> <span class="n">a_vecs_A</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">:),</span> <span class="s1">&#39;Ang&#39;</span>
-<a name="ln-396"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        a3 = &#39;</span><span class="p">,</span> <span class="n">a_vecs_A</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">:),</span> <span class="s1">&#39;Ang&#39;</span>
-<a name="ln-397"></a>            <span class="k">print</span><span class="o">*</span>
-<a name="ln-398"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    Reciprocal lattice vectors : &#39;</span>
-<a name="ln-399"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        b1 = &#39;</span><span class="p">,</span> <span class="n">b_vecs_A</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">:),</span> <span class="s1">&#39;Ang^(-1)&#39;</span>
-<a name="ln-400"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        b2 = &#39;</span><span class="p">,</span> <span class="n">b_vecs_A</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">:),</span> <span class="s1">&#39;Ang^(-1)&#39;</span>
-<a name="ln-401"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        b3 = &#39;</span><span class="p">,</span> <span class="n">b_vecs_A</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">:),</span> <span class="s1">&#39;Ang^(-1)&#39;</span>
-<a name="ln-402"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-378"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!! ERROR !!&#39;</span>
+<a name="ln-379"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-380"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;   Sum of k weights != 2&#39;</span>
+<a name="ln-381"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-382"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;!!!!!!!!!!!&#39;</span>
+<a name="ln-383"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-384"></a>
+<a name="ln-385"></a>            <span class="k">stop</span>
+<a name="ln-386"></a>
+<a name="ln-387"></a><span class="k">        end if</span>
+<a name="ln-388"></a>
+<a name="ln-389"></a><span class="k">    end subroutine</span>
+<a name="ln-390"></a>
+<a name="ln-391"></a><span class="k">    subroutine </span><span class="n">print_DFT_parameters</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+<a name="ln-392"></a>        <span class="c">!! Prints variables defined in this moudle</span>
+<a name="ln-393"></a>        <span class="k">implicit none</span>
+<a name="ln-394"></a>
+<a name="ln-395"></a><span class="k">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">filename</span>
+<a name="ln-396"></a>
+<a name="ln-397"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
+<a name="ln-398"></a>
+<a name="ln-399"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">n_k_str</span>
+<a name="ln-400"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">n_in_G_str</span>
+<a name="ln-401"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">n_val_str</span>
+<a name="ln-402"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">n_cond_str</span>
 <a name="ln-403"></a>
-<a name="ln-404"></a>        <span class="k">end if</span>
-<a name="ln-405"></a>
-<a name="ln-406"></a><span class="k">    end subroutine</span>
-<a name="ln-407"></a>
-<a name="ln-408"></a><span class="k">    subroutine </span><span class="n">get_in_wfc_FT</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">band_num</span><span class="p">,</span> <span class="n">in_wfc_FT</span><span class="p">)</span>
-<a name="ln-409"></a>        <span class="c">!! Reads the input DFT file and sets the [n_k, n_in_G] complex(dp) array </span>
-<a name="ln-410"></a>        <span class="c">!! with whose elements are the dimensionless block wave function </span>
-<a name="ln-411"></a>        <span class="c">!! coefficients, u_ikG</span>
-<a name="ln-412"></a>        <span class="k">implicit none</span>
-<a name="ln-413"></a>
-<a name="ln-414"></a><span class="k">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">filename</span>
-<a name="ln-415"></a>
-<a name="ln-416"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HID_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">file_id</span>
-<a name="ln-417"></a>            <span class="c">!! HDF5 file ID number for DFT input file</span>
-<a name="ln-418"></a>
-<a name="ln-419"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">band_num</span>
-<a name="ln-420"></a>
-<a name="ln-421"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">in_wfc_FT_r</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">)</span>
-<a name="ln-422"></a>            <span class="c">!! real part of the bloch wave functions in fourier space</span>
-<a name="ln-423"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">in_wfc_FT_c</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">)</span>
-<a name="ln-424"></a>            <span class="c">!! complex part of the bloch wave functions in fourier space</span>
-<a name="ln-425"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">in_wfc_FT</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">)</span>
-<a name="ln-426"></a>            <span class="c">!! Bloch wave functions in reciprocal space</span>
-<a name="ln-427"></a>
-<a name="ln-428"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<a name="ln-429"></a>
-<a name="ln-430"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">error</span>
-<a name="ln-431"></a>
-<a name="ln-432"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dataset_path_r</span>
-<a name="ln-433"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dataset_path_c</span>
-<a name="ln-434"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">band_num_str</span>
-<a name="ln-435"></a>
-<a name="ln-436"></a>        <span class="k">write</span><span class="p">(</span><span class="n">band_num_str</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">band_num</span>
+<a name="ln-404"></a>        <span class="k">write</span><span class="p">(</span><span class="n">n_k_str</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">n_k</span>
+<a name="ln-405"></a>        <span class="k">write</span><span class="p">(</span><span class="n">n_val_str</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">n_val</span>
+<a name="ln-406"></a>        <span class="k">write</span><span class="p">(</span><span class="n">n_cond_str</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">n_cond</span>
+<a name="ln-407"></a>        <span class="k">write</span><span class="p">(</span><span class="n">n_in_G_str</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">n_in_G</span>
+<a name="ln-408"></a>
+<a name="ln-409"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-410"></a>
+<a name="ln-411"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;----------------------------------------&#39;</span>
+<a name="ln-412"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    ---------&#39;</span>
+<a name="ln-413"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    DFT Input&#39;</span>
+<a name="ln-414"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    ---------&#39;</span>
+<a name="ln-415"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-416"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        Filename : &#39;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<a name="ln-417"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-418"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        Primitive lattice vectors (Ang) : &#39;</span>
+<a name="ln-419"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;            a1 = &#39;</span><span class="p">,</span> <span class="n">a_vecs_A</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">:)</span>
+<a name="ln-420"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;            a2 = &#39;</span><span class="p">,</span> <span class="n">a_vecs_A</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">:)</span>
+<a name="ln-421"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;            a3 = &#39;</span><span class="p">,</span> <span class="n">a_vecs_A</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">:)</span>
+<a name="ln-422"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-423"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        Reciprocal lattice vectors Ang^(-1) : &#39;</span>
+<a name="ln-424"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;            b1 = &#39;</span><span class="p">,</span> <span class="n">b_vecs_A</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">:)</span> 
+<a name="ln-425"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;            b2 = &#39;</span><span class="p">,</span> <span class="n">b_vecs_A</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">:)</span>
+<a name="ln-426"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;            b3 = &#39;</span><span class="p">,</span> <span class="n">b_vecs_A</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">:)</span>
+<a name="ln-427"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-428"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        Number of valence bands     = &#39;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">n_val_str</span><span class="p">))</span>
+<a name="ln-429"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        Number of conduction bands  = &#39;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">n_cond_str</span><span class="p">))</span>
+<a name="ln-430"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-431"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        Number of k points          = &#39;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">n_k_str</span><span class="p">))</span>
+<a name="ln-432"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-433"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        Number of G points          = &#39;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">n_in_G_str</span><span class="p">))</span>
+<a name="ln-434"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-435"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        Include spin?               = &#39;</span><span class="p">,</span> <span class="n">include_spin</span>
+<a name="ln-436"></a>            <span class="k">print</span><span class="o">*</span>
 <a name="ln-437"></a>
-<a name="ln-438"></a>        <span class="n">dataset_path_r</span> <span class="o">=</span> <span class="s1">&#39;in_wfc_FT_r/&#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">band_num_str</span><span class="p">))</span>
-<a name="ln-439"></a>        <span class="n">dataset_path_c</span> <span class="o">=</span> <span class="s1">&#39;in_wfc_FT_c/&#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">band_num_str</span><span class="p">))</span>
-<a name="ln-440"></a>
-<a name="ln-441"></a>        <span class="n">dims2</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">]</span>
-<a name="ln-442"></a>
-<a name="ln-443"></a>        <span class="k">call </span><span class="n">h5open_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-<a name="ln-444"></a>        <span class="k">call </span><span class="n">h5fopen_f</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">H5F_ACC_RDONLY_F</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-445"></a>
-<a name="ln-446"></a>        <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">dataset_path_r</span><span class="p">,</span> <span class="n">in_wfc_FT_r</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-447"></a>        <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">dataset_path_c</span><span class="p">,</span> <span class="n">in_wfc_FT_c</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-448"></a>
-<a name="ln-449"></a>        <span class="k">call </span><span class="n">h5fclose_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a name="ln-450"></a>        <span class="k">call </span><span class="n">h5close_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-<a name="ln-451"></a>
-<a name="ln-452"></a>        <span class="n">in_wfc_FT</span> <span class="o">=</span> <span class="n">in_wfc_FT_r</span> <span class="o">+</span> <span class="n">ii</span><span class="o">*</span><span class="n">in_wfc_FT_c</span>
+<a name="ln-438"></a>        <span class="k">end if</span>
+<a name="ln-439"></a>
+<a name="ln-440"></a><span class="k">    end subroutine</span>
+<a name="ln-441"></a>
+<a name="ln-442"></a><span class="k">    subroutine </span><span class="n">get_in_wfc_FT_no_spin</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">band_num</span><span class="p">,</span> <span class="n">in_wfc_FT</span><span class="p">)</span>
+<a name="ln-443"></a>        <span class="c">!! Reads the input DFT file and sets the [n_k, n_in_G] complex(dp) array </span>
+<a name="ln-444"></a>        <span class="c">!! with whose elements are the dimensionless block wave function </span>
+<a name="ln-445"></a>        <span class="c">!! coefficients, u_ikG</span>
+<a name="ln-446"></a>        <span class="k">implicit none</span>
+<a name="ln-447"></a>
+<a name="ln-448"></a><span class="k">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">filename</span>
+<a name="ln-449"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">band_num</span>
+<a name="ln-450"></a>
+<a name="ln-451"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">in_wfc_FT</span><span class="p">(:,</span> <span class="p">:)</span>
+<a name="ln-452"></a>            <span class="c">!! Bloch wave functions in reciprocal space</span>
 <a name="ln-453"></a>
-<a name="ln-454"></a>    <span class="k">end subroutine</span>
-<a name="ln-455"></a>
-<a name="ln-456"></a><span class="k">    subroutine </span><span class="n">expand_wfc_FT_for_FFT</span><span class="p">(</span><span class="n">n_grid</span><span class="p">,&amp;</span>
-<a name="ln-457"></a>            <span class="n">wfc_FT</span><span class="p">,</span> <span class="n">wfc_FT_exp</span><span class="p">,&amp;</span>
-<a name="ln-458"></a>            <span class="n">verbose</span><span class="p">)</span>
-<a name="ln-459"></a>        <span class="c">!! The Fourier components will generally not be defined on a</span>
-<a name="ln-460"></a>        <span class="c">!! uniform grid needed for an FFT. This subroutine puts the </span>
-<a name="ln-461"></a>        <span class="c">!! values of the Bloch coefficients in the correct place </span>
-<a name="ln-462"></a>        <span class="k">use </span><span class="n">FFT_util</span>
+<a name="ln-454"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HID_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">file_id</span>
+<a name="ln-455"></a>            <span class="c">!! HDF5 file ID number for DFT input file</span>
+<a name="ln-456"></a>
+<a name="ln-457"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">in_wfc_FT_r</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">)</span>
+<a name="ln-458"></a>            <span class="c">!! real part of the bloch wave functions in fourier space</span>
+<a name="ln-459"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">in_wfc_FT_c</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">)</span>
+<a name="ln-460"></a>            <span class="c">!! complex part of the bloch wave functions in fourier space</span>
+<a name="ln-461"></a>
+<a name="ln-462"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <a name="ln-463"></a>
-<a name="ln-464"></a>        <span class="k">implicit none</span>
+<a name="ln-464"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">error</span>
 <a name="ln-465"></a>
-<a name="ln-466"></a><span class="k">        </span><span class="kt">integer</span> <span class="kd">::</span> <span class="n">n_grid</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a name="ln-467"></a>
-<a name="ln-468"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">wfc_FT</span><span class="p">(</span><span class="n">n_in_G</span><span class="p">)</span>
-<a name="ln-469"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">wfc_FT_exp</span><span class="p">(</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">n_grid</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">n_grid</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
-<a name="ln-470"></a>
-<a name="ln-471"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
-<a name="ln-472"></a>
-<a name="ln-473"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">g</span>
-<a name="ln-474"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">FFT_idx</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a name="ln-475"></a>
-<a name="ln-476"></a>        <span class="n">wfc_FT_exp</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0_dp</span><span class="p">,</span> <span class="mf">0.0_dp</span><span class="p">)</span>
-<a name="ln-477"></a>
-<a name="ln-478"></a>        <span class="k">do </span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_in_G</span>
+<a name="ln-466"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dataset_path_r</span>
+<a name="ln-467"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dataset_path_c</span>
+<a name="ln-468"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">band_num_str</span>
+<a name="ln-469"></a>
+<a name="ln-470"></a>        <span class="k">write</span><span class="p">(</span><span class="n">band_num_str</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">band_num</span>
+<a name="ln-471"></a>
+<a name="ln-472"></a>        <span class="n">dataset_path_r</span> <span class="o">=</span> <span class="s1">&#39;in_wfc_FT_r/&#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">band_num_str</span><span class="p">))</span>
+<a name="ln-473"></a>        <span class="n">dataset_path_c</span> <span class="o">=</span> <span class="s1">&#39;in_wfc_FT_c/&#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">band_num_str</span><span class="p">))</span>
+<a name="ln-474"></a>
+<a name="ln-475"></a>        <span class="n">dims2</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">]</span>
+<a name="ln-476"></a>
+<a name="ln-477"></a>        <span class="k">call </span><span class="n">h5open_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<a name="ln-478"></a>        <span class="k">call </span><span class="n">h5fopen_f</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">H5F_ACC_RDONLY_F</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
 <a name="ln-479"></a>
-<a name="ln-480"></a>            <span class="k">call </span><span class="n">G_red_to_FFT_G_grid_index</span><span class="p">(</span><span class="n">n_grid</span><span class="p">,</span> <span class="n">in_G_grid_red</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">:),</span> <span class="n">FFT_idx</span><span class="p">)</span>
-<a name="ln-481"></a>
-<a name="ln-482"></a>            <span class="n">wfc_FT_exp</span><span class="p">(</span><span class="n">FFT_idx</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">FFT_idx</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">FFT_idx</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="o">=</span> <span class="n">wfc_FT</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
-<a name="ln-483"></a>
-<a name="ln-484"></a>        <span class="k">end do</span>
+<a name="ln-480"></a>        <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">dataset_path_r</span><span class="p">,</span> <span class="n">in_wfc_FT_r</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-481"></a>        <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">dataset_path_c</span><span class="p">,</span> <span class="n">in_wfc_FT_c</span><span class="p">,</span> <span class="n">dims2</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-482"></a>
+<a name="ln-483"></a>        <span class="k">call </span><span class="n">h5fclose_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-484"></a>        <span class="k">call </span><span class="n">h5close_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
 <a name="ln-485"></a>
-<a name="ln-486"></a><span class="k">    end subroutine</span>
+<a name="ln-486"></a>        <span class="n">in_wfc_FT</span> <span class="o">=</span> <span class="n">in_wfc_FT_r</span> <span class="o">+</span> <span class="n">ii</span><span class="o">*</span><span class="n">in_wfc_FT_c</span>
 <a name="ln-487"></a>
-<a name="ln-488"></a><span class="k">    function </span><span class="n">in_wfc_at_single_pt</span><span class="p">(</span><span class="n">band_num</span><span class="p">,</span> <span class="n">x0_red</span><span class="p">,</span> <span class="n">in_wfc_FT</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">wfc</span><span class="p">)</span>
-<a name="ln-489"></a>        <span class="c">!! returns the wave function evaluated at a point in</span>
-<a name="ln-490"></a>        <span class="c">!! reduced coordinates at a single point</span>
-<a name="ln-491"></a>        <span class="c">!!</span>
-<a name="ln-492"></a>        <span class="c">!! av_wfc(x0)_k = sum_G e^(i G.x0) wfc(G)_k</span>
-<a name="ln-493"></a>        <span class="k">implicit none</span>
-<a name="ln-494"></a>
-<a name="ln-495"></a><span class="k">        </span><span class="kt">integer</span> <span class="kd">::</span> <span class="n">band_num</span>
-<a name="ln-496"></a>
-<a name="ln-497"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0_red</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a name="ln-498"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a name="ln-499"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">phase_fac</span><span class="p">(</span><span class="n">n_in_G</span><span class="p">)</span>
-<a name="ln-500"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">wfc</span><span class="p">(</span><span class="n">n_k</span><span class="p">)</span>
+<a name="ln-488"></a>    <span class="k">end subroutine</span>
+<a name="ln-489"></a>
+<a name="ln-490"></a><span class="k">    subroutine </span><span class="n">get_in_wfc_FT_spin</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">band_num</span><span class="p">,</span> <span class="n">in_wfc_FT</span><span class="p">)</span>
+<a name="ln-491"></a>        <span class="c">!! Reads the input DFT file and sets the [n_k, n_in_G, 2] complex(dp) array </span>
+<a name="ln-492"></a>        <span class="c">!! with whose elements are the dimensionless block wave function </span>
+<a name="ln-493"></a>        <span class="c">!! coefficients, u_{i, k, G, s}, where s is the spin index</span>
+<a name="ln-494"></a>        <span class="k">implicit none</span>
+<a name="ln-495"></a>
+<a name="ln-496"></a><span class="k">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">filename</span>
+<a name="ln-497"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">band_num</span>
+<a name="ln-498"></a>
+<a name="ln-499"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">in_wfc_FT</span><span class="p">(:,</span> <span class="p">:,</span> <span class="p">:)</span>
+<a name="ln-500"></a>            <span class="c">!! Bloch wave functions in reciprocal space</span>
 <a name="ln-501"></a>
-<a name="ln-502"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">in_wfc_FT</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">)</span>
-<a name="ln-503"></a>
-<a name="ln-504"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">g</span>
-<a name="ln-505"></a>
-<a name="ln-506"></a>        <span class="n">x0</span> <span class="o">=</span> <span class="nb">matmul</span><span class="p">(</span><span class="n">red_to_xyz</span><span class="p">,</span> <span class="n">x0_red</span><span class="p">)</span>
-<a name="ln-507"></a>
-<a name="ln-508"></a>        <span class="n">phase_fac</span> <span class="o">=</span> <span class="nb">cmplx</span><span class="p">(</span><span class="mf">0.0_dp</span><span class="p">,</span> <span class="mf">0.0_dp</span><span class="p">,</span> <span class="n">dp</span><span class="p">)</span>
+<a name="ln-502"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HID_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">file_id</span>
+<a name="ln-503"></a>            <span class="c">!! HDF5 file ID number for DFT input file</span>
+<a name="ln-504"></a>
+<a name="ln-505"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">in_wfc_FT_r</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a name="ln-506"></a>            <span class="c">!! real part of the bloch wave functions in fourier space</span>
+<a name="ln-507"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">in_wfc_FT_c</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a name="ln-508"></a>            <span class="c">!! complex part of the bloch wave functions in fourier space</span>
 <a name="ln-509"></a>
-<a name="ln-510"></a>        <span class="k">do </span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_in_G</span>
-<a name="ln-511"></a>            <span class="n">phase_fac</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="o">=</span> <span class="nb">exp</span><span class="p">(</span><span class="n">ii</span><span class="o">*</span><span class="nb">dot_product</span><span class="p">(</span><span class="n">in_G_grid_xyz</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">:),</span> <span class="n">x0</span><span class="p">))</span>
-<a name="ln-512"></a>        <span class="k">end do</span>
+<a name="ln-510"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims3</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a name="ln-511"></a>
+<a name="ln-512"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">error</span>
 <a name="ln-513"></a>
-<a name="ln-514"></a><span class="k">        </span><span class="n">wfc</span> <span class="o">=</span> <span class="nb">matmul</span><span class="p">(</span><span class="n">in_wfc_FT</span><span class="p">,</span> <span class="n">phase_fac</span><span class="p">)</span>
-<a name="ln-515"></a>
-<a name="ln-516"></a>    <span class="k">end function</span>
+<a name="ln-514"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dataset_path_r</span>
+<a name="ln-515"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dataset_path_c</span>
+<a name="ln-516"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">band_num_str</span>
 <a name="ln-517"></a>
-<a name="ln-518"></a><span class="k">    subroutine </span><span class="n">get_PW_cutoffs</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
-<a name="ln-519"></a>        <span class="c">!! Calculate the plane wave expansion parameters</span>
-<a name="ln-520"></a>
-<a name="ln-521"></a>        <span class="k">implicit none</span>
+<a name="ln-518"></a>        <span class="k">write</span><span class="p">(</span><span class="n">band_num_str</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">band_num</span>
+<a name="ln-519"></a>
+<a name="ln-520"></a>        <span class="n">dataset_path_r</span> <span class="o">=</span> <span class="s1">&#39;in_wfc_FT_r/&#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">band_num_str</span><span class="p">))</span>
+<a name="ln-521"></a>        <span class="n">dataset_path_c</span> <span class="o">=</span> <span class="s1">&#39;in_wfc_FT_c/&#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">band_num_str</span><span class="p">))</span>
 <a name="ln-522"></a>
-<a name="ln-523"></a><span class="k">        </span><span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
+<a name="ln-523"></a>        <span class="n">dims3</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 <a name="ln-524"></a>
-<a name="ln-525"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">k</span><span class="p">,</span> <span class="n">g</span>
-<a name="ln-526"></a>
-<a name="ln-527"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_xyz</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a name="ln-528"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_mag</span>
-<a name="ln-529"></a>
-<a name="ln-530"></a>        <span class="n">q_PW_cut</span> <span class="o">=</span> <span class="mf">0.0_dp</span>
-<a name="ln-531"></a>        <span class="n">E_PW_cut</span> <span class="o">=</span> <span class="mf">0.0_dp</span>
-<a name="ln-532"></a>
-<a name="ln-533"></a>        <span class="k">do </span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_k</span>
-<a name="ln-534"></a>            <span class="k">do </span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_in_G</span>
+<a name="ln-525"></a>        <span class="k">call </span><span class="n">h5open_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<a name="ln-526"></a>        <span class="k">call </span><span class="n">h5fopen_f</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">H5F_ACC_RDONLY_F</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-527"></a>
+<a name="ln-528"></a>        <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">dataset_path_r</span><span class="p">,</span> <span class="n">in_wfc_FT_r</span><span class="p">,</span> <span class="n">dims3</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-529"></a>        <span class="k">call </span><span class="n">h5ltread_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">dataset_path_c</span><span class="p">,</span> <span class="n">in_wfc_FT_c</span><span class="p">,</span> <span class="n">dims3</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-530"></a>
+<a name="ln-531"></a>        <span class="k">call </span><span class="n">h5fclose_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a name="ln-532"></a>        <span class="k">call </span><span class="n">h5close_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<a name="ln-533"></a>
+<a name="ln-534"></a>        <span class="n">in_wfc_FT</span> <span class="o">=</span> <span class="n">in_wfc_FT_r</span> <span class="o">+</span> <span class="n">ii</span><span class="o">*</span><span class="n">in_wfc_FT_c</span>
 <a name="ln-535"></a>
-<a name="ln-536"></a>                <span class="n">q_xyz</span> <span class="o">=</span> <span class="n">k_grid_xyz</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">:)</span> <span class="o">+</span> <span class="n">in_G_grid_xyz</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">:)</span>
+<a name="ln-536"></a>    <span class="k">end subroutine</span>
 <a name="ln-537"></a>
-<a name="ln-538"></a>                <span class="n">q_mag</span> <span class="o">=</span> <span class="nb">norm2</span><span class="p">(</span><span class="n">q_xyz</span><span class="p">)</span>
-<a name="ln-539"></a>
-<a name="ln-540"></a>                <span class="k">if</span> <span class="p">(</span> <span class="n">q_mag</span> <span class="p">.</span><span class="n">ge</span><span class="p">.</span> <span class="n">q_PW_cut</span> <span class="p">)</span> <span class="k">then</span>
-<a name="ln-541"></a><span class="k">                    </span><span class="n">q_PW_cut</span> <span class="o">=</span> <span class="n">q_mag</span>
-<a name="ln-542"></a>                <span class="k">end if</span>
-<a name="ln-543"></a>
-<a name="ln-544"></a><span class="k">            end do</span>
-<a name="ln-545"></a><span class="k">        end do</span>
-<a name="ln-546"></a>
-<a name="ln-547"></a><span class="k">        </span><span class="n">E_PW_cut</span> <span class="o">=</span> <span class="n">q_PW_cut</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0_dp</span><span class="o">*</span><span class="n">m_elec</span><span class="p">)</span>
-<a name="ln-548"></a>
-<a name="ln-549"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
-<a name="ln-550"></a>
-<a name="ln-551"></a><span class="k">           print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    Plane wave expansion parameters : &#39;</span>
-<a name="ln-552"></a>           <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        E_PW_cut = &#39;</span><span class="p">,</span> <span class="n">E_PW_cut</span><span class="p">,</span> <span class="s1">&#39;eV&#39;</span>
-<a name="ln-553"></a>           <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        q_PW_cut = &#39;</span><span class="p">,</span> <span class="n">q_PW_cut</span><span class="o">/</span><span class="mf">1.0e3_dp</span><span class="p">,</span> <span class="s1">&#39;keV&#39;</span>
-<a name="ln-554"></a>           <span class="k">print</span><span class="o">*</span>
-<a name="ln-555"></a>
-<a name="ln-556"></a>        <span class="k">end if</span>
+<a name="ln-538"></a><span class="k">    subroutine </span><span class="n">expand_wfc_FT_for_FFT</span><span class="p">(</span><span class="n">n_grid</span><span class="p">,&amp;</span>
+<a name="ln-539"></a>            <span class="n">wfc_FT</span><span class="p">,</span> <span class="n">wfc_FT_exp</span><span class="p">,&amp;</span>
+<a name="ln-540"></a>            <span class="n">verbose</span><span class="p">)</span>
+<a name="ln-541"></a>        <span class="c">!! The Fourier components will generally not be defined on a</span>
+<a name="ln-542"></a>        <span class="c">!! uniform grid needed for an FFT. This subroutine puts the </span>
+<a name="ln-543"></a>        <span class="c">!! values of the Bloch coefficients in the correct place </span>
+<a name="ln-544"></a>        <span class="k">use </span><span class="n">FFT_util</span>
+<a name="ln-545"></a>
+<a name="ln-546"></a>        <span class="k">implicit none</span>
+<a name="ln-547"></a>
+<a name="ln-548"></a><span class="k">        </span><span class="kt">integer</span> <span class="kd">::</span> <span class="n">n_grid</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a name="ln-549"></a>
+<a name="ln-550"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">wfc_FT</span><span class="p">(</span><span class="n">n_in_G</span><span class="p">)</span>
+<a name="ln-551"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">wfc_FT_exp</span><span class="p">(</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">n_grid</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">n_grid</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<a name="ln-552"></a>
+<a name="ln-553"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
+<a name="ln-554"></a>
+<a name="ln-555"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">g</span>
+<a name="ln-556"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">FFT_idx</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <a name="ln-557"></a>
-<a name="ln-558"></a><span class="k">    end subroutine</span>
+<a name="ln-558"></a>        <span class="n">wfc_FT_exp</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0_dp</span><span class="p">,</span> <span class="mf">0.0_dp</span><span class="p">)</span>
 <a name="ln-559"></a>
-<a name="ln-560"></a><span class="k">    subroutine </span><span class="n">do_scissor_correction</span><span class="p">(</span><span class="n">band_gap</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
-<a name="ln-561"></a>        <span class="k">implicit none</span>
-<a name="ln-562"></a>
-<a name="ln-563"></a><span class="k">        </span><span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
-<a name="ln-564"></a>
-<a name="ln-565"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">band_gap</span>
-<a name="ln-566"></a>
-<a name="ln-567"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">scissor_correct</span>
-<a name="ln-568"></a>
-<a name="ln-569"></a>        <span class="n">scissor_correct</span> <span class="o">=</span> <span class="n">band_gap</span> <span class="o">-</span> <span class="p">&amp;</span>
-<a name="ln-570"></a>                    <span class="p">(</span><span class="nb">minval</span><span class="p">(</span><span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:))</span> <span class="o">-</span> <span class="nb">maxval</span><span class="p">(</span><span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="p">:</span><span class="n">n_val</span><span class="p">)))</span>
-<a name="ln-571"></a>
-<a name="ln-572"></a>        <span class="n">energy_bands</span> <span class="o">=</span> <span class="mf">0.0_dp</span>
-<a name="ln-573"></a>        <span class="n">energy_bands</span><span class="p">(:,</span> <span class="p">:</span><span class="n">n_val</span><span class="p">)</span> <span class="o">=</span> <span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="p">:</span><span class="n">n_val</span><span class="p">)</span> <span class="o">-</span> <span class="n">scissor_correct</span><span class="o">/</span><span class="mf">2.0_dp</span> 
-<a name="ln-574"></a>        <span class="n">energy_bands</span><span class="p">(:,</span> <span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:)</span> <span class="o">=</span> <span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:)</span> <span class="o">+</span> <span class="n">scissor_correct</span><span class="o">/</span><span class="mf">2.0_dp</span> 
-<a name="ln-575"></a>
-<a name="ln-576"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
-<a name="ln-577"></a>
-<a name="ln-578"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Performed scisscor correction.&#39;</span>
-<a name="ln-579"></a>            <span class="k">print</span><span class="o">*</span>
-<a name="ln-580"></a>
-<a name="ln-581"></a>        <span class="k">end if</span>
-<a name="ln-582"></a><span class="k">    </span>
-<a name="ln-583"></a><span class="k">    end subroutine</span>
-<a name="ln-584"></a>
-<a name="ln-585"></a><span class="k">    function </span><span class="n">get_w_max</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">w_max</span><span class="p">)</span>
-<a name="ln-586"></a>        <span class="c">!! Returns the maximum energy transfer allowed from valence state i</span>
-<a name="ln-587"></a>        <span class="k">implicit none</span>
-<a name="ln-588"></a>
-<a name="ln-589"></a><span class="k">        </span><span class="kt">integer</span> <span class="kd">::</span> <span class="n">i</span>
-<a name="ln-590"></a>
-<a name="ln-591"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">w_max</span>
-<a name="ln-592"></a>
-<a name="ln-593"></a>        <span class="n">w_max</span> <span class="o">=</span> <span class="nb">maxval</span><span class="p">(</span><span class="n">energy_bands</span><span class="p">)</span> <span class="o">-</span> <span class="nb">minval</span><span class="p">(</span><span class="n">energy_bands</span><span class="p">(:,</span> <span class="n">i</span><span class="p">))</span>
-<a name="ln-594"></a>
-<a name="ln-595"></a>    <span class="k">end function</span>
-<a name="ln-596"></a>
-<a name="ln-597"></a><span class="k">end module</span>
+<a name="ln-560"></a>        <span class="k">do </span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_in_G</span>
+<a name="ln-561"></a>
+<a name="ln-562"></a>            <span class="k">call </span><span class="n">G_red_to_FFT_G_grid_index</span><span class="p">(</span><span class="n">n_grid</span><span class="p">,</span> <span class="n">in_G_grid_red</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">:),</span> <span class="n">FFT_idx</span><span class="p">)</span>
+<a name="ln-563"></a>
+<a name="ln-564"></a>            <span class="n">wfc_FT_exp</span><span class="p">(</span><span class="n">FFT_idx</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">FFT_idx</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">FFT_idx</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="o">=</span> <span class="n">wfc_FT</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<a name="ln-565"></a>
+<a name="ln-566"></a>        <span class="k">end do</span>
+<a name="ln-567"></a>
+<a name="ln-568"></a><span class="k">    end subroutine</span>
+<a name="ln-569"></a>
+<a name="ln-570"></a><span class="k">    function </span><span class="n">in_wfc_at_single_pt</span><span class="p">(</span><span class="n">band_num</span><span class="p">,</span> <span class="n">x0_red</span><span class="p">,</span> <span class="n">in_wfc_FT</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">wfc</span><span class="p">)</span>
+<a name="ln-571"></a>        <span class="c">!! returns the wave function evaluated at a point in</span>
+<a name="ln-572"></a>        <span class="c">!! reduced coordinates at a single point</span>
+<a name="ln-573"></a>        <span class="c">!!</span>
+<a name="ln-574"></a>        <span class="c">!! av_wfc(x0)_k = sum_G e^(i G.x0) wfc(G)_k</span>
+<a name="ln-575"></a>        <span class="k">implicit none</span>
+<a name="ln-576"></a>
+<a name="ln-577"></a><span class="k">        </span><span class="kt">integer</span> <span class="kd">::</span> <span class="n">band_num</span>
+<a name="ln-578"></a>
+<a name="ln-579"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0_red</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a name="ln-580"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a name="ln-581"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">phase_fac</span><span class="p">(</span><span class="n">n_in_G</span><span class="p">)</span>
+<a name="ln-582"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">wfc</span><span class="p">(</span><span class="n">n_k</span><span class="p">)</span>
+<a name="ln-583"></a>
+<a name="ln-584"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">in_wfc_FT</span><span class="p">(</span><span class="n">n_k</span><span class="p">,</span> <span class="n">n_in_G</span><span class="p">)</span>
+<a name="ln-585"></a>
+<a name="ln-586"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">g</span>
+<a name="ln-587"></a>
+<a name="ln-588"></a>        <span class="n">x0</span> <span class="o">=</span> <span class="nb">matmul</span><span class="p">(</span><span class="n">red_to_xyz</span><span class="p">,</span> <span class="n">x0_red</span><span class="p">)</span>
+<a name="ln-589"></a>
+<a name="ln-590"></a>        <span class="n">phase_fac</span> <span class="o">=</span> <span class="nb">cmplx</span><span class="p">(</span><span class="mf">0.0_dp</span><span class="p">,</span> <span class="mf">0.0_dp</span><span class="p">,</span> <span class="n">dp</span><span class="p">)</span>
+<a name="ln-591"></a>
+<a name="ln-592"></a>        <span class="k">do </span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_in_G</span>
+<a name="ln-593"></a>            <span class="n">phase_fac</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="o">=</span> <span class="nb">exp</span><span class="p">(</span><span class="n">ii</span><span class="o">*</span><span class="nb">dot_product</span><span class="p">(</span><span class="n">in_G_grid_xyz</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">:),</span> <span class="n">x0</span><span class="p">))</span>
+<a name="ln-594"></a>        <span class="k">end do</span>
+<a name="ln-595"></a>
+<a name="ln-596"></a><span class="k">        </span><span class="n">wfc</span> <span class="o">=</span> <span class="nb">matmul</span><span class="p">(</span><span class="n">in_wfc_FT</span><span class="p">,</span> <span class="n">phase_fac</span><span class="p">)</span>
+<a name="ln-597"></a>
+<a name="ln-598"></a>    <span class="k">end function</span>
+<a name="ln-599"></a>
+<a name="ln-600"></a><span class="k">    subroutine </span><span class="n">get_PW_cutoffs</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
+<a name="ln-601"></a>        <span class="c">!! Calculate the plane wave expansion parameters</span>
+<a name="ln-602"></a>
+<a name="ln-603"></a>        <span class="k">implicit none</span>
+<a name="ln-604"></a>
+<a name="ln-605"></a><span class="k">        </span><span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
+<a name="ln-606"></a>
+<a name="ln-607"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">k</span><span class="p">,</span> <span class="n">g</span>
+<a name="ln-608"></a>
+<a name="ln-609"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_xyz</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a name="ln-610"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_mag</span>
+<a name="ln-611"></a>
+<a name="ln-612"></a>        <span class="n">q_PW_cut</span> <span class="o">=</span> <span class="mf">0.0_dp</span>
+<a name="ln-613"></a>        <span class="n">E_PW_cut</span> <span class="o">=</span> <span class="mf">0.0_dp</span>
+<a name="ln-614"></a>
+<a name="ln-615"></a>        <span class="k">do </span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_k</span>
+<a name="ln-616"></a>            <span class="k">do </span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_in_G</span>
+<a name="ln-617"></a>
+<a name="ln-618"></a>                <span class="n">q_xyz</span> <span class="o">=</span> <span class="n">k_grid_xyz</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">:)</span> <span class="o">+</span> <span class="n">in_G_grid_xyz</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">:)</span>
+<a name="ln-619"></a>
+<a name="ln-620"></a>                <span class="n">q_mag</span> <span class="o">=</span> <span class="nb">norm2</span><span class="p">(</span><span class="n">q_xyz</span><span class="p">)</span>
+<a name="ln-621"></a>
+<a name="ln-622"></a>                <span class="k">if</span> <span class="p">(</span> <span class="n">q_mag</span> <span class="p">.</span><span class="n">ge</span><span class="p">.</span> <span class="n">q_PW_cut</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-623"></a><span class="k">                    </span><span class="n">q_PW_cut</span> <span class="o">=</span> <span class="n">q_mag</span>
+<a name="ln-624"></a>                <span class="k">end if</span>
+<a name="ln-625"></a>
+<a name="ln-626"></a><span class="k">            end do</span>
+<a name="ln-627"></a><span class="k">        end do</span>
+<a name="ln-628"></a>
+<a name="ln-629"></a><span class="k">        </span><span class="n">E_PW_cut</span> <span class="o">=</span> <span class="n">q_PW_cut</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0_dp</span><span class="o">*</span><span class="n">m_elec</span><span class="p">)</span>
+<a name="ln-630"></a>
+<a name="ln-631"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-632"></a>
+<a name="ln-633"></a><span class="k">           print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        Plane wave expansion parameters : &#39;</span>
+<a name="ln-634"></a>           <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;            E_PW_cut = &#39;</span><span class="p">,</span> <span class="n">E_PW_cut</span><span class="p">,</span> <span class="s1">&#39;eV&#39;</span>
+<a name="ln-635"></a>           <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;            q_PW_cut = &#39;</span><span class="p">,</span> <span class="n">q_PW_cut</span><span class="o">/</span><span class="mf">1.0e3_dp</span><span class="p">,</span> <span class="s1">&#39;keV&#39;</span>
+<a name="ln-636"></a>           <span class="k">print</span><span class="o">*</span>
+<a name="ln-637"></a>
+<a name="ln-638"></a>        <span class="k">end if</span>
+<a name="ln-639"></a>
+<a name="ln-640"></a><span class="k">    end subroutine</span>
+<a name="ln-641"></a>
+<a name="ln-642"></a><span class="k">    subroutine </span><span class="n">do_scissor_correction</span><span class="p">(</span><span class="n">band_gap</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+<a name="ln-643"></a>        <span class="k">implicit none</span>
+<a name="ln-644"></a>
+<a name="ln-645"></a><span class="k">        </span><span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
+<a name="ln-646"></a>
+<a name="ln-647"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">band_gap</span>
+<a name="ln-648"></a>
+<a name="ln-649"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">scissor_correct</span>
+<a name="ln-650"></a>
+<a name="ln-651"></a>        <span class="n">scissor_correct</span> <span class="o">=</span> <span class="n">band_gap</span> <span class="o">-</span> <span class="p">&amp;</span>
+<a name="ln-652"></a>                    <span class="p">(</span><span class="nb">minval</span><span class="p">(</span><span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:))</span> <span class="o">-</span> <span class="nb">maxval</span><span class="p">(</span><span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="p">:</span><span class="n">n_val</span><span class="p">)))</span>
+<a name="ln-653"></a>
+<a name="ln-654"></a>        <span class="n">energy_bands</span> <span class="o">=</span> <span class="mf">0.0_dp</span>
+<a name="ln-655"></a>        <span class="n">energy_bands</span><span class="p">(:,</span> <span class="p">:</span><span class="n">n_val</span><span class="p">)</span> <span class="o">=</span> <span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="p">:</span><span class="n">n_val</span><span class="p">)</span> <span class="o">-</span> <span class="n">scissor_correct</span><span class="o">/</span><span class="mf">2.0_dp</span> 
+<a name="ln-656"></a>        <span class="n">energy_bands</span><span class="p">(:,</span> <span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:)</span> <span class="o">=</span> <span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:)</span> <span class="o">+</span> <span class="n">scissor_correct</span><span class="o">/</span><span class="mf">2.0_dp</span> 
+<a name="ln-657"></a>
+<a name="ln-658"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a name="ln-659"></a>
+<a name="ln-660"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Performed scissor correction.&#39;</span>
+<a name="ln-661"></a>            <span class="k">print</span><span class="o">*</span>
+<a name="ln-662"></a>
+<a name="ln-663"></a>        <span class="k">end if</span>
+<a name="ln-664"></a><span class="k">    </span>
+<a name="ln-665"></a><span class="k">    end subroutine</span>
+<a name="ln-666"></a>
+<a name="ln-667"></a><span class="k">    function </span><span class="n">get_w_max</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">w_max</span><span class="p">)</span>
+<a name="ln-668"></a>        <span class="c">!! Returns the maximum energy transfer allowed from valence state i</span>
+<a name="ln-669"></a>        <span class="k">implicit none</span>
+<a name="ln-670"></a>
+<a name="ln-671"></a><span class="k">        </span><span class="kt">integer</span> <span class="kd">::</span> <span class="n">i</span>
+<a name="ln-672"></a>
+<a name="ln-673"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">w_max</span>
+<a name="ln-674"></a>
+<a name="ln-675"></a>        <span class="n">w_max</span> <span class="o">=</span> <span class="nb">maxval</span><span class="p">(</span><span class="n">energy_bands</span><span class="p">)</span> <span class="o">-</span> <span class="nb">minval</span><span class="p">(</span><span class="n">energy_bands</span><span class="p">(:,</span> <span class="n">i</span><span class="p">))</span>
+<a name="ln-676"></a>
+<a name="ln-677"></a>    <span class="k">end function</span>
+<a name="ln-678"></a>
+<a name="ln-679"></a><span class="k">end module</span>
 </pre></div>
 
     </section>
@@ -876,7 +958,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-05-10T13:52:57.233972 
+             on 2021-06-21T15:08:24.929799 
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

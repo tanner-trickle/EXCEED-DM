@@ -1,0 +1,46 @@
+&control
+    process   = 'absorption',
+    calc_mode = 'scalar'
+    overwrite_output = .TRUE.
+/
+
+&io
+    out_folder      = './examples/Si/outputs',
+    run_description = 'scalar_absorp_test',
+    DFT_input_filename = './examples/Si/dft/Si_2x2x2_AE.hdf5',
+/
+
+&material
+    mat_name        = 'Si'
+    pc_vol_A        = 40.888 
+    rho_T_g_per_cm3 = 2.281  
+    band_gap        = 1.11 
+/
+
+&numerics
+    n_init = 4,
+    n_fin = 60
+/
+
+&absorption
+    n_omega = 100,
+    log_omega_min = 0,
+    log_omega_max = 2,
+    n_width_b = 3,
+    log_width_b_min = -2,
+    log_width_b_max = 0,
+    n_width_a = 2,
+    width_a_min = 0,
+    width_a_max = 0.2,
+    n_width_max = 1,
+    width_max_min = 0.2
+/
+
+&particle_physics_a
+    n_time = 1,
+    n_v_mag = 50, 
+    n_v_theta = 30, 
+    n_v_phi = 30
+/
+
+!

@@ -46,7 +46,7 @@ All Procedures &ndash; EXCEED-DM
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.1.0</small></a>
+          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.0</small></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -117,7 +117,33 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/calc_core_sto_wf_grid.html'>calc_core_sto_wf_grid</a></td><td><a href='../module/core_electrons.html'>core_electrons</a></td><td>Subroutine</td><td><p>computes the core wave functions on a grid, summed over the closest unit cells</p><a href="../proc/calc_core_sto_wf_grid.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
+			   <tr><td><a href='../proc/calc_pi_11_mat.html'>calc_pi_11_mat</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_pi_1v.html'>calc_pi_1v</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_pi_v1.html'>calc_pi_v1</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_pi_vv.html'>calc_pi_vv</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_rate_ps.html'>calc_rate_ps</a></td><td><a href='../module/rate_calc_ps.html'>rate_calc_ps</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_rate_scalar.html'>calc_rate_scalar</a></td><td><a href='../module/rate_calc_scalar.html'>rate_calc_scalar</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_rate_vector.html'>calc_rate_vector</a></td><td><a href='../module/rate_calc_vector.html'>rate_calc_vector</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../interface/calc_tff_vc.html'>calc_tff_vc</a></td><td><a href='../module/transition_form_factor.html'>transition_form_factor</a></td><td>Interface</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_tff_vc_no_spin.html'>calc_tff_vc_no_spin</a></td><td><a href='../module/transition_form_factor.html'>transition_form_factor</a></td><td>Subroutine</td><td><p>Compute the tff for the valence to conduction calculation</p><a href="../proc/calc_tff_vc_no_spin.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_tff_vc_spin.html'>calc_tff_vc_spin</a></td><td><a href='../module/transition_form_factor.html'>transition_form_factor</a></td><td>Subroutine</td><td><p>Compute the tff for the valence to conduction calculation</p><a href="../proc/calc_tff_vc_spin.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_tran_form.html'>calc_tran_form</a></td><td><a href='../module/tran_form_calc.html'>tran_form_calc</a></td><td>Subroutine</td><td></td></tr>
+			 
 			   <tr><td><a href='../proc/check_dft_parameters.html'>check_DFT_parameters</a></td><td><a href='../module/dft_parameters.html'>DFT_parameters</a></td><td>Subroutine</td><td><p>Check the values of of the input file to make sure they make sense</p></td></tr>
+			 
+			   <tr><td><a href='../proc/check_mb_dist_normalization.html'>check_mb_dist_normalization</a></td><td><a href='../module/particle_physics_abs.html'>particle_physics_abs</a></td><td>Subroutine</td><td><p>make sure the mb distribution integrates to 1</p><a href="../proc/check_mb_dist_normalization.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+			 
+			   <tr><td><a href='../proc/compute_self_energies.html'>compute_self_energies</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/core_sto_wf.html'>core_sto_wf</a></td><td><a href='../module/core_electrons.html'>core_electrons</a></td><td>Function</td><td><p>Core wave function</p><a href="../proc/core_sto_wf.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
@@ -131,13 +157,19 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/create_output_file.html'>create_output_file</a></td><td><a href='../module/io_input.html'>io_input</a></td><td>Subroutine</td><td><p>Creates the output file</p></td></tr>
 			 
-			   <tr><td><a href='../proc/dme_scatter_cc_calc.html'>dme_scatter_cc_calc</a></td><td><a href='../module/calc_dme_scatter_cc.html'>calc_dme_scatter_cc</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/dme_scatter_cc_calc.html'>dme_scatter_cc_calc</a></td><td><a href='../module/calc_exdm_scatter_cc.html'>calc_exdm_scatter_cc</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/dme_scatter_cf_calc.html'>dme_scatter_cf_calc</a></td><td><a href='../module/calc_dme_scatter_cf.html'>calc_dme_scatter_cf</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/dme_scatter_cf_calc.html'>dme_scatter_cf_calc</a></td><td><a href='../module/calc_exdm_scatter_cf.html'>calc_exdm_scatter_cf</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/dme_scatter_vc_calc.html'>dme_scatter_vc_calc</a></td><td><a href='../module/calc_dme_scatter_vc.html'>calc_dme_scatter_vc</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../interface/dme_scatter_vc_calc.html'>dme_scatter_vc_calc</a></td><td><a href='../module/calc_exdm_scatter_vc.html'>calc_exdm_scatter_vc</a></td><td>Interface</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/dme_scatter_vf_calc.html'>dme_scatter_vf_calc</a></td><td><a href='../module/calc_dme_scatter_vf.html'>calc_dme_scatter_vf</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/dme_scatter_vc_calc_no_spin.html'>dme_scatter_vc_calc_no_spin</a></td><td><a href='../module/calc_exdm_scatter_vc.html'>calc_exdm_scatter_vc</a></td><td>Subroutine</td><td><p>Computes the valence to conduction scattering rate assuming the wave functions do not
+ depend on the spin.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/dme_scatter_vc_calc_spin.html'>dme_scatter_vc_calc_spin</a></td><td><a href='../module/calc_exdm_scatter_vc.html'>calc_exdm_scatter_vc</a></td><td>Subroutine</td><td><p>Computes the valence to conduction scattering rate. Wave functions are 2 component spinors
+ in S_z basis</p></td></tr>
+			 
+			   <tr><td><a href='../proc/dme_scatter_vf_calc.html'>dme_scatter_vf_calc</a></td><td><a href='../module/calc_exdm_scatter_vf.html'>calc_exdm_scatter_vf</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/do_scissor_correction.html'>do_scissor_correction</a></td><td><a href='../module/dft_parameters.html'>DFT_parameters</a></td><td>Subroutine</td><td></td></tr>
 			 
@@ -157,9 +189,15 @@ All Procedures &ndash; EXCEED-DM
 			   <tr><td><a href='../proc/generate_uniform_points_on_sphere.html'>generate_uniform_points_on_sphere</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Function</td><td><p>Generates an (n_thata*n_phi, 2) list of points which are uniformly 
  distributed on the sphere</p></td></tr>
 			 
-			   <tr><td><a href='../proc/get_in_wfc_ft.html'>get_in_wfc_FT</a></td><td><a href='../module/dft_parameters.html'>DFT_parameters</a></td><td>Subroutine</td><td><p>Reads the input DFT file and sets the [n_k, n_in_G] complex(dp) array 
+			   <tr><td><a href='../interface/get_in_wfc_ft.html'>get_in_wfc_FT</a></td><td><a href='../module/dft_parameters.html'>DFT_parameters</a></td><td>Interface</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/get_in_wfc_ft_no_spin.html'>get_in_wfc_FT_no_spin</a></td><td><a href='../module/dft_parameters.html'>DFT_parameters</a></td><td>Subroutine</td><td><p>Reads the input DFT file and sets the [n_k, n_in_G] complex(dp) array 
  with whose elements are the dimensionless block wave function 
  coefficients, u_ikG</p></td></tr>
+			 
+			   <tr><td><a href='../proc/get_in_wfc_ft_spin.html'>get_in_wfc_FT_spin</a></td><td><a href='../module/dft_parameters.html'>DFT_parameters</a></td><td>Subroutine</td><td><p>Reads the input DFT file and sets the [n_k, n_in_G, 2] complex(dp) array 
+ with whose elements are the dimensionless block wave function 
+ coefficients, u_{i, k, G, s}, where s is the spin index</p></td></tr>
 			 
 			   <tr><td><a href='../proc/get_phi.html'>get_phi</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Function</td><td><p>returns the theta value of a unit direction vector, n_hat</p></td></tr>
 			 
@@ -180,6 +218,8 @@ All Procedures &ndash; EXCEED-DM
 			   <tr><td><a href='../proc/integrate_power_law.html'>integrate_power_law</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Function</td><td><p>= int_{x1}^{x2} (x/x_s)^b dx = x1 * int_{1}^{x2/x1} (x1/x_s)^b y^b dy
  = (b + 1)^(-1) * x1 * exp( b log(x1/x_s) ) * ( exp( (b + 1) log(x2/x1) ) - 1 )</p><a href="../proc/integrate_power_law.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
+			   <tr><td><a href='../proc/load_absorption_input.html'>load_absorption_input</a></td><td><a href='../module/absorption_input.html'>absorption_input</a></td><td>Subroutine</td><td><p>Load the absorption inputs</p></td></tr>
+			 
 			   <tr><td><a href='../proc/load_control.html'>load_control</a></td><td><a href='../module/control_input.html'>control_input</a></td><td>Subroutine</td><td><p>Loads the control variables</p></td></tr>
 			 
 			   <tr><td><a href='../proc/load_core_elec_config.html'>load_core_elec_config</a></td><td><a href='../module/core_electrons.html'>core_electrons</a></td><td>Subroutine</td><td><p>Reads the core electron configuration file</p></td></tr>
@@ -198,41 +238,71 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/load_numerics.html'>load_numerics</a></td><td><a href='../module/numerics_input.html'>numerics_input</a></td><td>Subroutine</td><td></td></tr>
 			 
+			   <tr><td><a href='../proc/load_particle_physics_abs.html'>load_particle_physics_abs</a></td><td><a href='../module/particle_physics_abs.html'>particle_physics_abs</a></td><td>Subroutine</td><td></td></tr>
+			 
 			   <tr><td><a href='../proc/load_particle_physics_scatter.html'>load_particle_physics_scatter</a></td><td><a href='../module/particle_physics_scatter.html'>particle_physics_scatter</a></td><td>Subroutine</td><td></td></tr>
 			 
+			   <tr><td><a href='../proc/load_tff_input.html'>load_tff_input</a></td><td><a href='../module/transition_form_factor.html'>transition_form_factor</a></td><td>Subroutine</td><td></td></tr>
+			 
 			   <tr><td><a href='../proc/load_zeff_parameters.html'>load_Zeff_parameters</a></td><td><a href='../module/zeff_input.html'>Zeff_input</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/mb_vel_distribution.html'>mb_vel_distribution</a></td><td><a href='../module/particle_physics_abs.html'>particle_physics_abs</a></td><td>Function</td><td><p>Maxwell boltzmann distribution, boosted with boost_vec</p></td></tr>
 			 
 			   <tr><td><a href='../proc/model_dielectric.html'>model_dielectric</a></td><td><a href='../module/in_med_scr.html'>in_med_scr</a></td><td>Function</td><td><p>Analytic form of the dielectric function
  Eq 6 from 
       https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</p></td></tr>
 			 
+			   <tr><td><a href='../proc/pauli_spin_matrix.html'>pauli_spin_matrix</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Function</td><td><p>Returns the ith Pauli spin matrix. Assume 0th Pauli matrix is the identity</p></td></tr>
+			 
 			   <tr><td><a href='../proc/power_law_fit.html'>power_law_fit</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Function</td><td><p>Finds the best fit parameters for y = y1 * (x/x1) ^ b, given log_y and log_x</p><a href="../proc/power_law_fit.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/pretty_time_format.html'>pretty_time_format</a></td><td><a href='../module/timing.html'>timing</a></td><td>Function</td><td><p>Fills time_str with a nicely formatted version of time </p></td></tr>
+			 
+			   <tr><td><a href='../proc/print_absorption_input.html'>print_absorption_input</a></td><td><a href='../module/absorption_input.html'>absorption_input</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/print_control.html'>print_control</a></td><td><a href='../module/control_input.html'>control_input</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/print_core_elec_config.html'>print_core_elec_config</a></td><td><a href='../module/core_electrons.html'>core_electrons</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/print_dft_parameters.html'>print_DFT_parameters</a></td><td><a href='../module/dft_parameters.html'>DFT_parameters</a></td><td>Subroutine</td><td><p>Prints variables defined in this moudle</p></td></tr>
 			 
+			   <tr><td><a href='../proc/print_in_med.html'>print_in_med</a></td><td><a href='../module/in_med_scr.html'>in_med_scr</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/print_io.html'>print_io</a></td><td><a href='../module/io_input.html'>io_input</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/print_material.html'>print_material</a></td><td><a href='../module/material_input.html'>material_input</a></td><td>Subroutine</td><td></td></tr>
+			 
 			   <tr><td><a href='../proc/print_numerics.html'>print_numerics</a></td><td><a href='../module/numerics_input.html'>numerics_input</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/print_particle_physics_abs.html'>print_particle_physics_abs</a></td><td><a href='../module/particle_physics_abs.html'>particle_physics_abs</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/print_particle_physics_scatter.html'>print_particle_physics_scatter</a></td><td><a href='../module/particle_physics_scatter.html'>particle_physics_scatter</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/print_sto_data.html'>print_sto_data</a></td><td><a href='../module/core_electrons.html'>core_electrons</a></td><td>Subroutine</td><td></td></tr>
 			 
+			   <tr><td><a href='../proc/print_tff_input.html'>print_tff_input</a></td><td><a href='../module/transition_form_factor.html'>transition_form_factor</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/print_zeff.html'>print_Zeff</a></td><td><a href='../module/zeff_input.html'>Zeff_input</a></td><td>Subroutine</td><td></td></tr>
+			 
 			   <tr><td><a href='../proc/q_func.html'>Q_func</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Function</td><td><p>Places x in an appropriate bin</p><a href="../proc/q_func.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/red_mass.html'>red_mass</a></td><td><a href='../module/particle_physics_scatter.html'>particle_physics_scatter</a></td><td>Function</td><td><p>Reduced mass </p></td></tr>
 			 
-			   <tr><td><a href='../proc/run_dme_scatter.html'>run_dme_scatter</a></td><td><a href='../module/dme_scatter.html'>dme_scatter</a></td><td>Subroutine</td><td><p>Scattering rate calculation</p></td></tr>
+			   <tr><td><a href='../proc/run_dme_absorption.html'>run_dme_absorption</a></td><td><a href='../module/dme_absorption.html'>dme_absorption</a></td><td>Subroutine</td><td><p>Absorption rate calculation</p></td></tr>
 			 
-			   <tr><td><a href='../proc/run_dme_scatter_cc.html'>run_dme_scatter_cc</a></td><td><a href='../module/dme_scatter_cc.html'>dme_scatter_cc</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/run_dme_scatter.html'>run_dme_scatter</a></td><td><a href='../module/exdm_scatter.html'>exdm_scatter</a></td><td>Subroutine</td><td><p>Scattering rate calculation</p></td></tr>
 			 
-			   <tr><td><a href='../proc/run_dme_scatter_cf.html'>run_dme_scatter_cf</a></td><td><a href='../module/dme_scatter_cf.html'>dme_scatter_cf</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/run_dme_scatter_cc.html'>run_dme_scatter_cc</a></td><td><a href='../module/exdm_scatter_cc.html'>exdm_scatter_cc</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/run_dme_scatter_vc.html'>run_dme_scatter_vc</a></td><td><a href='../module/dme_scatter_vc.html'>dme_scatter_vc</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/run_dme_scatter_cf.html'>run_dme_scatter_cf</a></td><td><a href='../module/exdm_scatter_cf.html'>exdm_scatter_cf</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/run_dme_scatter_vf.html'>run_dme_scatter_vf</a></td><td><a href='../module/dme_scatter_vf.html'>dme_scatter_vf</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/run_dme_scatter_vc.html'>run_dme_scatter_vc</a></td><td><a href='../module/exdm_scatter_vc.html'>exdm_scatter_vc</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/run_dme_scatter_vf.html'>run_dme_scatter_vf</a></td><td><a href='../module/exdm_scatter_vf.html'>exdm_scatter_vf</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/save_abs_rate.html'>save_abs_rate</a></td><td><a href='../module/dme_absorption.html'>dme_absorption</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/save_absorption_input.html'>save_absorption_input</a></td><td><a href='../module/absorption_input.html'>absorption_input</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/save_core_electrons.html'>save_core_electrons</a></td><td><a href='../module/core_electrons.html'>core_electrons</a></td><td>Subroutine</td><td></td></tr>
 			 
@@ -246,7 +316,11 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/save_particle_physics_scatter.html'>save_particle_physics_scatter</a></td><td><a href='../module/particle_physics_scatter.html'>particle_physics_scatter</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/save_rates.html'>save_rates</a></td><td><a href='../module/dme_scatter.html'>dme_scatter</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/save_rates.html'>save_rates</a></td><td><a href='../module/exdm_scatter.html'>exdm_scatter</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/save_self_energies.html'>save_self_energies</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/save_tran_form.html'>save_tran_form</a></td><td><a href='../module/dme_absorption.html'>dme_absorption</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/screening.html'>screening</a></td><td><a href='../module/in_med_scr.html'>in_med_scr</a></td><td>Function</td><td></td></tr>
 			 
@@ -273,8 +347,18 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/sto_wf_radial.html'>sto_wf_radial</a></td><td><a href='../module/core_electrons.html'>core_electrons</a></td><td>Function</td><td><p>Radial part of the Slater type orbital (STO) wave function</p><a href="../proc/sto_wf_radial.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
-			   <tr><td><a href='../proc/update_rates.html'>update_rates</a></td><td><a href='../module/dme_scatter.html'>dme_scatter</a></td><td>Subroutine</td><td><p>updates all the rate arrays with the output 
+			   <tr><td><a href='../proc/time_exdm_scatter_cc_calc.html'>time_exdm_scatter_cc_calc</a></td><td><a href='../module/exdm_scatter_cc.html'>exdm_scatter_cc</a></td><td>Subroutine</td><td><p>Times the c -&gt; c scattering rate calculation</p></td></tr>
+			 
+			   <tr><td><a href='../proc/time_exdm_scatter_cf_calc.html'>time_exdm_scatter_cf_calc</a></td><td><a href='../module/exdm_scatter_cf.html'>exdm_scatter_cf</a></td><td>Subroutine</td><td><p>Times the v -&gt; f scattering rate calculation</p></td></tr>
+			 
+			   <tr><td><a href='../proc/time_exdm_scatter_vc_calc.html'>time_exdm_scatter_vc_calc</a></td><td><a href='../module/exdm_scatter_vc.html'>exdm_scatter_vc</a></td><td>Subroutine</td><td><p>Times the v -&gt; c scattering rate calculation</p></td></tr>
+			 
+			   <tr><td><a href='../proc/time_exdm_scatter_vf_calc.html'>time_exdm_scatter_vf_calc</a></td><td><a href='../module/exdm_scatter_vf.html'>exdm_scatter_vf</a></td><td>Subroutine</td><td><p>Times the v -&gt; f scattering rate calculation</p></td></tr>
+			 
+			   <tr><td><a href='../proc/update_rates.html'>update_rates</a></td><td><a href='../module/exdm_scatter.html'>exdm_scatter</a></td><td>Subroutine</td><td><p>updates all the rate arrays with the output 
  of a single processors results</p></td></tr>
+			 
+			   <tr><td><a href='../proc/update_tran_form.html'>update_tran_form</a></td><td><a href='../module/dme_absorption.html'>dme_absorption</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/v_minus.html'>v_minus</a></td><td><a href='../module/particle_physics_scatter.html'>particle_physics_scatter</a></td><td>Function</td><td><p>v_- function</p><a href="../proc/v_minus.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
@@ -294,7 +378,7 @@ All Procedures &ndash; EXCEED-DM
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-05-10T13:52:57.233972 
+             on 2021-06-21T15:08:24.929799 
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

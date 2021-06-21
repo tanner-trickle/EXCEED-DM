@@ -123,6 +123,15 @@ module DFT_parameters
         !! 
         !! Units : eV
 
+    !!! experimental
+
+    logical :: include_spin = .FALSE.
+
+    interface get_in_wfc_FT
+        module procedure get_in_wfc_FT_no_spin
+        module procedure get_in_wfc_FT_spin
+    end interface
+
     contains
 
     subroutine save_DFT_parameters(filename, verbose)
@@ -181,11 +190,6 @@ module DFT_parameters
             call h5fclose_f(file_id, error)
             call h5close_f(error)
 
-            if ( verbose ) then
-                print*, '----------'
-                print*
-            end if
-
         else
 
             if ( verbose ) then
@@ -222,6 +226,8 @@ module DFT_parameters
         integer :: error
 
         integer :: g, k
+
+        integer :: wfc_data_rank
 
         if ( verbose ) then
 
@@ -283,18 +289,24 @@ module DFT_parameters
             dims2 = [n_k, n_bands]
             call h5ltread_dataset_double_f(file_id, 'energy_bands_raw', energy_bands_raw, dims2, error) 
 
+            call h5ltget_dataset_ndims_f(file_id, 'in_wfc_FT_c/1', wfc_data_rank, error)
+
+            if ( wfc_data_rank == 3 ) then
+                include_spin = .TRUE.
+            end if
+
             call h5fclose_f(file_id, error)
             call h5close_f(error)
 
             call check_DFT_parameters(verbose)
 
+            call print_DFT_parameters(filename, verbose=verbose)
+
             ! find how much the wave function coefficients were expanded
             call get_PW_cutoffs(verbose=verbose)
 
-            call print_DFT_parameters(filename, verbose=verbose)
-
             if ( verbose ) then
-                print*, '----------'
+                print*, '----------------------------------------'
                 print*
             end if
 
@@ -302,11 +314,11 @@ module DFT_parameters
 
             if ( verbose ) then
 
-                print*, '!! ERROR !!'
+                print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
-                print*, '   DFT input file : ', trim(filename), ' does NOT exist.'
+                print*, '    Input file for DFT parameters : ', trim(filename), ' does NOT exist.'
                 print*
-                print*, '!!!!!!!!!!!'
+                print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
                 print*
 
             end if
@@ -329,6 +341,11 @@ module DFT_parameters
         real(dp) :: i_3_2pi(3, 3) 
 
         real(dp) :: eps_val
+
+        if ( verbose ) then
+            print*, 'Running preliminary checks on DFT data...'
+            print*
+        end if
 
         i_3_2pi = 0.0_dp
 
@@ -379,51 +396,68 @@ module DFT_parameters
 
         logical, optional :: verbose
 
+        character(len=64) :: n_k_str
+        character(len=64) :: n_in_G_str
+        character(len=64) :: n_val_str
+        character(len=64) :: n_cond_str
+
+        write(n_k_str, *) n_k
+        write(n_val_str, *) n_val
+        write(n_cond_str, *) n_cond
+        write(n_in_G_str, *) n_in_G
+
         if ( verbose ) then
 
-            print*, '    DFT input filename : ', trim(filename)
+            print*, '----------------------------------------'
+            print*, '    ---------'
+            print*, '    DFT Input'
+            print*, '    ---------'
             print*
-            print*, '    Number of k points    = ', n_k
+            print*, '        Filename : ', trim(filename)
             print*
-            print*, '    Number of valence bands     = ', n_val
-            print*, '    Number of conduction bands  = ', n_cond 
+            print*, '        Primitive lattice vectors (Ang) : '
+            print*, '            a1 = ', a_vecs_A(1, :)
+            print*, '            a2 = ', a_vecs_A(2, :)
+            print*, '            a3 = ', a_vecs_A(3, :)
             print*
-            print*, '    Number of G points    = ', n_in_G
+            print*, '        Reciprocal lattice vectors Ang^(-1) : '
+            print*, '            b1 = ', b_vecs_A(1, :) 
+            print*, '            b2 = ', b_vecs_A(2, :)
+            print*, '            b3 = ', b_vecs_A(3, :)
             print*
-            print*, '    Primitive lattice vectors : '
-            print*, '        a1 = ', a_vecs_A(1, :), 'Ang'
-            print*, '        a2 = ', a_vecs_A(2, :), 'Ang'
-            print*, '        a3 = ', a_vecs_A(3, :), 'Ang'
+            print*, '        Number of valence bands     = ', trim(adjustl(n_val_str))
+            print*, '        Number of conduction bands  = ', trim(adjustl(n_cond_str))
             print*
-            print*, '    Reciprocal lattice vectors : '
-            print*, '        b1 = ', b_vecs_A(1, :), 'Ang^(-1)'
-            print*, '        b2 = ', b_vecs_A(2, :), 'Ang^(-1)'
-            print*, '        b3 = ', b_vecs_A(3, :), 'Ang^(-1)'
+            print*, '        Number of k points          = ', trim(adjustl(n_k_str))
+            print*
+            print*, '        Number of G points          = ', trim(adjustl(n_in_G_str))
+            print*
+            print*, '        Include spin?               = ', include_spin
             print*
 
         end if
 
     end subroutine
 
-    subroutine get_in_wfc_FT(filename, band_num, in_wfc_FT)
+    subroutine get_in_wfc_FT_no_spin(filename, band_num, in_wfc_FT)
         !! Reads the input DFT file and sets the [n_k, n_in_G] complex(dp) array 
         !! with whose elements are the dimensionless block wave function 
         !! coefficients, u_ikG
         implicit none
 
         character(len=*) :: filename
+        integer :: band_num
+
+        complex(dp) :: in_wfc_FT(:, :)
+            !! Bloch wave functions in reciprocal space
 
         integer(HID_T) :: file_id
             !! HDF5 file ID number for DFT input file
-
-        integer :: band_num
 
         real(dp) :: in_wfc_FT_r(n_k, n_in_G)
             !! real part of the bloch wave functions in fourier space
         real(dp) :: in_wfc_FT_c(n_k, n_in_G)
             !! complex part of the bloch wave functions in fourier space
-        complex(dp) :: in_wfc_FT(n_k, n_in_G)
-            !! Bloch wave functions in reciprocal space
 
         integer(HSIZE_T) :: dims2(2)
 
@@ -445,6 +479,54 @@ module DFT_parameters
 
         call h5ltread_dataset_double_f(file_id, dataset_path_r, in_wfc_FT_r, dims2, error)
         call h5ltread_dataset_double_f(file_id, dataset_path_c, in_wfc_FT_c, dims2, error)
+
+        call h5fclose_f(file_id, error)
+        call h5close_f(error)
+
+        in_wfc_FT = in_wfc_FT_r + ii*in_wfc_FT_c
+
+    end subroutine
+
+    subroutine get_in_wfc_FT_spin(filename, band_num, in_wfc_FT)
+        !! Reads the input DFT file and sets the [n_k, n_in_G, 2] complex(dp) array 
+        !! with whose elements are the dimensionless block wave function 
+        !! coefficients, u_{i, k, G, s}, where s is the spin index
+        implicit none
+
+        character(len=*) :: filename
+        integer :: band_num
+
+        complex(dp) :: in_wfc_FT(:, :, :)
+            !! Bloch wave functions in reciprocal space
+
+        integer(HID_T) :: file_id
+            !! HDF5 file ID number for DFT input file
+
+        real(dp) :: in_wfc_FT_r(n_k, n_in_G, 2)
+            !! real part of the bloch wave functions in fourier space
+        real(dp) :: in_wfc_FT_c(n_k, n_in_G, 2)
+            !! complex part of the bloch wave functions in fourier space
+
+        integer(HSIZE_T) :: dims3(3)
+
+        integer :: error
+
+        character(len=64) :: dataset_path_r
+        character(len=64) :: dataset_path_c
+        character(len=64) :: band_num_str
+
+        write(band_num_str, *) band_num
+
+        dataset_path_r = 'in_wfc_FT_r/'//trim(adjustl(band_num_str))
+        dataset_path_c = 'in_wfc_FT_c/'//trim(adjustl(band_num_str))
+
+        dims3 = [n_k, n_in_G, 2]
+
+        call h5open_f(error)
+        call h5fopen_f(filename, H5F_ACC_RDONLY_F, file_id, error)
+
+        call h5ltread_dataset_double_f(file_id, dataset_path_r, in_wfc_FT_r, dims3, error)
+        call h5ltread_dataset_double_f(file_id, dataset_path_c, in_wfc_FT_c, dims3, error)
 
         call h5fclose_f(file_id, error)
         call h5close_f(error)
@@ -548,9 +630,9 @@ module DFT_parameters
 
         if ( verbose ) then
 
-           print*, '    Plane wave expansion parameters : '
-           print*, '        E_PW_cut = ', E_PW_cut, 'eV'
-           print*, '        q_PW_cut = ', q_PW_cut/1.0e3_dp, 'keV'
+           print*, '        Plane wave expansion parameters : '
+           print*, '            E_PW_cut = ', E_PW_cut, 'eV'
+           print*, '            q_PW_cut = ', q_PW_cut/1.0e3_dp, 'keV'
            print*
 
         end if
@@ -575,7 +657,7 @@ module DFT_parameters
 
         if ( verbose ) then
 
-            print*, 'Performed scisscor correction.'
+            print*, 'Performed scissor correction.'
             print*
 
         end if

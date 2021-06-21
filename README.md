@@ -9,10 +9,17 @@
 
 ## Features
 
-`EXCEED-DM` provides a complete framework for computing DM-electron interaction rates. Given a range of DM masses, mediator form factors, and times of day, `EXCEED-DM` computes the scattering rate per kg-year binned in energy and momentum deposition.
+`EXCEED-DM` provides a complete framework for computing DM-electron interaction rates. 
 
-- **All kinematically allowed transitions are included.** In addition to transitions near the Fermi surface, where density functional theory (DFT) calculations are a necessary component of the calculation, electronic states further below, and above, are modeled semi-analytically and included in the scattering rate calculation.
-- **Compute daily and annual modulation signals.** No assumptions about the isotropy of the target are made, allowing one to study the daily modulation signal, and the DM velocity distribution parameters can be changed very easily to compute annual modulation. 
+- **Scattering**: Given a range of DM masses, mediator form factors, and times of day, `EXCEED-DM` computes the scattering rate per kg-year binned in energy and momentum deposition.
+  - **All kinematically allowed transitions are included.** In addition to transitions near the Fermi surface, where density functional theory (DFT) calculations are a necessary component of the calculation, electronic states further below, and above, are modeled semi-analytically and included in the scattering rate calculation.
+  - **Daily and annual modulation signals**: No assumptions about the isotropy of the target are made, allowing one to study the daily modulation signal, and the DM velocity distribution parameters can be changed very easily to compute annual modulation. 
+  - **Spin-dependent wave functions**: Some targets, such as those with spin-orbit coupling, will have electronic states which are not eigenstates of the spin operator. This means the wave functions have two components instead of one, and particle physics couplings to the spin operator are no longer trivial to compute. `EXCEED-DM` can perform these spin-dependent scattering rate calculations.
+    - Note: currently (v0.2.0) only valence to conduction transitions are supported.
+
+- **Absorption**: Given a range of DM masses and times of day, `EXCEED-DM` computes the absorption rate, electronic self energies, and generalized crystal form factors, needed to compute the DM absorption rate.
+  - **Scalar, pseudoscalar, and vector DM**: compute the absorption rate from these bosonic DM candidates.
+  - Note: currently (v0.2.0) only valence to conduction transitions are supported.
 
 `EXCEED-DM` is :
 
@@ -36,10 +43,10 @@ Follow these instructions to compile and run `EXCEED-DM` on a fresh Ubuntu (18.0
 
 1) Install preliminary software
     - Fortran compiler (`sudo apt install gfortran`) 
-    - OpenMPI (`sudo apt install libopenmpi-dev`)
-    - fftw3 (`sudo apt install libfftw3-dev`)
-    - hdf5 (`sudo apt install libhdf5-serial-dev`)
-    - FoBiS.py (`sudo pip3 install FoBiS.py`)
+    - OpenMPI          (`sudo apt install libopenmpi-dev`)
+    - fftw3            (`sudo apt install libfftw3-dev`)
+    - hdf5             (`sudo apt install libhdf5-serial-dev`)
+    - FoBiS.py         (`sudo pip3 install FoBiS.py`)
 
 Note : It's recommended to run `sudo apt update` before, and on a completely fresh Ubuntu installation pip will need to be installed (`sudo apt install python3-pip`).
 
@@ -61,7 +68,7 @@ If installed correctly you should see something similar to,
 
          --------------------
 
-            EXCEED-DM - v0.1.0
+            EXCEED-DM - v0.2.0
 
          --------------------
 
@@ -76,9 +83,11 @@ If installed correctly you should see something similar to,
 
          !!!!!!!!!!!
 
-5) Perform example calculation. Open `examples/Si/inputs/vc_test_input.txt` and change the file paths as necessary (DFT input file is stored in `./examples/Si/dft/Si/Si_2x2x2_AE.hdf5`). Then run
+5) Perform example calculation. From the main folder run         
 
         > mpirun -np 2 ./build/exdm ./examples/Si/inputs/vc_test_input.txt
+
+Output data is stored in `examples/Si/outputs/`. To run from another folder, open `examples/Si/inputs/vc_test_input.txt` and change the file paths as necessary (DFT input file is stored in `examples/Si/dft/Si/Si_2x2x2_AE.hdf5`).
 
 ## Support 
 
@@ -93,9 +102,11 @@ If installed correctly you should see something similar to,
 
 ## Papers using `EXCEED-DM`
 
+- S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek, [Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets]
 - T. Trickle, Z. Zhang, K. M. Zurek, K. Inzani and S. Griffin, [Multi-Channel Direct Detection of Light Dark Matter: Theoretical Framework]
 - S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek, [Multichannel direct detection of light dark matter: Target comparison]
 
+[Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets]:https://arxiv.org/abs/2105.05253 
 [Multi-Channel Direct Detection of Light Dark Matter: Theoretical Framework]: https://doi.org/10.1007/JHEP03(2020)036
 [Multichannel direct detection of light dark matter: Target comparison]: https://doi.org/10.1103/PhysRevD.101.055004
 
@@ -107,12 +118,13 @@ If you use `EXCEED-DM` in your work, please cite,
 
 along with,
 
-    @article{griffin2021extended,
-      title={Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets}, 
-      author={Sinéad M. Griffin and Katherine Inzani and Tanner Trickle and Zhengkang Zhang and Kathryn M. Zurek},
-      year={2021},
-      eprint={2105.05253},
-      archivePrefix={arXiv},
-      primaryClass={hep-ph}
+    @article{Griffin:2021znd,
+        author = "Griffin, Sin\'ead M. and Inzani, Katherine and Trickle, Tanner and Zhang, Zhengkang and Zurek, Kathryn M.",
+        title = "{Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets}",
+        eprint = "2105.05253",
+        archivePrefix = "arXiv",
+        primaryClass = "hep-ph",
+        month = "5",
+        year = "2021"
     }
 

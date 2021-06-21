@@ -1,0 +1,54 @@
+&control
+    process          = 'scatter',
+    calc_mode        = 'cc',
+    overwrite_output = .TRUE.
+/
+
+&io
+    out_folder                = './tests/Si/outputs',
+    run_description           = 'test_cc_scatter_example',
+    sto_wf_filename           = './examples/RHF_wf_data.hdf5', 
+    core_elec_config_filename = './tests/Si/core/Si_core_elec_config_RHF.hdf5', 
+    DFT_input_filename        = './tests/Si/dft/Si_2x2x2_AE.hdf5',
+/
+
+&material
+    mat_name        = 'Si'
+    pc_vol_A        = 40.888 
+    rho_T_g_per_cm3 = 2.281  
+    band_gap        = 1.11 
+/
+
+&particle_physics
+	n_mX          = 1,
+    n_extra_mX    = 1,
+    log_mmin      = 10,
+    log_mmax      = 10,
+	n_FDM         = 1,
+    FDMPower_min  = 2,
+    FDMPower_max  = 2
+/
+
+&extra_mX
+    mX_2(1) = 1D7
+/
+
+&numerics
+    q_bin_width      = 1D3,
+    E_bin_width      = 1,
+    n_E_bins         = 300,
+    E_bin_threshold  = 1
+    n_init           = 14, 
+    n_fin            = 60,
+    n_FFT_grid_input = 64, 64, 64
+/
+
+&in_medium
+    screen_type = 'analytic'
+    di_e0       = 11.3,
+    di_q_tf     = 4.134D3,
+    di_omega_p  = 16.6,
+    di_alpha    = 1.563
+/
+
+!

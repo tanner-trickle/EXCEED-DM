@@ -1,13 +1,13 @@
 &control
-    process   = 'scatter',
-    calc_mode = 'vf',
+    process          = 'scatter',
+    calc_mode        = 'vf',
     overwrite_output = .TRUE.
 /
 
 &io
-    out_folder      = '/mnt/c/Users/Tanner/Desktop/dm-electron/examples/Si/outputs',
-    run_description = 'vf_test',
-    DFT_input_filename = '/mnt/c/Users/Tanner/Desktop/dm-electron/examples/Si/dft/Si_2x2x2_AE.hdf5',
+    out_folder         = './examples/Si/outputs',
+    run_description    = 'vf_test',
+    DFT_input_filename = './examples/Si/dft/Si_2x2x2_AE.hdf5',
 /
 
 &material
@@ -33,14 +33,14 @@
 /
 
 &numerics
-    q_bin_width = 1D3
-    E_bin_width = 1,
-    n_E_bins = 200,
+    q_bin_width     = 1D3
+    E_bin_width     = 1,
+    n_E_bins        = 200,
     E_bin_threshold = 1
-    n_init = 4, 
-    n_fin = 1000,
-    n_kf_theta = 4, 
-    n_kf_phi = 4 
+    n_init          = 4, 
+    n_fin           = 1000,
+    n_kf_theta      = 4, 
+    n_kf_phi        = 4 
 /
 
 &Zeff

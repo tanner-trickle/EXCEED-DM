@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.1.0</small></a>
+          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.0</small></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title="11.4% of total for modules and submodules.">304 statements</a>
+    title=" 7.9% of total for modules and submodules.">354 statements</a>
      </li> 
      
      
@@ -169,7 +169,7 @@
   <div id="vars-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../module/dft_parameters.html#variable-n_k">n_k</a>
+      <a class="list-group-item" href="../module/dft_parameters.html#variable-n_k~2">n_k</a>
       
       <a class="list-group-item" href="../module/dft_parameters.html#variable-n_val">n_val</a>
       
@@ -209,6 +209,8 @@
       
       <a class="list-group-item" href="../module/dft_parameters.html#variable-k_grid_xyz">k_grid_xyz</a>
       
+      <a class="list-group-item" href="../module/dft_parameters.html#variable-include_spin">include_spin</a>
+      
     </div>
   </div>
 </div>
@@ -219,6 +221,18 @@
 
 
 
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#inters-0">Interfaces</a></h3></div>
+  <div id="inters-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/dft_parameters.html#interface-get_in_wfc_ft">get_in_wfc_FT</a>
+      
+    </div>
+  </div>
+</div>
 
 
 
@@ -252,7 +266,9 @@
       
       <a class="list-group-item" href="../module/dft_parameters.html#proc-print_dft_parameters">print_DFT_parameters</a>
       
-      <a class="list-group-item" href="../module/dft_parameters.html#proc-get_in_wfc_ft">get_in_wfc_FT</a>
+      <a class="list-group-item" href="../module/dft_parameters.html#proc-get_in_wfc_ft_no_spin">get_in_wfc_FT_no_spin</a>
+      
+      <a class="list-group-item" href="../module/dft_parameters.html#proc-get_in_wfc_ft_spin">get_in_wfc_FT_spin</a>
       
       <a class="list-group-item" href="../module/dft_parameters.html#proc-expand_wfc_ft_for_fft">expand_wfc_FT_for_FFT</a>
       
@@ -329,7 +345,7 @@
   <div id="vars-1" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../module/dft_parameters.html#variable-n_k">n_k</a>
+      <a class="list-group-item" href="../module/dft_parameters.html#variable-n_k~2">n_k</a>
       
       <a class="list-group-item" href="../module/dft_parameters.html#variable-n_val">n_val</a>
       
@@ -369,6 +385,8 @@
       
       <a class="list-group-item" href="../module/dft_parameters.html#variable-k_grid_xyz">k_grid_xyz</a>
       
+      <a class="list-group-item" href="../module/dft_parameters.html#variable-include_spin">include_spin</a>
+      
     </div>
   </div>
 </div>
@@ -379,6 +397,18 @@
 
 
 
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#inters-1">Interfaces</a></h3></div>
+  <div id="inters-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/dft_parameters.html#interface-get_in_wfc_ft">get_in_wfc_FT</a>
+      
+    </div>
+  </div>
+</div>
 
 
 
@@ -412,7 +442,9 @@
       
       <a class="list-group-item" href="../module/dft_parameters.html#proc-print_dft_parameters">print_DFT_parameters</a>
       
-      <a class="list-group-item" href="../module/dft_parameters.html#proc-get_in_wfc_ft">get_in_wfc_FT</a>
+      <a class="list-group-item" href="../module/dft_parameters.html#proc-get_in_wfc_ft_no_spin">get_in_wfc_FT_no_spin</a>
+      
+      <a class="list-group-item" href="../module/dft_parameters.html#proc-get_in_wfc_ft_spin">get_in_wfc_FT_spin</a>
       
       <a class="list-group-item" href="../module/dft_parameters.html#proc-expand_wfc_ft_for_fft">expand_wfc_FT_for_FFT</a>
       
@@ -457,7 +489,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-n_k"></span>integer,</td>
+  <td><span class="anchor" id="variable-n_k~2"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -767,7 +799,22 @@
   <td>allocatable</td><td>::</td>
   <td><strong>k_grid_xyz</strong>(:,:)</td><td></td><td></td><td><p>Dim : [n_k, 3]</p>
 <p>List of k vectors in xyz coordinates</p>
-<p>Units : eV</p></td>
+<p>Units : eV</p>
+<p>! experimental</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-include_spin"></span>logical,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>include_spin</strong></td><td> =</td><td>.FALSE.</td><td></td>
   
 </tr>
 
@@ -780,6 +827,203 @@
     
     
     
+    
+    <section>
+   <h2>Interfaces</h2>
+   
+     
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="interface-get_in_wfc_ft"></span><h3>public interface <a href='../interface/get_in_wfc_ft.html'>get_in_wfc_FT</a>
+    
+  </h3></div>
+  
+  <ul class="list-group">
+  
+  
+  
+    <li class="list-group-item">
+    
+    
+    <h3>
+public subroutine <a href='../proc/get_in_wfc_ft_no_spin.html'>get_in_wfc_FT_no_spin</a>(filename, band_num, in_wfc_FT)
+    
+    
+   
+</h3>
+    
+
+
+
+
+
+
+
+<p>Reads the input DFT file and sets the [n_k, n_in_G] complex(dp) array 
+ with whose elements are the dimensionless block wave function 
+ coefficients, u_ikG</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>filename</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>band_num</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>in_wfc_FT</strong>(:,:)</td><td><p>Bloch wave functions in reciprocal space</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+    </li>
+  
+    <li class="list-group-item">
+    
+    
+    <h3>
+public subroutine <a href='../proc/get_in_wfc_ft_spin.html'>get_in_wfc_FT_spin</a>(filename, band_num, in_wfc_FT)
+    
+    
+   
+</h3>
+    
+
+
+
+
+
+
+
+<p>Reads the input DFT file and sets the [n_k, n_in_G, 2] complex(dp) array 
+ with whose elements are the dimensionless block wave function 
+ coefficients, u_{i, k, G, s}, where s is the spin index</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>filename</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>band_num</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>in_wfc_FT</strong>(:,:,:)</td><td><p>Bloch wave functions in reciprocal space</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+    </li>
+  
+  
+  </ul>
+</div>
+
+    
+    </section>
+  <br>
     
 
     
@@ -1248,8 +1492,8 @@ public subroutine <a href='../proc/print_dft_parameters.html'>print_DFT_paramete
     
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-get_in_wfc_ft"></span><h3>
-public subroutine <a href='../proc/get_in_wfc_ft.html'>get_in_wfc_FT</a>(filename, band_num, in_wfc_FT)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-get_in_wfc_ft_no_spin"></span><h3>
+public subroutine <a href='../proc/get_in_wfc_ft_no_spin.html'>get_in_wfc_FT_no_spin</a>(filename, band_num, in_wfc_FT)
     
     
    
@@ -1322,7 +1566,98 @@ public subroutine <a href='../proc/get_in_wfc_ft.html'>get_in_wfc_FT</a>(filenam
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>in_wfc_FT</strong>(n_k,n_in_G)</td><td><p>Bloch wave functions in reciprocal space</p></td>
+  <td><strong>in_wfc_FT</strong>(:,:)</td><td><p>Bloch wave functions in reciprocal space</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-get_in_wfc_ft_spin"></span><h3>
+public subroutine <a href='../proc/get_in_wfc_ft_spin.html'>get_in_wfc_FT_spin</a>(filename, band_num, in_wfc_FT)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+
+
+
+
+<p>Reads the input DFT file and sets the [n_k, n_in_G, 2] complex(dp) array 
+ with whose elements are the dimensionless block wave function 
+ coefficients, u_{i, k, G, s}, where s is the spin index</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>character(len=*)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>filename</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>band_num</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>in_wfc_FT</strong>(:,:,:)</td><td><p>Bloch wave functions in reciprocal space</p></td>
   
 </tr>
 
@@ -1588,7 +1923,7 @@ public subroutine <a href='../proc/do_scissor_correction.html'>do_scissor_correc
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-05-10T13:52:57.233972 
+             on 2021-06-21T15:08:24.929799 
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

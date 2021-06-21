@@ -7,3 +7,5 @@ data/
 myTODO.md
 .ipynb_checkpoints
 __pycache__
+tests/Si/outputs/
+examples/Si/outputs/

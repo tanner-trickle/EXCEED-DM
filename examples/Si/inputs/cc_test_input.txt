@@ -1,15 +1,15 @@
 &control
-    process   = 'scatter',
-    calc_mode = 'cc',
+    process          = 'scatter',
+    calc_mode        = 'cc',
     overwrite_output = .TRUE.
 /
 
 &io
-    out_folder      = '/mnt/c/Users/Tanner/Desktop/dm-electron/examples/Si/outputs',
-    run_description = 'cc_test',
-    sto_wf_filename = '/mnt/c/Users/Tanner/Desktop/dm-electron/examples/RHF_wf_data.hdf5', 
-    core_elec_config_filename = '/mnt/c/Users/Tanner/Desktop/dm-electron/examples/Si/core/Si_core_elec_config_RHF.hdf5', 
-    DFT_input_filename = '/mnt/c/Users/Tanner/Desktop/dm-electron/examples/Si/dft/Si_2x2x2_AE.hdf5',
+    out_folder                = './examples/Si/outputs',
+    run_description           = 'cc_test',
+    sto_wf_filename           = './examples/RHF_wf_data.hdf5', 
+    core_elec_config_filename = './examples/Si/core/Si_core_elec_config_RHF.hdf5', 
+    DFT_input_filename        = './examples/Si/dft/Si_2x2x2_AE.hdf5',
 /
 
 &material
@@ -35,21 +35,21 @@
 /
 
 &numerics
-    q_bin_width = 1D3,
-    E_bin_width = 1,
-    n_E_bins = 300,
-    E_bin_threshold = 1
-    n_init = 14, 
-    n_fin = 60,
+    q_bin_width      = 1D3,
+    E_bin_width      = 1,
+    n_E_bins         = 300,
+    E_bin_threshold  = 1
+    n_init           = 14, 
+    n_fin            = 60,
     n_FFT_grid_input = 64, 64, 64
 /
 
 &in_medium
     screen_type = 'analytic'
-    di_e0 = 11.3,
-    di_q_tf = 4.134D3,
-    di_omega_p = 16.6,
-    di_alpha = 1.563
+    di_e0       = 11.3,
+    di_q_tf     = 4.134D3,
+    di_omega_p  = 16.6,
+    di_alpha    = 1.563
 /
 
 !
