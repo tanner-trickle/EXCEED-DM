@@ -11,6 +11,7 @@ program exdm
     use io_input
     use material_input
 
+    use dme_absorption
     use exdm_scatter
 
     implicit none
@@ -77,6 +78,11 @@ program exdm
         call run_dme_scatter(proc_id, root_process, out_filename, &
             nml_input_filename, DFT_input_filename, sto_wf_filename, &
             core_elec_config_filename, n_proc, save_binned_rate_if, verbose = verbose)
+
+    else if ( trim(process) == 'absorption' ) then
+
+        call run_dme_absorption(proc_id, root_process, out_filename, &
+            nml_input_filename, DFT_input_filename, n_proc, verbose = verbose)
 
     else
 
