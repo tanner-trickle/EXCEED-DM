@@ -102,11 +102,13 @@ Output data is stored in `examples/Si/outputs/`. To run from another folder, ope
 
 ## Papers using `EXCEED-DM`
 
+- A. Mitridate, T. Trickle, Z. Zhang, K. M. Zurek, [Dark Matter Absorption via Electronic Excitations]
 - S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek, [Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets]
 - T. Trickle, Z. Zhang, K. M. Zurek, K. Inzani and S. Griffin, [Multi-Channel Direct Detection of Light Dark Matter: Theoretical Framework]
 - S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek, [Multichannel direct detection of light dark matter: Target comparison]
 
-[Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets]:https://arxiv.org/abs/2105.05253 
+[Dark Matter Absorption via Electronic Excitations]: https://arxiv.org/abs/2106.12586 
+[Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets]: https://arxiv.org/abs/2105.05253 
 [Multi-Channel Direct Detection of Light Dark Matter: Theoretical Framework]: https://doi.org/10.1007/JHEP03(2020)036
 [Multichannel direct detection of light dark matter: Target comparison]: https://doi.org/10.1103/PhysRevD.101.055004
 

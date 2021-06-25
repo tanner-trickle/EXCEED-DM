@@ -5,7 +5,7 @@ v0.2.0
   - Compute the absorption rate, self-energies, and generalized crystal form factors in the absorption limit.
   - Setting `process = 'absorption'` in the input file switches the calculation to absorption mode. Check out examples in the `examples/` folder.
   - Set a variety of electron lifetime/width parameters, `width = min( a + b omega , width_max )` 
-  - See (add arXiv # once available) for details of the formulation.
+  - See https://arxiv.org/abs/2106.12586 for details of the formulation.
   - (Currently only spin-independent, valence -> conduction transitions are supported.) 
 
 v0.1.3
