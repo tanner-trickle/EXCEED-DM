@@ -56,8 +56,17 @@ contains
         end if
 
         ! calculation setup
-        call load_DFT_parameters(DFT_input_filename, verbose = verbose)
-        call do_scissor_correction(band_gap, verbose = verbose)
+        !! only load these variables if they haven't been loaded before
+        !! to compute the dielectric
+        if ( trim(screen_type) /= 'numeric' ) then
+            call load_DFT_parameters(DFT_input_filename, verbose = verbose)
+            call do_scissor_correction(band_gap, verbose = verbose)
+        else 
+            if ( load_dielectric_from_file ) then
+                call load_DFT_parameters(DFT_input_filename, verbose = verbose)
+                call do_scissor_correction(band_gap, verbose = verbose)
+            end if
+        end if
 
         ! doubled to avoid wrapping problems
         n_FFT_grid(1) = 2*(maxval(in_G_grid_red(:, 1)) - minval(in_G_grid_red(:, 1))) + 1

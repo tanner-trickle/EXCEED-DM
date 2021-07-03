@@ -9,7 +9,77 @@ module FFT_util
     real(dp), allocatable :: sym_FFT_G_grid_xyz(:, :, :, :)
         !! FFT G grid shifted so that both + and - G's are represented
 
-    contains
+contains
+
+    function get_sym_FFT_G_grid_red(n_grid, G_ind_vec, verbose) result(G_red)
+
+        implicit none
+
+        integer :: n_grid(3)
+
+        integer :: G_red(3)
+        integer :: G_ind_vec(3)
+        integer :: g1, g2, g3
+
+        logical, optional :: verbose
+
+        g1 = G_ind_vec(1)
+        g2 = G_ind_vec(2)
+        g3 = G_ind_vec(3)
+
+        G_red = [g1 - 1, g2 - 1, g3 - 1]
+
+        if ( g1 .gt. n_grid(1)/2 ) then
+            G_red(1) = g1 - n_grid(1) - 1
+        end if
+
+        if ( g2 .gt. n_grid(2)/2 ) then
+            G_red(2) = g2 - n_grid(2) - 1
+        end if
+
+        if ( g3 .gt. n_grid(3)/2 ) then
+            G_red(3) = g3 - n_grid(3) - 1
+        end if
+
+    end function
+
+    function get_sym_FFT_G_grid_xyz(n_grid, G_ind_vec, k_red_to_xyz, verbose) result(G_xyz)
+
+        implicit none
+
+        integer :: n_grid(3)
+
+        integer :: G_red(3)
+        integer :: G_ind_vec(3)
+        integer :: g1, g2, g3
+
+        real(dp) :: k_red_to_xyz(3, 3)
+
+        real(dp) :: G_xyz(3)
+
+        logical, optional :: verbose
+
+        g1 = G_ind_vec(1)
+        g2 = G_ind_vec(2)
+        g3 = G_ind_vec(3)
+
+        G_red = [g1 - 1, g2 - 1, g3 - 1]
+
+        if ( g1 .gt. n_grid(1)/2 ) then
+            G_red(1) = g1 - n_grid(1) - 1
+        end if
+
+        if ( g2 .gt. n_grid(2)/2 ) then
+            G_red(2) = g2 - n_grid(2) - 1
+        end if
+
+        if ( g3 .gt. n_grid(3)/2 ) then
+            G_red(3) = g3 - n_grid(3) - 1
+        end if
+
+        G_xyz = matmul(k_red_to_xyz, G_red)
+
+    end function
 
     subroutine set_sym_FFT_G_grid_xyz(n_grid, k_red_to_xyz, verbose)
         !! Symmetric FFT grid. 

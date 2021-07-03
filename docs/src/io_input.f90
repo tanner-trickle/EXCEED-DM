@@ -24,12 +24,19 @@ module io_input
     character(len = 512) :: core_elec_config_filename = ''
         !! File specifying the core electron configuration
 
+    character(len = 512) :: dielectric_filename = ''
+        !! File specifying the dielectric function. If the dielectric
+        !! will be computed this will be where the computed values are
+        !! stored. If this file already exists, the dielectric function
+        !! will be loaded from this file.
+
     NAMELIST /io/ DFT_input_filename, &
                     run_description, &
                     out_folder, &
                     out_filename, &
                     sto_wf_filename, &
-                    core_elec_config_filename
+                    core_elec_config_filename, &
+                    dielectric_filename
 contains
 
     subroutine print_io(verbose)
@@ -48,6 +55,7 @@ contains
             print*, '        DFT input            : ', trim(DFT_input_filename)
             print*, '        STO coefficients     : ', trim(sto_wf_filename)
             print*, '        Core electron config : ', trim(core_elec_config_filename)
+            print*, '        Dielectric           : ', trim(dielectric_filename)
             print*
 
         end if

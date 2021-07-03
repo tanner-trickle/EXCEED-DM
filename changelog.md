@@ -1,3 +1,13 @@
+v0.2.1
+---
+
+- Added a `dielectric` module which computes the dielectric in the scattering kinematic regime.
+  - To screen the rate with a numeric dielectric model, set `screen_type = numeric`.
+  - If `load_dielectric_from_file = .FALSE.`, the dielectric will be computed from scratch. Otherwise the screening factor will come from the dielectric matrix in the `dielectric_filename` file.
+  - Variables relevant for the calculation are loaded through the `dielectric` namelist. Check out examples in the `examples/` folder.
+  - Note: the dielectric here is only used to screen. Currently only v -> c transitions are included in the loop. For now, spin-indpendent wave functions only. 
+- Added `ubuntu-gnu-debug` build mode to debug with.
+
 v0.2.0
 ---
 

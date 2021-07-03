@@ -57,8 +57,15 @@ contains
         end if
 
         ! calculation setup
-        call load_DFT_parameters(trim(DFT_input_filename), verbose=verbose)
-        call do_scissor_correction(band_gap, verbose = verbose)
+        if ( trim(screen_type) /= 'numeric' ) then
+            call load_DFT_parameters(DFT_input_filename, verbose = verbose)
+            call do_scissor_correction(band_gap, verbose = verbose)
+        else 
+            if ( load_dielectric_from_file ) then
+                call load_DFT_parameters(DFT_input_filename, verbose = verbose)
+                call do_scissor_correction(band_gap, verbose = verbose)
+            end if
+        end if
 
         call load_core_elec_config(trim(core_elec_config_filename), verbose=verbose)
         call load_core_sto_data(trim(sto_wf_filename), verbose=verbose)

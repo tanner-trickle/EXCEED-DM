@@ -94,7 +94,7 @@ module DFT_parameters
         !! 
         !! Units : eV
     real(dp) :: k_red_to_xyz(3, 3)
-        !! Matrix converting reduced cooredinate momentum to physical xyz cooredinates
+        !! Matrix converting reduced coordinate momentum to physical xyz coordinates
         !! in eV via
         !!
         !!      k_xyz = matmul(k_red_to_xyz, k_red)

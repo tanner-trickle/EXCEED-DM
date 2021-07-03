@@ -46,7 +46,7 @@ All Procedures &ndash; EXCEED-DM
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.0</small></a>
+          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.1</small></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -141,7 +141,13 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/check_dft_parameters.html'>check_DFT_parameters</a></td><td><a href='../module/dft_parameters.html'>DFT_parameters</a></td><td>Subroutine</td><td><p>Check the values of of the input file to make sure they make sense</p></td></tr>
 			 
+			   <tr><td><a href='../proc/check_dielectric_memory.html'>check_dielectric_memory</a></td><td><a href='../module/calc_dielectric.html'>calc_dielectric</a></td><td>Subroutine</td><td><p>Checks to see if the dielectric is going to take up too
+ much memory.</p></td></tr>
+			 
 			   <tr><td><a href='../proc/check_mb_dist_normalization.html'>check_mb_dist_normalization</a></td><td><a href='../module/particle_physics_abs.html'>particle_physics_abs</a></td><td>Subroutine</td><td><p>make sure the mb distribution integrates to 1</p><a href="../proc/check_mb_dist_normalization.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+			 
+			   <tr><td><a href='../proc/compute_dielectric.html'>compute_dielectric</a></td><td><a href='../module/calc_dielectric.html'>calc_dielectric</a></td><td>Subroutine</td><td><p>Compute the contribution to the dimensionless dielectric
+ from a given i -&gt; f transition.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/compute_self_energies.html'>compute_self_energies</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
 			 
@@ -156,6 +162,12 @@ All Procedures &ndash; EXCEED-DM
  the individual sto_wf_radial</p><a href="../proc/core_sto_wf_radial.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/create_output_file.html'>create_output_file</a></td><td><a href='../module/io_input.html'>io_input</a></td><td>Subroutine</td><td><p>Creates the output file</p></td></tr>
+			 
+			   <tr><td><a href='../proc/define_q_grid.html'>define_q_grid</a></td><td><a href='../module/di_grid.html'>di_grid</a></td><td>Subroutine</td><td><p>q = k' - k + G</p><a href="../proc/define_q_grid.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+			 
+			   <tr><td><a href='../proc/di_set_job_table.html'>di_set_job_table</a></td><td><a href='../module/di_transition.html'>di_transition</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/di_width_func.html'>di_width_func</a></td><td><a href='../module/dielectric_input.html'>dielectric_input</a></td><td>Function</td><td><p>Parameterization of the electron lifetime/width.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/dme_scatter_cc_calc.html'>dme_scatter_cc_calc</a></td><td><a href='../module/calc_exdm_scatter_cc.html'>calc_exdm_scatter_cc</a></td><td>Subroutine</td><td></td></tr>
 			 
@@ -206,6 +218,10 @@ All Procedures &ndash; EXCEED-DM
 			   <tr><td><a href='../proc/get_sto_dataset_str.html'>get_sto_dataset_str</a></td><td><a href='../module/core_electrons.html'>core_electrons</a></td><td>Function</td><td><p>Returns the name of the dataset for nth element in the
  core electron configuration</p></td></tr>
 			 
+			   <tr><td><a href='../proc/get_sym_fft_g_grid_red.html'>get_sym_FFT_G_grid_red</a></td><td><a href='../module/fft_util.html'>FFT_util</a></td><td>Function</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/get_sym_fft_g_grid_xyz.html'>get_sym_FFT_G_grid_xyz</a></td><td><a href='../module/fft_util.html'>FFT_util</a></td><td>Function</td><td></td></tr>
+			 
 			   <tr><td><a href='../proc/get_theta.html'>get_theta</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Function</td><td><p>returns the theta value of a unit direction vector, n_hat</p></td></tr>
 			 
 			   <tr><td><a href='../proc/get_val_z_eff.html'>get_val_Z_eff</a></td><td><a href='../module/zeff_input.html'>Zeff_input</a></td><td>Function</td><td><p>returns the Z_eff value of the valence state</p></td></tr>
@@ -230,7 +246,13 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/load_dft_parameters.html'>load_DFT_parameters</a></td><td><a href='../module/dft_parameters.html'>DFT_parameters</a></td><td>Subroutine</td><td><p>Loads the DFT input file</p></td></tr>
 			 
-			   <tr><td><a href='../proc/load_in_med_scr.html'>load_in_med_scr</a></td><td><a href='../module/in_med_scr.html'>in_med_scr</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/load_dielectric_input.html'>load_dielectric_input</a></td><td><a href='../module/dielectric_input.html'>dielectric_input</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/load_in_med_scr.html'>load_in_med_scr</a></td><td><a href='../module/in_med_scr.html'>in_med_scr</a></td><td>Subroutine</td><td><p>allocate screen_mat
+ For some reason this does not work when load_dielectric_from_file is FALSE.
+ When load_dielectric_from_file = TRUE all the processes
+ open and read the file as expected. Seems like a file 
+ permission issue with HDF5.</p><a href="../proc/load_in_med_scr.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/load_io.html'>load_io</a></td><td><a href='../module/io_input.html'>io_input</a></td><td>Subroutine</td><td><p>Loads the io namelist</p></td></tr>
 			 
@@ -241,6 +263,8 @@ All Procedures &ndash; EXCEED-DM
 			   <tr><td><a href='../proc/load_particle_physics_abs.html'>load_particle_physics_abs</a></td><td><a href='../module/particle_physics_abs.html'>particle_physics_abs</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/load_particle_physics_scatter.html'>load_particle_physics_scatter</a></td><td><a href='../module/particle_physics_scatter.html'>particle_physics_scatter</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/load_scr_dielectric.html'>load_scr_dielectric</a></td><td><a href='../module/in_med_scr.html'>in_med_scr</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/load_tff_input.html'>load_tff_input</a></td><td><a href='../module/transition_form_factor.html'>transition_form_factor</a></td><td>Subroutine</td><td></td></tr>
 			 
@@ -266,6 +290,8 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/print_dft_parameters.html'>print_DFT_parameters</a></td><td><a href='../module/dft_parameters.html'>DFT_parameters</a></td><td>Subroutine</td><td><p>Prints variables defined in this moudle</p></td></tr>
 			 
+			   <tr><td><a href='../proc/print_dielectric_input.html'>print_dielectric_input</a></td><td><a href='../module/dielectric_input.html'>dielectric_input</a></td><td>Subroutine</td><td></td></tr>
+			 
 			   <tr><td><a href='../proc/print_in_med.html'>print_in_med</a></td><td><a href='../module/in_med_scr.html'>in_med_scr</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/print_io.html'>print_io</a></td><td><a href='../module/io_input.html'>io_input</a></td><td>Subroutine</td><td></td></tr>
@@ -288,6 +314,8 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/red_mass.html'>red_mass</a></td><td><a href='../module/particle_physics_scatter.html'>particle_physics_scatter</a></td><td>Function</td><td><p>Reduced mass </p></td></tr>
 			 
+			   <tr><td><a href='../proc/run_dielectric_calc.html'>run_dielectric_calc</a></td><td><a href='../module/calc_dielectric.html'>calc_dielectric</a></td><td>Subroutine</td><td><p>Compute the dielectric binned in energy and momentum transfer.</p><a href="../proc/run_dielectric_calc.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+			 
 			   <tr><td><a href='../proc/run_dme_absorption.html'>run_dme_absorption</a></td><td><a href='../module/dme_absorption.html'>dme_absorption</a></td><td>Subroutine</td><td><p>Absorption rate calculation</p></td></tr>
 			 
 			   <tr><td><a href='../proc/run_dme_scatter.html'>run_dme_scatter</a></td><td><a href='../module/exdm_scatter.html'>exdm_scatter</a></td><td>Subroutine</td><td><p>Scattering rate calculation</p></td></tr>
@@ -296,9 +324,11 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/run_dme_scatter_cf.html'>run_dme_scatter_cf</a></td><td><a href='../module/exdm_scatter_cf.html'>exdm_scatter_cf</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/run_dme_scatter_vc.html'>run_dme_scatter_vc</a></td><td><a href='../module/exdm_scatter_vc.html'>exdm_scatter_vc</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/run_dme_scatter_vc.html'>run_dme_scatter_vc</a></td><td><a href='../module/exdm_scatter_vc.html'>exdm_scatter_vc</a></td><td>Subroutine</td><td><p>only load these variables if they haven't been loaded before
+ to compute the dielectric</p></td></tr>
 			 
-			   <tr><td><a href='../proc/run_dme_scatter_vf.html'>run_dme_scatter_vf</a></td><td><a href='../module/exdm_scatter_vf.html'>exdm_scatter_vf</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/run_dme_scatter_vf.html'>run_dme_scatter_vf</a></td><td><a href='../module/exdm_scatter_vf.html'>exdm_scatter_vf</a></td><td>Subroutine</td><td><p>only load these variables if they haven't been loaded before
+ to compute the dielectric</p></td></tr>
 			 
 			   <tr><td><a href='../proc/save_abs_rate.html'>save_abs_rate</a></td><td><a href='../module/dme_absorption.html'>dme_absorption</a></td><td>Subroutine</td><td></td></tr>
 			 
@@ -307,6 +337,8 @@ All Procedures &ndash; EXCEED-DM
 			   <tr><td><a href='../proc/save_core_electrons.html'>save_core_electrons</a></td><td><a href='../module/core_electrons.html'>core_electrons</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/save_dft_parameters.html'>save_DFT_parameters</a></td><td><a href='../module/dft_parameters.html'>DFT_parameters</a></td><td>Subroutine</td><td><p>Saves some of the DFT input variables to filename</p></td></tr>
+			 
+			   <tr><td><a href='../proc/save_dielectric.html'>save_dielectric</a></td><td><a href='../module/calc_dielectric.html'>calc_dielectric</a></td><td>Subroutine</td><td><p>Save the computed dielectric to 'filename'.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/save_in_med_scr.html'>save_in_med_scr</a></td><td><a href='../module/in_med_scr.html'>in_med_scr</a></td><td>Subroutine</td><td></td></tr>
 			 
@@ -378,7 +410,7 @@ All Procedures &ndash; EXCEED-DM
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-06-21T15:08:24.929799 
+             on 2021-07-03T10:58:08.839627 
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

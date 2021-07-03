@@ -87,6 +87,7 @@ contains
         integer :: status(MPI_STATUS_SIZE)
         integer :: tag = 0
         integer :: err
+        integer :: ierr
 
         integer :: t, i
 
@@ -97,7 +98,10 @@ contains
 
         call load_particle_physics_scatter(nml_filename, verbose = verbose)
         call load_numerics(nml_filename, verbose = verbose)
-        call load_in_med_scr(nml_filename, verbose = verbose)
+
+        call load_in_med_scr(nml_filename, dielectric_filename, &
+           DFT_input_filename, proc_id, root_process, n_proc, verbose = verbose)
+
         call load_tff_input(nml_filename, verbose = verbose)
 
         call set_job_table(n_proc, n_init, n_fin, verbose=verbose)

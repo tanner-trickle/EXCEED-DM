@@ -15,11 +15,13 @@
   - **All kinematically allowed transitions are included.** In addition to transitions near the Fermi surface, where density functional theory (DFT) calculations are a necessary component of the calculation, electronic states further below, and above, are modeled semi-analytically and included in the scattering rate calculation.
   - **Daily and annual modulation signals**: No assumptions about the isotropy of the target are made, allowing one to study the daily modulation signal, and the DM velocity distribution parameters can be changed very easily to compute annual modulation. 
   - **Spin-dependent wave functions**: Some targets, such as those with spin-orbit coupling, will have electronic states which are not eigenstates of the spin operator. This means the wave functions have two components instead of one, and particle physics couplings to the spin operator are no longer trivial to compute. `EXCEED-DM` can perform these spin-dependent scattering rate calculations.
-    - Note: currently (v0.2.0) only valence to conduction transitions are supported.
+    - Note: currently (v >= 0.2.0) only valence to conduction transitions are supported.
+  - **Calculate the dielectric**: For some processes the dielectric will screen the interaction rate. The complex dielectric/screening factor can now be computed and used in scattering rate calculations.
+    - Note: currently (v >= 0.2.1) only spin-independent wave functions can be used in the calculation.
 
 - **Absorption**: Given a range of DM masses and times of day, `EXCEED-DM` computes the absorption rate, electronic self energies, and generalized crystal form factors, needed to compute the DM absorption rate.
   - **Scalar, pseudoscalar, and vector DM**: compute the absorption rate from these bosonic DM candidates.
-  - Note: currently (v0.2.0) only valence to conduction transitions are supported.
+  - Note: currently (v >= 0.2.0) only valence to conduction transitions are supported.
 
 `EXCEED-DM` is :
 
@@ -68,7 +70,7 @@ If installed correctly you should see something similar to,
 
          --------------------
 
-            EXCEED-DM - v0.2.0
+            EXCEED-DM - v0.2.1
 
          --------------------
 

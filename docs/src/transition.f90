@@ -1,5 +1,5 @@
 module transition
-    !! Hnadles labelling of the transitions that each processor should compute 
+    !! Handles labelling of the transitions that each processor should compute 
     !! for
 
     implicit none

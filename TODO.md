@@ -10,6 +10,7 @@
   - c -> c calculation
   - c -> f calculation
   - v -> f calculation
+- add tests for dielectric calculation
 
 ### Optimization
 

@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.0</small></a>
+          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.1</small></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.5% of total for source files.">23 statements</a>
+    title=" 0.4% of total for source files.">23 statements</a>
      </li> 
      
      
@@ -261,49 +261,49 @@
 
     <section>
       <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl"><pre><span></span><a name="ln-1"></a><span class="k">module </span><span class="n">timing</span>
-<a name="ln-2"></a>    <span class="c">!! Useful functions for timing a program</span>
-<a name="ln-3"></a>    <span class="k">use </span><span class="n">prec</span>
-<a name="ln-4"></a>
-<a name="ln-5"></a>    <span class="k">implicit none</span>
-<a name="ln-6"></a>
-<a name="ln-7"></a><span class="k">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="nb">time</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<a name="ln-8"></a>        <span class="c">!! holds raw timing variables</span>
-<a name="ln-9"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">delta_t</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<a name="ln-10"></a>        <span class="c">!! holds difference in timing variables</span>
-<a name="ln-11"></a>
-<a name="ln-12"></a><span class="k">contains</span>
-<a name="ln-13"></a>
-<a name="ln-14"></a><span class="k">    function </span><span class="n">pretty_time_format</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">time_str</span><span class="p">)</span>
-<a name="ln-15"></a>        <span class="c">!! Fills time_str with a nicely formatted version of time </span>
-<a name="ln-16"></a>
-<a name="ln-17"></a>        <span class="k">implicit none</span>
-<a name="ln-18"></a>
-<a name="ln-19"></a><span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t</span>
-<a name="ln-20"></a>
-<a name="ln-21"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">time_hr</span>
-<a name="ln-22"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">time_min</span>
-<a name="ln-23"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">time_sec</span>
-<a name="ln-24"></a>
-<a name="ln-25"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span> <span class="o">=</span> <span class="mi">512</span><span class="p">)</span> <span class="kd">::</span> <span class="n">time_str</span>
-<a name="ln-26"></a>
-<a name="ln-27"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">t</span> <span class="p">.</span><span class="n">lt</span><span class="p">.</span> <span class="mf">1.0_dp</span> <span class="p">)</span> <span class="k">then</span>
-<a name="ln-28"></a>
-<a name="ln-29"></a><span class="k">            write</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">t</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;ms&#39;</span>
-<a name="ln-30"></a>
-<a name="ln-31"></a>        <span class="k">else</span>
-<a name="ln-32"></a>
-<a name="ln-33"></a><span class="k">            </span><span class="n">time_hr</span> <span class="o">=</span> <span class="nb">floor</span><span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="mi">360</span><span class="mf">0.0_dp</span><span class="p">)</span>
-<a name="ln-34"></a>            <span class="n">time_min</span> <span class="o">=</span> <span class="nb">floor</span><span class="p">((</span><span class="n">t</span> <span class="o">-</span> <span class="n">time_hr</span><span class="o">*</span><span class="mi">360</span><span class="mf">0.0_dp</span><span class="p">)</span><span class="o">/</span><span class="mi">6</span><span class="mf">0.0_dp</span><span class="p">)</span>
-<a name="ln-35"></a>            <span class="n">time_sec</span> <span class="o">=</span> <span class="nb">nint</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">time_hr</span><span class="o">*</span><span class="mi">360</span><span class="mf">0.0_dp</span> <span class="o">-</span> <span class="n">time_min</span><span class="o">*</span><span class="mi">6</span><span class="mf">0.0_dp</span><span class="p">)</span>
-<a name="ln-36"></a>
-<a name="ln-37"></a>            <span class="k">write</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">time_hr</span><span class="p">,</span> <span class="s1">&#39;hr &#39;</span><span class="p">,</span> <span class="n">time_min</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="n">time_sec</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span>
-<a name="ln-38"></a>
-<a name="ln-39"></a>        <span class="k">end if</span>
-<a name="ln-40"></a>
-<a name="ln-41"></a><span class="k">    end function</span>
-<a name="ln-42"></a>
-<a name="ln-43"></a><span class="k">end module</span>
+    <div class="hl"><pre><span></span><a id="ln-1" name="ln-1"></a><span class="k">module </span><span class="n">timing</span>
+<a id="ln-2" name="ln-2"></a>    <span class="c">!! Useful functions for timing a program</span>
+<a id="ln-3" name="ln-3"></a>    <span class="k">use </span><span class="n">prec</span>
+<a id="ln-4" name="ln-4"></a>
+<a id="ln-5" name="ln-5"></a>    <span class="k">implicit none</span>
+<a id="ln-6" name="ln-6"></a>
+<a id="ln-7" name="ln-7"></a><span class="k">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="nb">time</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<a id="ln-8" name="ln-8"></a>        <span class="c">!! holds raw timing variables</span>
+<a id="ln-9" name="ln-9"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">delta_t</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<a id="ln-10" name="ln-10"></a>        <span class="c">!! holds difference in timing variables</span>
+<a id="ln-11" name="ln-11"></a>
+<a id="ln-12" name="ln-12"></a><span class="k">contains</span>
+<a id="ln-13" name="ln-13"></a>
+<a id="ln-14" name="ln-14"></a><span class="k">    function </span><span class="n">pretty_time_format</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">time_str</span><span class="p">)</span>
+<a id="ln-15" name="ln-15"></a>        <span class="c">!! Fills time_str with a nicely formatted version of time </span>
+<a id="ln-16" name="ln-16"></a>
+<a id="ln-17" name="ln-17"></a>        <span class="k">implicit none</span>
+<a id="ln-18" name="ln-18"></a>
+<a id="ln-19" name="ln-19"></a><span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t</span>
+<a id="ln-20" name="ln-20"></a>
+<a id="ln-21" name="ln-21"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">time_hr</span>
+<a id="ln-22" name="ln-22"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">time_min</span>
+<a id="ln-23" name="ln-23"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">time_sec</span>
+<a id="ln-24" name="ln-24"></a>
+<a id="ln-25" name="ln-25"></a>        <span class="kt">character</span><span class="p">(</span><span class="nb">len</span> <span class="o">=</span> <span class="mi">512</span><span class="p">)</span> <span class="kd">::</span> <span class="n">time_str</span>
+<a id="ln-26" name="ln-26"></a>
+<a id="ln-27" name="ln-27"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">t</span> <span class="p">.</span><span class="n">lt</span><span class="p">.</span> <span class="mf">1.0_dp</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-28" name="ln-28"></a>
+<a id="ln-29" name="ln-29"></a><span class="k">            write</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">t</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;ms&#39;</span>
+<a id="ln-30" name="ln-30"></a>
+<a id="ln-31" name="ln-31"></a>        <span class="k">else</span>
+<a id="ln-32" name="ln-32"></a>
+<a id="ln-33" name="ln-33"></a><span class="k">            </span><span class="n">time_hr</span> <span class="o">=</span> <span class="nb">floor</span><span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="mi">360</span><span class="mf">0.0_dp</span><span class="p">)</span>
+<a id="ln-34" name="ln-34"></a>            <span class="n">time_min</span> <span class="o">=</span> <span class="nb">floor</span><span class="p">((</span><span class="n">t</span> <span class="o">-</span> <span class="n">time_hr</span><span class="o">*</span><span class="mi">360</span><span class="mf">0.0_dp</span><span class="p">)</span><span class="o">/</span><span class="mi">6</span><span class="mf">0.0_dp</span><span class="p">)</span>
+<a id="ln-35" name="ln-35"></a>            <span class="n">time_sec</span> <span class="o">=</span> <span class="nb">nint</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">time_hr</span><span class="o">*</span><span class="mi">360</span><span class="mf">0.0_dp</span> <span class="o">-</span> <span class="n">time_min</span><span class="o">*</span><span class="mi">6</span><span class="mf">0.0_dp</span><span class="p">)</span>
+<a id="ln-36" name="ln-36"></a>
+<a id="ln-37" name="ln-37"></a>            <span class="k">write</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">time_hr</span><span class="p">,</span> <span class="s1">&#39;hr &#39;</span><span class="p">,</span> <span class="n">time_min</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="n">time_sec</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span>
+<a id="ln-38" name="ln-38"></a>
+<a id="ln-39" name="ln-39"></a>        <span class="k">end if</span>
+<a id="ln-40" name="ln-40"></a>
+<a id="ln-41" name="ln-41"></a><span class="k">    end function</span>
+<a id="ln-42" name="ln-42"></a>
+<a id="ln-43" name="ln-43"></a><span class="k">end module</span>
 </pre></div>
 
     </section>
@@ -322,7 +322,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-06-21T15:08:24.929799 
+             on 2021-07-03T10:58:08.839627 
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

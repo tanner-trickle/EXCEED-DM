@@ -48,7 +48,7 @@ $fftw3_lib_dir = /usr/lib/x86_64-linux-gnu
 [modes]
 modes = local-gnu local-gnu-debug
         local-intel local-intel-debug
-        ubuntu-gnu 
+        ubuntu-gnu ubuntu-gnu-debug
         ubuntu-intel
         lrc-gnu
         caltech-hpc-gnu

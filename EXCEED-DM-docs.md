@@ -9,7 +9,7 @@ github: https://github.com/tanner-trickle
 date: 06/21/2021
 email: ttrickle17@gmail.com
 source: false
-version: 0.2.0
+version: 0.2.1
 print_creation_date: true
 exclude: fftw3.f90
          special_functions.f90
