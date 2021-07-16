@@ -48,6 +48,8 @@ Follow these instructions to compile and run `EXCEED-DM` on a fresh Ubuntu (18.0
     - OpenMPI          (`sudo apt install libopenmpi-dev`)
     - fftw3            (`sudo apt install libfftw3-dev`)
     - hdf5             (`sudo apt install libhdf5-serial-dev`)
+    - LAPACK           (`sudo apt install liblapack-dev`)
+    - BLAS             (`sudo apt install libblas-dev`)
     - FoBiS.py         (`sudo pip3 install FoBiS.py`)
 
 Note : It's recommended to run `sudo apt update` before, and on a completely fresh Ubuntu installation pip will need to be installed (`sudo apt install python3-pip`).

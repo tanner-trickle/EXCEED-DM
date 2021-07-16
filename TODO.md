@@ -14,7 +14,6 @@
 
 ### Optimization
 
-- See if incorporating external BLAS software gives significant speed increase.
 - Use better profiling to see if there are slow spots.
 
 ## Long term

@@ -48,6 +48,9 @@ contains
         complex(dp), allocatable :: wfc_FT_i_s(:, :, :)
         complex(dp), allocatable :: wfc_FT_f_s(:, :, :)
 
+        complex(dp) :: k_red_eig_vals(3)
+        complex(dp) :: k_red_eig_vecs(3, 3)
+
         if ( verbose ) then
 
             print*, 'Starting v -> c scattering rate calculation...'
@@ -75,6 +78,9 @@ contains
 
         n_FFT = n_FFT_grid(1)*n_FFT_grid(2)*n_FFT_grid(3)
 
+        call calc_eig_system_33((1.0_dp, 0.0_dp)*k_red_to_xyz, k_red_eig_vals, k_red_eig_vecs)
+        q_s_FFT = minval(abs(k_red_eig_vals))/2.0_dp
+
         if ( verbose ) then
 
             print*, '----------------------------------------'
@@ -86,6 +92,8 @@ contains
             print*, '        ', n_FFT_grid
             print*
             print*, '        Number of G points in FFT grid = ', n_FFT
+            print*
+            print*, '        q_s_FFT = ', q_s_FFT/1.0e3_dp, ' keV'
             print*
             print*, '----------------------------------------'
             print*

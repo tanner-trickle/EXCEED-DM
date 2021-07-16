@@ -16,6 +16,7 @@ files=(\
     "Si/inputs/ps_absorp_example.txt"\
     "Si/inputs/vector_absorp_example.txt"\
     "Si/inputs/scalar_absorp_example.txt"\
+    "Si/inputs/scalar_absorp_spin_example.txt"\
 )
 
 # files=(\

@@ -12,14 +12,12 @@ module rate_calc_scalar
 
 contains
 
-    subroutine calc_rate_scalar(pi_11_mat, pi_1v, pi_v1, pi_vv, abs_rate, verbose)
+    subroutine calc_rate_scalar(pi_1_1_mat, pi_v2_v2, v_vec, v_max, abs_rate, verbose)
 
         implicit none
 
-        complex(dp) :: pi_11_mat(3, 3, n_omega, n_widths)
-        complex(dp) :: pi_1v(3, n_omega, n_widths)
-        complex(dp) :: pi_v1(3, n_omega, n_widths)
-        complex(dp) :: pi_vv(n_omega, n_widths)
+        complex(dp) :: pi_1_1_mat(3, 3, n_omega, n_widths)
+        complex(dp) :: pi_v2_v2(n_omega, n_widths)
 
         real(dp) :: abs_rate(n_omega, n_widths, n_time)
 
@@ -33,28 +31,18 @@ contains
         real(dp) :: omega
         real(dp) :: v_angular_mesh(n_v_theta*n_v_phi, 2)
 
-        real(dp) :: v_mag, v_theta, v_phi, v_max
-        real(dp) :: v_mag_list(n_v_mag)
+        real(dp) :: v_mag, v_max
         real(dp) :: v_vec(3)
         real(dp) :: q_vec(3), q_mag
 
         real(dp) :: pi_r, pi_c
-        real(dp) :: pi_11
-        real(dp) :: pi_1v_val, pi_v1_val
+        real(dp) :: pi_1_1
 
         real(dp) :: ve_vec(3)
 
         real(dp) :: mb_val
 
-        v_max = vEsc + vE
-
-        do v = 1, n_v_mag
-
-            v_mag_list(v) = v_max*(v - 1.0_dp)/max(1.0_dp, n_v_mag - 1.0_dp)
-
-        end do
-
-        v_angular_mesh = generate_uniform_points_on_sphere(n_v_theta, n_v_phi)
+        v_mag = norm2(v_vec)
 
         do w = 1, n_omega
 
@@ -67,47 +55,30 @@ contains
 
                     av_rate = 0.0_dp
 
-                    ! velocity integral
-                    do v = 1, n_v_mag
-                        do a = 1, n_v_theta*n_v_phi
+                    q_vec = omega*v_vec
+                    q_mag = norm2(q_vec)
 
-                            v_mag = v_mag_list(v)
-                            v_theta = v_angular_mesh(a, 1)
-                            v_phi = v_angular_mesh(a, 2)
+                    if ( q_mag > 0.0_dp ) then
 
-                            v_vec(1) = v_mag*sin(v_theta)*cos(v_phi)
-                            v_vec(2) = v_mag*sin(v_theta)*sin(v_phi)
-                            v_vec(3) = v_mag*cos(v_theta)
+                        pi_1_1 = dot_product( q_vec/m_elec, matmul( pi_1_1_mat(:, :, w, p), q_vec/m_elec ) )
 
-                            q_vec = omega*v_vec
-                            q_mag = norm2(q_vec)
+                        gam = -(omega)**(-1)*aimag(&
+                            pi_v2_v2(w, p) + &
+                            (e_EM)**(-2)*( q_mag**2 )*&
+                            ( q_mag**2 )*&
+                            ( q_mag**2 - e_EM**2*pi_1_1 )**(-1)&
+                            )
 
-                            if ( q_mag > 0.0_dp ) then
+                        rate = (rhoX/rho_T)*(omega)**(-1)*gam
 
-                                pi_11 = dot_product( q_vec/m_elec, matmul( pi_11_mat(:, :, w, p), q_vec/m_elec ) )
-                                pi_1v_val = dot_product( q_vec/m_elec, pi_1v(:, w, p) )
-                                pi_v1_val = dot_product( q_vec/m_elec, pi_v1(:, w, p) )
+                        mb_val = mb_vel_distribution(v_vec, boost_vec_in = ve_vec)
 
-                                gam = -(omega)**(-1)*aimag(&
-                                    pi_vv(w, p) + &
-                                    (e_EM)**(-2)*( q_mag**2 - e_EM**2*pi_v1_val )*&
-                                    ( q_mag**2 - e_EM**2*pi_1v_val )*&
-                                    ( q_mag**2 - e_EM**2*pi_11 )**(-1)&
-                                    )
+                        av_rate = av_rate + v_mag**2*(4.0_dp*pi*v_max)*(1.0_dp*n_v_mag*n_v_theta*n_v_phi)**(-1)*&
+                                            rate*mb_val
 
-                                rate = (rhoX/rho_T)*(omega)**(-1)*gam
+                    end if
 
-                                mb_val = mb_vel_distribution(v_vec, boost_vec_in = ve_vec)
-
-                                av_rate = av_rate + v_mag**2*(4.0_dp*pi*v_max)*(1.0_dp*n_v_mag*n_v_theta*n_v_phi)**(-1)*&
-                                                    rate*mb_val
-
-                            end if
-
-                        end do
-                    end do
-
-                    abs_rate(w, p, t) = av_rate
+                    abs_rate(w, p, t) = abs_rate(w, p, t) + av_rate
 
                 end do
             end do

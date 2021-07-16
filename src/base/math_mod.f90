@@ -9,6 +9,23 @@ module math_mod
 
 contains
 
+    subroutine calc_eig_system_33(mat, eig_val, eig_vec)
+        !! Wrapper function to ZGEEV, find eigenvalues and (right) eigenvectors of 3x3 matrix.
+
+        complex(dp) :: mat(3, 3)
+
+        complex(dp) :: eig_vec(3, 3)
+        complex(dp) :: eig_val(3)
+
+        complex(dp) :: lwork(6), rwork(6)
+        complex(dp) :: dummy(1, 1)
+
+        integer :: info
+
+        call zgeev('N', 'V', 3, mat, 3, eig_val, dummy, 1, eig_vec, 3, lwork, 6, rwork, info) 
+
+    end subroutine
+
     function pauli_spin_matrix(i) result(mat)
         !! Returns the ith Pauli spin matrix. Assume 0th Pauli matrix is the identity
 

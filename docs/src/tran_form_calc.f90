@@ -7,8 +7,72 @@ module tran_form_calc
     use DFT_parameters
 
     implicit none
+
+    !! Compute different transition form factors for spin-independent
+    !! and spin-dependent wave functions 
+    interface calc_tran_form_1
+        module procedure calc_tran_form_1_no_spin
+        module procedure calc_tran_form_1_spin
+    end interface
+
+    interface calc_tran_form_v
+        module procedure calc_tran_form_v_no_spin
+        module procedure calc_tran_form_v_spin
+    end interface
+
+    interface calc_tran_form_v2
+        module procedure calc_tran_form_v2_no_spin
+        module procedure calc_tran_form_v2_spin
+    end interface
     
 contains
+
+    !! TODO
+    subroutine calc_tran_form_1_no_spin(tran_form, verbose)
+        !! Computes the spin independent scalar transition form factor:
+        !!
+        !! $$\begin{align}
+        !!      f_{i, i', \mathbf{k}} = \sum_\mathbf{G} \widetilde{u}_{i' \mathbf{k} \mathbf{G}}^* \widetilde{u}_{i \mathbf{k}
+        !! \mathbf{G}} \nonumber
+        !! \end{align}$$ 
+        !!
+        !! for a given i, i'
+        implicit none
+
+
+
+
+    end subroutine
+
+    subroutine calc_tran_form_1_spin(tran_form, verbose)
+        !! Computes the spin dependent scalar transition form factor:
+        !!
+        !! $$\begin{align}
+        !!      f_{i, i', \mathbf{k}}^{ss'} = \sum_\mathbf{G} {\widetilde{u}_{i' \mathbf{k} \mathbf{G}}^{s'}}^* \widetilde{u}_{i \mathbf{k}
+        !! \mathbf{G}}^s \nonumber
+        !! \end{align}$$ 
+        !!
+        !! for a given i, i'
+
+    end subroutine
+
+    subroutine calc_tran_form_v_no_spin()
+
+    end subroutine
+
+    subroutine calc_tran_form_v_spin()
+
+    end subroutine
+
+    subroutine calc_tran_form_v2_no_spin()
+
+    end subroutine
+
+    subroutine calc_tran_form_v2_spin()
+
+    end subroutine
+
+
 
     subroutine calc_tran_form(tran_form, tran_form_vec, omega_k, &
         val_id, cond_id, wfc_FT_i, wfc_FT_f, verbose)

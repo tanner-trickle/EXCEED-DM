@@ -262,6 +262,9 @@ contains
 
         real(dp) :: f_sq_val
 
+        complex(dp) :: eig_vals(3)
+        complex(dp) :: eig_vecs(3, 3)
+
         b_rate = 0.0_dp
         wfc_FT_i_exp = (0.0_dp, 0.0_dp)
         wfc_FT_f_exp = (0.0_dp, 0.0_dp)

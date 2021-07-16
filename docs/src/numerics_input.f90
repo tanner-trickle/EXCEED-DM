@@ -60,8 +60,6 @@ module numerics_input
         !! Minimum eigenvalue of k_red_to_xyz matrix
         !!
         !! Note : only used in calculations which use the FFT
-        !! 
-        !! TODO : do not hard code this in
 
     integer :: n_kf_theta = 1
         !! Number of theta points in integration of kf
@@ -104,7 +102,7 @@ module numerics_input
                         Ef_max, &
                         n_init, &
                         n_fin, &
-                        q_s_FFT, &
+                        ! q_s_FFT, &
                         n_FFT_grid_input, &
                         n_kf_theta, &
                         n_kf_phi, &

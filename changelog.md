@@ -1,3 +1,13 @@
+v0.2.2
+---
+
+- Improvements to `absorption` module.
+  - Initial support for spin-dependent wave functions.
+    - More general transition form factors can be computed.
+  - Parallelization of velocity integral
+- **LAPACK and BLAS are now required.** Additional installation instructions have been added to the `ubuntu-gnu` build.
+- `q_s_FFT` has been removed as a `numerics` input option. This is now computed directly with `LAPACK` routines.
+
 v0.2.1
 ---
 

@@ -189,6 +189,8 @@ libs     = $ubuntu_hdf5_lib_dir/libhdf5_fortran.a
            $ubuntu_hdf5_lib_dir/libhdf5_hl.a
            $ubuntu_hdf5_lib_dir/libhdf5.a
            $ubuntu_fftw3_lib_dir/libfftw3.a
+           -llapack
+           -lblas
            -lpthread
            -lsz
            -lz
@@ -208,6 +210,8 @@ libs     = $ubuntu_hdf5_lib_dir/libhdf5_fortran.a
            $ubuntu_hdf5_lib_dir/libhdf5_hl.a
            $ubuntu_hdf5_lib_dir/libhdf5.a
            $ubuntu_fftw3_lib_dir/libfftw3.a
+           -llapack
+           -lblas
            -lpthread
            -lsz
            -lz
@@ -256,6 +260,8 @@ libs     = $caltech_hpc_hdf5_lib_dir/libhdf5_fortran.a
            $caltech_hpc_hdf5_lib_dir/libhdf5_hl.a
            $caltech_hpc_hdf5_lib_dir/libhdf5.a
            $caltech_hpc_fftw3_lib_dir/libfftw3.a
+           -llapack
+           -lblas
            -lpthread
            -lsz
            -lz
