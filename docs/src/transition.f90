@@ -45,7 +45,12 @@ contains
 
         n_tran = n_init*n_fin
 
-        allocate(tran_to_init_fin_id(n_tran, 2))
+        if ( .not. allocated(tran_to_init_fin_id) ) then
+            allocate(tran_to_init_fin_id(n_tran, 2))
+        else
+            deallocate(tran_to_init_fin_id)
+            allocate(tran_to_init_fin_id(n_tran, 2))
+        end if
 
         id = 0
         do i = 1, n_init
@@ -65,7 +70,12 @@ contains
             n_tran_per_proc = n_tran/n_proc + 1
         end if 
 
-        allocate(job_table(n_proc, n_tran_per_proc))
+        if ( .not. allocated(job_table) ) then
+            allocate(job_table(n_proc, n_tran_per_proc))
+        else
+            deallocate(job_table)
+            allocate(job_table(n_proc, n_tran_per_proc))
+        end if
 
         tran_id = 0
         

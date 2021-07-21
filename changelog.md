@@ -1,3 +1,15 @@
+v0.2.3
+---
+
+- Calculation of the dielectric for targets with spin-dependent wave functions is now supported.
+- Added routine to time the dielectric calculation.
+- Added `spin_degen` which accounts for the spin degeneracy factor of the initial (valence) states.
+- Added `scalar_LO` absorption calculation mode to just compute the leading order contribution for scalar DM absorption.
+- Generalized vector/pseudoscalar DM absorption calculation for anisotropic targets.
+  - Self-energy, Pi_vi_vj, is now computed along with the other self energies.
+- Implemented routine to rigorously find maximum magnitude of q for which an FFT will give consistent results across meshes. See `find_q_max_FFT` routine in `FFT_util`.
+- Updated `install.md`
+
 v0.2.2
 ---
 

@@ -29,6 +29,7 @@ contains
             n_FFT_grid,&
             k_cut, &
             wfc_FFT_plan, Tif_FFT_plan,&
+            q_max_FFT, &
             verbose)
         !! Computes the valence to conduction scattering rate. Wave functions are 2 component spinors
         !! in S_z basis
@@ -92,7 +93,7 @@ contains
 
         n_FFT = n_FFT_grid(1)*n_FFT_grid(2)*n_FFT_grid(3)
 
-        q_max_FFT = n_FFT_grid(1)*q_s_FFT
+        ! q_max_FFT = n_FFT_grid(1)*q_s_FFT
 
         do ki = 1, k_cut
 
@@ -197,7 +198,7 @@ contains
         ! add overall constants
         do m = 1, n_mX
 
-            b_rate(:, :, m, :, :) = (2*pi)*(rhoX/rho_T)*(2*pc_vol)**(-2)*&
+            b_rate(:, :, m, :, :) = (spin_degen/2.0_dp)*(2*pi)*(rhoX/rho_T)*(2*pc_vol)**(-2)*&
                             red_mass(mX(m), m_elec)**(-2)*(mX(m))**(-1)*&
                             (1.0_dp*n_FFT)**(-2)*b_rate(:, :, m, :, :)
         end do
@@ -212,6 +213,7 @@ contains
             n_FFT_grid,&
             k_cut, &
             wfc_FFT_plan, Tif_FFT_plan,&
+            q_max_FFT, &
             verbose)
         !! Computes the valence to conduction scattering rate assuming the wave functions do not
         !! depend on the spin.
@@ -276,7 +278,7 @@ contains
 
         n_FFT = n_FFT_grid(1)*n_FFT_grid(2)*n_FFT_grid(3)
 
-        q_max_FFT = n_FFT_grid(1)*q_s_FFT
+        ! q_max_FFT = n_FFT_grid(1)*q_s_FFT
 
         do ki = 1, k_cut
 
@@ -371,7 +373,7 @@ contains
         ! add overall constants
         do m = 1, n_mX
 
-            b_rate(:, :, m, :, :) = (2*pi)*(rhoX/rho_T)*(2*pc_vol)**(-2)*&
+            b_rate(:, :, m, :, :) = (spin_degen/2.0_dp)*(2*pi)*(rhoX/rho_T)*(2*pc_vol)**(-2)*&
                             red_mass(mX(m), m_elec)**(-2)*(mX(m))**(-1)*&
                             (1.0_dp*n_FFT)**(-2)*b_rate(:, :, m, :, :)
         end do

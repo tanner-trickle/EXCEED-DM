@@ -10,7 +10,7 @@
     <meta name="author" content="Tanner Trickle" >
     <link rel="icon" href="../favicon.png">
 
-    <title>calc_pi_vv &ndash; EXCEED-DM</title>
+    <title>calc_pi_vi_vj &ndash; EXCEED-DM</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.2</small></a>
+          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.3</small></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -108,8 +108,8 @@
     
   
   <div class="row">
-    <h1>calc_pi_vv
-      <small>Subroutine</small>
+    <h1>calc_pi_vi_vj
+   <small>Interface</small>
     
     </h1>
     
@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.4% of total for procedures.">20 statements</a>
+    title="<p> 0.1% of total for procedures.</p>Including implementation: 72 statements,  1.4% of total for procedures.">4 statements</a>
      </li> 
      
      
@@ -143,7 +143,7 @@
      <li><a href='../module/calc_pi.html'>calc_PI</a></li>
     
   
-     <li class="active">calc_pi_vv</li>
+     <li class="active">calc_pi_vi_vj</li>
   </ol>
 </div>
 </div>
@@ -158,7 +158,7 @@
   
   <div class="row">
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
-    
+      
 <div id="sidebar">
   
 <h3>Contents</h3>
@@ -183,8 +183,20 @@
 
 
 
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#modprocs-0">Module Procedures</a></h3></div>
+  <div id="modprocs-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../interface/calc_pi_vi_vj.html#moduleprocedure-calc_pi_vi_vj_no_spin">calc_pi_vi_vj_no_spin</a>
+      
+      <a class="list-group-item" href="../interface/calc_pi_vi_vj.html#moduleprocedure-calc_pi_vi_vj_spin">calc_pi_vi_vj_spin</a>
+      
+    </div>
+  </div>
+</div>
 
-<em>None</em>
+
 
 
 </div>
@@ -192,87 +204,14 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>
-public subroutine calc_pi_vv(pi_vv, tran_form_t, omega_iipk_t)
-    
-    
+      <h2>public interface calc_pi_vi_vj</h2>
    
-</h2>
-    
-  
-
-
-    
-
-    <h3>Arguments</h3>
-    
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
-<tbody>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-pi_vv"></span>complex(kind=dp)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>pi_vv</strong>(n_omega,n_widths)</td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-tran_form_t"></span>complex(kind=dp)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>tran_form_t</strong>(n_k)</td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-omega_iipk_t"></span>real(kind=dp)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>omega_iipk_t</strong>(n_k)</td><td></td>
-  
-</tr>
-
-</tbody>
-</table>
-
-    
-    
-    
-    
      
-    <br>
+     
+    
 
-    <section class="visible-xs visible-sm hidden-md">
-      
+     <section class="visible-xs visible-sm hidden-md">
+       
 <h3>Contents</h3>
  
 
@@ -295,34 +234,198 @@ public subroutine calc_pi_vv(pi_vv, tran_form_t, omega_iipk_t)
 
 
 
-
-<em>None</em>
-
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
-    
-
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-    
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#modprocs-1">Module Procedures</a></h3></div>
+  <div id="modprocs-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../interface/calc_pi_vi_vj.html#moduleprocedure-calc_pi_vi_vj_no_spin">calc_pi_vi_vj_no_spin</a>
+      
+      <a class="list-group-item" href="../interface/calc_pi_vi_vj.html#moduleprocedure-calc_pi_vi_vj_spin">calc_pi_vi_vj_spin</a>
+      
     </div>
   </div>
+</div>
+
+
+
+
+     </section>
+     <br class="visible-xs visible-sm hidden-md">
+     
+  
+
+  
+
+  
+   <h2>Module Procedures</h2>
+   
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-calc_pi_vi_vj_no_spin"></span><h3>
+public subroutine <a href='../proc/calc_pi_vi_vj_no_spin.html'>calc_pi_vi_vj_no_spin</a>(pi_vi_vj, tran_form_v, omega_iipk)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>pi_vi_vj</strong>(:,:,:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>tran_form_v</strong>(:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>omega_iipk</strong>(:)</td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  </div>
+  </div>
+
+   
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-calc_pi_vi_vj_spin"></span><h3>
+public subroutine <a href='../proc/calc_pi_vi_vj_spin.html'>calc_pi_vi_vj_spin</a>(pi_vi_vj, tran_form_v, omega_iipk)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>pi_vi_vj</strong>(:,:,:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>tran_form_v</strong>(:,:,:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>omega_iipk</strong>(:)</td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  </div>
+  </div>
+
+   
+     
+
+ </div>
+</div>
 
 
     <hr>    
@@ -336,7 +439,7 @@ public subroutine calc_pi_vv(pi_vv, tran_form_t, omega_iipk_t)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-07-15T05:28:03.058520 
+             on 2021-07-21T07:12:49.447928 
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

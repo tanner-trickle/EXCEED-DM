@@ -52,14 +52,14 @@ module numerics_input
         !!
         !! Note : only used in calculations which use the FFT
 
-    real(dp) :: q_s_FFT = 2151.0_dp/2.0_dp
-        !! Units : eV
-        !!
-        !! q_max_FFT = q_s_FFT*N_FFT
-        !!
-        !! Minimum eigenvalue of k_red_to_xyz matrix
-        !!
-        !! Note : only used in calculations which use the FFT
+    !real(dp) :: q_s_FFT = 2151.0_dp/2.0_dp
+    !    !! Units : eV
+    !    !!
+    !    !! q_max_FFT = q_s_FFT*N_FFT
+    !    !!
+    !    !! Minimum eigenvalue of k_red_to_xyz matrix
+    !    !!
+    !    !! Note : only used in calculations which use the FFT
 
     integer :: n_kf_theta = 1
         !! Number of theta points in integration of kf

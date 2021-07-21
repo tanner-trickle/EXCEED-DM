@@ -28,23 +28,39 @@ module tran_form_calc
 contains
 
     !! TODO
-    subroutine calc_tran_form_1_no_spin(tran_form, verbose)
+    subroutine calc_tran_form_1_no_spin(tran_form, val_id, cond_id, wfc_FT_i, wfc_FT_f, verbose)
         !! Computes the spin independent scalar transition form factor:
         !!
         !! $$\begin{align}
         !!      f_{i, i', \mathbf{k}} = \sum_\mathbf{G} \widetilde{u}_{i' \mathbf{k} \mathbf{G}}^* \widetilde{u}_{i \mathbf{k}
-        !! \mathbf{G}} \nonumber
+        !! \mathbf{G}} = \delta_{i i'} \nonumber
         !! \end{align}$$ 
         !!
         !! for a given i, i'
+        !!
+        !! Have this function here to have a nice interface.
         implicit none
 
+        logical, optional :: verbose
 
+        complex(dp) :: tran_form(:)
 
+        integer :: val_id, cond_id
+
+        complex(dp) :: wfc_FT_i(:, :)
+        complex(dp) :: wfc_FT_f(:, :)
+
+        integer :: k, g
+
+        if ( val_id /= cond_id ) then
+
+            tran_form = (0.0_dp, 0.0_dp)
+
+        end if
 
     end subroutine
 
-    subroutine calc_tran_form_1_spin(tran_form, verbose)
+    subroutine calc_tran_form_1_spin(tran_form, val_id, cond_id, wfc_FT_i, wfc_FT_f, verbose)
         !! Computes the spin dependent scalar transition form factor:
         !!
         !! $$\begin{align}
@@ -52,44 +68,132 @@ contains
         !! \mathbf{G}}^s \nonumber
         !! \end{align}$$ 
         !!
-        !! for a given i, i'
-
-    end subroutine
-
-    subroutine calc_tran_form_v_no_spin()
-
-    end subroutine
-
-    subroutine calc_tran_form_v_spin()
-
-    end subroutine
-
-    subroutine calc_tran_form_v2_no_spin()
-
-    end subroutine
-
-    subroutine calc_tran_form_v2_spin()
-
-    end subroutine
-
-
-
-    subroutine calc_tran_form(tran_form, tran_form_vec, omega_k, &
-        val_id, cond_id, wfc_FT_i, wfc_FT_f, verbose)
+        !! for a given i, i'.
+        !!
+        !! Note:
+        !! $$\begin{align}
+        !!      \sum_{s} f_{i, i', \mathbf{k}}^{s s} = \delta_{i i'}
+        !! \end{align}$$ 
 
         implicit none
 
-        complex(dp) :: tran_form(n_k)
-        complex(dp) :: tran_form_vec(3, n_k)
+        logical, optional :: verbose
 
-        real(dp) :: omega_k(n_k)
+        complex(dp) :: tran_form(:, :, :)
 
         integer :: val_id, cond_id
 
-        complex(dp) :: wfc_FT_i(n_k, n_in_G)
-        complex(dp) :: wfc_FT_f(n_k, n_in_G)
+        complex(dp) :: wfc_FT_i(:, :, :)
+        complex(dp) :: wfc_FT_f(:, :, :)
+
+        integer :: k, s, sp
+
+        tran_form = (0.0_dp, 0.0_dp)
+
+        if ( val_id /= cond_id ) then
+
+            do k = 1, n_k
+                do s = 1, 2
+                    do sp = 1, 2
+
+                        tran_form(k, s, sp) = tran_form(k, s, sp) + sum(conjg(wfc_FT_f(k, :, sp))*wfc_FT_i(k, :, s))
+
+                    end do
+                end do
+            end do
+
+        else
+
+            tran_form = (0.0_dp, 0.0_dp)
+
+        end if
+
+    end subroutine
+
+    subroutine calc_tran_form_v_no_spin(tran_form, val_id, cond_id, wfc_FT_i, wfc_FT_f, verbose)
+
+        implicit none
 
         logical, optional :: verbose
+
+        complex(dp) :: tran_form(:, :)
+
+        integer :: val_id, cond_id
+
+        complex(dp) :: wfc_FT_i(:, :)
+        complex(dp) :: wfc_FT_f(:, :)
+
+        integer :: k, g
+
+        real(dp) :: p_vec(3)
+
+        do k = 1, n_k
+
+            do g = 1, n_in_G
+
+                p_vec = k_grid_xyz(k, :) + in_G_grid_xyz(g, :)
+
+                tran_form(:, k) = tran_form(:, k) + &
+                    (p_vec/m_elec)*conjg(wfc_FT_f(k, g))*wfc_FT_i(k, g)
+
+            end do
+
+        end do
+
+    end subroutine
+
+    subroutine calc_tran_form_v_spin(tran_form, val_id, cond_id, wfc_FT_i, wfc_FT_f, verbose)
+
+        implicit none
+
+        logical, optional :: verbose
+
+        complex(dp) :: tran_form(:, :, :, :)
+
+        integer :: val_id, cond_id
+
+        complex(dp) :: wfc_FT_i(:, :, :)
+        complex(dp) :: wfc_FT_f(:, :, :)
+
+        integer :: k, g, s, sp
+
+        real(dp) :: p_vec(3)
+
+        tran_form = (0.0_dp, 0.0_dp)
+
+        do k = 1, n_k
+
+            do s = 1, 2
+                do sp = 1, 2
+
+                    do g = 1, n_in_G
+
+                        p_vec = k_grid_xyz(k, :) + in_G_grid_xyz(g, :)
+
+                        tran_form(:, k, s, sp) = tran_form(:, k, s, sp) + &
+                            (p_vec/m_elec)*conjg(wfc_FT_f(k, g, sp))*wfc_FT_i(k, g, s)
+
+                    end do
+
+                end do
+            end do
+
+        end do
+
+    end subroutine
+
+    subroutine calc_tran_form_v2_no_spin(tran_form, val_id, cond_id, wfc_FT_i, wfc_FT_f, verbose)
+
+        implicit none
+
+        logical, optional :: verbose
+
+        complex(dp) :: tran_form(:)
+
+        integer :: val_id, cond_id
+
+        complex(dp) :: wfc_FT_i(:, :)
+        complex(dp) :: wfc_FT_f(:, :)
 
         integer :: k, g
 
@@ -97,25 +201,61 @@ contains
         real(dp) :: p_sq
 
         tran_form = (0.0_dp, 0.0_dp)
-        tran_form_vec = (0.0_dp, 0.0_dp)
-        omega_k = 0.0_dp
 
         do k = 1, n_k
-
-            omega_k(k) = energy_bands(k, cond_id) - energy_bands(k, val_id)
 
             do g = 1, n_in_G
 
                 p_vec = k_grid_xyz(k, :) + in_G_grid_xyz(g, :)
 
-                p_sq = dot_product(p_vec, p_vec)
+                p_sq = norm2(p_vec)**2
 
-                tran_form(k) = tran_form(k) +&
+                tran_form(k) = tran_form(k) + &
                     (p_sq/m_elec**2)*conjg(wfc_FT_f(k, g))*wfc_FT_i(k, g)
 
-                tran_form_vec(:, k) = tran_form_vec(:, k) + &
-                    (p_vec/m_elec)*conjg(wfc_FT_f(k, g))*wfc_FT_i(k, g)
+            end do
 
+        end do
+
+    end subroutine
+
+    subroutine calc_tran_form_v2_spin(tran_form, val_id, cond_id, wfc_FT_i, wfc_FT_f, verbose)
+
+        implicit none
+
+        logical, optional :: verbose
+
+        complex(dp) :: tran_form(:, :, :)
+
+        integer :: val_id, cond_id
+
+        complex(dp) :: wfc_FT_i(:, :, :)
+        complex(dp) :: wfc_FT_f(:, :, :)
+
+        integer :: k, g, s, sp
+
+        real(dp) :: p_vec(3)
+        real(dp) :: p_sq
+
+        tran_form = (0.0_dp, 0.0_dp)
+
+        do k = 1, n_k
+
+            do s = 1, 2
+                do sp = 1, 2
+
+                    do g = 1, n_in_G
+
+                        p_vec = k_grid_xyz(k, :) + in_G_grid_xyz(g, :)
+
+                        p_sq = norm2(p_vec)**2
+
+                        tran_form(k, s, sp) = tran_form(k, s, sp) + &
+                            (p_sq/m_elec**2)*conjg(wfc_FT_f(k, g, sp))*wfc_FT_i(k, g, s)
+
+                    end do
+
+                end do
             end do
 
         end do

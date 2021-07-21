@@ -10,7 +10,7 @@
     <meta name="author" content="Tanner Trickle" >
     <link rel="icon" href="../favicon.png">
 
-    <title>calc_tran_form &ndash; EXCEED-DM</title>
+    <title>compute_self_energies_no_spin &ndash; EXCEED-DM</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.2</small></a>
+          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.3</small></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -108,7 +108,7 @@
     
   
   <div class="row">
-    <h1>calc_tran_form
+    <h1>compute_self_energies_no_spin
       <small>Subroutine</small>
     
     </h1>
@@ -126,24 +126,24 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.5% of total for procedures.">25 statements</a>
+    title=" 0.5% of total for procedures.">24 statements</a>
      </li> 
      
      
      
-    <li><i class="fa fa-code"></i><a href="../src/tran_form_calc.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/calc_PI.f90"> Source File</a></li>
      
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
     
-     <li><a href='../sourcefile/tran_form_calc.f90.html'>tran_form_calc.f90</a></li>
+     <li><a href='../sourcefile/calc_pi.f90.html'>calc_PI.f90</a></li>
     
-     <li><a href='../module/tran_form_calc.html'>tran_form_calc</a></li>
+     <li><a href='../module/calc_pi.html'>calc_PI</a></li>
     
   
-     <li class="active">calc_tran_form</li>
+     <li class="active">compute_self_energies_no_spin</li>
   </ol>
 </div>
 </div>
@@ -193,7 +193,7 @@
     
     <div class="col-md-9" id='text'>
     <h2>
-public subroutine calc_tran_form(tran_form, tran_form_vec, omega_k, val_id, cond_id, wfc_FT_i, wfc_FT_f, verbose)
+public subroutine compute_self_energies_no_spin(nml_filename, tran_form_1_t, tran_form_v_t, tran_form_v2_t, omega_iipk_t, n_init, n_fin, n_k, n_proc, proc_id, root_process, verbose)
     
     
    
@@ -222,12 +222,12 @@ public subroutine calc_tran_form(tran_form, tran_form_vec, omega_k, val_id, cond
   
 <tr>
   
-  <td><span class="anchor" id="variable-tran_form~4"></span>complex(kind=dp)</td>
+  <td><span class="anchor" id="variable-nml_filename"></span>character(len=*)</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>tran_form</strong>(n_k)</td><td></td>
+  <td><strong>nml_filename</strong></td><td></td>
   
 </tr>
 
@@ -237,12 +237,12 @@ public subroutine calc_tran_form(tran_form, tran_form_vec, omega_k, val_id, cond
   
 <tr>
   
-  <td><span class="anchor" id="variable-tran_form_vec~2"></span>complex(kind=dp)</td>
+  <td><span class="anchor" id="variable-tran_form_1_t"></span>complex(kind=dp)</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>tran_form_vec</strong>(3,n_k)</td><td></td>
+  <td><strong>tran_form_1_t</strong>(:,:)</td><td></td>
   
 </tr>
 
@@ -252,12 +252,12 @@ public subroutine calc_tran_form(tran_form, tran_form_vec, omega_k, val_id, cond
   
 <tr>
   
-  <td><span class="anchor" id="variable-omega_k"></span>real(kind=dp)</td>
+  <td><span class="anchor" id="variable-tran_form_v_t"></span>complex(kind=dp)</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>omega_k</strong>(n_k)</td><td></td>
+  <td><strong>tran_form_v_t</strong>(:,:,:)</td><td></td>
   
 </tr>
 
@@ -267,12 +267,12 @@ public subroutine calc_tran_form(tran_form, tran_form_vec, omega_k, val_id, cond
   
 <tr>
   
-  <td><span class="anchor" id="variable-val_id"></span>integer</td>
+  <td><span class="anchor" id="variable-tran_form_v2_t"></span>complex(kind=dp)</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>val_id</strong></td><td></td>
+  <td><strong>tran_form_v2_t</strong>(:,:)</td><td></td>
   
 </tr>
 
@@ -282,12 +282,12 @@ public subroutine calc_tran_form(tran_form, tran_form_vec, omega_k, val_id, cond
   
 <tr>
   
-  <td><span class="anchor" id="variable-cond_id"></span>integer</td>
+  <td><span class="anchor" id="variable-omega_iipk_t"></span>real(kind=dp)</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>cond_id</strong></td><td></td>
+  <td><strong>omega_iipk_t</strong>(:,:)</td><td></td>
   
 </tr>
 
@@ -297,12 +297,12 @@ public subroutine calc_tran_form(tran_form, tran_form_vec, omega_k, val_id, cond
   
 <tr>
   
-  <td><span class="anchor" id="variable-wfc_ft_i"></span>complex(kind=dp)</td>
+  <td><span class="anchor" id="variable-n_init~2"></span>integer</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>wfc_FT_i</strong>(n_k,n_in_G)</td><td></td>
+  <td><strong>n_init</strong></td><td></td>
   
 </tr>
 
@@ -312,12 +312,12 @@ public subroutine calc_tran_form(tran_form, tran_form_vec, omega_k, val_id, cond
   
 <tr>
   
-  <td><span class="anchor" id="variable-wfc_ft_f"></span>complex(kind=dp)</td>
+  <td><span class="anchor" id="variable-n_fin~2"></span>integer</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>wfc_FT_f</strong>(n_k,n_in_G)</td><td></td>
+  <td><strong>n_fin</strong></td><td></td>
   
 </tr>
 
@@ -327,7 +327,67 @@ public subroutine calc_tran_form(tran_form, tran_form_vec, omega_k, val_id, cond
   
 <tr>
   
-  <td><span class="anchor" id="variable-verbose~40"></span>logical,</td>
+  <td><span class="anchor" id="variable-n_k"></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>n_k</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_proc~3"></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>n_proc</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-proc_id~4"></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>proc_id</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-root_process~4"></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>root_process</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-verbose~33"></span>logical,</td>
   <td></td>
   <td>optional</td>
   
@@ -411,7 +471,7 @@ public subroutine calc_tran_form(tran_form, tran_form_vec, omega_k, val_id, cond
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-07-15T05:28:03.058520 
+             on 2021-07-21T07:12:49.447928 
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

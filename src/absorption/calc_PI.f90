@@ -21,6 +21,13 @@ module calc_PI
         !!
         !! Units : eV^2
 
+    complex(dp), allocatable :: pi_v2_v2_t(:, :, :)
+        !! Dim : [n_omega, n_widths, n_tran_per_proc]
+        !! 
+        !! self energy with two v^2 insertions
+        !!
+        !! Units : eV^2
+
     complex(dp), allocatable :: pi_1_1_mat(:, :, :, :)
         !! Dim : [3, 3, n_omega, n_widths] 
         !!
@@ -30,17 +37,20 @@ module calc_PI
         !!
         !! Units : eV^2
 
-    complex(dp), allocatable :: pi_v2_v2_t(:, :, :)
-        !! Dim : [n_omega, n_widths, n_tran_per_proc]
-        !! 
-        !! self energy with two v^2 insertions
-        !!
-        !! Units : eV^2
-
     complex(dp), allocatable :: pi_1_1_mat_t(:, :, :, :, :)
         !! Dim : [3, 3, n_omega, n_widths, n_tran_per_proc] 
         !!
         !! self energy, without q_vec's
+        !!
+        !! Units : eV^2
+
+    complex(dp), allocatable :: pi_vi_vj(:, :, :, :)
+        !! Dim : [3, 3, n_omega, n_widths] 
+        !!
+        !! Units : eV^2
+
+    complex(dp), allocatable :: pi_vi_vj_t(:, :, :, :, :)
+        !! Dim : [3, 3, n_omega, n_widths, n_tran_per_proc] 
         !!
         !! Units : eV^2
 
@@ -57,6 +67,11 @@ module calc_PI
     interface calc_pi_1_1_mat
         module procedure calc_pi_1_1_mat_no_spin
         module procedure calc_pi_1_1_mat_spin
+    end interface
+
+    interface calc_pi_vi_vj
+        module procedure calc_pi_vi_vj_no_spin
+        module procedure calc_pi_vi_vj_spin
     end interface
 
 contains
@@ -76,17 +91,23 @@ contains
 
         end if
 
+        allocate(pi_v2_v2(n_omega, n_widths))
+        pi_v2_v2 = (0.0_dp, 0.0_dp)
+
         allocate(pi_v2_v2_t(n_omega, n_widths, n_tran_per_proc))
         pi_v2_v2_t = (0.0_dp, 0.0_dp)
+
+        allocate(pi_1_1_mat(3, 3, n_omega, n_widths))
+        pi_1_1_mat = (0.0_dp, 0.0_dp)
 
         allocate(pi_1_1_mat_t(3, 3, n_omega, n_widths, n_tran_per_proc))
         pi_1_1_mat_t = (0.0_dp, 0.0_dp)
 
-        allocate(pi_v2_v2(n_omega, n_widths))
-        pi_v2_v2 = (0.0_dp, 0.0_dp)
+        allocate(pi_vi_vj(3, 3, n_omega, n_widths))
+        pi_vi_vj = (0.0_dp, 0.0_dp)
 
-        allocate(pi_1_1_mat(3, 3, n_omega, n_widths))
-        pi_1_1_mat = (0.0_dp, 0.0_dp)
+        allocate(pi_vi_vj_t(3, 3, n_omega, n_widths, n_tran_per_proc))
+        pi_vi_vj_t = (0.0_dp, 0.0_dp)
 
     end subroutine
 
@@ -105,6 +126,9 @@ contains
             MPI_DOUBLE_COMPLEX, root_process, MPI_COMM_WORLD, err)
 
         call MPI_Bcast(pi_1_1_mat, size(pi_1_1_mat), &
+            MPI_DOUBLE_COMPLEX, root_process, MPI_COMM_WORLD, err)
+
+        call MPI_Bcast(pi_vi_vj, size(pi_vi_vj), &
             MPI_DOUBLE_COMPLEX, root_process, MPI_COMM_WORLD, err)
 
     end subroutine
@@ -133,6 +157,9 @@ contains
             call MPI_SEND(pi_1_1_mat_t, &
                size(pi_1_1_mat_t), MPI_DOUBLE_COMPLEX, root_process, tag, MPI_COMM_WORLD, err)
 
+            call MPI_SEND(pi_vi_vj_t, &
+               size(pi_vi_vj_t), MPI_DOUBLE_COMPLEX, root_process, tag, MPI_COMM_WORLD, err)
+
         end if
 
         if ( proc_id .eq. root_process ) then
@@ -140,6 +167,7 @@ contains
             ! add main processors contribution
             pi_v2_v2 = pi_v2_v2 + sum(pi_v2_v2_t, 3)
             pi_1_1_mat = pi_1_1_mat + sum(pi_1_1_mat_t, 5)
+            pi_vi_vj = pi_vi_vj + sum(pi_vi_vj_t, 5)
 
             do i = 1, n_proc
                 if ( (i - 1) .ne. root_process ) then
@@ -150,9 +178,13 @@ contains
                     call MPI_RECV(pi_1_1_mat_t, &
                        size(pi_1_1_mat_t), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
 
+                    call MPI_RECV(pi_vi_vj_t, &
+                       size(pi_vi_vj_t), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
+
                     ! add other processors contributions
                     pi_v2_v2 = pi_v2_v2 + sum(pi_v2_v2_t, 3)
                     pi_1_1_mat = pi_1_1_mat + sum(pi_1_1_mat_t, 5)
+                    pi_vi_vj = pi_vi_vj + sum(pi_vi_vj_t, 5)
 
                 end if
             end do
@@ -202,6 +234,7 @@ contains
 
                 call calc_pi_v2_v2(pi_v2_v2_t(:, :, t), tran_form_v2_t(t, :), omega_iipk_t(t, :))
                 call calc_pi_1_1_mat(pi_1_1_mat_t(:, :, :, :, t), tran_form_v_t(:, t, :), omega_iipk_t(t, :))
+                call calc_pi_vi_vj(pi_vi_vj_t(:, :, :, :, t), tran_form_v_t(:, t, :), omega_iipk_t(t, :))
 
             end if
 
@@ -244,6 +277,7 @@ contains
 
                 call calc_pi_v2_v2(pi_v2_v2_t(:, :, t), tran_form_v2_t(t, :, :, :), omega_iipk_t(t, :))
                 call calc_pi_1_1_mat(pi_1_1_mat_t(:, :, :, :, t), tran_form_v_t(:, t, :, :, :), omega_iipk_t(t, :))
+                call calc_pi_vi_vj(pi_vi_vj_t(:, :, :, :, t), tran_form_v_t(:, t, :, :, :), omega_iipk_t(t, :))
 
             end if
 
@@ -283,7 +317,7 @@ contains
                                 ( omega - omega_k + ii*width )**(-1) - &
                                 ( omega + omega_k - ii*width )**(-1) &
                             )*&
-                           abs(tran_form_v2(k))**2
+                           abs(tran_form_v2(k))**2*(spin_degen/2.0_dp)
 
                     end if
 
@@ -335,7 +369,7 @@ contains
                                 ( omega - omega_k + ii*width )**(-1) - &
                                 ( omega + omega_k - ii*width )**(-1) &
                             )*&
-                           abs(tf)**2
+                           abs(tf)**2*(spin_degen/2.0_dp)
 
                     end if
 
@@ -398,7 +432,7 @@ contains
                                 ( omega - omega_k + ii*width )**(-1) - &
                                 ( omega + omega_k - ii*width )**(-1) &
                             )*&
-                           outer_ff(:, :, k)
+                           outer_ff(:, :, k)*(spin_degen/2.0_dp)
 
                     end if
 
@@ -473,7 +507,140 @@ contains
                                 ( omega - omega_k + ii*width )**(-1) - &
                                 ( omega + omega_k - ii*width )**(-1) &
                             )*&
-                           outer_ff(:, :, k)
+                           outer_ff(:, :, k)*(spin_degen/2.0_dp)
+
+                    end if
+
+                end do
+
+            end do
+        end do
+
+    end subroutine
+
+    subroutine calc_pi_vi_vj_no_spin(pi_vi_vj, tran_form_v, omega_iipk)
+
+        implicit none
+
+        complex(dp) :: pi_vi_vj(:, :, :, :)
+
+        complex(dp) :: tran_form_v(:, :)
+
+        real(dp) :: omega_iipk(:)
+
+        complex(dp) :: outer_ff(3, 3, n_k)
+
+        real(dp) :: omega_k
+
+        integer :: i, j
+        integer :: k
+
+        integer :: p, w
+
+        real(dp) :: width, omega
+
+        do k = 1, n_k
+            do i = 1, 3
+                do j = 1, 3
+
+                    outer_ff(i, j, k) = conjg(tran_form_v(i, k))*tran_form_v(j, k)
+
+                end do
+            end do
+        end do
+
+        do p = 1, n_widths
+            do w = 1, n_omega
+
+                omega = omega_list(w)
+                width = delta_list(w, p)
+
+                do k = 1, n_k
+
+                    omega_k = omega_iipk(k)
+
+                    if ( abs(omega - omega_k) < sigma_gamma*width ) then
+
+                        pi_vi_vj(:, :, w, p) = pi_vi_vj(:, :, w, p) + &
+                           (pc_vol)**(-1)*k_weight(k)*&
+                           ( &
+                                ( omega - omega_k + ii*width )**(-1) - &
+                                ( omega + omega_k - ii*width )**(-1) &
+                            )*&
+                           outer_ff(:, :, k)*(spin_degen/2.0_dp)
+
+                    end if
+
+                end do
+
+            end do
+        end do
+
+    end subroutine
+
+    subroutine calc_pi_vi_vj_spin(pi_vi_vj, tran_form_v, omega_iipk)
+
+        implicit none
+
+        complex(dp) :: pi_vi_vj(:, :, :, :)
+
+        complex(dp) :: tran_form_v(:, :, :, :)
+
+        real(dp) :: omega_iipk(:)
+
+        complex(dp) :: outer_ff(3, 3, n_k)
+
+        real(dp) :: omega_k
+
+        integer :: i, j
+        integer :: k
+
+        integer :: s
+
+        integer :: p, w
+
+        real(dp) :: width, omega
+
+        complex(dp) :: tf_v(3)
+
+        do k = 1, n_k
+
+            tf_v = (0.0_dp, 0.0_dp)
+
+            do s = 1, 2
+
+                tf_v = tf_v + tran_form_v(:, k, s, s)
+
+            end do
+
+            do i = 1, 3
+                do j = 1, 3
+
+                    outer_ff(i, j, k) = conjg(tf_v(i))*tf_v(j)
+
+                end do
+            end do
+        end do
+
+        do p = 1, n_widths
+            do w = 1, n_omega
+
+                omega = omega_list(w)
+                width = delta_list(w, p)
+
+                do k = 1, n_k
+
+                    omega_k = omega_iipk(k)
+
+                    if ( abs(omega - omega_k) < sigma_gamma*width ) then
+
+                        pi_vi_vj(:, :, w, p) = pi_vi_vj(:, :, w, p) + &
+                           (pc_vol)**(-1)*k_weight(k)*&
+                           ( &
+                                ( omega - omega_k + ii*width )**(-1) - &
+                                ( omega + omega_k - ii*width )**(-1) &
+                            )*&
+                           outer_ff(:, :, k)*(spin_degen/2.0_dp)
 
                     end if
 
@@ -564,6 +731,20 @@ contains
                     '/pi_1_1_mat_c', &
                     size(dims3), dims3,&
                     aimag(pi_1_1_mat(:, :, :, i)), error)
+
+                call h5ltmake_dataset_double_f(file_id,&
+                    'self_energies'//&
+                    '/width_'//trim(i_str)//&
+                    '/pi_vi_vj_r', &
+                    size(dims3), dims3,&
+                    real(pi_vi_vj(:, :, :, i)), error)
+
+                call h5ltmake_dataset_double_f(file_id,&
+                    'self_energies'//&
+                    '/width_'//trim(i_str)//&
+                    '/pi_vi_vj_c', &
+                    size(dims3), dims3,&
+                    aimag(pi_vi_vj(:, :, :, i)), error)
 
             end do
 

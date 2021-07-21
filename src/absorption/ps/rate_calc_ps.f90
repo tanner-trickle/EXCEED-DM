@@ -12,11 +12,11 @@ module rate_calc_ps
 
 contains
 
-    subroutine calc_rate_ps(pi_1_1_mat, v_vec, v_max, abs_rate, verbose)
+    subroutine calc_rate_ps(pi_vi_vj, v_vec, v_max, abs_rate, verbose)
 
         implicit none
 
-        complex(dp) :: pi_1_1_mat(3, 3, n_omega, n_widths)
+        complex(dp) :: pi_vi_vj(3, 3, n_omega, n_widths)
 
         real(dp) :: abs_rate(n_omega, n_widths, n_time)
 
@@ -38,6 +38,11 @@ contains
 
         real(dp) :: mb_val
 
+        complex(dp) :: pi_eigvals(3)
+        complex(dp) :: pi_eigvectors(3, 3)
+
+        integer :: i
+
         v_mag = norm2(v_vec)
 
         do w = 1, n_omega
@@ -45,6 +50,9 @@ contains
             omega = omega_list(w)
 
             do p = 1, n_widths
+
+                call calc_eig_system_33(e_EM**2*pi_vi_vj(:, :, w, p), pi_eigvals, pi_eigvectors)
+
                 do t = 1, n_time
 
                     ve_vec = vE_vec_list(t, :) 
@@ -56,11 +64,8 @@ contains
 
                     if ( q_mag > 0.0_dp ) then
 
-                        pi_c = aimag(dot_product( q_vec/m_elec, matmul( pi_1_1_mat(:, :, w, p), q_vec/m_elec ) ))
-
-                        gam = -(omega)**(-1)*(3.0_dp*omega**4)*&
-                            ( 4.0_dp*m_elec**2*q_mag**2 )**(-1)*&
-                            pi_c
+                        gam = -omega**2*(4.0_dp*m_elec**2*omega*e_EM**2)**(-1)*&
+                            aimag(sum(pi_eigvals))
 
                         rate = (rhoX/rho_T)*(omega)**(-1)*gam
 

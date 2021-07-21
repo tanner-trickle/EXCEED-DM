@@ -11,7 +11,7 @@ program exdm
     use io_input
     use material_input
 
-    use dme_absorption
+    use exdm_absorption
     use exdm_scatter
 
     implicit none

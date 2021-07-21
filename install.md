@@ -1,6 +1,6 @@
 # Installation
 
-Instuctions on how to setup, and check the setup of, `dm-electron` on a local machine. For setup on a cluster ignore the **install** instructions, but make sure to check that the cluster has all the packages installed/modules loaded by running the commands in **check install**
+Instuctions on how to setup, and check the setup of, `EXCEED-DM` on a local machine. For setup on a cluster ignore the **install** instructions, but make sure to check that the cluster has all the packages installed/modules loaded by running the commands in **check install**
 
 ## Pre-requisites
 
@@ -131,8 +131,8 @@ To build the program we use **FoBiS.py** which is a simple build systerm for For
 
 ### Step 0: Download dm-electron
 
-    git clone https://github.com/tanner-trickle/dm-electron
-    cd dm-electron
+    git clone https://github.com/tanner-trickle/EXCEED-DM
+    cd EXCEED-DM
 
 ### Step 1: Specify file locations
 
@@ -164,7 +164,7 @@ assuming your Fortran compiler is **gfortran**.
 
 To check that the program was built run
     
-    mpirun -np 2 ./build/dme 
+    mpirun -np 2 ./build/exdm
 
 ### Clean Build
 

@@ -46,7 +46,7 @@ All Procedures &ndash; EXCEED-DM
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.2</small></a>
+          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.3</small></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -115,31 +115,45 @@ All Procedures &ndash; EXCEED-DM
 			 <thead><tr><th>Procedure</th><th>Location</th><th>Procedure Type</th><th>Description</th></tr></thead>
 			 <tbody>
 			 
+			   <tr><td><a href='../proc/bcast_self_energies.html'>bcast_self_energies</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td><p>After the self energies have been summed together on the main
+ processor, send the summed Pi's back out to each processor
+ so that the rate calculation can be parallelized over v</p></td></tr>
+			 
 			   <tr><td><a href='../proc/calc_core_sto_wf_grid.html'>calc_core_sto_wf_grid</a></td><td><a href='../module/core_electrons.html'>core_electrons</a></td><td>Subroutine</td><td><p>computes the core wave functions on a grid, summed over the closest unit cells</p><a href="../proc/calc_core_sto_wf_grid.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/calc_eig_system_33.html'>calc_eig_system_33</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Subroutine</td><td><p>Wrapper function to ZGEEV, find eigenvalues and (right) eigenvectors of 3x3 matrix.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/calc_pi_11_mat.html'>calc_pi_11_mat</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../interface/calc_pi_1_1_mat.html'>calc_pi_1_1_mat</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Interface</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/calc_pi_1v.html'>calc_pi_1v</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/calc_pi_1_1_mat_no_spin.html'>calc_pi_1_1_mat_no_spin</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/calc_pi_v1.html'>calc_pi_v1</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/calc_pi_1_1_mat_spin.html'>calc_pi_1_1_mat_spin</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/calc_pi_vv.html'>calc_pi_vv</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../interface/calc_pi_v2_v2.html'>calc_pi_v2_v2</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Interface</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_pi_v2_v2_no_spin.html'>calc_pi_v2_v2_no_spin</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_pi_v2_v2_spin.html'>calc_pi_v2_v2_spin</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../interface/calc_pi_vi_vj.html'>calc_pi_vi_vj</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Interface</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_pi_vi_vj_no_spin.html'>calc_pi_vi_vj_no_spin</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_pi_vi_vj_spin.html'>calc_pi_vi_vj_spin</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/calc_rate_ps.html'>calc_rate_ps</a></td><td><a href='../module/rate_calc_ps.html'>rate_calc_ps</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/calc_rate_scalar.html'>calc_rate_scalar</a></td><td><a href='../module/rate_calc_scalar.html'>rate_calc_scalar</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/calc_rate_vector.html'>calc_rate_vector</a></td><td><a href='../module/rate_calc_vector.html'>rate_calc_vector</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/calc_rate_scalar_lo.html'>calc_rate_scalar_LO</a></td><td><a href='../module/rate_calc_scalar_lo.html'>rate_calc_scalar_LO</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/calc_rate_vector.html'>calc_rate_vector</a></td><td><a href='../module/rate_calc_vector.html'>rate_calc_vector</a></td><td>Subroutine</td><td><p>sum over (diagonalized) polarizations</p></td></tr>
 			 
 			   <tr><td><a href='../interface/calc_tff_vc.html'>calc_tff_vc</a></td><td><a href='../module/transition_form_factor.html'>transition_form_factor</a></td><td>Interface</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/calc_tff_vc_no_spin.html'>calc_tff_vc_no_spin</a></td><td><a href='../module/transition_form_factor.html'>transition_form_factor</a></td><td>Subroutine</td><td><p>Compute the tff for the valence to conduction calculation</p><a href="../proc/calc_tff_vc_no_spin.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/calc_tff_vc_spin.html'>calc_tff_vc_spin</a></td><td><a href='../module/transition_form_factor.html'>transition_form_factor</a></td><td>Subroutine</td><td><p>Compute the tff for the valence to conduction calculation</p><a href="../proc/calc_tff_vc_spin.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
-			 
-			   <tr><td><a href='../proc/calc_tran_form.html'>calc_tran_form</a></td><td><a href='../module/tran_form_calc.html'>tran_form_calc</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../interface/calc_tran_form_1.html'>calc_tran_form_1</a></td><td><a href='../module/tran_form_calc.html'>tran_form_calc</a></td><td>Interface</td><td></td></tr>
 			 
@@ -166,10 +180,23 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/check_mb_dist_normalization.html'>check_mb_dist_normalization</a></td><td><a href='../module/particle_physics_abs.html'>particle_physics_abs</a></td><td>Subroutine</td><td><p>make sure the mb distribution integrates to 1</p><a href="../proc/check_mb_dist_normalization.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
-			   <tr><td><a href='../proc/compute_dielectric.html'>compute_dielectric</a></td><td><a href='../module/calc_dielectric.html'>calc_dielectric</a></td><td>Subroutine</td><td><p>Compute the contribution to the dimensionless dielectric
+			   <tr><td><a href='../proc/comm_self_energies.html'>comm_self_energies</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td><p>Communicate the self energies that each processor is computing</p></td></tr>
+			 
+			   <tr><td><a href='../interface/compute_dielectric.html'>compute_dielectric</a></td><td><a href='../module/calc_dielectric.html'>calc_dielectric</a></td><td>Interface</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/compute_dielectric_no_spin.html'>compute_dielectric_no_spin</a></td><td><a href='../module/calc_dielectric.html'>calc_dielectric</a></td><td>Subroutine</td><td><p>Compute the contribution to the dimensionless dielectric
  from a given i -&gt; f transition.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/compute_self_energies.html'>compute_self_energies</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/compute_dielectric_spin.html'>compute_dielectric_spin</a></td><td><a href='../module/calc_dielectric.html'>calc_dielectric</a></td><td>Subroutine</td><td><p>Compute the contribution to the dimensionless dielectric
+ from a given i -&gt; f transition.</p></td></tr>
+			 
+			   <tr><td><a href='../interface/compute_self_energies.html'>compute_self_energies</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Interface</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/compute_self_energies_no_spin.html'>compute_self_energies_no_spin</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/compute_self_energies_setup.html'>compute_self_energies_setup</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/compute_self_energies_spin.html'>compute_self_energies_spin</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/core_sto_wf.html'>core_sto_wf</a></td><td><a href='../module/core_electrons.html'>core_electrons</a></td><td>Function</td><td><p>Core wave function</p><a href="../proc/core_sto_wf.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
@@ -182,6 +209,8 @@ All Procedures &ndash; EXCEED-DM
  the individual sto_wf_radial</p><a href="../proc/core_sto_wf_radial.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/create_output_file.html'>create_output_file</a></td><td><a href='../module/io_input.html'>io_input</a></td><td>Subroutine</td><td><p>Creates the output file</p></td></tr>
+			 
+			   <tr><td><a href='../proc/create_v_mesh.html'>create_v_mesh</a></td><td><a href='../module/exdm_absorption.html'>exdm_absorption</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/define_q_grid.html'>define_q_grid</a></td><td><a href='../module/di_grid.html'>di_grid</a></td><td>Subroutine</td><td><p>q = k' - k + G</p><a href="../proc/define_q_grid.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
@@ -212,6 +241,8 @@ All Procedures &ndash; EXCEED-DM
 			   <tr><td><a href='../proc/f_med_sq_func.html'>F_med_sq_func</a></td><td><a href='../module/particle_physics_scatter.html'>particle_physics_scatter</a></td><td>Function</td><td><p>Mediator for factor squared</p><a href="../proc/f_med_sq_func.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/factorial.html'>factorial</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Function</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/find_q_max_fft.html'>find_q_max_FFT</a></td><td><a href='../module/fft_util.html'>FFT_util</a></td><td>Subroutine</td><td><p>Finds the maximum <script type="math/tex"> |q| </script> the FFT is consistent for.</p><a href="../proc/find_q_max_fft.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/g_func.html'>g_func</a></td><td><a href='../module/particle_physics_scatter.html'>particle_physics_scatter</a></td><td>Function</td><td><p>Kinematic function : </p><a href="../proc/g_func.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
@@ -336,7 +367,7 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/run_dielectric_calc.html'>run_dielectric_calc</a></td><td><a href='../module/calc_dielectric.html'>calc_dielectric</a></td><td>Subroutine</td><td><p>Compute the dielectric binned in energy and momentum transfer.</p><a href="../proc/run_dielectric_calc.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
-			   <tr><td><a href='../proc/run_dme_absorption.html'>run_dme_absorption</a></td><td><a href='../module/dme_absorption.html'>dme_absorption</a></td><td>Subroutine</td><td><p>Absorption rate calculation</p></td></tr>
+			   <tr><td><a href='../proc/run_dme_absorption.html'>run_dme_absorption</a></td><td><a href='../module/exdm_absorption.html'>exdm_absorption</a></td><td>Subroutine</td><td><p>Absorption rate calculation</p><a href="../proc/run_dme_absorption.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/run_dme_scatter.html'>run_dme_scatter</a></td><td><a href='../module/exdm_scatter.html'>exdm_scatter</a></td><td>Subroutine</td><td><p>Scattering rate calculation</p></td></tr>
 			 
@@ -350,7 +381,7 @@ All Procedures &ndash; EXCEED-DM
 			   <tr><td><a href='../proc/run_dme_scatter_vf.html'>run_dme_scatter_vf</a></td><td><a href='../module/exdm_scatter_vf.html'>exdm_scatter_vf</a></td><td>Subroutine</td><td><p>only load these variables if they haven't been loaded before
  to compute the dielectric</p></td></tr>
 			 
-			   <tr><td><a href='../proc/save_abs_rate.html'>save_abs_rate</a></td><td><a href='../module/dme_absorption.html'>dme_absorption</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/save_abs_rate.html'>save_abs_rate</a></td><td><a href='../module/exdm_absorption.html'>exdm_absorption</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/save_absorption_input.html'>save_absorption_input</a></td><td><a href='../module/absorption_input.html'>absorption_input</a></td><td>Subroutine</td><td></td></tr>
 			 
@@ -372,7 +403,7 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/save_self_energies.html'>save_self_energies</a></td><td><a href='../module/calc_pi.html'>calc_PI</a></td><td>Subroutine</td><td></td></tr>
 			 
-			   <tr><td><a href='../proc/save_tran_form.html'>save_tran_form</a></td><td><a href='../module/dme_absorption.html'>dme_absorption</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/save_tran_form.html'>save_tran_form</a></td><td><a href='../module/exdm_absorption.html'>exdm_absorption</a></td><td>Subroutine</td><td><p>These are zero</p></td></tr>
 			 
 			   <tr><td><a href='../proc/screening.html'>screening</a></td><td><a href='../module/in_med_scr.html'>in_med_scr</a></td><td>Function</td><td></td></tr>
 			 
@@ -399,6 +430,8 @@ All Procedures &ndash; EXCEED-DM
 			 
 			   <tr><td><a href='../proc/sto_wf_radial.html'>sto_wf_radial</a></td><td><a href='../module/core_electrons.html'>core_electrons</a></td><td>Function</td><td><p>Radial part of the Slater type orbital (STO) wave function</p><a href="../proc/sto_wf_radial.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
+			   <tr><td><a href='../proc/time_dielectric_calc.html'>time_dielectric_calc</a></td><td><a href='../module/calc_dielectric.html'>calc_dielectric</a></td><td>Subroutine</td><td><p>do the calculation for an individual job</p></td></tr>
+			 
 			   <tr><td><a href='../proc/time_exdm_scatter_cc_calc.html'>time_exdm_scatter_cc_calc</a></td><td><a href='../module/exdm_scatter_cc.html'>exdm_scatter_cc</a></td><td>Subroutine</td><td><p>Times the c -&gt; c scattering rate calculation</p></td></tr>
 			 
 			   <tr><td><a href='../proc/time_exdm_scatter_cf_calc.html'>time_exdm_scatter_cf_calc</a></td><td><a href='../module/exdm_scatter_cf.html'>exdm_scatter_cf</a></td><td>Subroutine</td><td><p>Times the v -&gt; f scattering rate calculation</p></td></tr>
@@ -410,7 +443,7 @@ All Procedures &ndash; EXCEED-DM
 			   <tr><td><a href='../proc/update_rates.html'>update_rates</a></td><td><a href='../module/exdm_scatter.html'>exdm_scatter</a></td><td>Subroutine</td><td><p>updates all the rate arrays with the output 
  of a single processors results</p></td></tr>
 			 
-			   <tr><td><a href='../proc/update_tran_form.html'>update_tran_form</a></td><td><a href='../module/dme_absorption.html'>dme_absorption</a></td><td>Subroutine</td><td></td></tr>
+			   <tr><td><a href='../proc/update_tran_form.html'>update_tran_form</a></td><td><a href='../module/exdm_absorption.html'>exdm_absorption</a></td><td>Subroutine</td><td></td></tr>
 			 
 			   <tr><td><a href='../proc/v_minus.html'>v_minus</a></td><td><a href='../module/particle_physics_scatter.html'>particle_physics_scatter</a></td><td>Function</td><td><p>v_- function</p><a href="../proc/v_minus.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
@@ -430,7 +463,7 @@ All Procedures &ndash; EXCEED-DM
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-07-15T05:28:03.058520 
+             on 2021-07-21T07:12:49.447928 
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

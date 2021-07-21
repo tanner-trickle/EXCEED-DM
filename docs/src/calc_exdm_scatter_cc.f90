@@ -24,6 +24,7 @@ contains
             n_FFT_grid,&
             k_cut, &
             wfc_FFT_plan, Tif_FFT_plan,&
+            q_max_FFT, &
             verbose)
 
         implicit none
@@ -79,7 +80,7 @@ contains
 
         n_FFT = n_FFT_grid(1)*n_FFT_grid(2)*n_FFT_grid(3)
 
-        q_max_FFT = n_FFT_grid(1)*q_s_FFT
+        ! q_max_FFT = n_FFT_grid(1)*q_s_FFT
 
         Ei = core_energy(init_id)
 

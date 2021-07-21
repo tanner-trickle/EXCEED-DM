@@ -123,9 +123,13 @@ module DFT_parameters
         !! 
         !! Units : eV
 
-    !!! experimental
-
     logical :: include_spin = .FALSE.
+
+    real(dp) :: spin_degen = 2.0_dp
+        !! Spin degeneracy factor.
+        !!
+        !! SI wave functions - 2
+        !! SD wave functions - 1
 
     interface get_in_wfc_FT
         module procedure get_in_wfc_FT_no_spin
@@ -186,6 +190,9 @@ module DFT_parameters
                 k_red_to_xyz, error)
             call h5ltmake_dataset_double_f(file_id, 'DFT_parameters/red_to_xyz', size(dims2), dims2,&
                 red_to_xyz, error)
+
+            call h5ltmake_dataset_double_f(file_id, 'DFT_parameters/spin_degen', size(dims1), dims1,&
+                spin_degen, error)
 
             call h5fclose_f(file_id, error)
             call h5close_f(error)
@@ -292,7 +299,10 @@ module DFT_parameters
             call h5ltget_dataset_ndims_f(file_id, 'in_wfc_FT_c/1', wfc_data_rank, error)
 
             if ( wfc_data_rank == 3 ) then
+
                 include_spin = .TRUE.
+                spin_degen = 1.0_dp
+
             end if
 
             call h5fclose_f(file_id, error)

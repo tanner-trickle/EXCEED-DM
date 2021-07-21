@@ -49,8 +49,7 @@ contains
         complex(dp), allocatable :: wfc_i(:, :, :)
         complex(dp), allocatable :: wfc_FT_f(:, :)
 
-        complex(dp) :: k_red_eig_vals(3)
-        complex(dp) :: k_red_eig_vecs(3, 3)
+        real(dp) :: q_max_FFT
 
         if ( verbose ) then
 
@@ -86,8 +85,10 @@ contains
 
         n_FFT = n_FFT_grid(1)*n_FFT_grid(2)*n_FFT_grid(3)
 
-        call calc_eig_system_33((1.0_dp, 0.0_dp)*k_red_to_xyz, k_red_eig_vals, k_red_eig_vecs)
-        q_s_FFT = minval(abs(k_red_eig_vals))/2.0_dp
+        call find_q_max_FFT(q_max_FFT, k_red_to_xyz, n_FFT_grid, verbose = .FALSE.)
+
+        ! call calc_eig_system_33((1.0_dp, 0.0_dp)*k_red_to_xyz, k_red_eig_vals, k_red_eig_vecs)
+        ! q_s_FFT = minval(abs(k_red_eig_vals))/2.0_dp
 
         if ( verbose ) then
 
@@ -101,7 +102,7 @@ contains
             print*
             print*, '        Number of G points in FFT grid = ', n_FFT
             print*
-            print*, '        q_s_FFT = ', q_s_FFT/1.0e3_dp, ' keV'
+            print*, '        q_max_FFT = ', q_max_FFT/1.0e3_dp, ' keV'
             print*
             print*, '----------------------------------------'
             print*
@@ -118,7 +119,7 @@ contains
         if ( ( proc_id == root_process ) .and. ( timer ) ) then
 
             call time_exdm_scatter_cc_calc(DFT_input_filename, 1, wfc_fft_plan, &
-                Tif_fft_plan, n_FFT_grid, verbose = verbose)
+                Tif_fft_plan, n_FFT_grid, q_max_FFT, verbose = verbose)
 
         end if
 
@@ -153,7 +154,7 @@ contains
 
                 call dme_scatter_cc_calc(binned_rate_t(:, :, :, :, :, t),& 
                     wfc_i, wfc_FT_f, init_id, cond_id, n_FFT_grid, n_k, &
-                    wfc_fft_plan, Tif_FFT_plan, verbose = verbose)
+                    wfc_fft_plan, Tif_FFT_plan, q_max_FFT, verbose = verbose)
 
             end if
 
@@ -174,12 +175,14 @@ contains
     end subroutine
 
     subroutine time_exdm_scatter_cc_calc(DFT_input_filename, tran_id, wfc_fft_plan, &
-            Tif_fft_plan, n_FFT_grid, verbose)
+            Tif_fft_plan, n_FFT_grid, q_max_FFT, verbose)
         !! Times the c -> c scattering rate calculation
         use timing 
         use mpi
 
         implicit none
+
+        real(dp) :: q_max_FFT
 
         character(len=*) :: DFT_input_filename
 
@@ -222,7 +225,7 @@ contains
 
         call dme_scatter_cc_calc(b_rate,& 
             wfc_i, wfc_FT_f, init_id, cond_id, n_FFT_grid, 1, &
-            wfc_fft_plan, Tif_FFT_plan, verbose = verbose)
+            wfc_fft_plan, Tif_FFT_plan, q_max_FFT, verbose = verbose)
 
         time(5) = MPI_Wtime()
 
