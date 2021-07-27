@@ -12,11 +12,11 @@ module rate_calc_ps
 
 contains
 
-    subroutine calc_rate_ps(pi_vi_vj, v_vec, v_max, abs_rate, verbose)
+    subroutine calc_rate_ps(pi_1_1_mat, v_vec, v_max, abs_rate, verbose)
 
         implicit none
 
-        complex(dp) :: pi_vi_vj(3, 3, n_omega, n_widths)
+        complex(dp) :: pi_1_1_mat(3, 3, n_omega, n_widths)
 
         real(dp) :: abs_rate(n_omega, n_widths, n_time)
 
@@ -41,6 +41,8 @@ contains
         complex(dp) :: pi_eigvals(3)
         complex(dp) :: pi_eigvectors(3, 3)
 
+        complex(dp) :: pi_mat(3, 3)
+
         integer :: i
 
         v_mag = norm2(v_vec)
@@ -51,7 +53,9 @@ contains
 
             do p = 1, n_widths
 
-                call calc_eig_system_33(e_EM**2*pi_vi_vj(:, :, w, p), pi_eigvals, pi_eigvectors)
+                pi_mat = e_EM**2*(omega/m_elec)**2*pi_1_1_mat(:, :, w, p)
+
+                call calc_eigvals_33(pi_mat, pi_eigvals)
 
                 do t = 1, n_time
 

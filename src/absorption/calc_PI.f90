@@ -227,7 +227,7 @@ contains
 
             tran_id = job_table(proc_id + 1, t)
 
-            if ( tran_id .ne. 0 ) then
+            if ( tran_id /= 0 ) then
 
                 init_id = tran_to_init_fin_id(tran_id, 1)
                 fin_id = tran_to_init_fin_id(tran_id, 2)

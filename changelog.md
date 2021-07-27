@@ -1,3 +1,9 @@
+v0.2.4
+---
+
+- Reworked the implementation of the vector/pseudoscalar DM absorption calculation.
+- Fixed bug in absorption rate calculation introduced in v0.2.3 which overwrote the main processors transition form factors when computing the self energies.
+
 v0.2.3
 ---
 

@@ -101,6 +101,43 @@ module exdm_absorption
         !!
         !! Units : None
 
+    complex(dp), allocatable :: tran_form_1_no_spin_t_buff(:, :)
+        !! Dim : [n_tran_per_proc, n_k]
+        !!
+        !! Units : None
+
+    complex(dp), allocatable :: tran_form_1_spin_t_buff(:, :, :, :)
+        !! Dim : [n_tran_per_proc, n_k, s, sp]
+        !!
+        !! Units : None
+
+    complex(dp), allocatable :: tran_form_v_no_spin_t_buff(:, :, :)
+        !! Dim : [3, n_tran_per_proc, n_k]
+        !!
+        !! Units : None
+
+    complex(dp), allocatable :: tran_form_v_spin_t_buff(:, :, :, :, :)
+        !! Dim : [3, n_tran_per_proc, n_k, s, sp]
+        !!
+        !! Units : None
+
+    complex(dp), allocatable :: tran_form_v2_no_spin_t_buff(:, :)
+        !! Dim : [n_tran_per_proc, n_k]
+        !!
+        !! Units : None
+
+    complex(dp), allocatable :: tran_form_v2_spin_t_buff(:, :, :, :)
+        !! Dim : [n_tran_per_proc, n_k, s, sp]
+        !!
+        !! Units : None
+
+    real(dp), allocatable :: omega_iipk_t_buff(:, :)
+        !! Dim : [n_tran_per_proc, n_k]
+        !!
+        !! Energy difference of the transition from i -> f at k
+        !!
+        !! Units : None
+
     real(dp), allocatable :: abs_rate(:, :, :)
         !! Dim : [n_omega, n_widths, n_times] 
         !!
@@ -193,6 +230,27 @@ contains
 
             allocate(omega_iipk(n_init, n_fin, n_k))
             omega_iipk           = 0.0_dp
+
+            allocate(tran_form_1_no_spin_t_buff(n_tran_per_proc, n_k))
+            tran_form_1_no_spin_t_buff  = (0.0_dp, 0.0_dp)
+
+            allocate(tran_form_1_spin_t_buff(n_tran_per_proc, n_k, 2, 2))
+            tran_form_1_spin_t_buff     = (0.0_dp, 0.0_dp)
+
+            allocate(tran_form_v_no_spin_t_buff(3, n_tran_per_proc, n_k))
+            tran_form_v_no_spin_t_buff  = (0.0_dp, 0.0_dp)
+
+            allocate(tran_form_v_spin_t_buff(3, n_tran_per_proc, n_k, 2, 2))
+            tran_form_v_spin_t_buff     = (0.0_dp, 0.0_dp)
+
+            allocate(tran_form_v2_no_spin_t_buff(n_tran_per_proc, n_k))
+            tran_form_v2_no_spin_t_buff = (0.0_dp, 0.0_dp)
+
+            allocate(tran_form_v2_spin_t_buff(n_tran_per_proc, n_k, 2, 2))
+            tran_form_v2_spin_t_buff    = (0.0_dp, 0.0_dp)
+
+            allocate(omega_iipk_t_buff(n_tran_per_proc, n_k))
+            omega_iipk_t_buff           = 0.0_dp
 
         end if
 
@@ -334,39 +392,39 @@ contains
 
                     if ( include_spin ) then
 
-                        call MPI_RECV(tran_form_1_spin_t, &
-                           size(tran_form_1_spin_t), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
+                        call MPI_RECV(tran_form_1_spin_t_buff, &
+                           size(tran_form_1_spin_t_buff), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
 
-                        call MPI_RECV(tran_form_v_spin_t, &
-                           size(tran_form_v_spin_t), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
+                        call MPI_RECV(tran_form_v_spin_t_buff, &
+                           size(tran_form_v_spin_t_buff), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
 
-                        call MPI_RECV(tran_form_v2_spin_t, &
-                           size(tran_form_v2_spin_t), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
+                        call MPI_RECV(tran_form_v2_spin_t_buff, &
+                           size(tran_form_v2_spin_t_buff), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
 
                     else
 
-                        call MPI_RECV(tran_form_1_no_spin_t, &
-                           size(tran_form_1_no_spin_t), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
+                        call MPI_RECV(tran_form_1_no_spin_t_buff, &
+                           size(tran_form_1_no_spin_t_buff), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
 
-                        call MPI_RECV(tran_form_v_no_spin_t, &
-                           size(tran_form_v_no_spin_t), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
+                        call MPI_RECV(tran_form_v_no_spin_t_buff, &
+                           size(tran_form_v_no_spin_t_buff), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
 
-                        call MPI_RECV(tran_form_v2_no_spin_t, &
-                           size(tran_form_v2_no_spin_t), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
+                        call MPI_RECV(tran_form_v2_no_spin_t_buff, &
+                           size(tran_form_v2_no_spin_t_buff), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
 
                     end if
 
-                    call MPI_RECV(omega_iipk_t, &
-                       size(omega_iipk_t), MPI_DOUBLE, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
+                    call MPI_RECV(omega_iipk_t_buff, &
+                       size(omega_iipk_t_buff), MPI_DOUBLE, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
 
                     ! other processors contributions
-                    call update_tran_form(tran_form_1_no_spin_t, &
-                                          tran_form_v_no_spin_t, &
-                                          tran_form_v2_no_spin_t, &
-                                          tran_form_1_spin_t, &
-                                          tran_form_v_spin_t, &
-                                          tran_form_v2_spin_t, &
-                                          omega_iipk_t, i - 1, verbose = verbose)
+                    call update_tran_form(tran_form_1_no_spin_t_buff, &
+                                          tran_form_v_no_spin_t_buff, &
+                                          tran_form_v2_no_spin_t_buff, &
+                                          tran_form_1_spin_t_buff, &
+                                          tran_form_v_spin_t_buff, &
+                                          tran_form_v2_spin_t_buff, &
+                                          omega_iipk_t_buff, i - 1, verbose = verbose)
 
                 end if
             end do
@@ -444,12 +502,12 @@ contains
 
                 if ( trim(calc_mode) == 'vector' ) then
 
-                    call calc_rate_vector(pi_vi_vj, v_vec, &
+                    call calc_rate_vector(pi_1_1_mat, v_vec, &
                         abs_v_max, abs_rate, verbose = verbose)
 
                 else if ( trim(calc_mode) == 'ps' ) then
 
-                    call calc_rate_ps(pi_vi_vj, v_vec, &
+                    call calc_rate_ps(pi_1_1_mat, v_vec, &
                         abs_v_max, abs_rate, verbose = verbose)
 
                 else if ( trim(calc_mode) == 'scalar' ) then

@@ -1,7 +1,7 @@
 module rate_calc_vector
     !! Given the self energies, compute the absorption rate of vector DM
     !!
-    !! Computed by diagonalizing Pi_vivj vs Pi_11
+    !! Computed by diagonalizing Pi_1_1_mat
 
     use prec
     use constants
@@ -13,11 +13,11 @@ module rate_calc_vector
 
 contains
 
-    subroutine calc_rate_vector(pi_vi_vj, v_vec, v_max, abs_rate, verbose)
+    subroutine calc_rate_vector(pi_1_1_mat, v_vec, v_max, abs_rate, verbose)
 
         implicit none
 
-        complex(dp) :: pi_vi_vj(3, 3, n_omega, n_widths)
+        complex(dp) :: pi_1_1_mat(3, 3, n_omega, n_widths)
 
         real(dp) :: abs_rate(n_omega, n_widths, n_time)
 
@@ -45,6 +45,8 @@ contains
         complex(dp) :: pi_eigvals(3)
         complex(dp) :: pi_eigvectors(3, 3)
 
+        complex(dp) :: pi_mat(3, 3)
+
         integer :: i
 
         v_mag = norm2(v_vec)
@@ -55,7 +57,9 @@ contains
 
             do p = 1, n_widths
 
-                call calc_eig_system_33(e_EM**2*pi_vi_vj(:, :, w, p), pi_eigvals, pi_eigvectors)
+                pi_mat = e_EM**2*(omega/m_elec)**2*pi_1_1_mat(:, :, w, p)
+
+                call calc_eigvals_33(pi_mat, pi_eigvals)
 
                 do t = 1, n_time
 
@@ -73,8 +77,17 @@ contains
                         !! sum over (diagonalized) polarizations
                         do i = 1, 3
 
+                            ! pi_r = real(pi_eigvals(i))
+                            ! pi_c = aimag(pi_eigvals(i))
+
                             gam = gam + &
-                                -e_EM**(-2)*(3.0_dp*omega)**(-1)*aimag( omega**2*pi_eigvals(i) / ( omega**2 - pi_eigvals(i) ) )
+                                (-1.0_dp)*e_EM**(-2)*(3.0_dp*omega)**(-1)*&
+                                aimag( omega**2*pi_eigvals(i) / ( omega**2 - pi_eigvals(i) ) )
+
+                            ! gam = gam + &
+                            !     (-1.0_dp)*(3.0_dp*omega)**(-1)*&
+                            !     omega**4*( ( omega**2 - e_EM**2*pi_r )**2 + ( e_EM**2*pi_c )**2 )**(-1)*&
+                            !     pi_c
 
                         end do
 

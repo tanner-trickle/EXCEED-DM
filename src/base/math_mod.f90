@@ -9,8 +9,29 @@ module math_mod
 
 contains
 
+    subroutine calc_eigvals_33(mat, eigval)
+
+        implicit none
+
+        complex(dp) :: mat(3, 3)
+
+        complex(dp) :: eig_vec(3, 3)
+        complex(dp) :: eigval(3)
+
+        complex(dp) :: lwork(6), rwork(6)
+        complex(dp) :: dummy_1(1, 1)
+        complex(dp) :: dummy_2(1, 1)
+
+        integer :: info
+
+        call zgeev('N', 'N', 3, mat, 3, eigval, dummy_1, 1, dummy_2, 1, lwork, 6, rwork, info) 
+
+    end subroutine
+
     subroutine calc_eig_system_33(mat, eig_val, eig_vec)
         !! Wrapper function to ZGEEV, find eigenvalues and (right) eigenvectors of 3x3 matrix.
+
+        implicit none
 
         complex(dp) :: mat(3, 3)
 
