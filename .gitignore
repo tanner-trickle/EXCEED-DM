@@ -9,3 +9,4 @@ myTODO.md
 __pycache__
 tests/Si/outputs/
 examples/Si/outputs/
+*_spin.hdf5

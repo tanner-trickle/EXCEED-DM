@@ -1,3 +1,5 @@
+![exdm-prelim-logo](./docs/media/exdm-prelim-logo.png)
+
 # EXCEED-DM (EXtended Calculation of Electronic Excitations for Direct detection of Dark Matter)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -5,22 +7,25 @@
 
 **NOTICE: This program is in active development and the code, as well as required inputs and outputs, are subject to change. Star and watch the repository to stay up to date!**
 
+
 `EXCEED-DM` is an OpenMPI Fortran program that computes Dark Matter (DM) induced electronic transition rates for any gapped crystal target. 
+
+**Documentation**: https://tanner-trickle.github.io/EXCEED-DM
 
 ## Features
 
 `EXCEED-DM` provides a complete framework for computing DM-electron interaction rates. 
 
 - **Scattering**: Given a range of DM masses, mediator form factors, and times of day, `EXCEED-DM` computes the scattering rate per kg-year binned in energy and momentum deposition.
-  - **All kinematically allowed transitions are included.** In addition to transitions near the Fermi surface, where density functional theory (DFT) calculations are a necessary component of the calculation, electronic states further below, and above, are modeled semi-analytically and included in the scattering rate calculation.
-  - **Daily and annual modulation signals**: No assumptions about the isotropy of the target are made, allowing one to study the daily modulation signal, and the DM velocity distribution parameters can be changed very easily to compute annual modulation. 
-  - **Spin-dependent wave functions**: Some targets, such as those with spin-orbit coupling, will have electronic states which are not eigenstates of the spin operator. This means the wave functions have two components instead of one, and particle physics couplings to the spin operator are no longer trivial to compute. `EXCEED-DM` can perform these spin-dependent scattering rate calculations.
-    - Note: currently (v >= 0.2.0) only valence to conduction transitions are supported.
-  - **Calculate the dielectric**: For some processes the dielectric will screen the interaction rate. The complex dielectric/screening factor can now be computed and used in scattering rate calculations.
+    - **All kinematically allowed transitions are included.** In addition to transitions near the Fermi surface, where density functional theory (DFT) calculations are a necessary component of the calculation, electronic states further below, and above, are modeled semi-analytically and included in the scattering rate calculation.
+    - **Daily and annual modulation signals**: No assumptions about the isotropy of the target are made, allowing one to study the daily modulation signal, and the DM velocity distribution parameters can be changed very easily to compute annual modulation. 
+    - **Spin-dependent wave functions**: Some targets, such as those with spin-orbit coupling, will have electronic states which are not eigenstates of the spin operator. This means the wave functions have two components instead of one, and particle physics couplings to the spin operator are no longer trivial to compute. `EXCEED-DM` can perform these spin-dependent scattering rate calculations.
+      - Note: currently (v >= 0.2.0) only valence to conduction transitions are supported.
+    - **Calculate the dielectric**: For some processes the dielectric will screen the interaction rate. The complex dielectric/screening factor can now be computed and used in scattering rate calculations.
 
 - **Absorption**: Given a range of DM masses and times of day, `EXCEED-DM` computes the absorption rate, electronic self energies, and generalized crystal form factors, needed to compute the DM absorption rate.
-  - **Scalar, pseudoscalar, and vector DM**: compute the absorption rate from these bosonic DM candidates.
-  - Note: currently (v >= 0.2.0) only valence to conduction transitions are supported.
+    - **Scalar, pseudoscalar, and vector DM**: compute the absorption rate from these bosonic DM candidates.
+    - Note: currently (v >= 0.2.0) only valence to conduction transitions are supported.
 
 `EXCEED-DM` is :
 
@@ -43,13 +48,14 @@ Inside the `utilities` folder are other programs meant to aid in using `EXCEED-D
 Follow these instructions to compile and run `EXCEED-DM` on a fresh Ubuntu (18.04, 20.04) distribution. For installation on other systems, or if something goes wrong, see `install.md` for more detailed instructions.
 
 1) Install preliminary software
-    - Fortran compiler (`sudo apt install gfortran`) 
-    - OpenMPI          (`sudo apt install libopenmpi-dev`)
-    - fftw3            (`sudo apt install libfftw3-dev`)
-    - hdf5             (`sudo apt install libhdf5-serial-dev`)
-    - LAPACK           (`sudo apt install liblapack-dev`)
-    - BLAS             (`sudo apt install libblas-dev`)
-    - FoBiS.py         (`sudo pip3 install FoBiS.py`)
+
+- Fortran compiler (`sudo apt install gfortran`)
+- OpenMPI (`sudo apt install libopenmpi-dev`)
+- fftw3 (`sudo apt install libfftw3-dev`)
+- hdf5 (`sudo apt install libhdf5-serial-dev`)
+- LAPACK (`sudo apt install liblapack-dev`)
+- BLAS (`sudo apt install libblas-dev`)
+- FoBiS.py (`sudo pip3 install FoBiS.py`)
 
 Note : It's recommended to run `sudo apt update` before, and on a completely fresh Ubuntu installation pip will need to be installed (`sudo apt install python3-pip`).
 
@@ -71,7 +77,7 @@ If installed correctly you should see something similar to,
 
          --------------------
 
-            EXCEED-DM - v0.2.4
+            EXCEED-DM - v0.2.5
 
          --------------------
 

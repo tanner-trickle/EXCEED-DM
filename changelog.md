@@ -1,3 +1,41 @@
+v0.2.5
+---
+
+- **Major code refactor** and other miscellaneous improvements on the way to v1.0.0
+    - Changed valence -> conduction parallelization scheme from {i, i'} -> {i, k}, allowing for significant speedups when ( number of valence bands ) x ( number of conduction bands ) < ( number of processors )
+    - Added `n_val_max`, `n_cond_max` options to specify the maximum number of valence and conduction bands to keep in the calculation (valence -> conduction scattering, absorption, and dielectric calculations). `n_val_max` counts down from the Fermi surface and `n_cond_max` counts up from the Fermi surface.
+    - Changed core -> conduction parallelization scheme from {i, i'} -> {i, kf}, allowing for significant speedups when ( number of core states ) x ( number of conduction bands ) < ( number of processors )
+    - Added `n_prinicipal_min`, `n_principal_max` to set the minimum and maximum principal quantum numbers to include in scattering rate calculations involving core initial states.
+    - Changed valence -> free parallelization scheme to {i, k}.
+    - Changed absorption parallelization scheme to {i, k}
+    - Added option to skip saving transition form factors in absorption calculation.
+    - Reworked dielectric calculation, added more namelist input options.
+    - Changed dielectric parallelization scheme from {i, i'} -> {i, k}, allowing for significant speedups when ( number of valence bands ) x ( number of conduction bands ) < ( number of processors )
+    - Added `dielectric` process which computes just the dielectric.
+    - Utilizing `type` structures to make code more modular/reusable. Each type has at least its own `load`, `save`, and `print` procedure.
+        - `PW_dataset` - handles the plane wave Bloch wave function coefficients 
+        - `dm_model` - dark matter model parameters
+        - `material` - collection of target material parameters
+        - `expt` - experimental parameters
+        - `core_electron` - Core electron configuration and STO wave function coefficients for the core electrons
+        - and more!
+    - Output scattering rate units are now cm^(-2), for easier conversion to cross section constraints.
+    - Output absorption rates are total rates given use specified experimental masses and exposures.
+    - `EXCEED-DM` version is now written to output for easy comparison with previous and future versions.
+    - Added `k_` subgroup to Bloch coefficient data structure for easy access to the wave function coefficients at a given `i`, `k`.
+        - Updated example files in `examples/dft` accordingly.
+    - Updated core electron configuration file specification
+        - Updated example files in `examples/(Si, Ge)/core` accordingly.
+        - Updated `utilities/create_elec_config.ipynb`.
+    - Added example input files for Germanium.
+    - Improved/standardized output printing with an `info_messages` module.
+    - Improved comments inside the code, many variable explanations have associated LaTeX'ed equations which can be read by viewing the documentation in a browser.
+    - Major update to documentation. Check it out [here](https://tanner-trickle.github.io) folder.
+    - All modules, procedures, and types have some documentation.
+    - Specific documentation pages for all input and output files.
+    - `/examples/Si/dft/Si_2x2x2_AE_spin.hdf5` are now realistic spin dependent wave function coefficients for Si (just spin-independent ones doubled.).
+    - Added preliminary logo, `docs/media/exdm-prelim-logo.png`.
+
 v0.2.4
 ---
 
