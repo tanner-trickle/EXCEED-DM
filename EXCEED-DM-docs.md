@@ -1,7 +1,7 @@
 src_dir: ./src/
-output_dir: ./docs/ford/
-page_dir: ./docs/pages/
-media_dir: ./docs/media/
+output_dir: ./docs/
+page_dir: ./docs-extra/pages/
+media_dir: ./docs-extra/media/
 project: EXCEED-DM
 project_github: https://github.com/tanner-trickle/EXCEED-DM
 summary: ![exdm-prelim-logo](|media|/exdm-prelim-logo.png) <br><br> EXCEED-DM: EXtended Calculation of Electronic Excitations for Direct detection of Dark Matter.
