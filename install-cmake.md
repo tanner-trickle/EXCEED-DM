@@ -1,16 +1,16 @@
 # Installation
 
-Instuctions on how to setup, and check the setup of, `EXCEED-DM` on a local machine. For setup on a cluster ignore the **install** instructions, but make sure to check that the cluster has all the packages installed/modules loaded by running the commands in **check install**
+Instuctions on how to setup, and check the setup of, `EXCEED-DM` using CMake. 
 
 ## Pre-requisites
 
-- Fortran90 compiler (gfortran, ifort)
+- Fortran compiler
 - OpenMPI
 - FFTW3
 - HDF5
 - LAPACK
 - BLAS
-- FoBiS.py
+- CMake (v>=3.16)
 
 ## Fortran90 compiler
 
@@ -42,7 +42,7 @@ Instuctions on how to setup, and check the setup of, `EXCEED-DM` on a local mach
 
 #### Install
 
-Follow the instructions at [https://www.open-mpi.org/faq/?category=building#easy-build](https://www.open-mpi.org/faq/?category=building#easy-build).
+    sudo apt install libopenmpi-dev
 
 #### Check Install
 
@@ -115,52 +115,42 @@ Then, to install HDF5 at location /usr/local/hdf5, run
 
     h5fc -showconfig
     
-## FoBiS.py
+## CMake
 
-### Linux/Mac
+### Linux
 
 #### Install
 
-    pip install FoBiS.py
+    sudo apt install cmake
 
 #### Check Install
 
-    FoBiS.py --version
+    cmake --version
 
 ## Build
 
-To build the program we use **FoBiS.py** which is a simple build systerm for Fortran code. **FoBiS** requires a **fobos** file which specifies the build options. There is an example in the main folder. The user must specify the location of the hdf5 libraries and fftw libraries.
+To build `EXCEED-DM` to `/your/path/EXCEED-DM` with CMake,
 
-### Step 0: Download EXCEED-DM
+    > tar -xvzf EXCEED-DM-vX.Y.Z.tar.gz -C /your/path/EXCEED-DM
+    > cd /your/path/EXCEED-DM
+    > mkdir build
+    > cd build
+    > cmake ..
+    > make
 
-    git clone https://github.com/tanner-trickle/EXCEED-DM
-    cd EXCEED-DM
+### Build Options
 
-### Step 1: Specify file locations
+CMake allows the user to change many of the build parameters at the command line. Simply append these options to the `cmake ..` command in the previous section.
 
-Inside the **fobos** file there are four variables which need to be specified:
-    
-    $hdf5_inc_dir
-    $hdf5_lib_dir
-    $fftw3_inc_dir
-    $fftw3_lib_dir
+- To specify a different Fortran compiler,
 
-(For running on a cluster simply make new copies of these variables as done for **ubuntu** and **caltech_hpc** in the **fobos** file.)
+        -DCMAKE_Fortran_COMPILER=<your compiler>
 
-The directories can be found by finding the location of four files (assuming these weren't previously moved upon installation),
+- To specify a build mode, 
 
-- hdf5 include (inc) directory -> directory of `hdf5.mod`
-- hdf5 library (lib) directory -> directory of `libhdf5.a`
-- fftw3 include directory -> directory of `fftw3.f03` 
-- fftw3 library directory -> directory of `libfftw3.a`
+        -DCMAKE_BUILD_TYPE=<build-type>
 
-### Step 2: Compile
-
-Finally, run
-
-    FoBiS.py build -mode local-gnu
-
-assuming your Fortran compiler is **gfortran**.
+    Options are: `Release`, `Debug`
 
 ### Check Build
 
@@ -168,8 +158,12 @@ To check that the program was built run
     
     mpirun -np 2 ./build/exdm
 
+from the main folder.
+
 ### Clean Build
 
 To remove the current build of the program, run
 
-    FoBiS.py clean
+    cmake --build . --target clean
+
+from the `build/` folder
