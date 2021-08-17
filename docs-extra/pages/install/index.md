@@ -1,5 +1,5 @@
 title: Installation
 author: Tanner Trickle
-date: v0.2.5
+date: v0.2.6
 
-{!install.md!}
+{!install-cmake.md!}

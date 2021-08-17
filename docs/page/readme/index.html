@@ -182,7 +182,7 @@
 <li><code>core_elec_config/</code> - Calculations involving core electrons require a 'core electron configuration' file that depends on the target material. These files can be generated with the notebook in <code>core_elec_config/</code> by simply passing the <a href="https://materialsproject.org/">Materials Project</a> ID.</li>
 </ul>
 <h2>Getting Started</h2>
-<p>Follow these instructions to compile and run <code>EXCEED-DM</code> on a fresh Ubuntu (18.04, 20.04) distribution. For installation on other systems, or if something goes wrong, see <code>install.md</code> for more detailed instructions.</p>
+<p>Follow these instructions to compile and run <code>EXCEED-DM</code> on a fresh Linux distribution. For installation on other systems, or if something goes wrong, see <code>install-cmake.md</code> for more detailed instructions.</p>
 <p>1) Install preliminary software</p>
 <ul>
 <li>Fortran compiler (<code>sudo apt install gfortran</code>)</li>
@@ -191,49 +191,52 @@
 <li>hdf5 (<code>sudo apt install libhdf5-serial-dev</code>)</li>
 <li>LAPACK (<code>sudo apt install liblapack-dev</code>)</li>
 <li>BLAS (<code>sudo apt install libblas-dev</code>)</li>
-<li>FoBiS.py (<code>sudo pip3 install FoBiS.py</code>)</li>
+<li>CMake (<code>sudo apt install cmake</code>)</li>
 </ul>
-<p>Note : It's recommended to run <code>sudo apt update</code> before, and on a completely fresh Ubuntu installation pip will need to be installed (<code>sudo apt install python3-pip</code>).</p>
+<p>Note : It's recommended to run <code>sudo apt update</code> before, and on a completely fresh Linux distribution.</p>
 <p>2) Download, then extact the latest release with</p>
 <div class="codehilite"><pre><span></span><code>    &gt; tar -xvzf EXCEED-DM-vX.Y.Z.tar.gz -C /your/specific/path/
 </code></pre></div>
 
-<p>3) From <code>/your/specific/path</code>, compile the main program, <code>exdm</code>,</p>
-<div class="codehilite"><pre><span></span><code>    &gt; FoBiS.py build -mode ubuntu-gnu
+<p>3) Compile the main program, <code>exdm</code>,</p>
+<div class="codehilite"><pre><span></span><code>    &gt; cd /your/specific/path
+    &gt; mkdir build
+    &gt; cd build
+    &gt; cmake ..
+    &gt; make
 </code></pre></div>
 
-<p>To compile <code>exdm</code> on a cluster a few file paths specific to the cluster will have to be put in to the <code>fobos</code> file. See that file and <code>install.md</code> for more instructions.</p>
 <p>4) Test the installation</p>
-<div class="codehilite"><pre><span></span><code>    &gt; mpirun -np 2 ./build/exdm
+<div class="codehilite"><pre><span></span><code>    &gt; mpirun -np 2 ./exdm
 </code></pre></div>
 
 <p>If installed correctly you should see something similar to,</p>
-<div class="codehilite"><pre><span></span><code>     <span class="o">--------------------</span>
+<div class="codehilite"><pre><span></span><code><span class="c">     </span><span class="nb">----------------------------------------------------------------------</span><span class="c"></span>
 
-        <span class="nv">EXCEED</span><span class="o">-</span><span class="nv">DM</span> <span class="o">-</span> <span class="nv">v0</span>.<span class="mi">2</span>.<span class="mi">5</span>
+<span class="c">         EXCEED</span><span class="nb">-</span><span class="c">DM </span><span class="nb">-</span><span class="c"> v0</span><span class="nt">.</span><span class="c">2</span><span class="nt">.</span><span class="c">5</span>
 
-     <span class="o">--------------------</span>
+<span class="c">         Running on 1 processors</span>
+<span class="c">         Compiled with GCC version 10</span><span class="nt">.</span><span class="c">3</span><span class="nt">.</span><span class="c">0</span>
 
-     <span class="nv">Running</span> <span class="nv">on</span>            <span class="mi">2</span> <span class="nv">processors</span>
-     <span class="nv">Compiled</span> <span class="nv">with</span> <span class="nv">GCC</span> <span class="nv">version</span> <span class="mi">9</span>.<span class="mi">3</span>.<span class="mi">0</span>
+<span class="c">     </span><span class="nb">----------------------------------------------------------------------</span><span class="c"></span>
 
-     <span class="o">----------</span>
+<span class="c">     Loading control parameters</span><span class="nt">...</span><span class="c"></span>
 
-     <span class="o">!!</span> <span class="nv">ERROR</span> <span class="o">!!</span>
+<span class="c">     !!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
 
-        <span class="nv">Input</span> <span class="nv">file</span> <span class="k">for</span> <span class="nv">control</span> <span class="nv">parameters</span> :  <span class="nv">does</span> <span class="nv">NOT</span> <span class="nv">exist</span>.
+<span class="c">         Input file for control parameters :  does NOT exist</span><span class="nt">.</span><span class="c"></span>
 
-     <span class="o">!!!!!!!!!!!</span>
+<span class="c">     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
 </code></pre></div>
 
-<p>5) Perform example calculation. From the main folder run         </p>
+<p>5) Perform example calculation. From <code>/your/specific/path</code> run         </p>
 <div class="codehilite"><pre><span></span><code>    &gt; mpirun -np 2 ./build/exdm ./examples/Si/inputs/vc_test_input.txt
 </code></pre></div>
 
 <p>Output data is stored in <code>examples/Si/outputs/</code>. To run from another folder, open <code>examples/Si/inputs/vc_test_input.txt</code> and change the file paths as necessary (DFT input file is stored in <code>examples/Si/dft/Si/Si_2x2x2_AE.hdf5</code>).</p>
 <h2>Support</h2>
 <ul>
-<li>Installation instructions can be found in <code>install.md</code>.</li>
+<li>Installation instructions can be found in <code>install-cmake.md</code>.</li>
 <li>More detailed usage intstructions can be found in the user manual (<strong>in preparation</strong>).</li>
 <li>Input files needed for example calculations can be found in <code>examples/</code>.</li>
 <li>Output files of example calculations can be found in <code>examples/&lt;material name&gt;/outputs/</code> and here:<ul>
@@ -349,7 +352,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-08-16 17:13  
+             on 2021-08-17 12:37  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

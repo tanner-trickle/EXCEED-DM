@@ -122,7 +122,7 @@
         <li><i class="fa fa-pencil"></i> Tanner Trickle</li>
          
          
-        <li><i class="fa fa-calendar-o"></i> v0.2.5</li>
+        <li><i class="fa fa-calendar-o"></i> v0.2.6</li>
          
 <!--
         
@@ -142,14 +142,60 @@
   <div class="row">
     <div class="col-md-9 col-md-push-3" id='text'>
       <h1>Installation</h1>
-<p>Instuctions on how to setup, and check the setup of, <code>EXCEED-DM</code> on a local machine. For setup on a cluster ignore the <strong>install</strong> instructions, but make sure to check that the cluster has all the packages installed/modules loaded by running the commands in <strong>check install</strong></p>
+<p>Instuctions on how to setup, and check the setup of, <code>EXCEED-DM</code> using CMake. </p>
+<h2>Build</h2>
+<p>To build <code>EXCEED-DM</code> to <code>/your/path/EXCEED-DM</code> with CMake,</p>
+<div class="codehilite"><pre><span></span><code>&gt; tar -xvzf EXCEED-DM-vX.Y.Z.tar.gz -C /your/path/EXCEED-DM
+&gt; cd /your/path/EXCEED-DM
+&gt; mkdir build
+&gt; cd build
+&gt; cmake ..
+&gt; make
+</code></pre></div>
+
+<h3>Build Options</h3>
+<p>CMake allows the user to change many of the build parameters at the command line. Simply append these options to the <code>cmake ..</code> command in the previous section.</p>
+<ul>
+<li>
+<p>To specify a different Fortran compiler,</p>
+<div class="codehilite"><pre><span></span><code>-DCMAKE_Fortran_COMPILER=&lt;your compiler&gt;
+</code></pre></div>
+
+</li>
+<li>
+<p>To specify a build mode, </p>
+<div class="codehilite"><pre><span></span><code>-DCMAKE_BUILD_TYPE=&lt;build-type&gt;
+</code></pre></div>
+
+<p>Options are: <code>Release</code>, <code>Debug</code></p>
+</li>
+</ul>
+<h3>Cluster/Supercomputer</h3>
+<p>Large computing systems should have a way to load the pre-requisite software, e.g. <code>module load openmpi</code>. Once all of the prerequisites are loaded cmake should automatically find the correct file locations. </p>
+<p>Notes:
+- You might have to specify the compiler directly with a build option.
+- Your version of HDF5 should have been compiled with the same compiler you're using. There seems to be some wiggle room with different versions of the same compiler, but expect errors if you compiled HDF5 with GNU Fortran and want to compile the main program with an Intel compiler.</p>
+<h3>Check Build</h3>
+<p>To check that the program was built run</p>
+<div class="codehilite"><pre><span></span><code>mpirun -np 2 ./build/exdm
+</code></pre></div>
+
+<p>from the main folder.</p>
+<h3>Clean Build</h3>
+<p>To remove the current build of the program, run</p>
+<div class="codehilite"><pre><span></span><code>cmake --build . --target clean
+</code></pre></div>
+
+<p>from the <code>build/</code> folder.</p>
 <h2>Pre-requisites</h2>
 <ul>
-<li>Fortran90 compiler (gfortran, ifort)</li>
+<li>Fortran compiler</li>
 <li>OpenMPI</li>
 <li>FFTW3</li>
 <li>HDF5</li>
-<li>FoBiS.py</li>
+<li>LAPACK</li>
+<li>BLAS</li>
+<li>CMake (v&gt;=3.16)</li>
 </ul>
 <h2>Fortran90 compiler</h2>
 <h3>Linux</h3>
@@ -176,7 +222,9 @@
 <h2>OpenMPI</h2>
 <h3>Linux</h3>
 <h4>Install</h4>
-<p>Follow the instructions at <a href="https://www.open-mpi.org/faq/?category=building#easy-build">https://www.open-mpi.org/faq/?category=building#easy-build</a>.</p>
+<div class="codehilite"><pre><span></span><code>sudo apt install libopenmpi-dev
+</code></pre></div>
+
 <h4>Check Install</h4>
 <div class="codehilite"><pre><span></span><code>mpirun --version
 </code></pre></div>
@@ -237,53 +285,14 @@ make check-install      # optional
 <div class="codehilite"><pre><span></span><code>h5fc -showconfig
 </code></pre></div>
 
-<h2>FoBiS.py</h2>
-<h3>Linux/Mac</h3>
+<h2>CMake</h2>
+<h3>Linux</h3>
 <h4>Install</h4>
-<div class="codehilite"><pre><span></span><code>pip install FoBiS.py
+<div class="codehilite"><pre><span></span><code>sudo apt install cmake
 </code></pre></div>
 
 <h4>Check Install</h4>
-<div class="codehilite"><pre><span></span><code>FoBiS.py --version
-</code></pre></div>
-
-<h2>Build</h2>
-<p>To build the program we use <strong>FoBiS.py</strong> which is a simple build systerm for Fortran code. <strong>FoBiS</strong> requires a <strong>fobos</strong> file which specifies the build options. There is an example in the main folder. The user must specify the location of the hdf5 libraries and fftw libraries.</p>
-<h3>Step 0: Download dm-electron</h3>
-<div class="codehilite"><pre><span></span><code>git clone https://github.com/tanner-trickle/EXCEED-DM
-cd EXCEED-DM
-</code></pre></div>
-
-<h3>Step 1: Specify file locations</h3>
-<p>Inside the <strong>fobos</strong> file there are four variables which need to be specified:</p>
-<div class="codehilite"><pre><span></span><code>$hdf5_inc_dir
-$hdf5_lib_dir
-$fftw3_inc_dir
-$fftw3_lib_dir
-</code></pre></div>
-
-<p>(For running on a cluster simply make new copies of these variables as done for <strong>ubuntu</strong> and <strong>caltech_hpc</strong> in the <strong>fobos</strong> file.)</p>
-<p>The directories can be found by finding the location of four files (assuming these weren't previously moved upon installation),</p>
-<ul>
-<li>hdf5 include (inc) directory -&gt; directory of <code>hdf5.mod</code></li>
-<li>hdf5 library (lib) directory -&gt; directory of <code>libhdf5.a</code></li>
-<li>fftw3 include directory -&gt; directory of <code>fftw3.f03</code> </li>
-<li>fftw3 library directory -&gt; directory of <code>libfftw3.a</code></li>
-</ul>
-<h3>Step 2: Compile</h3>
-<p>Finally, run</p>
-<div class="codehilite"><pre><span></span><code>FoBiS.py build -mode local-gnu
-</code></pre></div>
-
-<p>assuming your Fortran compiler is <strong>gfortran</strong>.</p>
-<h3>Check Build</h3>
-<p>To check that the program was built run</p>
-<div class="codehilite"><pre><span></span><code>mpirun -np 2 ./build/exdm
-</code></pre></div>
-
-<h3>Clean Build</h3>
-<p>To remove the current build of the program, run</p>
-<div class="codehilite"><pre><span></span><code>FoBiS.py clean
+<div class="codehilite"><pre><span></span><code>cmake --version
 </code></pre></div>
     </div>
     
@@ -367,7 +376,7 @@ $fftw3_lib_dir
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-08-16 17:13  
+             on 2021-08-17 12:37  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

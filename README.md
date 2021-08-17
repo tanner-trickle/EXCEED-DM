@@ -45,7 +45,7 @@ Inside the `utilities` folder are other programs meant to aid in using `EXCEED-D
 
 ## Getting Started
 
-Follow these instructions to compile and run `EXCEED-DM` on a fresh Ubuntu (18.04, 20.04) distribution. For installation on other systems, or if something goes wrong, see `install.md` for more detailed instructions.
+Follow these instructions to compile and run `EXCEED-DM` on a fresh Linux distribution. For installation on other systems, or if something goes wrong, see `install-cmake.md` for more detailed instructions.
 
 1) Install preliminary software
 
@@ -55,44 +55,46 @@ Follow these instructions to compile and run `EXCEED-DM` on a fresh Ubuntu (18.0
 - hdf5 (`sudo apt install libhdf5-serial-dev`)
 - LAPACK (`sudo apt install liblapack-dev`)
 - BLAS (`sudo apt install libblas-dev`)
-- FoBiS.py (`sudo pip3 install FoBiS.py`)
+- CMake (`sudo apt install cmake`)
 
-Note : It's recommended to run `sudo apt update` before, and on a completely fresh Ubuntu installation pip will need to be installed (`sudo apt install python3-pip`).
+Note : It's recommended to run `sudo apt update` before, and on a completely fresh Linux distribution.
 
 2) Download, then extact the latest release with
     
         > tar -xvzf EXCEED-DM-vX.Y.Z.tar.gz -C /your/specific/path/
 
-3) From `/your/specific/path`, compile the main program, `exdm`,
+3) Compile the main program, `exdm`,
 
-        > FoBiS.py build -mode ubuntu-gnu
-
-To compile `exdm` on a cluster a few file paths specific to the cluster will have to be put in to the `fobos` file. See that file and `install.md` for more instructions.
+        > cd /your/specific/path
+        > mkdir build
+        > cd build
+        > cmake ..
+        > make
 
 4) Test the installation
 
-        > mpirun -np 2 ./build/exdm
+        > mpirun -np 2 ./exdm
 
 If installed correctly you should see something similar to,
 
-         --------------------
+         ----------------------------------------------------------------------
 
-            EXCEED-DM - v0.2.5
+             EXCEED-DM - v0.2.5
 
-         --------------------
+             Running on 1 processors
+             Compiled with GCC version 10.3.0
 
-         Running on            2 processors
-         Compiled with GCC version 9.3.0
+         ----------------------------------------------------------------------
 
-         ----------
+         Loading control parameters...
 
-         !! ERROR !!
+         !!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-            Input file for control parameters :  does NOT exist.
+             Input file for control parameters :  does NOT exist.
 
-         !!!!!!!!!!!
+         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-5) Perform example calculation. From the main folder run         
+5) Perform example calculation. From `/your/specific/path` run         
 
         > mpirun -np 2 ./build/exdm ./examples/Si/inputs/vc_test_input.txt
 
@@ -100,7 +102,7 @@ Output data is stored in `examples/Si/outputs/`. To run from another folder, ope
 
 ## Support 
 
-- Installation instructions can be found in `install.md`.
+- Installation instructions can be found in `install-cmake.md`.
 - More detailed usage intstructions can be found in the user manual (**in preparation**).
 - Input files needed for example calculations can be found in `examples/`.
 - Output files of example calculations can be found in `examples/<material name>/outputs/` and here:
