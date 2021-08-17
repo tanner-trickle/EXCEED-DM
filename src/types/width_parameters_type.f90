@@ -119,7 +119,7 @@ contains
                 self%a_min, error)
             call h5ltmake_dataset_double_f(file_id, 'widths/a_max',&
                 size(dims1), dims1,&
-                self%a_min, error)
+                self%a_max, error)
 
             call h5ltmake_dataset_double_f(file_id, 'widths/log_b_min',&
                 size(dims1), dims1,&

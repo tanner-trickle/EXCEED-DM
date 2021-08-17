@@ -28,6 +28,9 @@ module transition_form_factor
     !!     <li> 
     !!         1 - \( \mathcal{O} = 1 \) [ vc (SI/SD), cc (SI) ]
     !!     </li>
+    !!     <li>
+    !!         2 - \( \mathcal{O} = \mathbf{S}_e \) [vc (SD)]
+    !!     </li>
     !! </ul>
     !!
     !! Notes : Bracketed quantities indicate what transition types are currently supported, <b>s</b> indicates its only
@@ -121,32 +124,37 @@ contains
 
                 case ( 2 )
 
-                    ! pauli matrix operator
+                    ! pauli matrix operator, \( \sigma^i \)
 
-                    ! do i = 1, 3
+                    do g3 = 1, n_FFT_grid(3)
+                        do g2 = 1, n_FFT_grid(2)
+                            do g1 = 1, n_FFT_grid(1)
 
-                    !     do g3 = 1, n_FFT_grid(3)
-                    !         do g2 = 1, n_FFT_grid(2)
-                    !             do g1 = 1, n_FFT_grid(1)
+                                Tx_v_terms(1, 1, g1, g2, g3) = &
+                                    conjg(wfc_f(1, g1, g2, g3))*wfc_i(2, g1, g2, g3) + &
+                                    conjg(wfc_f(2, g1, g2, g3))*wfc_i(1, g1, g2, g3)
 
-                    !                 op = pauli_spin_matrix(i)
+                                Tx_v_terms(2, 1, g1, g2, g3) = &
+                                    -ii*conjg(wfc_f(1, g1, g2, g3))*wfc_i(2, g1, g2, g3) + &
+                                    ii*conjg(wfc_f(2, g1, g2, g3))*wfc_i(1, g1, g2, g3)
 
-                    !                 Tx_v_terms(i, 1, g1, g2, g3) = dot_product(& 
-                    !                         conjg(wfc_f(:, g1, g2, g3)),&
-                    !                         matmul( op , wfc_i(:, g1, g2, g3) )&
-                    !                         )
+                                Tx_v_terms(3, 1, g1, g2, g3) = &
+                                    conjg(wfc_f(1, g1, g2, g3))*wfc_i(1, g1, g2, g3) - &
+                                    conjg(wfc_f(2, g1, g2, g3))*wfc_i(2, g1, g2, g3)
 
-                    !             end do
-                    !         end do
-                    !     end do
+                            end do
+                        end do
+                    end do
 
-                    !     call dfftw_execute_dft(FFT_plan, Tx_v_terms(i, 1, :, :, :) , TFF_v_terms(i, 1, :, :, :)) 
+                    do i = 1, 3
 
-                    !     ! TFF_v_terms(i, 2, :, :, :) = conjg(TFF_v_terms(i, 1, :, :, :))
+                        call dfftw_execute_dft(FFT_plan, Tx_v_terms(i, 1, :, :, :) , TFF_v_terms(i, 1, :, :, :)) 
 
-                    !     TFF = TFF + abs(TFF_v_terms(i, 1, :, :, :))**2
+                        ! TFF_v_terms(i, 2, :, :, :) = conjg(TFF_v_terms(i, 1, :, :, :))
 
-                    ! end do
+                        TFF = TFF + abs(TFF_v_terms(i, 1, :, :, :))**2
+
+                    end do
 
                 case default
 

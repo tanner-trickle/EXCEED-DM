@@ -132,7 +132,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 2.2% of total for modules and submodules.">147 statements</a>
+    title=" 3.0% of total for modules and submodules.">207 statements</a>
      </li> 
      
      
@@ -187,6 +187,8 @@
     <div id="subs-0" class="panel-collapse collapse">
       
       <a class="list-group-item" href="../module/exdm_dielectric.html#proc-run_exdm_dielectric">run_exdm_dielectric</a>
+      
+      <a class="list-group-item" href="../module/exdm_dielectric.html#proc-time_exdm_dielectric_calc">time_exdm_dielectric_calc</a>
       
       <a class="list-group-item" href="../module/exdm_dielectric.html#proc-save_dielectric">save_dielectric</a>
       
@@ -298,6 +300,8 @@
     <div id="subs-1" class="panel-collapse collapse">
       
       <a class="list-group-item" href="../module/exdm_dielectric.html#proc-run_exdm_dielectric">run_exdm_dielectric</a>
+      
+      <a class="list-group-item" href="../module/exdm_dielectric.html#proc-time_exdm_dielectric_calc">time_exdm_dielectric_calc</a>
       
       <a class="list-group-item" href="../module/exdm_dielectric.html#proc-save_dielectric">save_dielectric</a>
       
@@ -486,6 +490,231 @@ public subroutine <a href='../proc/run_exdm_dielectric.html'>run_exdm_dielectric
     
     
   <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-time_exdm_dielectric_calc"></span><h3>
+public subroutine <a href='../proc/time_exdm_dielectric_calc.html'>time_exdm_dielectric_calc</a>(FFT_grid, PW_dataset, target_mat, bins, widths, numerics, n_jobs_per_proc, val_id, cond_id, k, kf, verbose)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+
+
+
+
+<p>Clocks the valence <script type="math/tex"> \rightarrow </script> conduction dielectric calculation
+ by running a smaller version of the program.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(FFT_grid_t)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>FFT_grid</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(PW_dataset_t)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>PW_dataset</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(<a href='../type/material_t.html'>material_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>target_mat</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(<a href='../type/bins_dielectric_t.html'>bins_dielectric_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>bins</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(<a href='../type/width_parameters_t.html'>width_parameters_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>widths</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(<a href='../type/numerics_dielectric_t.html'>numerics_dielectric_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>numerics</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>n_jobs_per_proc</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>val_id</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>cond_id</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>k</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>kf</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>logical,</td>
+  <td></td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>verbose</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-save_dielectric"></span><h3>
 public subroutine <a href='../proc/save_dielectric.html'>save_dielectric</a>(filename, dielectric, verbose)
     
@@ -593,7 +822,7 @@ public subroutine <a href='../proc/save_dielectric.html'>save_dielectric</a>(fil
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-08-08 08:37  
+             on 2021-08-16 17:13  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

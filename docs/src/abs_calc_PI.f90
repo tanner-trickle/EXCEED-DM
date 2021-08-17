@@ -261,7 +261,7 @@ contains
                 omega = dm_model%mX(w)
                 width = widths%get_width(p, omega)
 
-                do f = 1, size(tran_form_v2)
+                do f = 1, size(tran_form_v2, 1)
 
                     cond_id = f + PW_dataset%n_val
 
@@ -312,7 +312,7 @@ contains
                 omega = dm_model%mX(w)
                 width = widths%get_width(p, omega)
 
-                do f = 1, size(tran_form_v2)
+                do f = 1, size(tran_form_v2, 1)
 
                     tf = (0.0_dp, 0.0_dp)
 

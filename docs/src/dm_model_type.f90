@@ -278,6 +278,8 @@ contains
             self%v0_km_per_sec = v0_km_per_sec
             self%vE_km_per_sec = vE_km_per_sec
             self%vEsc_km_per_sec = vEsc_km_per_sec
+
+            self%tff_id = tff_id
             
             self%v0        = km_per_sec_to_none*v0_km_per_sec
             self%vE        = km_per_sec_to_none*vE_km_per_sec
@@ -373,6 +375,9 @@ contains
                 self%vEsc_km_per_sec, error)
             call h5ltmake_dataset_double_f(file_id, 'dm_model/vE', size(dims1), dims1,&
                 self%vE_km_per_sec, error)
+            dims1 = [2]
+            call h5ltmake_dataset_int_f(file_id, 'dm_model/tff_id', size(dims1), dims1,&
+                self%tff_id, error)
 
             call h5fclose_f(file_id, error)
             call h5close_f(error)

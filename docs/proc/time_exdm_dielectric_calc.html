@@ -10,7 +10,7 @@
     <meta name="author" content="Tanner Trickle" >
     <link rel="icon" href="../favicon.png">
 
-    <title>FFT_grid_print &ndash; EXCEED-DM</title>
+    <title>time_exdm_dielectric_calc &ndash; EXCEED-DM</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -114,7 +114,7 @@
     
   
   <div class="row">
-    <h1>FFT_grid_print
+    <h1>time_exdm_dielectric_calc
       <small>Subroutine</small>
     
     </h1>
@@ -132,24 +132,24 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.3% of total for procedures.">20 statements</a>
+    title=" 0.9% of total for procedures.">57 statements</a>
      </li> 
      
      
      
-    <li><i class="fa fa-code"></i><a href="../src/FFT_util.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/exdm_dielectric.f90"> Source File</a></li>
      
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
     
-     <li><a href='../sourcefile/fft_util.f90.html'>FFT_util.f90</a></li>
+     <li><a href='../sourcefile/exdm_dielectric.f90.html'>exdm_dielectric.f90</a></li>
     
-     <li><a href='../module/fft_util.html'>FFT_util</a></li>
+     <li><a href='../module/exdm_dielectric.html'>exdm_dielectric</a></li>
     
   
-     <li class="active">FFT_grid_print</li>
+     <li class="active">time_exdm_dielectric_calc</li>
   </ol>
 </div>
 </div>
@@ -199,17 +199,39 @@
     
     <div class="col-md-9" id='text'>
     <h2>
-public subroutine FFT_grid_print(self, verbose)
+public subroutine time_exdm_dielectric_calc(FFT_grid, PW_dataset, target_mat, bins, widths, numerics, n_jobs_per_proc, val_id, cond_id, k, kf, verbose)
     
     
    
 </h2>
     
   
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Uses</h3>
+      </div>
+      <ul class="list-group">
+      
+      <li class="list-group-item">
+  <ul class="list-inline">
+    
+    <li><a href='../module/timing.html'>timing</a></li>
+    
+    <li><a href="http://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node410.htm">mpi</a></li>
+    
+  </ul>
+      </li>
+      
+      
+      
+      </ul>
+    </div>
+    
 
 
     
-    <p>Prints <code>FFT_grid</code> components.</p>
+    <p>Clocks the valence <script type="math/tex"> \rightarrow </script> conduction dielectric calculation
+ by running a smaller version of the program.</p>
     
 
     <h3>Arguments</h3>
@@ -230,12 +252,12 @@ public subroutine FFT_grid_print(self, verbose)
   
 <tr>
   
-  <td><span class="anchor" id="variable-self~84"></span>class(<a href='../type/fft_grid_t.html'>FFT_grid_t</a>)</td>
+  <td><span class="anchor" id="variable-fft_grid~3"></span>type(FFT_grid_t)</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>self</strong></td><td></td>
+  <td><strong>FFT_grid</strong></td><td></td>
   
 </tr>
 
@@ -245,7 +267,157 @@ public subroutine FFT_grid_print(self, verbose)
   
 <tr>
   
-  <td><span class="anchor" id="variable-verbose~94"></span>logical,</td>
+  <td><span class="anchor" id="variable-pw_dataset~18"></span>type(PW_dataset_t)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>PW_dataset</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-target_mat~17"></span>type(<a href='../type/material_t.html'>material_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>target_mat</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-bins~3"></span>type(<a href='../type/bins_dielectric_t.html'>bins_dielectric_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>bins</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-widths~15"></span>type(<a href='../type/width_parameters_t.html'>width_parameters_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>widths</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-numerics~8"></span>type(<a href='../type/numerics_dielectric_t.html'>numerics_dielectric_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>numerics</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_jobs_per_proc~2"></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>n_jobs_per_proc</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-val_id~15"></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>val_id</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-cond_id~9"></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>cond_id</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-k~15"></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>k</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-kf~3"></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>kf</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-verbose~29"></span>logical,</td>
   <td></td>
   <td>optional</td>
   

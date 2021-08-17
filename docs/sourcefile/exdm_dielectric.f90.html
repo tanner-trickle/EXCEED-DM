@@ -132,7 +132,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 2.1% of total for source files.">147 statements</a>
+    title=" 3.0% of total for source files.">207 statements</a>
      </li> 
      
      
@@ -439,14 +439,14 @@
 <a id="ln-170" name="ln-170"></a>        <span class="k">call </span><span class="n">numerics</span><span class="p">%</span><span class="n">define_q_grid</span><span class="p">(</span><span class="n">bins</span><span class="p">%</span><span class="n">n_q</span><span class="o">*</span><span class="n">bins</span><span class="p">%</span><span class="n">q_width</span><span class="p">,</span> <span class="p">&amp;</span>
 <a id="ln-171" name="ln-171"></a>            <span class="n">PW_dataset</span><span class="p">,</span> <span class="n">FFT_grid</span><span class="p">)</span>
 <a id="ln-172" name="ln-172"></a>
-<a id="ln-173" name="ln-173"></a>        <span class="c">! ! time calculation</span>
-<a id="ln-174" name="ln-174"></a>        <span class="c">! if ( ( proc_id == root_process ) .and. ( main_control%timer ) ) then</span>
+<a id="ln-173" name="ln-173"></a>        <span class="c">! time calculation</span>
+<a id="ln-174" name="ln-174"></a>        <span class="k">if</span> <span class="p">(</span> <span class="p">(</span> <span class="n">proc_id</span> <span class="o">==</span> <span class="n">root_process</span> <span class="p">)</span> <span class="p">.</span><span class="nb">and</span><span class="p">.</span> <span class="p">(</span> <span class="n">main_control</span><span class="p">%</span><span class="n">timer</span> <span class="p">)</span> <span class="p">)</span> <span class="k">then</span>
 <a id="ln-175" name="ln-175"></a>
-<a id="ln-176" name="ln-176"></a>        <span class="c">!     call time_exdm_scatter_vc_calc(FFT_grid, PW_dataset, target_mat, &amp;</span>
-<a id="ln-177" name="ln-177"></a>        <span class="c">!                         bins, dm_model, expt, numerics, ik_manager%n_jobs_per_proc, &amp;</span>
-<a id="ln-178" name="ln-178"></a>        <span class="c">!                         PW_dataset%n_val, PW_dataset%n_val + 1, 1, 1, verbose = verbose)</span>
+<a id="ln-176" name="ln-176"></a><span class="k">            call </span><span class="n">time_exdm_dielectric_calc</span><span class="p">(</span><span class="n">FFT_grid</span><span class="p">,</span> <span class="n">PW_dataset</span><span class="p">,</span> <span class="n">target_mat</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-177" name="ln-177"></a>                                <span class="n">bins</span><span class="p">,</span> <span class="n">widths</span><span class="p">,</span> <span class="n">numerics</span><span class="p">,</span> <span class="n">ik_manager</span><span class="p">%</span><span class="n">n_jobs_per_proc</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-178" name="ln-178"></a>                                <span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_val</span><span class="p">,</span> <span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
 <a id="ln-179" name="ln-179"></a>
-<a id="ln-180" name="ln-180"></a>        <span class="c">! end if</span>
+<a id="ln-180" name="ln-180"></a>        <span class="k">end if</span>
 <a id="ln-181" name="ln-181"></a>
 <a id="ln-182" name="ln-182"></a>        <span class="c">! allocate wave functions</span>
 <a id="ln-183" name="ln-183"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">PW_dataset</span><span class="p">%</span><span class="n">include_spin</span> <span class="p">)</span> <span class="k">then</span>
@@ -544,170 +544,155 @@
 <a id="ln-275" name="ln-275"></a>
 <a id="ln-276" name="ln-276"></a><span class="k">    end subroutine</span>
 <a id="ln-277" name="ln-277"></a>
-<a id="ln-278" name="ln-278"></a>    <span class="c">! subroutine time_dielectric_calc(DFT_input_filename, tran_id, &amp;</span>
-<a id="ln-279" name="ln-279"></a>    <span class="c">!         n_FFT_grid, k_cut, wfc_fft_plan, Tif_fft_plan, n_q_grid, q_grid_min, n_k_vec, verbose)</span>
-<a id="ln-280" name="ln-280"></a>
-<a id="ln-281" name="ln-281"></a>    <span class="c">!     use timing</span>
-<a id="ln-282" name="ln-282"></a>
-<a id="ln-283" name="ln-283"></a>    <span class="c">!     implicit none</span>
+<a id="ln-278" name="ln-278"></a><span class="k">    subroutine </span><span class="n">time_exdm_dielectric_calc</span><span class="p">(</span><span class="n">FFT_grid</span><span class="p">,</span> <span class="n">PW_dataset</span><span class="p">,</span> <span class="n">target_mat</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-279" name="ln-279"></a>            <span class="n">bins</span><span class="p">,</span> <span class="n">widths</span><span class="p">,</span> <span class="n">numerics</span><span class="p">,</span> <span class="n">n_jobs_per_proc</span><span class="p">,</span> <span class="n">val_id</span><span class="p">,</span> <span class="n">cond_id</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">kf</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+<a id="ln-280" name="ln-280"></a>        <span class="c">!! Clocks the valence \( \rightarrow \) conduction dielectric calculation</span>
+<a id="ln-281" name="ln-281"></a>        <span class="c">!! by running a smaller version of the program.</span>
+<a id="ln-282" name="ln-282"></a>        <span class="k">use </span><span class="n">timing</span> 
+<a id="ln-283" name="ln-283"></a>        <span class="k">use </span><span class="n">mpi</span>
 <a id="ln-284" name="ln-284"></a>
-<a id="ln-285" name="ln-285"></a>    <span class="c">!     character(len=*) :: DFT_input_filename</span>
+<a id="ln-285" name="ln-285"></a>        <span class="k">implicit none</span>
 <a id="ln-286" name="ln-286"></a>
-<a id="ln-287" name="ln-287"></a>    <span class="c">!     integer :: tran_id</span>
-<a id="ln-288" name="ln-288"></a>
-<a id="ln-289" name="ln-289"></a>    <span class="c">!     integer :: n_FFT_grid(3)</span>
-<a id="ln-290" name="ln-290"></a>
-<a id="ln-291" name="ln-291"></a>    <span class="c">!     integer :: k_cut</span>
-<a id="ln-292" name="ln-292"></a>
-<a id="ln-293" name="ln-293"></a>    <span class="c">!     integer :: wfc_fft_plan(8)</span>
-<a id="ln-294" name="ln-294"></a>    <span class="c">!     integer :: Tif_fft_plan(8)</span>
-<a id="ln-295" name="ln-295"></a>
-<a id="ln-296" name="ln-296"></a>    <span class="c">!     integer :: n_q_grid(3)</span>
-<a id="ln-297" name="ln-297"></a>
-<a id="ln-298" name="ln-298"></a>    <span class="c">!     real(dp) :: q_grid_min(3)</span>
+<a id="ln-287" name="ln-287"></a><span class="k">        type</span><span class="p">(</span><span class="n">FFT_grid_t</span><span class="p">)</span> <span class="kd">::</span> <span class="n">FFT_grid</span>
+<a id="ln-288" name="ln-288"></a>        <span class="k">type</span><span class="p">(</span><span class="n">PW_dataset_t</span><span class="p">)</span> <span class="kd">::</span> <span class="n">PW_dataset</span>
+<a id="ln-289" name="ln-289"></a>        <span class="k">type</span><span class="p">(</span><span class="n">material_t</span><span class="p">)</span> <span class="kd">::</span> <span class="n">target_mat</span>
+<a id="ln-290" name="ln-290"></a>        <span class="k">type</span><span class="p">(</span><span class="n">bins_dielectric_t</span><span class="p">)</span> <span class="kd">::</span> <span class="n">bins</span>
+<a id="ln-291" name="ln-291"></a>        <span class="k">type</span><span class="p">(</span><span class="n">width_parameters_t</span><span class="p">)</span> <span class="kd">::</span> <span class="n">widths</span>
+<a id="ln-292" name="ln-292"></a>        <span class="k">type</span><span class="p">(</span><span class="n">numerics_dielectric_t</span><span class="p">)</span> <span class="kd">::</span> <span class="n">numerics</span>
+<a id="ln-293" name="ln-293"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">n_jobs_per_proc</span>
+<a id="ln-294" name="ln-294"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">val_id</span><span class="p">,</span> <span class="n">cond_id</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">kf</span>
+<a id="ln-295" name="ln-295"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
+<a id="ln-296" name="ln-296"></a>
+<a id="ln-297" name="ln-297"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">wfc_ik</span><span class="p">(:,</span> <span class="p">:,</span> <span class="p">:)</span>
+<a id="ln-298" name="ln-298"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">wfc_iks</span><span class="p">(:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:)</span>
 <a id="ln-299" name="ln-299"></a>
-<a id="ln-300" name="ln-300"></a>    <span class="c">!     integer :: n_k_vec(3)</span>
-<a id="ln-301" name="ln-301"></a>
-<a id="ln-302" name="ln-302"></a>    <span class="c">!     complex(dp), allocatable :: wfc_FT_i(:, :)</span>
-<a id="ln-303" name="ln-303"></a>    <span class="c">!     complex(dp), allocatable :: wfc_FT_f(:, :)</span>
+<a id="ln-300" name="ln-300"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">wfc_fkf</span><span class="p">(:,</span> <span class="p">:,</span> <span class="p">:)</span>
+<a id="ln-301" name="ln-301"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">wfc_fkfs</span><span class="p">(:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:)</span>
+<a id="ln-302" name="ln-302"></a>
+<a id="ln-303" name="ln-303"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dielec</span><span class="p">(</span><span class="n">bins</span><span class="p">%</span><span class="n">n_E</span><span class="p">,</span> <span class="n">bins</span><span class="p">%</span><span class="n">n_q</span><span class="p">,</span> <span class="n">bins</span><span class="p">%</span><span class="n">n_q_theta</span><span class="p">,</span> <span class="n">bins</span><span class="p">%</span><span class="n">n_q_phi</span><span class="p">)</span>
 <a id="ln-304" name="ln-304"></a>
-<a id="ln-305" name="ln-305"></a>    <span class="c">!     complex(dp), allocatable :: wfc_FT_i_s(:, :, :)</span>
-<a id="ln-306" name="ln-306"></a>    <span class="c">!     complex(dp), allocatable :: wfc_FT_f_s(:, :, :)</span>
-<a id="ln-307" name="ln-307"></a>
-<a id="ln-308" name="ln-308"></a>    <span class="c">!     logical, optional :: verbose</span>
+<a id="ln-305" name="ln-305"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-306" name="ln-306"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Timing dielectric calculation...&#39;</span>
+<a id="ln-307" name="ln-307"></a>            <span class="k">print</span><span class="o">*</span>
+<a id="ln-308" name="ln-308"></a>        <span class="k">end if</span>
 <a id="ln-309" name="ln-309"></a>
-<a id="ln-310" name="ln-310"></a>    <span class="c">!     integer :: val_id, cond_id</span>
+<a id="ln-310" name="ln-310"></a><span class="k">        if</span> <span class="p">(</span> <span class="n">PW_dataset</span><span class="p">%</span><span class="n">include_spin</span> <span class="p">)</span> <span class="k">then</span>
 <a id="ln-311" name="ln-311"></a>
-<a id="ln-312" name="ln-312"></a>    <span class="c">!     complex(dp) :: dielec_test(di_n_omega_bins, di_n_q_bins, di_n_q_theta_bins, di_n_q_phi_bins)</span>
-<a id="ln-313" name="ln-313"></a>
-<a id="ln-314" name="ln-314"></a>    <span class="c">!     if ( verbose ) then</span>
-<a id="ln-315" name="ln-315"></a>
-<a id="ln-316" name="ln-316"></a>    <span class="c">!         print*, &#39;Timing dielectric calculation...&#39;</span>
-<a id="ln-317" name="ln-317"></a>    <span class="c">!         print*</span>
+<a id="ln-312" name="ln-312"></a><span class="k">            allocate</span><span class="p">(</span><span class="n">wfc_iks</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">FFT_grid</span><span class="p">%</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">FFT_grid</span><span class="p">%</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">FFT_grid</span><span class="p">%</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+<a id="ln-313" name="ln-313"></a>            <span class="k">allocate</span><span class="p">(</span><span class="n">wfc_fkfs</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">FFT_grid</span><span class="p">%</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">FFT_grid</span><span class="p">%</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">FFT_grid</span><span class="p">%</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+<a id="ln-314" name="ln-314"></a>
+<a id="ln-315" name="ln-315"></a>            <span class="k">call </span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">load_wfc_ik_expanded_spin</span><span class="p">(</span><span class="n">val_id</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">FFT_grid</span><span class="p">,</span> <span class="n">wfc_iks</span><span class="p">)</span>
+<a id="ln-316" name="ln-316"></a>
+<a id="ln-317" name="ln-317"></a>        <span class="k">else</span>
 <a id="ln-318" name="ln-318"></a>
-<a id="ln-319" name="ln-319"></a>    <span class="c">!     end if</span>
-<a id="ln-320" name="ln-320"></a>
-<a id="ln-321" name="ln-321"></a>    <span class="c">!     if ( include_spin ) then</span>
-<a id="ln-322" name="ln-322"></a>
-<a id="ln-323" name="ln-323"></a>    <span class="c">!         allocate(wfc_FT_i_s(n_k, n_in_G, 2))</span>
-<a id="ln-324" name="ln-324"></a>    <span class="c">!         allocate(wfc_FT_f_s(n_k, n_in_G, 2))</span>
+<a id="ln-319" name="ln-319"></a><span class="k">            allocate</span><span class="p">(</span><span class="n">wfc_ik</span><span class="p">(</span><span class="n">FFT_grid</span><span class="p">%</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">FFT_grid</span><span class="p">%</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">FFT_grid</span><span class="p">%</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+<a id="ln-320" name="ln-320"></a>            <span class="k">allocate</span><span class="p">(</span><span class="n">wfc_fkf</span><span class="p">(</span><span class="n">FFT_grid</span><span class="p">%</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">FFT_grid</span><span class="p">%</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">FFT_grid</span><span class="p">%</span><span class="n">n_grid</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+<a id="ln-321" name="ln-321"></a>
+<a id="ln-322" name="ln-322"></a>            <span class="k">call </span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">load_wfc_ik_expanded_no_spin</span><span class="p">(</span><span class="n">val_id</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">FFT_grid</span><span class="p">,</span> <span class="n">wfc_ik</span><span class="p">)</span>
+<a id="ln-323" name="ln-323"></a>
+<a id="ln-324" name="ln-324"></a>        <span class="k">end if</span>
 <a id="ln-325" name="ln-325"></a>
-<a id="ln-326" name="ln-326"></a>    <span class="c">!     else</span>
-<a id="ln-327" name="ln-327"></a>
-<a id="ln-328" name="ln-328"></a>    <span class="c">!         allocate(wfc_FT_i(n_k, n_in_G))</span>
-<a id="ln-329" name="ln-329"></a>    <span class="c">!         allocate(wfc_FT_f(n_k, n_in_G))</span>
+<a id="ln-326" name="ln-326"></a>        <span class="c">! factor of 1 in dielectric formula</span>
+<a id="ln-327" name="ln-327"></a>        <span class="n">dielec</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0_dp</span><span class="p">,</span> <span class="mf">0.0_dp</span><span class="p">)</span>
+<a id="ln-328" name="ln-328"></a>
+<a id="ln-329" name="ln-329"></a>        <span class="nb">time</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">MPI_Wtime</span><span class="p">()</span>
 <a id="ln-330" name="ln-330"></a>
-<a id="ln-331" name="ln-331"></a>    <span class="c">!     end if</span>
+<a id="ln-331" name="ln-331"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">PW_dataset</span><span class="p">%</span><span class="n">include_spin</span> <span class="p">)</span> <span class="k">then</span>
 <a id="ln-332" name="ln-332"></a>
-<a id="ln-333" name="ln-333"></a>    <span class="c">!     val_id = di_tran_to_init_fin_id(tran_id, 1)</span>
-<a id="ln-334" name="ln-334"></a>    <span class="c">!     cond_id = di_tran_to_init_fin_id(tran_id, 2) + n_val</span>
-<a id="ln-335" name="ln-335"></a>
-<a id="ln-336" name="ln-336"></a>    <span class="c">!     if ( include_spin ) then</span>
-<a id="ln-337" name="ln-337"></a>
-<a id="ln-338" name="ln-338"></a>    <span class="c">!         call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i_s)</span>
-<a id="ln-339" name="ln-339"></a>    <span class="c">!         call get_in_wfc_FT(DFT_input_filename, cond_id, wfc_FT_f_s)</span>
+<a id="ln-333" name="ln-333"></a><span class="k">            call </span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">load_wfc_ik_expanded_spin</span><span class="p">(</span><span class="n">cond_id</span><span class="p">,</span> <span class="n">kf</span><span class="p">,</span> <span class="n">FFT_grid</span><span class="p">,</span> <span class="n">wfc_fkfs</span><span class="p">)</span>
+<a id="ln-334" name="ln-334"></a>
+<a id="ln-335" name="ln-335"></a>            <span class="k">call </span><span class="n">dielectric_calc_vc</span><span class="p">(</span><span class="n">dielec</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-336" name="ln-336"></a>                <span class="n">FFT_grid</span><span class="p">,</span> <span class="n">PW_dataset</span><span class="p">,</span> <span class="n">target_mat</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-337" name="ln-337"></a>                <span class="n">bins</span><span class="p">,</span> <span class="n">widths</span><span class="p">,</span> <span class="n">numerics</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-338" name="ln-338"></a>                <span class="n">wfc_iks</span><span class="p">,</span> <span class="n">wfc_fkfs</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-339" name="ln-339"></a>                <span class="n">val_id</span><span class="p">,</span> <span class="n">cond_id</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">kf</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="p">.</span><span class="n">FALSE</span><span class="p">.)</span>
 <a id="ln-340" name="ln-340"></a>
-<a id="ln-341" name="ln-341"></a>    <span class="c">!         time(3) = MPI_Wtime()</span>
+<a id="ln-341" name="ln-341"></a>        <span class="k">else</span>
 <a id="ln-342" name="ln-342"></a>
-<a id="ln-343" name="ln-343"></a>    <span class="c">!         call compute_dielectric(dielec_test, &amp;</span>
-<a id="ln-344" name="ln-344"></a>    <span class="c">!         val_id, cond_id, wfc_FT_i_s, wfc_FT_f_s, n_FFT_grid, k_cut, &amp;</span>
-<a id="ln-345" name="ln-345"></a>    <span class="c">!             wfc_FFT_plan, Tif_FFT_plan, n_q_grid, q_grid_min, &amp;</span>
-<a id="ln-346" name="ln-346"></a>    <span class="c">!             n_k_vec, verbose = verbose)</span>
-<a id="ln-347" name="ln-347"></a>
-<a id="ln-348" name="ln-348"></a>    <span class="c">!         time(4) = MPI_Wtime()</span>
-<a id="ln-349" name="ln-349"></a>
-<a id="ln-350" name="ln-350"></a>    <span class="c">!     else</span>
-<a id="ln-351" name="ln-351"></a>
-<a id="ln-352" name="ln-352"></a>    <span class="c">!         call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i)</span>
-<a id="ln-353" name="ln-353"></a>    <span class="c">!         call get_in_wfc_FT(DFT_input_filename, cond_id, wfc_FT_f)</span>
+<a id="ln-343" name="ln-343"></a><span class="k">            call </span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">load_wfc_ik_expanded_no_spin</span><span class="p">(</span><span class="n">cond_id</span><span class="p">,</span> <span class="n">kf</span><span class="p">,</span> <span class="n">FFT_grid</span><span class="p">,</span> <span class="n">wfc_fkf</span><span class="p">)</span>
+<a id="ln-344" name="ln-344"></a>
+<a id="ln-345" name="ln-345"></a>            <span class="k">call </span><span class="n">dielectric_calc_vc</span><span class="p">(</span><span class="n">dielec</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-346" name="ln-346"></a>                <span class="n">FFT_grid</span><span class="p">,</span> <span class="n">PW_dataset</span><span class="p">,</span> <span class="n">target_mat</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-347" name="ln-347"></a>                <span class="n">bins</span><span class="p">,</span> <span class="n">widths</span><span class="p">,</span> <span class="n">numerics</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-348" name="ln-348"></a>                <span class="n">wfc_ik</span><span class="p">,</span> <span class="n">wfc_fkf</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-349" name="ln-349"></a>                <span class="n">val_id</span><span class="p">,</span> <span class="n">cond_id</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">kf</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="p">.</span><span class="n">FALSE</span><span class="p">.)</span>
+<a id="ln-350" name="ln-350"></a>
+<a id="ln-351" name="ln-351"></a>        <span class="k">end if</span>
+<a id="ln-352" name="ln-352"></a>
+<a id="ln-353" name="ln-353"></a><span class="k">        </span><span class="nb">time</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="n">MPI_Wtime</span><span class="p">()</span>
 <a id="ln-354" name="ln-354"></a>
-<a id="ln-355" name="ln-355"></a>    <span class="c">!         !! do the calculation for an individual job</span>
-<a id="ln-356" name="ln-356"></a>
-<a id="ln-357" name="ln-357"></a>    <span class="c">!         time(3) = MPI_Wtime()</span>
-<a id="ln-358" name="ln-358"></a>
-<a id="ln-359" name="ln-359"></a>    <span class="c">!         call compute_dielectric(dielec_test, &amp;</span>
-<a id="ln-360" name="ln-360"></a>    <span class="c">!         val_id, cond_id, wfc_FT_i, wfc_FT_f, n_FFT_grid, k_cut, &amp;</span>
-<a id="ln-361" name="ln-361"></a>    <span class="c">!             wfc_FFT_plan, Tif_FFT_plan, n_q_grid, q_grid_min, &amp;</span>
-<a id="ln-362" name="ln-362"></a>    <span class="c">!             n_k_vec, verbose = verbose)</span>
-<a id="ln-363" name="ln-363"></a>
-<a id="ln-364" name="ln-364"></a>    <span class="c">!         time(4) = MPI_Wtime()</span>
-<a id="ln-365" name="ln-365"></a>
-<a id="ln-366" name="ln-366"></a>    <span class="c">!     end if</span>
-<a id="ln-367" name="ln-367"></a>
-<a id="ln-368" name="ln-368"></a>    <span class="c">!     if ( verbose ) then</span>
-<a id="ln-369" name="ln-369"></a>
-<a id="ln-370" name="ln-370"></a>    <span class="c">!         print*, &#39;----------------------------------------&#39;</span>
-<a id="ln-371" name="ln-371"></a>    <span class="c">!         print*, &#39;    --------------------------&#39;</span>
-<a id="ln-372" name="ln-372"></a>    <span class="c">!         print*, &#39;    Timing (TEST - dielectric)&#39;</span>
-<a id="ln-373" name="ln-373"></a>    <span class="c">!         print*, &#39;    --------------------------&#39;</span>
-<a id="ln-374" name="ln-374"></a>    <span class="c">!         print*</span>
-<a id="ln-375" name="ln-375"></a>    <span class="c">!         print*, &#39;        (TEST) Run time: &#39;</span>
-<a id="ln-376" name="ln-376"></a>    <span class="c">!         print*, &#39;            &#39;, trim(pretty_time_format(time(4) - time(3)))</span>
-<a id="ln-377" name="ln-377"></a>    <span class="c">!         print*</span>
-<a id="ln-378" name="ln-378"></a>    <span class="c">!         print*, &#39;        Expected run time for dielectric calculation : &#39;</span>
-<a id="ln-379" name="ln-379"></a>    <span class="c">!         print*, &#39;            &#39;, trim(pretty_time_format(&amp;</span>
-<a id="ln-380" name="ln-380"></a>    <span class="c">!             di_n_tran_per_proc*n_k**2*(time(4) - time(3))&amp;</span>
-<a id="ln-381" name="ln-381"></a>    <span class="c">!             ))</span>
-<a id="ln-382" name="ln-382"></a>    <span class="c">!         print*</span>
-<a id="ln-383" name="ln-383"></a>    <span class="c">!         print*, &#39;----------------------------------------&#39;</span>
-<a id="ln-384" name="ln-384"></a>    <span class="c">!         print*</span>
-<a id="ln-385" name="ln-385"></a>
-<a id="ln-386" name="ln-386"></a>    <span class="c">!     end if</span>
-<a id="ln-387" name="ln-387"></a>
-<a id="ln-388" name="ln-388"></a>    <span class="c">! end subroutine</span>
-<a id="ln-389" name="ln-389"></a>
-<a id="ln-390" name="ln-390"></a>    <span class="k">subroutine </span><span class="n">save_dielectric</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dielectric</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
-<a id="ln-391" name="ln-391"></a>        <span class="c">!! Saves the dielectric.</span>
+<a id="ln-355" name="ln-355"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-356" name="ln-356"></a><span class="k">            call </span><span class="n">print_section_seperator</span><span class="p">()</span>
+<a id="ln-357" name="ln-357"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    --------------------------&#39;</span>
+<a id="ln-358" name="ln-358"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    Timing - Dielectric (TEST)&#39;</span>
+<a id="ln-359" name="ln-359"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;    --------------------------&#39;</span>
+<a id="ln-360" name="ln-360"></a>            <span class="k">print</span><span class="o">*</span>
+<a id="ln-361" name="ln-361"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        (TEST) Run time: &#39;</span>
+<a id="ln-362" name="ln-362"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;            &#39;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="n">pretty_time_format</span><span class="p">(</span><span class="nb">time</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="nb">time</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+<a id="ln-363" name="ln-363"></a>            <span class="k">print</span><span class="o">*</span>
+<a id="ln-364" name="ln-364"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;        Expected run time for whole calculation : &#39;</span>
+<a id="ln-365" name="ln-365"></a>            <span class="k">print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;            &#39;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="n">pretty_time_format</span><span class="p">(&amp;</span>
+<a id="ln-366" name="ln-366"></a>                <span class="n">n_jobs_per_proc</span><span class="o">*</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_k</span><span class="o">*</span><span class="n">numerics</span><span class="p">%</span><span class="n">n_cond_max</span><span class="o">*</span><span class="p">(</span><span class="nb">time</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="nb">time</span><span class="p">(</span><span class="mi">3</span><span class="p">))&amp;</span>
+<a id="ln-367" name="ln-367"></a>                <span class="p">))</span>
+<a id="ln-368" name="ln-368"></a>            <span class="k">print</span><span class="o">*</span>
+<a id="ln-369" name="ln-369"></a>            <span class="k">call </span><span class="n">print_section_seperator</span><span class="p">()</span>
+<a id="ln-370" name="ln-370"></a>            <span class="k">print</span><span class="o">*</span>
+<a id="ln-371" name="ln-371"></a>        <span class="k">end if</span>
+<a id="ln-372" name="ln-372"></a>
+<a id="ln-373" name="ln-373"></a><span class="k">    end subroutine</span>
+<a id="ln-374" name="ln-374"></a>
+<a id="ln-375" name="ln-375"></a><span class="k">    subroutine </span><span class="n">save_dielectric</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dielectric</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+<a id="ln-376" name="ln-376"></a>        <span class="c">!! Saves the dielectric.</span>
+<a id="ln-377" name="ln-377"></a>
+<a id="ln-378" name="ln-378"></a>        <span class="k">implicit none</span>
+<a id="ln-379" name="ln-379"></a>
+<a id="ln-380" name="ln-380"></a><span class="k">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">filename</span>
+<a id="ln-381" name="ln-381"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dielectric</span><span class="p">(:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:)</span>
+<a id="ln-382" name="ln-382"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
+<a id="ln-383" name="ln-383"></a>
+<a id="ln-384" name="ln-384"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HID_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">file_id</span>
+<a id="ln-385" name="ln-385"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HID_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">group_id</span>
+<a id="ln-386" name="ln-386"></a>
+<a id="ln-387" name="ln-387"></a>        <span class="kt">logical</span> <span class="kd">::</span> <span class="n">file_exists</span>
+<a id="ln-388" name="ln-388"></a>
+<a id="ln-389" name="ln-389"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims1</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="ln-390" name="ln-390"></a>        <span class="c">! integer(HSIZE_T) :: dims2(2)</span>
+<a id="ln-391" name="ln-391"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims4</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <a id="ln-392" name="ln-392"></a>
-<a id="ln-393" name="ln-393"></a>        <span class="k">implicit none</span>
+<a id="ln-393" name="ln-393"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">error</span>
 <a id="ln-394" name="ln-394"></a>
-<a id="ln-395" name="ln-395"></a><span class="k">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">)</span> <span class="kd">::</span> <span class="n">filename</span>
-<a id="ln-396" name="ln-396"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dielectric</span><span class="p">(:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:)</span>
-<a id="ln-397" name="ln-397"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
-<a id="ln-398" name="ln-398"></a>
-<a id="ln-399" name="ln-399"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HID_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">file_id</span>
-<a id="ln-400" name="ln-400"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HID_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">group_id</span>
+<a id="ln-395" name="ln-395"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-396" name="ln-396"></a>
+<a id="ln-397" name="ln-397"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Saving dielectric...&#39;</span>
+<a id="ln-398" name="ln-398"></a>            <span class="k">print</span><span class="o">*</span>
+<a id="ln-399" name="ln-399"></a>
+<a id="ln-400" name="ln-400"></a>        <span class="k">end if</span>
 <a id="ln-401" name="ln-401"></a>
-<a id="ln-402" name="ln-402"></a>        <span class="kt">logical</span> <span class="kd">::</span> <span class="n">file_exists</span>
-<a id="ln-403" name="ln-403"></a>
-<a id="ln-404" name="ln-404"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims1</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<a id="ln-405" name="ln-405"></a>        <span class="c">! integer(HSIZE_T) :: dims2(2)</span>
-<a id="ln-406" name="ln-406"></a>        <span class="kt">integer</span><span class="p">(</span><span class="n">HSIZE_T</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dims4</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<a id="ln-402" name="ln-402"></a>        <span class="c">! open the file to write</span>
+<a id="ln-403" name="ln-403"></a>        <span class="k">call </span><span class="n">h5open_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<a id="ln-404" name="ln-404"></a>        <span class="k">call </span><span class="n">h5fopen_f</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">H5F_ACC_RDWR_F</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a id="ln-405" name="ln-405"></a>
+<a id="ln-406" name="ln-406"></a>        <span class="k">call </span><span class="n">h5gcreate_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;dielectric&#39;</span><span class="p">,</span> <span class="n">group_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
 <a id="ln-407" name="ln-407"></a>
-<a id="ln-408" name="ln-408"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">error</span>
-<a id="ln-409" name="ln-409"></a>
-<a id="ln-410" name="ln-410"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
-<a id="ln-411" name="ln-411"></a>
-<a id="ln-412" name="ln-412"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Saving dielectric...&#39;</span>
-<a id="ln-413" name="ln-413"></a>            <span class="k">print</span><span class="o">*</span>
-<a id="ln-414" name="ln-414"></a>
-<a id="ln-415" name="ln-415"></a>        <span class="k">end if</span>
+<a id="ln-408" name="ln-408"></a>        <span class="n">dims4</span> <span class="o">=</span> <span class="p">[</span><span class="n">size</span><span class="p">(</span><span class="n">dielectric</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">&amp;</span>
+<a id="ln-409" name="ln-409"></a>                 <span class="n">size</span><span class="p">(</span><span class="n">dielectric</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">&amp;</span>
+<a id="ln-410" name="ln-410"></a>                 <span class="n">size</span><span class="p">(</span><span class="n">dielectric</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">&amp;</span>
+<a id="ln-411" name="ln-411"></a>                 <span class="n">size</span><span class="p">(</span><span class="n">dielectric</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
+<a id="ln-412" name="ln-412"></a>
+<a id="ln-413" name="ln-413"></a>        <span class="k">call </span><span class="n">h5ltmake_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;dielectric/dielectric_r&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-414" name="ln-414"></a>            <span class="n">size</span><span class="p">(</span><span class="n">dims4</span><span class="p">),</span> <span class="n">dims4</span><span class="p">,&amp;</span>
+<a id="ln-415" name="ln-415"></a>            <span class="kt">real</span><span class="p">(</span><span class="n">dielectric</span><span class="p">),</span> <span class="n">error</span><span class="p">)</span>
 <a id="ln-416" name="ln-416"></a>
-<a id="ln-417" name="ln-417"></a>        <span class="c">! open the file to write</span>
-<a id="ln-418" name="ln-418"></a>        <span class="k">call </span><span class="n">h5open_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-<a id="ln-419" name="ln-419"></a>        <span class="k">call </span><span class="n">h5fopen_f</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">H5F_ACC_RDWR_F</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a id="ln-417" name="ln-417"></a>        <span class="k">call </span><span class="n">h5ltmake_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;dielectric/dielectric_c&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-418" name="ln-418"></a>            <span class="n">size</span><span class="p">(</span><span class="n">dims4</span><span class="p">),</span> <span class="n">dims4</span><span class="p">,&amp;</span>
+<a id="ln-419" name="ln-419"></a>            <span class="nb">aimag</span><span class="p">(</span><span class="n">dielectric</span><span class="p">),</span> <span class="n">error</span><span class="p">)</span>
 <a id="ln-420" name="ln-420"></a>
-<a id="ln-421" name="ln-421"></a>        <span class="k">call </span><span class="n">h5gcreate_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;dielectric&#39;</span><span class="p">,</span> <span class="n">group_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a id="ln-422" name="ln-422"></a>
-<a id="ln-423" name="ln-423"></a>        <span class="n">dims4</span> <span class="o">=</span> <span class="p">[</span><span class="n">size</span><span class="p">(</span><span class="n">dielectric</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">&amp;</span>
-<a id="ln-424" name="ln-424"></a>                 <span class="n">size</span><span class="p">(</span><span class="n">dielectric</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">&amp;</span>
-<a id="ln-425" name="ln-425"></a>                 <span class="n">size</span><span class="p">(</span><span class="n">dielectric</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">&amp;</span>
-<a id="ln-426" name="ln-426"></a>                 <span class="n">size</span><span class="p">(</span><span class="n">dielectric</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
-<a id="ln-427" name="ln-427"></a>
-<a id="ln-428" name="ln-428"></a>        <span class="k">call </span><span class="n">h5ltmake_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;dielectric/dielectric_r&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
-<a id="ln-429" name="ln-429"></a>            <span class="n">size</span><span class="p">(</span><span class="n">dims4</span><span class="p">),</span> <span class="n">dims4</span><span class="p">,&amp;</span>
-<a id="ln-430" name="ln-430"></a>            <span class="kt">real</span><span class="p">(</span><span class="n">dielectric</span><span class="p">),</span> <span class="n">error</span><span class="p">)</span>
-<a id="ln-431" name="ln-431"></a>
-<a id="ln-432" name="ln-432"></a>        <span class="k">call </span><span class="n">h5ltmake_dataset_double_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;dielectric/dielectric_c&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
-<a id="ln-433" name="ln-433"></a>            <span class="n">size</span><span class="p">(</span><span class="n">dims4</span><span class="p">),</span> <span class="n">dims4</span><span class="p">,&amp;</span>
-<a id="ln-434" name="ln-434"></a>            <span class="nb">aimag</span><span class="p">(</span><span class="n">dielectric</span><span class="p">),</span> <span class="n">error</span><span class="p">)</span>
-<a id="ln-435" name="ln-435"></a>
-<a id="ln-436" name="ln-436"></a>        <span class="k">call </span><span class="n">h5fclose_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<a id="ln-437" name="ln-437"></a>        <span class="k">call </span><span class="n">h5close_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-<a id="ln-438" name="ln-438"></a>
-<a id="ln-439" name="ln-439"></a>    <span class="k">end subroutine</span>
-<a id="ln-440" name="ln-440"></a>
-<a id="ln-441" name="ln-441"></a><span class="k">end module</span>
+<a id="ln-421" name="ln-421"></a>        <span class="k">call </span><span class="n">h5fclose_f</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<a id="ln-422" name="ln-422"></a>        <span class="k">call </span><span class="n">h5close_f</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<a id="ln-423" name="ln-423"></a>
+<a id="ln-424" name="ln-424"></a>    <span class="k">end subroutine</span>
+<a id="ln-425" name="ln-425"></a>
+<a id="ln-426" name="ln-426"></a><span class="k">end module</span>
 </pre></div>
 
     </section>
@@ -726,7 +711,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-08-08 08:37  
+             on 2021-08-16 17:13  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

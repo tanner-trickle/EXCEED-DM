@@ -170,14 +170,14 @@ contains
         call numerics%define_q_grid(bins%n_q*bins%q_width, &
             PW_dataset, FFT_grid)
 
-        ! ! time calculation
-        ! if ( ( proc_id == root_process ) .and. ( main_control%timer ) ) then
+        ! time calculation
+        if ( ( proc_id == root_process ) .and. ( main_control%timer ) ) then
 
-        !     call time_exdm_scatter_vc_calc(FFT_grid, PW_dataset, target_mat, &
-        !                         bins, dm_model, expt, numerics, ik_manager%n_jobs_per_proc, &
-        !                         PW_dataset%n_val, PW_dataset%n_val + 1, 1, 1, verbose = verbose)
+            call time_exdm_dielectric_calc(FFT_grid, PW_dataset, target_mat, &
+                                bins, widths, numerics, ik_manager%n_jobs_per_proc, &
+                                PW_dataset%n_val, PW_dataset%n_val + 1, 1, 1, verbose = verbose)
 
-        ! end if
+        end if
 
         ! allocate wave functions
         if ( PW_dataset%include_spin ) then
@@ -275,117 +275,102 @@ contains
 
     end subroutine
 
-    ! subroutine time_dielectric_calc(DFT_input_filename, tran_id, &
-    !         n_FFT_grid, k_cut, wfc_fft_plan, Tif_fft_plan, n_q_grid, q_grid_min, n_k_vec, verbose)
+    subroutine time_exdm_dielectric_calc(FFT_grid, PW_dataset, target_mat, &
+            bins, widths, numerics, n_jobs_per_proc, val_id, cond_id, k, kf, verbose)
+        !! Clocks the valence \( \rightarrow \) conduction dielectric calculation
+        !! by running a smaller version of the program.
+        use timing 
+        use mpi
 
-    !     use timing
+        implicit none
 
-    !     implicit none
+        type(FFT_grid_t) :: FFT_grid
+        type(PW_dataset_t) :: PW_dataset
+        type(material_t) :: target_mat
+        type(bins_dielectric_t) :: bins
+        type(width_parameters_t) :: widths
+        type(numerics_dielectric_t) :: numerics
+        integer :: n_jobs_per_proc
+        integer :: val_id, cond_id, k, kf
+        logical, optional :: verbose
 
-    !     character(len=*) :: DFT_input_filename
+        complex(dp), allocatable :: wfc_ik(:, :, :)
+        complex(dp), allocatable :: wfc_iks(:, :, :, :)
 
-    !     integer :: tran_id
+        complex(dp), allocatable :: wfc_fkf(:, :, :)
+        complex(dp), allocatable :: wfc_fkfs(:, :, :, :)
 
-    !     integer :: n_FFT_grid(3)
+        complex(dp) :: dielec(bins%n_E, bins%n_q, bins%n_q_theta, bins%n_q_phi)
 
-    !     integer :: k_cut
+        if ( verbose ) then
+            print*, 'Timing dielectric calculation...'
+            print*
+        end if
 
-    !     integer :: wfc_fft_plan(8)
-    !     integer :: Tif_fft_plan(8)
+        if ( PW_dataset%include_spin ) then
 
-    !     integer :: n_q_grid(3)
+            allocate(wfc_iks(2, FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
+            allocate(wfc_fkfs(2, FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
 
-    !     real(dp) :: q_grid_min(3)
+            call PW_dataset%load_wfc_ik_expanded_spin(val_id, k, FFT_grid, wfc_iks)
 
-    !     integer :: n_k_vec(3)
+        else
 
-    !     complex(dp), allocatable :: wfc_FT_i(:, :)
-    !     complex(dp), allocatable :: wfc_FT_f(:, :)
+            allocate(wfc_ik(FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
+            allocate(wfc_fkf(FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
 
-    !     complex(dp), allocatable :: wfc_FT_i_s(:, :, :)
-    !     complex(dp), allocatable :: wfc_FT_f_s(:, :, :)
+            call PW_dataset%load_wfc_ik_expanded_no_spin(val_id, k, FFT_grid, wfc_ik)
 
-    !     logical, optional :: verbose
+        end if
 
-    !     integer :: val_id, cond_id
+        ! factor of 1 in dielectric formula
+        dielec = (1.0_dp, 0.0_dp)
 
-    !     complex(dp) :: dielec_test(di_n_omega_bins, di_n_q_bins, di_n_q_theta_bins, di_n_q_phi_bins)
+        time(3) = MPI_Wtime()
 
-    !     if ( verbose ) then
+        if ( PW_dataset%include_spin ) then
 
-    !         print*, 'Timing dielectric calculation...'
-    !         print*
+            call PW_dataset%load_wfc_ik_expanded_spin(cond_id, kf, FFT_grid, wfc_fkfs)
 
-    !     end if
+            call dielectric_calc_vc(dielec, &
+                FFT_grid, PW_dataset, target_mat, &
+                bins, widths, numerics, &
+                wfc_iks, wfc_fkfs, &
+                val_id, cond_id, k, kf, verbose = .FALSE.)
 
-    !     if ( include_spin ) then
+        else
 
-    !         allocate(wfc_FT_i_s(n_k, n_in_G, 2))
-    !         allocate(wfc_FT_f_s(n_k, n_in_G, 2))
+            call PW_dataset%load_wfc_ik_expanded_no_spin(cond_id, kf, FFT_grid, wfc_fkf)
 
-    !     else
+            call dielectric_calc_vc(dielec, &
+                FFT_grid, PW_dataset, target_mat, &
+                bins, widths, numerics, &
+                wfc_ik, wfc_fkf, &
+                val_id, cond_id, k, kf, verbose = .FALSE.)
 
-    !         allocate(wfc_FT_i(n_k, n_in_G))
-    !         allocate(wfc_FT_f(n_k, n_in_G))
+        end if
 
-    !     end if
+        time(4) = MPI_Wtime()
 
-    !     val_id = di_tran_to_init_fin_id(tran_id, 1)
-    !     cond_id = di_tran_to_init_fin_id(tran_id, 2) + n_val
+        if ( verbose ) then
+            call print_section_seperator()
+            print*, '    --------------------------'
+            print*, '    Timing - Dielectric (TEST)'
+            print*, '    --------------------------'
+            print*
+            print*, '        (TEST) Run time: '
+            print*, '            ', trim(pretty_time_format(time(4) - time(3)))
+            print*
+            print*, '        Expected run time for whole calculation : '
+            print*, '            ', trim(pretty_time_format(&
+                n_jobs_per_proc*PW_dataset%n_k*numerics%n_cond_max*(time(4) - time(3))&
+                ))
+            print*
+            call print_section_seperator()
+            print*
+        end if
 
-    !     if ( include_spin ) then
-
-    !         call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i_s)
-    !         call get_in_wfc_FT(DFT_input_filename, cond_id, wfc_FT_f_s)
-
-    !         time(3) = MPI_Wtime()
-
-    !         call compute_dielectric(dielec_test, &
-    !         val_id, cond_id, wfc_FT_i_s, wfc_FT_f_s, n_FFT_grid, k_cut, &
-    !             wfc_FFT_plan, Tif_FFT_plan, n_q_grid, q_grid_min, &
-    !             n_k_vec, verbose = verbose)
-
-    !         time(4) = MPI_Wtime()
-
-    !     else
-
-    !         call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i)
-    !         call get_in_wfc_FT(DFT_input_filename, cond_id, wfc_FT_f)
-
-    !         !! do the calculation for an individual job
-
-    !         time(3) = MPI_Wtime()
-
-    !         call compute_dielectric(dielec_test, &
-    !         val_id, cond_id, wfc_FT_i, wfc_FT_f, n_FFT_grid, k_cut, &
-    !             wfc_FFT_plan, Tif_FFT_plan, n_q_grid, q_grid_min, &
-    !             n_k_vec, verbose = verbose)
-
-    !         time(4) = MPI_Wtime()
-
-    !     end if
-
-    !     if ( verbose ) then
-
-    !         print*, '----------------------------------------'
-    !         print*, '    --------------------------'
-    !         print*, '    Timing (TEST - dielectric)'
-    !         print*, '    --------------------------'
-    !         print*
-    !         print*, '        (TEST) Run time: '
-    !         print*, '            ', trim(pretty_time_format(time(4) - time(3)))
-    !         print*
-    !         print*, '        Expected run time for dielectric calculation : '
-    !         print*, '            ', trim(pretty_time_format(&
-    !             di_n_tran_per_proc*n_k**2*(time(4) - time(3))&
-    !             ))
-    !         print*
-    !         print*, '----------------------------------------'
-    !         print*
-
-    !     end if
-
-    ! end subroutine
+    end subroutine
 
     subroutine save_dielectric(filename, dielectric, verbose)
         !! Saves the dielectric.

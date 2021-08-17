@@ -70,6 +70,9 @@ All of the output data from an EXCEED-DM run.
 - `vEsc` - real - \( v_\text{esc} \)
     - Escape velocity, dark matter velocity distribution parameter.
     - Units : \( \text{km} \; \text{s}^{-1} \)
+- `tff_id` - int
+    - Dim : [2]
+    - Transition form factor ID.
 
 ## experiment
 
