@@ -74,18 +74,11 @@ contains
         type(parallel_manager_t) :: iw_manager
         type(numerics_scatter_cf_t) :: numerics
 
-        type(binned_scatter_rate_t), allocatable :: binned_rate_job(:)
-            !! Dim : [ n_tran_per_proc ]
-            !!
-            !! Binned rate per cross section, per kg-year for each transition
-            !!
-            !! Units : cm^(-2)
-
         integer, allocatable :: job_id_to_iw(:, :)
 
         integer :: t, f, i, k, j
         integer :: job_id
-        integer :: init_id, w_id
+        integer :: init_id, w_id, core_id
 
         real(dp) :: log_omega_min, log_omega_max
 
@@ -122,12 +115,6 @@ contains
             numerics%w_id_list, &
             job_id_to_iw, verbose = verbose)
 
-        ! allocate the binned rate arrays
-        allocate(binned_rate_job(iw_manager%n_jobs_per_proc))
-        do i = 1, iw_manager%n_jobs_per_proc
-            call binned_rate_job(i)%init(bins, dm_model, expt)
-        end do
-
         if ( log_omega_max > log_omega_min ) then
 
             if ( verbose ) then
@@ -142,14 +129,15 @@ contains
                 if ( job_id /= 0 ) then
 
                     ! count states down from highest valence band
-                    init_id = job_id_to_iw(job_id, 1)
+                    core_id = job_id_to_iw(job_id, 1)
                     w_id = job_id_to_iw(job_id, 2)
+                    init_id = job_id_to_iw(job_id, 3)
 
                     ! compute rate
-                    call exdm_scatter_cf_calc(binned_rate_job(j), &
+                    call exdm_scatter_cf_calc(binned_rate_init(init_id), &
                         core_electron, target_mat, &
                         bins, dm_model, expt, in_med_scr, numerics, &
-                        init_id, w_id, verbose = .FALSE.)
+                        core_id, w_id, verbose = .FALSE.)
 
                 end if
 
@@ -168,9 +156,6 @@ contains
                 verbose = verbose)
 
         end if
-
-        call iw_manager%comm_scatter_binned_rate_job_init(proc_id, root_process, job_id_to_iw, &
-            binned_rate_job, binned_rate_init, verbose)
 
         if ( proc_id == root_process ) then
             call core_electron%save(io_files%out_filename, verbose = verbose)

@@ -50,7 +50,7 @@
 &bins_scatter
     q_width = 1D3,
     E_width = 1,
-    n_E    = 1,
+    n_E    = 400,
     n_q    = 1
 /
 

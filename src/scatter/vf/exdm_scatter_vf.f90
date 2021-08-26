@@ -72,18 +72,12 @@ contains
         type(parallel_manager_t) :: ik_manager
         type(numerics_scatter_vf_t) :: numerics
 
-        type(binned_scatter_rate_t), allocatable :: binned_rate_job(:)
-            !! Dim : [ n_tran_per_proc ]
-            !!
-            !! Binned rate per cross section, per kg-year for each transition
-            !!
-            !! Units : cm^(-2)
-
         integer, allocatable :: job_id_to_ik(:, :)
 
         integer :: t, f, i, k, j
         integer :: job_id
         integer :: val_id, fin_id
+        integer :: init_id
 
         complex(dp), allocatable :: wfc_FT_ik(:)
 
@@ -112,12 +106,6 @@ contains
             numerics%val_id_list, &
             numerics%k_id_list, &
             job_id_to_ik, verbose = verbose)
-
-        ! allocate the binned rate arrays
-        allocate(binned_rate_job(ik_manager%n_jobs_per_proc))
-        do i = 1, ik_manager%n_jobs_per_proc
-            call binned_rate_job(i)%init(bins, dm_model, expt)
-        end do
 
         allocate(wfc_FT_ik(PW_dataset%n_G))
 
@@ -151,12 +139,13 @@ contains
                     ! count states down from highest valence band
                     val_id = job_id_to_ik(job_id, 1)
                     k = job_id_to_ik(job_id, 2)
+                    init_id = job_id_to_ik(job_id, 3)
 
                     ! load initial wave function
                     call PW_dataset%load_wfc_FT_ik_no_spin(val_id, k, wfc_FT_ik)
 
                     ! compute rate
-                    call exdm_scatter_vf_calc(binned_rate_job(j), &
+                    call exdm_scatter_vf_calc(binned_rate_init(init_id), &
                         PW_dataset, target_mat, &
                         bins, dm_model, expt, in_med_scr, &
                         numerics, &
@@ -179,9 +168,6 @@ contains
                 verbose = verbose)
 
         end if
-
-        call ik_manager%comm_scatter_binned_rate_job_init(proc_id, root_process, job_id_to_ik, &
-            binned_rate_job, binned_rate_init, verbose)
 
         if ( proc_id == root_process ) then
             call PW_dataset%save(io_files%out_filename, verbose = verbose)

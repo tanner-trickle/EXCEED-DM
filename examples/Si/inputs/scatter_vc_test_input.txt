@@ -33,12 +33,12 @@
 /
 
 &dm_model
-	n_mX             = 1,
-    log_mX_min       = 10,
+	n_mX             = 10,
+    log_mX_min       = 6,
     log_mX_max       = 10,
     n_extra_mX       = 0,
-    n_med_FF         = 1,
-    med_FF_min       = 2,
+    n_med_FF         = 2,
+    med_FF_min       = 0,
     med_FF_max       = 2,
     rhoX_GeV_per_cm3 = 0.4,
     v0_km_per_sec    = 230,
@@ -50,8 +50,8 @@
 &bins_scatter
     q_width = 1D3,
     E_width = 1,
-    n_E    = 1,
-    n_q    = 1
+    n_E    = 100,
+    n_q    = 100
 /
 
 &numerics_s_vc

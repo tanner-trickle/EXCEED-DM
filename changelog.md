@@ -1,3 +1,12 @@
+v0.2.6
+---
+
+- Added the option to build with `cmake`. This will become the default build option in `v1.0.0`. Installation instructions can be found in `install-cmake.md` or on the website.   
+- Communication of scattering rate data is now done with an `MPI_Reduce` command versus manual send and recv calls.
+- Added a timing subroutine when computing the dielectric.
+- Miscellaneous updates to documentation.
+- Minor bug fixes: some variables were not saving to the output files. 
+
 v0.2.5
 ---
 

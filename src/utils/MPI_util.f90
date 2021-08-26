@@ -27,7 +27,6 @@ module MPI_util
 
             procedure :: init => parallel_manager_init
             procedure :: create_job_to_2d_ID_table
-            procedure :: comm_scatter_binned_rate_job_init
             procedure :: comm_abs_tran_form
             procedure :: comm_self_energies
             procedure :: comm_abs_rate
@@ -531,97 +530,93 @@ contains
 
     end subroutine
 
-    subroutine comm_scatter_binned_rate_job_init(self, proc_id, root_process, job_id_to_init_id, &
-            binned_rate_job, binned_rate_init, verbose)
-        !! Communicate the `binned_rate_job`'s computed at each processor to the `binned_rate_init`'s
-        !! which hold the binned rates for each initial state.
+    subroutine comm_reduce_binned_rate_init(proc_id, root_process, binned_rate_init, verbose)
+        !! Return and sum all of the binned_rate_init's from the processors using MPI_Reduce.
 
         use binned_scatter_rate_type
 
         implicit none
 
-        class(parallel_manager_t) :: self
         integer :: proc_id, root_process
-        integer :: job_id_to_init_id(:, :)
-        type(binned_scatter_rate_t) :: binned_rate_job(:)
         type(binned_scatter_rate_t) :: binned_rate_init(:)
+        real(dp), allocatable :: local_binned_rate_init_mat(:, :, :, :, :, :)
+        real(dp), allocatable :: sum_binned_rate_init_mat(:, :, :, :, :, :)
         logical, optional :: verbose
 
-        integer :: status(MPI_STATUS_SIZE)
-        integer :: tag = 0
+        integer :: i
         integer :: err
 
-        integer :: i, j, init_id, job_id
-
-        integer :: n_proc
-
-        call MPI_COMM_SIZE(MPI_COMM_WORLD, n_proc, err)
-
         if ( verbose ) then
-            print*, 'Communicating scattering rate data...'
+            print*, 'Reducing scattering rate data...'
             print*
         end if
 
-        ! send data to main processor
-        if ( proc_id /= root_process ) then
-
-            do j = 1, self%n_jobs_per_proc
-
-                call MPI_SEND(binned_rate_job(j)%binned_rate, &
-                   size(binned_rate_job(j)%binned_rate), &
-                   MPI_DOUBLE, root_process, tag, MPI_COMM_WORLD, err)
-
-           end do
-
+        if ( verbose ) then
+            print*, 'Allocating large scattering rate data matrices...'
+            print*
         end if
+
+        allocate(local_binned_rate_init_mat(&
+            size(binned_rate_init), &
+            size(binned_rate_init(1)%binned_rate, 1), &
+            size(binned_rate_init(1)%binned_rate, 2), &
+            size(binned_rate_init(1)%binned_rate, 3), &
+            size(binned_rate_init(1)%binned_rate, 4), &
+            size(binned_rate_init(1)%binned_rate, 5) ) )
+
+        do i = 1, size(binned_rate_init)
+            local_binned_rate_init_mat(i, :, :, :, :, :) = binned_rate_init(i)%binned_rate
+        end do
 
         if ( proc_id == root_process ) then
 
-            ! add main processors contribution to binned_rate_init
-            do j = 1, self%n_jobs_per_proc
+            allocate(sum_binned_rate_init_mat(&
+                size(binned_rate_init), &
+                size(binned_rate_init(1)%binned_rate, 1), &
+                size(binned_rate_init(1)%binned_rate, 2), &
+                size(binned_rate_init(1)%binned_rate, 3), &
+                size(binned_rate_init(1)%binned_rate, 4), &
+                size(binned_rate_init(1)%binned_rate, 5) ) )
 
-                job_id = self%job_table(proc_id + 1, j)
+        end if
 
-                if ( job_id /= 0 ) then
+        if ( verbose ) then
+            print*, 'Done allocating large scattering rate data matrices!'
+            print*
+        end if
 
-                    init_id = job_id_to_init_id(job_id, 3)
+        if ( verbose ) then
+            print*, 'Calling MPI_Reduce...'
+            print*
+        end if
 
-                    binned_rate_init(init_id)%binned_rate = binned_rate_init(init_id)%binned_rate + &
-                        binned_rate_job(j)%binned_rate
+        call MPI_Reduce(local_binned_rate_init_mat, &
+                        sum_binned_rate_init_mat, &
+                        size(local_binned_rate_init_mat), &
+                        MPI_DOUBLE, &
+                        MPI_SUM, &
+                        root_process, &
+                        MPI_COMM_WORLD, &
+                        err)
 
-                end if
+        if ( verbose ) then
+            print*, 'Done calling MPI_Reduce!'
+            print*
+        end if
 
-            end do
+        ! set binned_rate_init to the summed value
+        if ( proc_id == root_process ) then
 
-            do i = 1, n_proc
-                if ( (i - 1) /= root_process ) then
+            do i = 1, size(binned_rate_init)
 
-                    do j = 1, self%n_jobs_per_proc
+                binned_rate_init(i)%binned_rate = sum_binned_rate_init_mat(i, :, :, :, :, :)
 
-                        call MPI_RECV(binned_rate_job(j)%binned_rate, &
-                           size(binned_rate_job(j)%binned_rate), &
-                           MPI_DOUBLE, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
-
-                        job_id = self%job_table(i, j)
-
-                        if ( job_id /= 0 ) then
-
-                            init_id = job_id_to_init_id(job_id, 3)
-
-                            binned_rate_init(init_id)%binned_rate = binned_rate_init(init_id)%binned_rate + &
-                                binned_rate_job(j)%binned_rate
-
-                        end if
-
-                    end do
-
-                end if
             end do
 
         end if
 
         if ( verbose ) then
-            print*, 'Done communicating scattering rate data!'
+            print*, 'Done reducing scattering rate data!'
             print*
         end if
 

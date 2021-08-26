@@ -9,7 +9,7 @@ author: Tanner Trickle
 github: https://github.com/tanner-trickle
 email: ttrickle17@gmail.com
 source: true
-version: 0.2.5
+version: 0.2.6
 print_creation_date: true
 creation_date: %Y-%m-%d %H:%M %z
 graph: false
