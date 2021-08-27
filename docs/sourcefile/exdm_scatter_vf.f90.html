@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.5</small></a>
+          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.6</small></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -132,7 +132,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 1.5% of total for source files.">102 statements</a>
+    title=" 1.4% of total for source files.">98 statements</a>
      </li> 
      
      
@@ -341,194 +341,180 @@
 <a id="ln-72" name="ln-72"></a>        <span class="k">type</span><span class="p">(</span><span class="n">parallel_manager_t</span><span class="p">)</span> <span class="kd">::</span> <span class="n">ik_manager</span>
 <a id="ln-73" name="ln-73"></a>        <span class="k">type</span><span class="p">(</span><span class="n">numerics_scatter_vf_t</span><span class="p">)</span> <span class="kd">::</span> <span class="n">numerics</span>
 <a id="ln-74" name="ln-74"></a>
-<a id="ln-75" name="ln-75"></a>        <span class="k">type</span><span class="p">(</span><span class="n">binned_scatter_rate_t</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">binned_rate_job</span><span class="p">(:)</span>
-<a id="ln-76" name="ln-76"></a>            <span class="c">!! Dim : [ n_tran_per_proc ]</span>
-<a id="ln-77" name="ln-77"></a>            <span class="c">!!</span>
-<a id="ln-78" name="ln-78"></a>            <span class="c">!! Binned rate per cross section, per kg-year for each transition</span>
-<a id="ln-79" name="ln-79"></a>            <span class="c">!!</span>
-<a id="ln-80" name="ln-80"></a>            <span class="c">!! Units : cm^(-2)</span>
+<a id="ln-75" name="ln-75"></a>        <span class="kt">integer</span><span class="p">,</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">job_id_to_ik</span><span class="p">(:,</span> <span class="p">:)</span>
+<a id="ln-76" name="ln-76"></a>
+<a id="ln-77" name="ln-77"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">t</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span>
+<a id="ln-78" name="ln-78"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">job_id</span>
+<a id="ln-79" name="ln-79"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">val_id</span><span class="p">,</span> <span class="n">fin_id</span>
+<a id="ln-80" name="ln-80"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">init_id</span>
 <a id="ln-81" name="ln-81"></a>
-<a id="ln-82" name="ln-82"></a>        <span class="kt">integer</span><span class="p">,</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">job_id_to_ik</span><span class="p">(:,</span> <span class="p">:)</span>
+<a id="ln-82" name="ln-82"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">wfc_FT_ik</span><span class="p">(:)</span>
 <a id="ln-83" name="ln-83"></a>
-<a id="ln-84" name="ln-84"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">t</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span>
-<a id="ln-85" name="ln-85"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">job_id</span>
-<a id="ln-86" name="ln-86"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">val_id</span><span class="p">,</span> <span class="n">fin_id</span>
-<a id="ln-87" name="ln-87"></a>
-<a id="ln-88" name="ln-88"></a>        <span class="kt">complex</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">wfc_FT_ik</span><span class="p">(:)</span>
-<a id="ln-89" name="ln-89"></a>
-<a id="ln-90" name="ln-90"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">log_omega_min</span><span class="p">,</span> <span class="n">log_omega_max</span>
-<a id="ln-91" name="ln-91"></a>
-<a id="ln-92" name="ln-92"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
-<a id="ln-93" name="ln-93"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Starting v -&gt; f scattering rate calculation...&#39;</span>
-<a id="ln-94" name="ln-94"></a>            <span class="k">print</span><span class="o">*</span>
-<a id="ln-95" name="ln-95"></a>        <span class="k">end if</span>
-<a id="ln-96" name="ln-96"></a>
-<a id="ln-97" name="ln-97"></a><span class="k">        call </span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">load</span><span class="p">(</span><span class="n">io_files</span><span class="p">%</span><span class="n">PW_data_filename</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
-<a id="ln-98" name="ln-98"></a>        <span class="k">call </span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">do_scissor_correction</span><span class="p">(</span><span class="n">target_mat</span><span class="p">%</span><span class="n">band_gap</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
-<a id="ln-99" name="ln-99"></a>
-<a id="ln-100" name="ln-100"></a>        <span class="k">call </span><span class="n">numerics</span><span class="p">%</span><span class="n">load</span><span class="p">(</span><span class="n">io_files</span><span class="p">%</span><span class="n">nml_input_filename</span><span class="p">,</span> <span class="n">PW_dataset</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
+<a id="ln-84" name="ln-84"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">log_omega_min</span><span class="p">,</span> <span class="n">log_omega_max</span>
+<a id="ln-85" name="ln-85"></a>
+<a id="ln-86" name="ln-86"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-87" name="ln-87"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Starting v -&gt; f scattering rate calculation...&#39;</span>
+<a id="ln-88" name="ln-88"></a>            <span class="k">print</span><span class="o">*</span>
+<a id="ln-89" name="ln-89"></a>        <span class="k">end if</span>
+<a id="ln-90" name="ln-90"></a>
+<a id="ln-91" name="ln-91"></a><span class="k">        call </span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">load</span><span class="p">(</span><span class="n">io_files</span><span class="p">%</span><span class="n">PW_data_filename</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
+<a id="ln-92" name="ln-92"></a>        <span class="k">call </span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">do_scissor_correction</span><span class="p">(</span><span class="n">target_mat</span><span class="p">%</span><span class="n">band_gap</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
+<a id="ln-93" name="ln-93"></a>
+<a id="ln-94" name="ln-94"></a>        <span class="k">call </span><span class="n">numerics</span><span class="p">%</span><span class="n">load</span><span class="p">(</span><span class="n">io_files</span><span class="p">%</span><span class="n">nml_input_filename</span><span class="p">,</span> <span class="n">PW_dataset</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
+<a id="ln-95" name="ln-95"></a>
+<a id="ln-96" name="ln-96"></a>        <span class="c">! create job table, parallelizing over {i, k}</span>
+<a id="ln-97" name="ln-97"></a>        <span class="k">call </span><span class="n">ik_manager</span><span class="p">%</span><span class="n">init</span><span class="p">(</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_k</span><span class="o">*</span><span class="n">numerics</span><span class="p">%</span><span class="n">n_val_max</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
+<a id="ln-98" name="ln-98"></a>
+<a id="ln-99" name="ln-99"></a>        <span class="k">allocate</span><span class="p">(</span><span class="n">job_id_to_ik</span><span class="p">(</span><span class="n">ik_manager</span><span class="p">%</span><span class="n">n_jobs</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<a id="ln-100" name="ln-100"></a>        <span class="n">job_id_to_ik</span> <span class="o">=</span> <span class="mi">0</span>
 <a id="ln-101" name="ln-101"></a>
-<a id="ln-102" name="ln-102"></a>        <span class="c">! create job table, parallelizing over {i, k}</span>
-<a id="ln-103" name="ln-103"></a>        <span class="k">call </span><span class="n">ik_manager</span><span class="p">%</span><span class="n">init</span><span class="p">(</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_k</span><span class="o">*</span><span class="n">numerics</span><span class="p">%</span><span class="n">n_val_max</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
+<a id="ln-102" name="ln-102"></a>        <span class="k">call </span><span class="n">numerics</span><span class="p">%</span><span class="n">create_val_id_list</span><span class="p">(</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_val</span><span class="p">)</span>
+<a id="ln-103" name="ln-103"></a>        <span class="k">call </span><span class="n">numerics</span><span class="p">%</span><span class="n">create_k_id_list</span><span class="p">(</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_k</span><span class="p">)</span>
 <a id="ln-104" name="ln-104"></a>
-<a id="ln-105" name="ln-105"></a>        <span class="k">allocate</span><span class="p">(</span><span class="n">job_id_to_ik</span><span class="p">(</span><span class="n">ik_manager</span><span class="p">%</span><span class="n">n_jobs</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<a id="ln-106" name="ln-106"></a>        <span class="n">job_id_to_ik</span> <span class="o">=</span> <span class="mi">0</span>
-<a id="ln-107" name="ln-107"></a>
-<a id="ln-108" name="ln-108"></a>        <span class="k">call </span><span class="n">numerics</span><span class="p">%</span><span class="n">create_val_id_list</span><span class="p">(</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_val</span><span class="p">)</span>
-<a id="ln-109" name="ln-109"></a>        <span class="k">call </span><span class="n">numerics</span><span class="p">%</span><span class="n">create_k_id_list</span><span class="p">(</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_k</span><span class="p">)</span>
-<a id="ln-110" name="ln-110"></a>
-<a id="ln-111" name="ln-111"></a>        <span class="k">call </span><span class="n">ik_manager</span><span class="p">%</span><span class="n">create_job_to_2d_ID_table</span><span class="p">(&amp;</span>
-<a id="ln-112" name="ln-112"></a>            <span class="n">numerics</span><span class="p">%</span><span class="n">val_id_list</span><span class="p">,</span> <span class="p">&amp;</span>
-<a id="ln-113" name="ln-113"></a>            <span class="n">numerics</span><span class="p">%</span><span class="n">k_id_list</span><span class="p">,</span> <span class="p">&amp;</span>
-<a id="ln-114" name="ln-114"></a>            <span class="n">job_id_to_ik</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
-<a id="ln-115" name="ln-115"></a>
-<a id="ln-116" name="ln-116"></a>        <span class="c">! allocate the binned rate arrays</span>
-<a id="ln-117" name="ln-117"></a>        <span class="k">allocate</span><span class="p">(</span><span class="n">binned_rate_job</span><span class="p">(</span><span class="n">ik_manager</span><span class="p">%</span><span class="n">n_jobs_per_proc</span><span class="p">))</span>
-<a id="ln-118" name="ln-118"></a>        <span class="k">do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ik_manager</span><span class="p">%</span><span class="n">n_jobs_per_proc</span>
-<a id="ln-119" name="ln-119"></a>            <span class="k">call </span><span class="n">binned_rate_job</span><span class="p">(</span><span class="n">i</span><span class="p">)%</span><span class="n">init</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">,</span> <span class="n">expt</span><span class="p">)</span>
-<a id="ln-120" name="ln-120"></a>        <span class="k">end do</span>
-<a id="ln-121" name="ln-121"></a>
-<a id="ln-122" name="ln-122"></a><span class="k">        allocate</span><span class="p">(</span><span class="n">wfc_FT_ik</span><span class="p">(</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_G</span><span class="p">))</span>
+<a id="ln-105" name="ln-105"></a>        <span class="k">call </span><span class="n">ik_manager</span><span class="p">%</span><span class="n">create_job_to_2d_ID_table</span><span class="p">(&amp;</span>
+<a id="ln-106" name="ln-106"></a>            <span class="n">numerics</span><span class="p">%</span><span class="n">val_id_list</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-107" name="ln-107"></a>            <span class="n">numerics</span><span class="p">%</span><span class="n">k_id_list</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-108" name="ln-108"></a>            <span class="n">job_id_to_ik</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
+<a id="ln-109" name="ln-109"></a>
+<a id="ln-110" name="ln-110"></a>        <span class="k">allocate</span><span class="p">(</span><span class="n">wfc_FT_ik</span><span class="p">(</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_G</span><span class="p">))</span>
+<a id="ln-111" name="ln-111"></a>
+<a id="ln-112" name="ln-112"></a>        <span class="n">log_omega_min</span> <span class="o">=</span> <span class="n">log10</span><span class="p">(</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">Ef_max</span><span class="p">)</span>
+<a id="ln-113" name="ln-113"></a>        <span class="n">log_omega_max</span> <span class="o">=</span> <span class="n">log10</span><span class="p">(</span><span class="mf">0.5_dp</span><span class="o">*</span><span class="n">dm_model</span><span class="p">%</span><span class="n">vX_max</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="nb">maxval</span><span class="p">(</span><span class="n">dm_model</span><span class="p">%</span><span class="n">mX</span><span class="p">))</span>
+<a id="ln-114" name="ln-114"></a>
+<a id="ln-115" name="ln-115"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">log_omega_max</span> <span class="o">&gt;</span> <span class="n">log_omega_min</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-116" name="ln-116"></a>
+<a id="ln-117" name="ln-117"></a>            <span class="c">!     ! time calculation</span>
+<a id="ln-118" name="ln-118"></a>
+<a id="ln-119" name="ln-119"></a>            <span class="c">!     if ( ( proc_id == root_process ) .and. ( timer ) ) then</span>
+<a id="ln-120" name="ln-120"></a>
+<a id="ln-121" name="ln-121"></a>            <span class="c">!         call time_exdm_scatter_vf_calc(DFT_input_filename, 1, log_omega_table, &amp;</span>
+<a id="ln-122" name="ln-122"></a>            <span class="c">!            angular_mesh, verbose = verbose)</span>
 <a id="ln-123" name="ln-123"></a>
-<a id="ln-124" name="ln-124"></a>        <span class="n">log_omega_min</span> <span class="o">=</span> <span class="n">log10</span><span class="p">(</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">Ef_max</span><span class="p">)</span>
-<a id="ln-125" name="ln-125"></a>        <span class="n">log_omega_max</span> <span class="o">=</span> <span class="n">log10</span><span class="p">(</span><span class="mf">0.5_dp</span><span class="o">*</span><span class="n">dm_model</span><span class="p">%</span><span class="n">vX_max</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="nb">maxval</span><span class="p">(</span><span class="n">dm_model</span><span class="p">%</span><span class="n">mX</span><span class="p">))</span>
-<a id="ln-126" name="ln-126"></a>
-<a id="ln-127" name="ln-127"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">log_omega_max</span> <span class="o">&gt;</span> <span class="n">log_omega_min</span> <span class="p">)</span> <span class="k">then</span>
-<a id="ln-128" name="ln-128"></a>
-<a id="ln-129" name="ln-129"></a>            <span class="c">!     ! time calculation</span>
-<a id="ln-130" name="ln-130"></a>
-<a id="ln-131" name="ln-131"></a>            <span class="c">!     if ( ( proc_id == root_process ) .and. ( timer ) ) then</span>
+<a id="ln-124" name="ln-124"></a>            <span class="c">!     end if</span>
+<a id="ln-125" name="ln-125"></a>
+<a id="ln-126" name="ln-126"></a>            <span class="n">numerics</span><span class="p">%</span><span class="n">omega_list</span> <span class="o">=</span> <span class="mi">1</span><span class="mf">0.0_dp</span><span class="o">**</span><span class="n">uniform_list</span><span class="p">(</span><span class="n">numerics</span><span class="p">%</span><span class="n">n_omega</span><span class="p">,</span> <span class="n">log_omega_min</span><span class="p">,</span> <span class="n">log_omega_max</span><span class="p">)</span>
+<a id="ln-127" name="ln-127"></a>
+<a id="ln-128" name="ln-128"></a>            <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-129" name="ln-129"></a><span class="k">                print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Calculating transition rates...&#39;</span>
+<a id="ln-130" name="ln-130"></a>                <span class="k">print</span><span class="o">*</span>
+<a id="ln-131" name="ln-131"></a>            <span class="k">end if</span>
 <a id="ln-132" name="ln-132"></a>
-<a id="ln-133" name="ln-133"></a>            <span class="c">!         call time_exdm_scatter_vf_calc(DFT_input_filename, 1, log_omega_table, &amp;</span>
-<a id="ln-134" name="ln-134"></a>            <span class="c">!            angular_mesh, verbose = verbose)</span>
-<a id="ln-135" name="ln-135"></a>
-<a id="ln-136" name="ln-136"></a>            <span class="c">!     end if</span>
-<a id="ln-137" name="ln-137"></a>
-<a id="ln-138" name="ln-138"></a>            <span class="n">numerics</span><span class="p">%</span><span class="n">omega_list</span> <span class="o">=</span> <span class="mi">1</span><span class="mf">0.0_dp</span><span class="o">**</span><span class="n">uniform_list</span><span class="p">(</span><span class="n">numerics</span><span class="p">%</span><span class="n">n_omega</span><span class="p">,</span> <span class="n">log_omega_min</span><span class="p">,</span> <span class="n">log_omega_max</span><span class="p">)</span>
-<a id="ln-139" name="ln-139"></a>
-<a id="ln-140" name="ln-140"></a>            <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
-<a id="ln-141" name="ln-141"></a><span class="k">                print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Calculating transition rates...&#39;</span>
-<a id="ln-142" name="ln-142"></a>                <span class="k">print</span><span class="o">*</span>
-<a id="ln-143" name="ln-143"></a>            <span class="k">end if</span>
-<a id="ln-144" name="ln-144"></a>
-<a id="ln-145" name="ln-145"></a><span class="k">            do </span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ik_manager</span><span class="p">%</span><span class="n">n_jobs_per_proc</span>
-<a id="ln-146" name="ln-146"></a>                
-<a id="ln-147" name="ln-147"></a>                <span class="n">job_id</span> <span class="o">=</span> <span class="n">ik_manager</span><span class="p">%</span><span class="n">job_table</span><span class="p">(</span><span class="n">proc_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
-<a id="ln-148" name="ln-148"></a>
-<a id="ln-149" name="ln-149"></a>                <span class="k">if</span> <span class="p">(</span> <span class="n">job_id</span> <span class="o">/=</span> <span class="mi">0</span> <span class="p">)</span> <span class="k">then</span>
-<a id="ln-150" name="ln-150"></a>
-<a id="ln-151" name="ln-151"></a>                    <span class="c">! count states down from highest valence band</span>
-<a id="ln-152" name="ln-152"></a>                    <span class="n">val_id</span> <span class="o">=</span> <span class="n">job_id_to_ik</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<a id="ln-153" name="ln-153"></a>                    <span class="n">k</span> <span class="o">=</span> <span class="n">job_id_to_ik</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<a id="ln-154" name="ln-154"></a>
-<a id="ln-155" name="ln-155"></a>                    <span class="c">! load initial wave function</span>
-<a id="ln-156" name="ln-156"></a>                    <span class="k">call </span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">load_wfc_FT_ik_no_spin</span><span class="p">(</span><span class="n">val_id</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">wfc_FT_ik</span><span class="p">)</span>
+<a id="ln-133" name="ln-133"></a><span class="k">            do </span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ik_manager</span><span class="p">%</span><span class="n">n_jobs_per_proc</span>
+<a id="ln-134" name="ln-134"></a>                
+<a id="ln-135" name="ln-135"></a>                <span class="n">job_id</span> <span class="o">=</span> <span class="n">ik_manager</span><span class="p">%</span><span class="n">job_table</span><span class="p">(</span><span class="n">proc_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+<a id="ln-136" name="ln-136"></a>
+<a id="ln-137" name="ln-137"></a>                <span class="k">if</span> <span class="p">(</span> <span class="n">job_id</span> <span class="o">/=</span> <span class="mi">0</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-138" name="ln-138"></a>
+<a id="ln-139" name="ln-139"></a>                    <span class="c">! count states down from highest valence band</span>
+<a id="ln-140" name="ln-140"></a>                    <span class="n">val_id</span> <span class="o">=</span> <span class="n">job_id_to_ik</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="ln-141" name="ln-141"></a>                    <span class="n">k</span> <span class="o">=</span> <span class="n">job_id_to_ik</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="ln-142" name="ln-142"></a>                    <span class="n">init_id</span> <span class="o">=</span> <span class="n">job_id_to_ik</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<a id="ln-143" name="ln-143"></a>
+<a id="ln-144" name="ln-144"></a>                    <span class="c">! load initial wave function</span>
+<a id="ln-145" name="ln-145"></a>                    <span class="k">call </span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">load_wfc_FT_ik_no_spin</span><span class="p">(</span><span class="n">val_id</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">wfc_FT_ik</span><span class="p">)</span>
+<a id="ln-146" name="ln-146"></a>
+<a id="ln-147" name="ln-147"></a>                    <span class="c">! compute rate</span>
+<a id="ln-148" name="ln-148"></a>                    <span class="k">call </span><span class="n">exdm_scatter_vf_calc</span><span class="p">(</span><span class="n">binned_rate_init</span><span class="p">(</span><span class="n">init_id</span><span class="p">),</span> <span class="p">&amp;</span>
+<a id="ln-149" name="ln-149"></a>                        <span class="n">PW_dataset</span><span class="p">,</span> <span class="n">target_mat</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-150" name="ln-150"></a>                        <span class="n">bins</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">,</span> <span class="n">expt</span><span class="p">,</span> <span class="n">in_med_scr</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-151" name="ln-151"></a>                        <span class="n">numerics</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-152" name="ln-152"></a>                        <span class="n">wfc_FT_ik</span><span class="p">,</span> <span class="n">val_id</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="p">.</span><span class="n">FALSE</span><span class="p">.)</span>
+<a id="ln-153" name="ln-153"></a>
+<a id="ln-154" name="ln-154"></a>                <span class="k">end if</span>
+<a id="ln-155" name="ln-155"></a>
+<a id="ln-156" name="ln-156"></a><span class="k">            end do</span>
 <a id="ln-157" name="ln-157"></a>
-<a id="ln-158" name="ln-158"></a>                    <span class="c">! compute rate</span>
-<a id="ln-159" name="ln-159"></a>                    <span class="k">call </span><span class="n">exdm_scatter_vf_calc</span><span class="p">(</span><span class="n">binned_rate_job</span><span class="p">(</span><span class="n">j</span><span class="p">),</span> <span class="p">&amp;</span>
-<a id="ln-160" name="ln-160"></a>                        <span class="n">PW_dataset</span><span class="p">,</span> <span class="n">target_mat</span><span class="p">,</span> <span class="p">&amp;</span>
-<a id="ln-161" name="ln-161"></a>                        <span class="n">bins</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">,</span> <span class="n">expt</span><span class="p">,</span> <span class="n">in_med_scr</span><span class="p">,</span> <span class="p">&amp;</span>
-<a id="ln-162" name="ln-162"></a>                        <span class="n">numerics</span><span class="p">,</span> <span class="p">&amp;</span>
-<a id="ln-163" name="ln-163"></a>                        <span class="n">wfc_FT_ik</span><span class="p">,</span> <span class="n">val_id</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="p">.</span><span class="n">FALSE</span><span class="p">.)</span>
+<a id="ln-158" name="ln-158"></a><span class="k">            if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-159" name="ln-159"></a><span class="k">                print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Done calculating transition rates!&#39;</span>
+<a id="ln-160" name="ln-160"></a>                <span class="k">print</span><span class="o">*</span>
+<a id="ln-161" name="ln-161"></a>            <span class="k">end if</span>
+<a id="ln-162" name="ln-162"></a>
+<a id="ln-163" name="ln-163"></a><span class="k">        else</span>
 <a id="ln-164" name="ln-164"></a>
-<a id="ln-165" name="ln-165"></a>                <span class="k">end if</span>
-<a id="ln-166" name="ln-166"></a>
-<a id="ln-167" name="ln-167"></a><span class="k">            end do</span>
-<a id="ln-168" name="ln-168"></a>
-<a id="ln-169" name="ln-169"></a><span class="k">            if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
-<a id="ln-170" name="ln-170"></a><span class="k">                print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Done calculating transition rates!&#39;</span>
-<a id="ln-171" name="ln-171"></a>                <span class="k">print</span><span class="o">*</span>
-<a id="ln-172" name="ln-172"></a>            <span class="k">end if</span>
-<a id="ln-173" name="ln-173"></a>
-<a id="ln-174" name="ln-174"></a><span class="k">        else</span>
-<a id="ln-175" name="ln-175"></a>
-<a id="ln-176" name="ln-176"></a><span class="k">            call </span><span class="n">print_warning_message</span><span class="p">(&amp;</span>
-<a id="ln-177" name="ln-177"></a>                <span class="s1">&#39;No mass in mX is large enough to warrant the v -&gt; f calculation&#39;</span><span class="o">//</span><span class="p">&amp;</span>
-<a id="ln-178" name="ln-178"></a>                <span class="s1">&#39; with the specified Ef_max. Skipping v -&gt; f calculation.&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
-<a id="ln-179" name="ln-179"></a>                <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
-<a id="ln-180" name="ln-180"></a>
-<a id="ln-181" name="ln-181"></a>        <span class="k">end if</span>
-<a id="ln-182" name="ln-182"></a>
-<a id="ln-183" name="ln-183"></a><span class="k">        call </span><span class="n">ik_manager</span><span class="p">%</span><span class="n">comm_scatter_binned_rate_job_init</span><span class="p">(</span><span class="n">proc_id</span><span class="p">,</span> <span class="n">root_process</span><span class="p">,</span> <span class="n">job_id_to_ik</span><span class="p">,</span> <span class="p">&amp;</span>
-<a id="ln-184" name="ln-184"></a>            <span class="n">binned_rate_job</span><span class="p">,</span> <span class="n">binned_rate_init</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
-<a id="ln-185" name="ln-185"></a>
-<a id="ln-186" name="ln-186"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">proc_id</span> <span class="o">==</span> <span class="n">root_process</span> <span class="p">)</span> <span class="k">then</span>
-<a id="ln-187" name="ln-187"></a><span class="k">            call </span><span class="n">PW_dataset</span><span class="p">%</span><span class="k">save</span><span class="p">(</span><span class="n">io_files</span><span class="p">%</span><span class="n">out_filename</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
-<a id="ln-188" name="ln-188"></a>            <span class="k">call </span><span class="n">numerics</span><span class="p">%</span><span class="k">save</span><span class="p">(</span><span class="n">io_files</span><span class="p">%</span><span class="n">out_filename</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
-<a id="ln-189" name="ln-189"></a>        <span class="k">end if</span>
-<a id="ln-190" name="ln-190"></a>
-<a id="ln-191" name="ln-191"></a><span class="k">    end subroutine</span>
-<a id="ln-192" name="ln-192"></a>
-<a id="ln-193" name="ln-193"></a>    <span class="c">! subroutine time_exdm_scatter_vf_calc(DFT_input_filename, tran_id, log_omega_table, &amp;</span>
-<a id="ln-194" name="ln-194"></a>    <span class="c">!         angular_mesh, verbose)</span>
-<a id="ln-195" name="ln-195"></a>    <span class="c">!     !! Times the v -&gt; f scattering rate calculation</span>
-<a id="ln-196" name="ln-196"></a>    <span class="c">!     use timing </span>
-<a id="ln-197" name="ln-197"></a>    <span class="c">!     use mpi</span>
+<a id="ln-165" name="ln-165"></a><span class="k">            call </span><span class="n">print_warning_message</span><span class="p">(&amp;</span>
+<a id="ln-166" name="ln-166"></a>                <span class="s1">&#39;No mass in mX is large enough to warrant the v -&gt; f calculation&#39;</span><span class="o">//</span><span class="p">&amp;</span>
+<a id="ln-167" name="ln-167"></a>                <span class="s1">&#39; with the specified Ef_max. Skipping v -&gt; f calculation.&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-168" name="ln-168"></a>                <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
+<a id="ln-169" name="ln-169"></a>
+<a id="ln-170" name="ln-170"></a>        <span class="k">end if</span>
+<a id="ln-171" name="ln-171"></a>
+<a id="ln-172" name="ln-172"></a><span class="k">        if</span> <span class="p">(</span> <span class="n">proc_id</span> <span class="o">==</span> <span class="n">root_process</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-173" name="ln-173"></a><span class="k">            call </span><span class="n">PW_dataset</span><span class="p">%</span><span class="k">save</span><span class="p">(</span><span class="n">io_files</span><span class="p">%</span><span class="n">out_filename</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
+<a id="ln-174" name="ln-174"></a>            <span class="k">call </span><span class="n">numerics</span><span class="p">%</span><span class="k">save</span><span class="p">(</span><span class="n">io_files</span><span class="p">%</span><span class="n">out_filename</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">)</span>
+<a id="ln-175" name="ln-175"></a>        <span class="k">end if</span>
+<a id="ln-176" name="ln-176"></a>
+<a id="ln-177" name="ln-177"></a><span class="k">    end subroutine</span>
+<a id="ln-178" name="ln-178"></a>
+<a id="ln-179" name="ln-179"></a>    <span class="c">! subroutine time_exdm_scatter_vf_calc(DFT_input_filename, tran_id, log_omega_table, &amp;</span>
+<a id="ln-180" name="ln-180"></a>    <span class="c">!         angular_mesh, verbose)</span>
+<a id="ln-181" name="ln-181"></a>    <span class="c">!     !! Times the v -&gt; f scattering rate calculation</span>
+<a id="ln-182" name="ln-182"></a>    <span class="c">!     use timing </span>
+<a id="ln-183" name="ln-183"></a>    <span class="c">!     use mpi</span>
+<a id="ln-184" name="ln-184"></a>
+<a id="ln-185" name="ln-185"></a>    <span class="c">!     implicit none</span>
+<a id="ln-186" name="ln-186"></a>
+<a id="ln-187" name="ln-187"></a>    <span class="c">!     real(dp) :: log_omega_table(n_fin, 2)</span>
+<a id="ln-188" name="ln-188"></a>    <span class="c">!     real(dp) :: log_omegas(2)</span>
+<a id="ln-189" name="ln-189"></a>
+<a id="ln-190" name="ln-190"></a>    <span class="c">!     real(dp) :: angular_mesh(n_kf_theta*n_kf_phi, 2)</span>
+<a id="ln-191" name="ln-191"></a>
+<a id="ln-192" name="ln-192"></a>    <span class="c">!     character(len=*) :: DFT_input_filename</span>
+<a id="ln-193" name="ln-193"></a>
+<a id="ln-194" name="ln-194"></a>    <span class="c">!     integer :: tran_id</span>
+<a id="ln-195" name="ln-195"></a>
+<a id="ln-196" name="ln-196"></a>    <span class="c">!     logical, optional :: verbose</span>
+<a id="ln-197" name="ln-197"></a>    <span class="c">!     real(dp) :: b_rate(n_q_bins + 1, n_E_bins + 1, n_mX, n_FDM, n_time)</span>
 <a id="ln-198" name="ln-198"></a>
-<a id="ln-199" name="ln-199"></a>    <span class="c">!     implicit none</span>
+<a id="ln-199" name="ln-199"></a>    <span class="c">!     complex(dp), allocatable :: wfc_FT_i(:, :)</span>
 <a id="ln-200" name="ln-200"></a>
-<a id="ln-201" name="ln-201"></a>    <span class="c">!     real(dp) :: log_omega_table(n_fin, 2)</span>
-<a id="ln-202" name="ln-202"></a>    <span class="c">!     real(dp) :: log_omegas(2)</span>
-<a id="ln-203" name="ln-203"></a>
-<a id="ln-204" name="ln-204"></a>    <span class="c">!     real(dp) :: angular_mesh(n_kf_theta*n_kf_phi, 2)</span>
-<a id="ln-205" name="ln-205"></a>
-<a id="ln-206" name="ln-206"></a>    <span class="c">!     character(len=*) :: DFT_input_filename</span>
+<a id="ln-201" name="ln-201"></a>    <span class="c">!     integer :: val_id, fin_id</span>
+<a id="ln-202" name="ln-202"></a>
+<a id="ln-203" name="ln-203"></a>    <span class="c">!     if ( verbose ) then</span>
+<a id="ln-204" name="ln-204"></a>
+<a id="ln-205" name="ln-205"></a>    <span class="c">!         print*, &#39;Timing v -&gt; f calculation...&#39;</span>
+<a id="ln-206" name="ln-206"></a>    <span class="c">!         print*</span>
 <a id="ln-207" name="ln-207"></a>
-<a id="ln-208" name="ln-208"></a>    <span class="c">!     integer :: tran_id</span>
+<a id="ln-208" name="ln-208"></a>    <span class="c">!     end if</span>
 <a id="ln-209" name="ln-209"></a>
-<a id="ln-210" name="ln-210"></a>    <span class="c">!     logical, optional :: verbose</span>
-<a id="ln-211" name="ln-211"></a>    <span class="c">!     real(dp) :: b_rate(n_q_bins + 1, n_E_bins + 1, n_mX, n_FDM, n_time)</span>
-<a id="ln-212" name="ln-212"></a>
-<a id="ln-213" name="ln-213"></a>    <span class="c">!     complex(dp), allocatable :: wfc_FT_i(:, :)</span>
+<a id="ln-210" name="ln-210"></a>    <span class="c">!     allocate(wfc_FT_i(n_k, n_in_G))</span>
+<a id="ln-211" name="ln-211"></a>
+<a id="ln-212" name="ln-212"></a>    <span class="c">!     val_id = tran_to_init_fin_id(tran_id, 1)</span>
+<a id="ln-213" name="ln-213"></a>    <span class="c">!     fin_id = tran_to_init_fin_id(tran_id, 2)</span>
 <a id="ln-214" name="ln-214"></a>
-<a id="ln-215" name="ln-215"></a>    <span class="c">!     integer :: val_id, fin_id</span>
+<a id="ln-215" name="ln-215"></a>    <span class="c">!     call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i)</span>
 <a id="ln-216" name="ln-216"></a>
-<a id="ln-217" name="ln-217"></a>    <span class="c">!     if ( verbose ) then</span>
+<a id="ln-217" name="ln-217"></a>    <span class="c">!     log_omegas = log_omega_table(fin_id, :)</span>
 <a id="ln-218" name="ln-218"></a>
-<a id="ln-219" name="ln-219"></a>    <span class="c">!         print*, &#39;Timing v -&gt; f calculation...&#39;</span>
-<a id="ln-220" name="ln-220"></a>    <span class="c">!         print*</span>
-<a id="ln-221" name="ln-221"></a>
-<a id="ln-222" name="ln-222"></a>    <span class="c">!     end if</span>
+<a id="ln-219" name="ln-219"></a>    <span class="c">!     time(3) = MPI_Wtime()</span>
+<a id="ln-220" name="ln-220"></a>
+<a id="ln-221" name="ln-221"></a>    <span class="c">!     call dme_scatter_vf_calc(b_rate,&amp; </span>
+<a id="ln-222" name="ln-222"></a>    <span class="c">!         wfc_FT_i, val_id, log_omegas, 1, angular_mesh, verbose = verbose)</span>
 <a id="ln-223" name="ln-223"></a>
-<a id="ln-224" name="ln-224"></a>    <span class="c">!     allocate(wfc_FT_i(n_k, n_in_G))</span>
+<a id="ln-224" name="ln-224"></a>    <span class="c">!     time(4) = MPI_Wtime()</span>
 <a id="ln-225" name="ln-225"></a>
-<a id="ln-226" name="ln-226"></a>    <span class="c">!     val_id = tran_to_init_fin_id(tran_id, 1)</span>
-<a id="ln-227" name="ln-227"></a>    <span class="c">!     fin_id = tran_to_init_fin_id(tran_id, 2)</span>
-<a id="ln-228" name="ln-228"></a>
-<a id="ln-229" name="ln-229"></a>    <span class="c">!     call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i)</span>
-<a id="ln-230" name="ln-230"></a>
-<a id="ln-231" name="ln-231"></a>    <span class="c">!     log_omegas = log_omega_table(fin_id, :)</span>
-<a id="ln-232" name="ln-232"></a>
-<a id="ln-233" name="ln-233"></a>    <span class="c">!     time(3) = MPI_Wtime()</span>
-<a id="ln-234" name="ln-234"></a>
-<a id="ln-235" name="ln-235"></a>    <span class="c">!     call dme_scatter_vf_calc(b_rate,&amp; </span>
-<a id="ln-236" name="ln-236"></a>    <span class="c">!         wfc_FT_i, val_id, log_omegas, 1, angular_mesh, verbose = verbose)</span>
-<a id="ln-237" name="ln-237"></a>
-<a id="ln-238" name="ln-238"></a>    <span class="c">!     time(4) = MPI_Wtime()</span>
-<a id="ln-239" name="ln-239"></a>
-<a id="ln-240" name="ln-240"></a>    <span class="c">!     if ( verbose ) then</span>
-<a id="ln-241" name="ln-241"></a>
-<a id="ln-242" name="ln-242"></a>    <span class="c">!         print*, &#39;----------------------------------------&#39;</span>
-<a id="ln-243" name="ln-243"></a>    <span class="c">!         print*, &#39;    -------------&#39;</span>
-<a id="ln-244" name="ln-244"></a>    <span class="c">!         print*, &#39;    Timing (TEST)&#39;</span>
-<a id="ln-245" name="ln-245"></a>    <span class="c">!         print*, &#39;    -------------&#39;</span>
-<a id="ln-246" name="ln-246"></a>    <span class="c">!         print*</span>
-<a id="ln-247" name="ln-247"></a>    <span class="c">!         print*, &#39;        (TEST) Run time : &#39;</span>
-<a id="ln-248" name="ln-248"></a>    <span class="c">!         print*, &#39;            &#39;, trim(pretty_time_format(time(4) - time(3)))</span>
-<a id="ln-249" name="ln-249"></a>    <span class="c">!         print*</span>
-<a id="ln-250" name="ln-250"></a>    <span class="c">!         print*, &#39;        Expected run time for whole calculation :&#39;</span>
-<a id="ln-251" name="ln-251"></a>    <span class="c">!         print*, &#39;            &#39;, trim(pretty_time_format(&amp;</span>
-<a id="ln-252" name="ln-252"></a>    <span class="c">!             n_tran_per_proc*n_k*(time(4) - time(3))&amp;</span>
-<a id="ln-253" name="ln-253"></a>    <span class="c">!             ))</span>
-<a id="ln-254" name="ln-254"></a>    <span class="c">!         print*</span>
-<a id="ln-255" name="ln-255"></a>    <span class="c">!         print*, &#39;----------------------------------------&#39;</span>
-<a id="ln-256" name="ln-256"></a>    <span class="c">!         print*</span>
-<a id="ln-257" name="ln-257"></a>
-<a id="ln-258" name="ln-258"></a>    <span class="c">!     end if</span>
-<a id="ln-259" name="ln-259"></a>
-<a id="ln-260" name="ln-260"></a>    <span class="c">! end subroutine</span>
-<a id="ln-261" name="ln-261"></a>
-<a id="ln-262" name="ln-262"></a><span class="k">end module</span>
+<a id="ln-226" name="ln-226"></a>    <span class="c">!     if ( verbose ) then</span>
+<a id="ln-227" name="ln-227"></a>
+<a id="ln-228" name="ln-228"></a>    <span class="c">!         print*, &#39;----------------------------------------&#39;</span>
+<a id="ln-229" name="ln-229"></a>    <span class="c">!         print*, &#39;    -------------&#39;</span>
+<a id="ln-230" name="ln-230"></a>    <span class="c">!         print*, &#39;    Timing (TEST)&#39;</span>
+<a id="ln-231" name="ln-231"></a>    <span class="c">!         print*, &#39;    -------------&#39;</span>
+<a id="ln-232" name="ln-232"></a>    <span class="c">!         print*</span>
+<a id="ln-233" name="ln-233"></a>    <span class="c">!         print*, &#39;        (TEST) Run time : &#39;</span>
+<a id="ln-234" name="ln-234"></a>    <span class="c">!         print*, &#39;            &#39;, trim(pretty_time_format(time(4) - time(3)))</span>
+<a id="ln-235" name="ln-235"></a>    <span class="c">!         print*</span>
+<a id="ln-236" name="ln-236"></a>    <span class="c">!         print*, &#39;        Expected run time for whole calculation :&#39;</span>
+<a id="ln-237" name="ln-237"></a>    <span class="c">!         print*, &#39;            &#39;, trim(pretty_time_format(&amp;</span>
+<a id="ln-238" name="ln-238"></a>    <span class="c">!             n_tran_per_proc*n_k*(time(4) - time(3))&amp;</span>
+<a id="ln-239" name="ln-239"></a>    <span class="c">!             ))</span>
+<a id="ln-240" name="ln-240"></a>    <span class="c">!         print*</span>
+<a id="ln-241" name="ln-241"></a>    <span class="c">!         print*, &#39;----------------------------------------&#39;</span>
+<a id="ln-242" name="ln-242"></a>    <span class="c">!         print*</span>
+<a id="ln-243" name="ln-243"></a>
+<a id="ln-244" name="ln-244"></a>    <span class="c">!     end if</span>
+<a id="ln-245" name="ln-245"></a>
+<a id="ln-246" name="ln-246"></a>    <span class="c">! end subroutine</span>
+<a id="ln-247" name="ln-247"></a>
+<a id="ln-248" name="ln-248"></a><span class="k">end module</span>
 </pre></div>
 
     </section>
@@ -547,7 +533,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-08-17 12:37  
+             on 2021-08-26 17:09  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

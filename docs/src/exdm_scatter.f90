@@ -9,6 +9,7 @@ module exdm_scatter
 
     use control_input
     use io_input
+    use MPI_util
 
     use material_type
     use dm_model_type
@@ -123,6 +124,10 @@ contains
             stop
 
         end if
+
+        ! communicate computed data
+        call comm_reduce_binned_rate_init(proc_id, root_process, binned_rate_init, &
+            verbose)
 
         ! save data
         if ( proc_id == root_process ) then

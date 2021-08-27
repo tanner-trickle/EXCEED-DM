@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 # Project information ###########################
 
 project(EXCEED-DM
-        VERSION 0.2.6
+        VERSION 0.2.7
         DESCRIPTION "OpenMPI Fortran program that computes Dark Matter (DM) induced electronic transition rates for any gapped crystal target."
         HOMEPAGE_URL "https://tanner-trickle.github.io/EXCEED-DM/index.html"
         LANGUAGES Fortran)
@@ -22,6 +22,8 @@ set(CMAKE_Fortran_FLAGS_RELEASE "-O3")
 #################################################
 
 # Main executable ###############################
+
+set(CMAKE_Fortran_MODULE_DIRECTORY "${PROJECT_SOURCE_DIR}/build/mod")
 
 file(GLOB_RECURSE sources src/*.f90)
 add_executable(exdm ${sources})

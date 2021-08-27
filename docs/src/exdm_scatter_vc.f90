@@ -72,19 +72,12 @@ contains
         type(parallel_manager_t) :: ik_manager
         type(numerics_scatter_vc_t) :: numerics
 
-        type(binned_scatter_rate_t), allocatable :: binned_rate_job(:)
-            !! Dim : [ n_tran_per_proc ]
-            !!
-            !! Binned rate per cross section, per kg-year for each transition
-            !!
-            !! Units : cm^(-2)
-
         integer, allocatable :: job_id_to_ik(:, :)
 
         integer :: i, j, f
 
         integer :: job_id
-        integer :: val_id, cond_id
+        integer :: val_id, cond_id, init_id
         integer :: k, kf
 
         integer :: n_FFT_grid(3)
@@ -130,12 +123,6 @@ contains
             numerics%k_id_list, &
             job_id_to_ik, verbose = verbose)
 
-        ! allocate the binned rate arrays
-        allocate(binned_rate_job(ik_manager%n_jobs_per_proc))
-        do i = 1, ik_manager%n_jobs_per_proc
-            call binned_rate_job(i)%init(bins, dm_model, expt)
-        end do
-
         ! time calculation
         if ( ( proc_id == root_process ) .and. ( main_control%timer ) ) then
 
@@ -173,6 +160,7 @@ contains
 
                 ! count states down from highest valence band
                 val_id = job_id_to_ik(job_id, 1)
+                init_id = job_id_to_ik(job_id, 3)
                 k = job_id_to_ik(job_id, 2)
 
                 if ( PW_dataset%include_spin ) then
@@ -190,7 +178,7 @@ contains
                             call PW_dataset%load_wfc_ik_expanded_spin(cond_id, kf, FFT_grid, wfc_fkfs)
 
                             ! compute rate
-                            call exdm_scatter_vc_calc(binned_rate_job(j), &
+                            call exdm_scatter_vc_calc(binned_rate_init(init_id), &
                                 FFT_grid, PW_dataset, target_mat, &
                                 bins, dm_model, expt, in_med_scr, &
                                 wfc_iks, wfc_fkfs, &
@@ -214,7 +202,7 @@ contains
                             call PW_dataset%load_wfc_ik_expanded_no_spin(cond_id, kf, FFT_grid, wfc_fkf)
 
                             ! compute rate
-                            call exdm_scatter_vc_calc(binned_rate_job(j), &
+                            call exdm_scatter_vc_calc(binned_rate_init(init_id), &
                                 FFT_grid, PW_dataset, target_mat, &
                                 bins, dm_model, expt, in_med_scr, &
                                 wfc_ik, wfc_fkf, &
@@ -233,9 +221,6 @@ contains
             print*, 'Done calculating transition rates!'
             print*
         end if
-
-        call ik_manager%comm_scatter_binned_rate_job_init(proc_id, root_process, job_id_to_ik, &
-            binned_rate_job, binned_rate_init, verbose)
 
         if ( proc_id == root_process ) then
             call PW_dataset%save(io_files%out_filename, verbose = verbose)
