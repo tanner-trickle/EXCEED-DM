@@ -674,6 +674,9 @@ contains
         !! Performs a scissor correction to the band structure. This shifts the valence and conduction
         !! bands independently such that \( \text{min} E_{\text{cond}, \mathbf{k}} - \text{max} E_{\text{val}, \mathbf{k}} = \)
         !!` band_gap`.
+        !!
+        !! Additionally, shifts all of the bands by a constant value such that the valence band maximum, \( \text{max}
+        !! E_{\text{val}, \mathbf{k}} \), is equal to 0.
         implicit none
 
         class(PW_dataset_t) :: self
@@ -682,6 +685,7 @@ contains
 
         real(dp) :: scissor_correct
 
+        ! scissor correct band structure
         scissor_correct = band_gap - &
                     (minval(self%energy_bands_raw(:, self%n_val + 1:)) - &
                      maxval(self%energy_bands_raw(:, :self%n_val)))
@@ -689,6 +693,9 @@ contains
         self%energy_bands = 0.0_dp
         self%energy_bands(:, :self%n_val) = self%energy_bands_raw(:, :self%n_val) - scissor_correct/2.0_dp 
         self%energy_bands(:, self%n_val + 1:) = self%energy_bands_raw(:, self%n_val + 1:) + scissor_correct/2.0_dp 
+
+        ! shift valence band maximum to 0 by shifting the whole band structure 
+        self%energy_bands = self%energy_bands - maxval(self%energy_bands(:, self%n_val))
 
         if ( verbose ) then
 
@@ -698,163 +705,5 @@ contains
         end if
     
     end subroutine
-
-    ! subroutine get_wfc_FT_no_spin(filename, band_num, in_wfc_FT)
-    !     !! Reads the input DFT file and sets the [n_k, n_in_G] complex(dp) array 
-    !     !! with whose elements are the dimensionless block wave function 
-    !     !! coefficients, u_ikG
-    !     implicit none
-
-    !     character(len=*) :: filename
-    !     integer :: band_num
-
-    !     complex(dp) :: in_wfc_FT(:, :)
-    !         !! Bloch wave functions in reciprocal space
-
-    !     integer(HID_T) :: file_id
-    !         !! HDF5 file ID number for DFT input file
-
-    !     real(dp) :: in_wfc_FT_r(n_k, n_in_G)
-    !         !! real part of the bloch wave functions in fourier space
-    !     real(dp) :: in_wfc_FT_c(n_k, n_in_G)
-    !         !! complex part of the bloch wave functions in fourier space
-
-    !     integer(HSIZE_T) :: dims2(2)
-
-    !     integer :: error
-
-    !     character(len=64) :: dataset_path_r
-    !     character(len=64) :: dataset_path_c
-    !     character(len=64) :: band_num_str
-
-    !     write(band_num_str, *) band_num
-
-    !     dataset_path_r = 'in_wfc_FT_r/'//trim(adjustl(band_num_str))
-    !     dataset_path_c = 'in_wfc_FT_c/'//trim(adjustl(band_num_str))
-
-    !     dims2 = [n_k, n_in_G]
-
-    !     call h5open_f(error)
-    !     call h5fopen_f(filename, H5F_ACC_RDONLY_F, file_id, error)
-
-    !     call h5ltread_dataset_double_f(file_id, dataset_path_r, in_wfc_FT_r, dims2, error)
-    !     call h5ltread_dataset_double_f(file_id, dataset_path_c, in_wfc_FT_c, dims2, error)
-
-    !     call h5fclose_f(file_id, error)
-    !     call h5close_f(error)
-
-    !     in_wfc_FT = in_wfc_FT_r + ii*in_wfc_FT_c
-
-    ! end subroutine
-
-    ! subroutine get_in_wfc_FT_spin(filename, band_num, in_wfc_FT)
-    !     !! Reads the input DFT file and sets the [n_k, n_in_G, 2] complex(dp) array 
-    !     !! with whose elements are the dimensionless block wave function 
-    !     !! coefficients, u_{i, k, G, s}, where s is the spin index
-    !     implicit none
-
-    !     character(len=*) :: filename
-    !     integer :: band_num
-
-    !     complex(dp) :: in_wfc_FT(:, :, :)
-    !         !! Bloch wave functions in reciprocal space
-
-    !     integer(HID_T) :: file_id
-    !         !! HDF5 file ID number for DFT input file
-
-    !     real(dp) :: in_wfc_FT_r(n_k, n_in_G, 2)
-    !         !! real part of the bloch wave functions in fourier space
-    !     real(dp) :: in_wfc_FT_c(n_k, n_in_G, 2)
-    !         !! complex part of the bloch wave functions in fourier space
-
-    !     integer(HSIZE_T) :: dims3(3)
-
-    !     integer :: error
-
-    !     character(len=64) :: dataset_path_r
-    !     character(len=64) :: dataset_path_c
-    !     character(len=64) :: band_num_str
-
-    !     write(band_num_str, *) band_num
-
-    !     dataset_path_r = 'in_wfc_FT_r/'//trim(adjustl(band_num_str))
-    !     dataset_path_c = 'in_wfc_FT_c/'//trim(adjustl(band_num_str))
-
-    !     dims3 = [n_k, n_in_G, 2]
-
-    !     call h5open_f(error)
-    !     call h5fopen_f(filename, H5F_ACC_RDONLY_F, file_id, error)
-
-    !     call h5ltread_dataset_double_f(file_id, dataset_path_r, in_wfc_FT_r, dims3, error)
-    !     call h5ltread_dataset_double_f(file_id, dataset_path_c, in_wfc_FT_c, dims3, error)
-
-    !     call h5fclose_f(file_id, error)
-    !     call h5close_f(error)
-
-    !     in_wfc_FT = in_wfc_FT_r + ii*in_wfc_FT_c
-
-    ! end subroutine
-
-    !subroutine expand_wfc_FT_for_FFT(n_grid,&
-    !        wfc_FT, wfc_FT_exp,&
-    !        verbose)
-    !    !! The Fourier components will generally not be defined on a
-    !    !! uniform grid needed for an FFT. This subroutine puts the 
-    !    !! values of the Bloch coefficients in the correct place 
-    !    use FFT_util
-
-    !    implicit none
-
-    !    integer :: n_grid(3)
-
-    !    complex(dp) :: wfc_FT(n_in_G)
-    !    complex(dp) :: wfc_FT_exp(n_grid(1), n_grid(2), n_grid(3))
-
-    !    logical, optional :: verbose
-
-    !    integer :: g
-    !    integer :: FFT_idx(3)
-
-    !    wfc_FT_exp = (0.0_dp, 0.0_dp)
-
-    !    do g = 1, n_in_G
-
-    !        call G_red_to_FFT_G_grid_index(n_grid, in_G_grid_red(g, :), FFT_idx)
-
-    !        wfc_FT_exp(FFT_idx(1), FFT_idx(2), FFT_idx(3)) = wfc_FT(g)
-
-    !    end do
-
-    !end subroutine
-
-    !function in_wfc_at_single_pt(band_num, x0_red, in_wfc_FT) result(wfc)
-    !    !! returns the wave function evaluated at a point in
-    !    !! reduced coordinates at a single point
-    !    !!
-    !    !! av_wfc(x0)_k = sum_G e^(i G.x0) wfc(G)_k
-    !    implicit none
-
-    !    integer :: band_num
-
-    !    real(dp) :: x0_red(3)
-    !    real(dp) :: x0(3)
-    !    complex(dp) :: phase_fac(n_in_G)
-    !    complex(dp) :: wfc(n_k)
-
-    !    complex(dp) :: in_wfc_FT(n_k, n_in_G)
-
-    !    integer :: g
-
-    !    x0 = matmul(red_to_xyz, x0_red)
-
-    !    phase_fac = cmplx(0.0_dp, 0.0_dp, dp)
-
-    !    do g = 1, n_in_G
-    !        phase_fac(g) = exp(ii*dot_product(in_G_grid_xyz(g, :), x0))
-    !    end do
-
-    !    wfc = matmul(in_wfc_FT, phase_fac)
-
-    !end function
 
 end module

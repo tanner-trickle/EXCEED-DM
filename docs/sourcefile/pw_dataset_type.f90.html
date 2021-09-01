@@ -132,7 +132,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 4.5% of total for source files.">312 statements</a>
+    title=" 4.5% of total for source files.">313 statements</a>
      </li> 
      
      
@@ -943,190 +943,39 @@
 <a id="ln-674" name="ln-674"></a>        <span class="c">!! Performs a scissor correction to the band structure. This shifts the valence and conduction</span>
 <a id="ln-675" name="ln-675"></a>        <span class="c">!! bands independently such that \( \text{min} E_{\text{cond}, \mathbf{k}} - \text{max} E_{\text{val}, \mathbf{k}} = \)</span>
 <a id="ln-676" name="ln-676"></a>        <span class="c">!!` band_gap`.</span>
-<a id="ln-677" name="ln-677"></a>        <span class="k">implicit none</span>
-<a id="ln-678" name="ln-678"></a>
-<a id="ln-679" name="ln-679"></a><span class="k">        class</span><span class="p">(</span><span class="n">PW_dataset_t</span><span class="p">)</span> <span class="kd">::</span> <span class="n">self</span>
-<a id="ln-680" name="ln-680"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">band_gap</span>
-<a id="ln-681" name="ln-681"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
-<a id="ln-682" name="ln-682"></a>
-<a id="ln-683" name="ln-683"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">scissor_correct</span>
-<a id="ln-684" name="ln-684"></a>
-<a id="ln-685" name="ln-685"></a>        <span class="n">scissor_correct</span> <span class="o">=</span> <span class="n">band_gap</span> <span class="o">-</span> <span class="p">&amp;</span>
-<a id="ln-686" name="ln-686"></a>                    <span class="p">(</span><span class="nb">minval</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="n">self</span><span class="p">%</span><span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:))</span> <span class="o">-</span> <span class="p">&amp;</span>
-<a id="ln-687" name="ln-687"></a>                     <span class="nb">maxval</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="p">:</span><span class="n">self</span><span class="p">%</span><span class="n">n_val</span><span class="p">)))</span>
-<a id="ln-688" name="ln-688"></a>
-<a id="ln-689" name="ln-689"></a>        <span class="n">self</span><span class="p">%</span><span class="n">energy_bands</span> <span class="o">=</span> <span class="mf">0.0_dp</span>
-<a id="ln-690" name="ln-690"></a>        <span class="n">self</span><span class="p">%</span><span class="n">energy_bands</span><span class="p">(:,</span> <span class="p">:</span><span class="n">self</span><span class="p">%</span><span class="n">n_val</span><span class="p">)</span> <span class="o">=</span> <span class="n">self</span><span class="p">%</span><span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="p">:</span><span class="n">self</span><span class="p">%</span><span class="n">n_val</span><span class="p">)</span> <span class="o">-</span> <span class="n">scissor_correct</span><span class="o">/</span><span class="mf">2.0_dp</span> 
-<a id="ln-691" name="ln-691"></a>        <span class="n">self</span><span class="p">%</span><span class="n">energy_bands</span><span class="p">(:,</span> <span class="n">self</span><span class="p">%</span><span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:)</span> <span class="o">=</span> <span class="n">self</span><span class="p">%</span><span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="n">self</span><span class="p">%</span><span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:)</span> <span class="o">+</span> <span class="n">scissor_correct</span><span class="o">/</span><span class="mf">2.0_dp</span> 
+<a id="ln-677" name="ln-677"></a>        <span class="c">!!</span>
+<a id="ln-678" name="ln-678"></a>        <span class="c">!! Additionally, shifts all of the bands by a constant value such that the valence band maximum, \( \text{max}</span>
+<a id="ln-679" name="ln-679"></a>        <span class="c">!! E_{\text{val}, \mathbf{k}} \), is equal to 0.</span>
+<a id="ln-680" name="ln-680"></a>        <span class="k">implicit none</span>
+<a id="ln-681" name="ln-681"></a>
+<a id="ln-682" name="ln-682"></a><span class="k">        class</span><span class="p">(</span><span class="n">PW_dataset_t</span><span class="p">)</span> <span class="kd">::</span> <span class="n">self</span>
+<a id="ln-683" name="ln-683"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">band_gap</span>
+<a id="ln-684" name="ln-684"></a>        <span class="kt">logical</span><span class="p">,</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">verbose</span>
+<a id="ln-685" name="ln-685"></a>
+<a id="ln-686" name="ln-686"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">scissor_correct</span>
+<a id="ln-687" name="ln-687"></a>
+<a id="ln-688" name="ln-688"></a>        <span class="c">! scissor correct band structure</span>
+<a id="ln-689" name="ln-689"></a>        <span class="n">scissor_correct</span> <span class="o">=</span> <span class="n">band_gap</span> <span class="o">-</span> <span class="p">&amp;</span>
+<a id="ln-690" name="ln-690"></a>                    <span class="p">(</span><span class="nb">minval</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="n">self</span><span class="p">%</span><span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:))</span> <span class="o">-</span> <span class="p">&amp;</span>
+<a id="ln-691" name="ln-691"></a>                     <span class="nb">maxval</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="p">:</span><span class="n">self</span><span class="p">%</span><span class="n">n_val</span><span class="p">)))</span>
 <a id="ln-692" name="ln-692"></a>
-<a id="ln-693" name="ln-693"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
-<a id="ln-694" name="ln-694"></a>
-<a id="ln-695" name="ln-695"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Performed scissor correction.&#39;</span>
-<a id="ln-696" name="ln-696"></a>            <span class="k">print</span><span class="o">*</span>
-<a id="ln-697" name="ln-697"></a>
-<a id="ln-698" name="ln-698"></a>        <span class="k">end if</span>
-<a id="ln-699" name="ln-699"></a><span class="k">    </span>
-<a id="ln-700" name="ln-700"></a><span class="k">    end subroutine</span>
+<a id="ln-693" name="ln-693"></a>        <span class="n">self</span><span class="p">%</span><span class="n">energy_bands</span> <span class="o">=</span> <span class="mf">0.0_dp</span>
+<a id="ln-694" name="ln-694"></a>        <span class="n">self</span><span class="p">%</span><span class="n">energy_bands</span><span class="p">(:,</span> <span class="p">:</span><span class="n">self</span><span class="p">%</span><span class="n">n_val</span><span class="p">)</span> <span class="o">=</span> <span class="n">self</span><span class="p">%</span><span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="p">:</span><span class="n">self</span><span class="p">%</span><span class="n">n_val</span><span class="p">)</span> <span class="o">-</span> <span class="n">scissor_correct</span><span class="o">/</span><span class="mf">2.0_dp</span> 
+<a id="ln-695" name="ln-695"></a>        <span class="n">self</span><span class="p">%</span><span class="n">energy_bands</span><span class="p">(:,</span> <span class="n">self</span><span class="p">%</span><span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:)</span> <span class="o">=</span> <span class="n">self</span><span class="p">%</span><span class="n">energy_bands_raw</span><span class="p">(:,</span> <span class="n">self</span><span class="p">%</span><span class="n">n_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:)</span> <span class="o">+</span> <span class="n">scissor_correct</span><span class="o">/</span><span class="mf">2.0_dp</span> 
+<a id="ln-696" name="ln-696"></a>
+<a id="ln-697" name="ln-697"></a>        <span class="c">! shift valence band maximum to 0 by shifting the whole band structure </span>
+<a id="ln-698" name="ln-698"></a>        <span class="n">self</span><span class="p">%</span><span class="n">energy_bands</span> <span class="o">=</span> <span class="n">self</span><span class="p">%</span><span class="n">energy_bands</span> <span class="o">-</span> <span class="nb">maxval</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">energy_bands</span><span class="p">(:,</span> <span class="n">self</span><span class="p">%</span><span class="n">n_val</span><span class="p">))</span>
+<a id="ln-699" name="ln-699"></a>
+<a id="ln-700" name="ln-700"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">verbose</span> <span class="p">)</span> <span class="k">then</span>
 <a id="ln-701" name="ln-701"></a>
-<a id="ln-702" name="ln-702"></a>    <span class="c">! subroutine get_wfc_FT_no_spin(filename, band_num, in_wfc_FT)</span>
-<a id="ln-703" name="ln-703"></a>    <span class="c">!     !! Reads the input DFT file and sets the [n_k, n_in_G] complex(dp) array </span>
-<a id="ln-704" name="ln-704"></a>    <span class="c">!     !! with whose elements are the dimensionless block wave function </span>
-<a id="ln-705" name="ln-705"></a>    <span class="c">!     !! coefficients, u_ikG</span>
-<a id="ln-706" name="ln-706"></a>    <span class="c">!     implicit none</span>
-<a id="ln-707" name="ln-707"></a>
-<a id="ln-708" name="ln-708"></a>    <span class="c">!     character(len=*) :: filename</span>
-<a id="ln-709" name="ln-709"></a>    <span class="c">!     integer :: band_num</span>
-<a id="ln-710" name="ln-710"></a>
-<a id="ln-711" name="ln-711"></a>    <span class="c">!     complex(dp) :: in_wfc_FT(:, :)</span>
-<a id="ln-712" name="ln-712"></a>    <span class="c">!         !! Bloch wave functions in reciprocal space</span>
-<a id="ln-713" name="ln-713"></a>
-<a id="ln-714" name="ln-714"></a>    <span class="c">!     integer(HID_T) :: file_id</span>
-<a id="ln-715" name="ln-715"></a>    <span class="c">!         !! HDF5 file ID number for DFT input file</span>
-<a id="ln-716" name="ln-716"></a>
-<a id="ln-717" name="ln-717"></a>    <span class="c">!     real(dp) :: in_wfc_FT_r(n_k, n_in_G)</span>
-<a id="ln-718" name="ln-718"></a>    <span class="c">!         !! real part of the bloch wave functions in fourier space</span>
-<a id="ln-719" name="ln-719"></a>    <span class="c">!     real(dp) :: in_wfc_FT_c(n_k, n_in_G)</span>
-<a id="ln-720" name="ln-720"></a>    <span class="c">!         !! complex part of the bloch wave functions in fourier space</span>
-<a id="ln-721" name="ln-721"></a>
-<a id="ln-722" name="ln-722"></a>    <span class="c">!     integer(HSIZE_T) :: dims2(2)</span>
-<a id="ln-723" name="ln-723"></a>
-<a id="ln-724" name="ln-724"></a>    <span class="c">!     integer :: error</span>
-<a id="ln-725" name="ln-725"></a>
-<a id="ln-726" name="ln-726"></a>    <span class="c">!     character(len=64) :: dataset_path_r</span>
-<a id="ln-727" name="ln-727"></a>    <span class="c">!     character(len=64) :: dataset_path_c</span>
-<a id="ln-728" name="ln-728"></a>    <span class="c">!     character(len=64) :: band_num_str</span>
-<a id="ln-729" name="ln-729"></a>
-<a id="ln-730" name="ln-730"></a>    <span class="c">!     write(band_num_str, *) band_num</span>
-<a id="ln-731" name="ln-731"></a>
-<a id="ln-732" name="ln-732"></a>    <span class="c">!     dataset_path_r = &#39;in_wfc_FT_r/&#39;//trim(adjustl(band_num_str))</span>
-<a id="ln-733" name="ln-733"></a>    <span class="c">!     dataset_path_c = &#39;in_wfc_FT_c/&#39;//trim(adjustl(band_num_str))</span>
-<a id="ln-734" name="ln-734"></a>
-<a id="ln-735" name="ln-735"></a>    <span class="c">!     dims2 = [n_k, n_in_G]</span>
-<a id="ln-736" name="ln-736"></a>
-<a id="ln-737" name="ln-737"></a>    <span class="c">!     call h5open_f(error)</span>
-<a id="ln-738" name="ln-738"></a>    <span class="c">!     call h5fopen_f(filename, H5F_ACC_RDONLY_F, file_id, error)</span>
-<a id="ln-739" name="ln-739"></a>
-<a id="ln-740" name="ln-740"></a>    <span class="c">!     call h5ltread_dataset_double_f(file_id, dataset_path_r, in_wfc_FT_r, dims2, error)</span>
-<a id="ln-741" name="ln-741"></a>    <span class="c">!     call h5ltread_dataset_double_f(file_id, dataset_path_c, in_wfc_FT_c, dims2, error)</span>
-<a id="ln-742" name="ln-742"></a>
-<a id="ln-743" name="ln-743"></a>    <span class="c">!     call h5fclose_f(file_id, error)</span>
-<a id="ln-744" name="ln-744"></a>    <span class="c">!     call h5close_f(error)</span>
-<a id="ln-745" name="ln-745"></a>
-<a id="ln-746" name="ln-746"></a>    <span class="c">!     in_wfc_FT = in_wfc_FT_r + ii*in_wfc_FT_c</span>
-<a id="ln-747" name="ln-747"></a>
-<a id="ln-748" name="ln-748"></a>    <span class="c">! end subroutine</span>
-<a id="ln-749" name="ln-749"></a>
-<a id="ln-750" name="ln-750"></a>    <span class="c">! subroutine get_in_wfc_FT_spin(filename, band_num, in_wfc_FT)</span>
-<a id="ln-751" name="ln-751"></a>    <span class="c">!     !! Reads the input DFT file and sets the [n_k, n_in_G, 2] complex(dp) array </span>
-<a id="ln-752" name="ln-752"></a>    <span class="c">!     !! with whose elements are the dimensionless block wave function </span>
-<a id="ln-753" name="ln-753"></a>    <span class="c">!     !! coefficients, u_{i, k, G, s}, where s is the spin index</span>
-<a id="ln-754" name="ln-754"></a>    <span class="c">!     implicit none</span>
-<a id="ln-755" name="ln-755"></a>
-<a id="ln-756" name="ln-756"></a>    <span class="c">!     character(len=*) :: filename</span>
-<a id="ln-757" name="ln-757"></a>    <span class="c">!     integer :: band_num</span>
-<a id="ln-758" name="ln-758"></a>
-<a id="ln-759" name="ln-759"></a>    <span class="c">!     complex(dp) :: in_wfc_FT(:, :, :)</span>
-<a id="ln-760" name="ln-760"></a>    <span class="c">!         !! Bloch wave functions in reciprocal space</span>
-<a id="ln-761" name="ln-761"></a>
-<a id="ln-762" name="ln-762"></a>    <span class="c">!     integer(HID_T) :: file_id</span>
-<a id="ln-763" name="ln-763"></a>    <span class="c">!         !! HDF5 file ID number for DFT input file</span>
-<a id="ln-764" name="ln-764"></a>
-<a id="ln-765" name="ln-765"></a>    <span class="c">!     real(dp) :: in_wfc_FT_r(n_k, n_in_G, 2)</span>
-<a id="ln-766" name="ln-766"></a>    <span class="c">!         !! real part of the bloch wave functions in fourier space</span>
-<a id="ln-767" name="ln-767"></a>    <span class="c">!     real(dp) :: in_wfc_FT_c(n_k, n_in_G, 2)</span>
-<a id="ln-768" name="ln-768"></a>    <span class="c">!         !! complex part of the bloch wave functions in fourier space</span>
-<a id="ln-769" name="ln-769"></a>
-<a id="ln-770" name="ln-770"></a>    <span class="c">!     integer(HSIZE_T) :: dims3(3)</span>
-<a id="ln-771" name="ln-771"></a>
-<a id="ln-772" name="ln-772"></a>    <span class="c">!     integer :: error</span>
-<a id="ln-773" name="ln-773"></a>
-<a id="ln-774" name="ln-774"></a>    <span class="c">!     character(len=64) :: dataset_path_r</span>
-<a id="ln-775" name="ln-775"></a>    <span class="c">!     character(len=64) :: dataset_path_c</span>
-<a id="ln-776" name="ln-776"></a>    <span class="c">!     character(len=64) :: band_num_str</span>
-<a id="ln-777" name="ln-777"></a>
-<a id="ln-778" name="ln-778"></a>    <span class="c">!     write(band_num_str, *) band_num</span>
-<a id="ln-779" name="ln-779"></a>
-<a id="ln-780" name="ln-780"></a>    <span class="c">!     dataset_path_r = &#39;in_wfc_FT_r/&#39;//trim(adjustl(band_num_str))</span>
-<a id="ln-781" name="ln-781"></a>    <span class="c">!     dataset_path_c = &#39;in_wfc_FT_c/&#39;//trim(adjustl(band_num_str))</span>
-<a id="ln-782" name="ln-782"></a>
-<a id="ln-783" name="ln-783"></a>    <span class="c">!     dims3 = [n_k, n_in_G, 2]</span>
-<a id="ln-784" name="ln-784"></a>
-<a id="ln-785" name="ln-785"></a>    <span class="c">!     call h5open_f(error)</span>
-<a id="ln-786" name="ln-786"></a>    <span class="c">!     call h5fopen_f(filename, H5F_ACC_RDONLY_F, file_id, error)</span>
-<a id="ln-787" name="ln-787"></a>
-<a id="ln-788" name="ln-788"></a>    <span class="c">!     call h5ltread_dataset_double_f(file_id, dataset_path_r, in_wfc_FT_r, dims3, error)</span>
-<a id="ln-789" name="ln-789"></a>    <span class="c">!     call h5ltread_dataset_double_f(file_id, dataset_path_c, in_wfc_FT_c, dims3, error)</span>
-<a id="ln-790" name="ln-790"></a>
-<a id="ln-791" name="ln-791"></a>    <span class="c">!     call h5fclose_f(file_id, error)</span>
-<a id="ln-792" name="ln-792"></a>    <span class="c">!     call h5close_f(error)</span>
-<a id="ln-793" name="ln-793"></a>
-<a id="ln-794" name="ln-794"></a>    <span class="c">!     in_wfc_FT = in_wfc_FT_r + ii*in_wfc_FT_c</span>
-<a id="ln-795" name="ln-795"></a>
-<a id="ln-796" name="ln-796"></a>    <span class="c">! end subroutine</span>
-<a id="ln-797" name="ln-797"></a>
-<a id="ln-798" name="ln-798"></a>    <span class="c">!subroutine expand_wfc_FT_for_FFT(n_grid,&amp;</span>
-<a id="ln-799" name="ln-799"></a>    <span class="c">!        wfc_FT, wfc_FT_exp,&amp;</span>
-<a id="ln-800" name="ln-800"></a>    <span class="c">!        verbose)</span>
-<a id="ln-801" name="ln-801"></a>    <span class="c">!    !! The Fourier components will generally not be defined on a</span>
-<a id="ln-802" name="ln-802"></a>    <span class="c">!    !! uniform grid needed for an FFT. This subroutine puts the </span>
-<a id="ln-803" name="ln-803"></a>    <span class="c">!    !! values of the Bloch coefficients in the correct place </span>
-<a id="ln-804" name="ln-804"></a>    <span class="c">!    use FFT_util</span>
-<a id="ln-805" name="ln-805"></a>
-<a id="ln-806" name="ln-806"></a>    <span class="c">!    implicit none</span>
-<a id="ln-807" name="ln-807"></a>
-<a id="ln-808" name="ln-808"></a>    <span class="c">!    integer :: n_grid(3)</span>
-<a id="ln-809" name="ln-809"></a>
-<a id="ln-810" name="ln-810"></a>    <span class="c">!    complex(dp) :: wfc_FT(n_in_G)</span>
-<a id="ln-811" name="ln-811"></a>    <span class="c">!    complex(dp) :: wfc_FT_exp(n_grid(1), n_grid(2), n_grid(3))</span>
-<a id="ln-812" name="ln-812"></a>
-<a id="ln-813" name="ln-813"></a>    <span class="c">!    logical, optional :: verbose</span>
-<a id="ln-814" name="ln-814"></a>
-<a id="ln-815" name="ln-815"></a>    <span class="c">!    integer :: g</span>
-<a id="ln-816" name="ln-816"></a>    <span class="c">!    integer :: FFT_idx(3)</span>
-<a id="ln-817" name="ln-817"></a>
-<a id="ln-818" name="ln-818"></a>    <span class="c">!    wfc_FT_exp = (0.0_dp, 0.0_dp)</span>
-<a id="ln-819" name="ln-819"></a>
-<a id="ln-820" name="ln-820"></a>    <span class="c">!    do g = 1, n_in_G</span>
-<a id="ln-821" name="ln-821"></a>
-<a id="ln-822" name="ln-822"></a>    <span class="c">!        call G_red_to_FFT_G_grid_index(n_grid, in_G_grid_red(g, :), FFT_idx)</span>
-<a id="ln-823" name="ln-823"></a>
-<a id="ln-824" name="ln-824"></a>    <span class="c">!        wfc_FT_exp(FFT_idx(1), FFT_idx(2), FFT_idx(3)) = wfc_FT(g)</span>
-<a id="ln-825" name="ln-825"></a>
-<a id="ln-826" name="ln-826"></a>    <span class="c">!    end do</span>
-<a id="ln-827" name="ln-827"></a>
-<a id="ln-828" name="ln-828"></a>    <span class="c">!end subroutine</span>
-<a id="ln-829" name="ln-829"></a>
-<a id="ln-830" name="ln-830"></a>    <span class="c">!function in_wfc_at_single_pt(band_num, x0_red, in_wfc_FT) result(wfc)</span>
-<a id="ln-831" name="ln-831"></a>    <span class="c">!    !! returns the wave function evaluated at a point in</span>
-<a id="ln-832" name="ln-832"></a>    <span class="c">!    !! reduced coordinates at a single point</span>
-<a id="ln-833" name="ln-833"></a>    <span class="c">!    !!</span>
-<a id="ln-834" name="ln-834"></a>    <span class="c">!    !! av_wfc(x0)_k = sum_G e^(i G.x0) wfc(G)_k</span>
-<a id="ln-835" name="ln-835"></a>    <span class="c">!    implicit none</span>
-<a id="ln-836" name="ln-836"></a>
-<a id="ln-837" name="ln-837"></a>    <span class="c">!    integer :: band_num</span>
-<a id="ln-838" name="ln-838"></a>
-<a id="ln-839" name="ln-839"></a>    <span class="c">!    real(dp) :: x0_red(3)</span>
-<a id="ln-840" name="ln-840"></a>    <span class="c">!    real(dp) :: x0(3)</span>
-<a id="ln-841" name="ln-841"></a>    <span class="c">!    complex(dp) :: phase_fac(n_in_G)</span>
-<a id="ln-842" name="ln-842"></a>    <span class="c">!    complex(dp) :: wfc(n_k)</span>
-<a id="ln-843" name="ln-843"></a>
-<a id="ln-844" name="ln-844"></a>    <span class="c">!    complex(dp) :: in_wfc_FT(n_k, n_in_G)</span>
-<a id="ln-845" name="ln-845"></a>
-<a id="ln-846" name="ln-846"></a>    <span class="c">!    integer :: g</span>
-<a id="ln-847" name="ln-847"></a>
-<a id="ln-848" name="ln-848"></a>    <span class="c">!    x0 = matmul(red_to_xyz, x0_red)</span>
-<a id="ln-849" name="ln-849"></a>
-<a id="ln-850" name="ln-850"></a>    <span class="c">!    phase_fac = cmplx(0.0_dp, 0.0_dp, dp)</span>
-<a id="ln-851" name="ln-851"></a>
-<a id="ln-852" name="ln-852"></a>    <span class="c">!    do g = 1, n_in_G</span>
-<a id="ln-853" name="ln-853"></a>    <span class="c">!        phase_fac(g) = exp(ii*dot_product(in_G_grid_xyz(g, :), x0))</span>
-<a id="ln-854" name="ln-854"></a>    <span class="c">!    end do</span>
-<a id="ln-855" name="ln-855"></a>
-<a id="ln-856" name="ln-856"></a>    <span class="c">!    wfc = matmul(in_wfc_FT, phase_fac)</span>
-<a id="ln-857" name="ln-857"></a>
-<a id="ln-858" name="ln-858"></a>    <span class="c">!end function</span>
-<a id="ln-859" name="ln-859"></a>
-<a id="ln-860" name="ln-860"></a><span class="k">end module</span>
+<a id="ln-702" name="ln-702"></a><span class="k">            print</span><span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Performed scissor correction.&#39;</span>
+<a id="ln-703" name="ln-703"></a>            <span class="k">print</span><span class="o">*</span>
+<a id="ln-704" name="ln-704"></a>
+<a id="ln-705" name="ln-705"></a>        <span class="k">end if</span>
+<a id="ln-706" name="ln-706"></a><span class="k">    </span>
+<a id="ln-707" name="ln-707"></a><span class="k">    end subroutine</span>
+<a id="ln-708" name="ln-708"></a>
+<a id="ln-709" name="ln-709"></a><span class="k">end module</span>
 </pre></div>
 
     </section>
@@ -1145,7 +994,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-08-26 17:09  
+             on 2021-09-01 14:24  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>
