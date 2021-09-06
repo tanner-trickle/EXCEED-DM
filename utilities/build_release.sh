@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # version number of the build
 version_number="0.2.0"
@@ -6,20 +6,21 @@ version_number="0.2.0"
 # folders to include in release build
 folders=(\
     # "../docs" \
+    # "../docs-extra" \
     "../examples" \
     "../tests" \
     "../src" \
-    "../utilities")
+    "../utilities"
+    "../CMakeModules")
 
 # specific files to include in release build
 files=(\
     "LICENSE" \
     "README.md" \
     "changelog.md" \
-    "EXCEED-DM-docs.md" \
-    "fobos" \
-    "install.md"\
-    "TODO.md")
+    # "EXCEED-DM-docs.md" \
+    # "install-cmake.md" \
+    "CMakeLists.txt")
 
 # create the folder
 mkdir "v${version_number}"
