@@ -23,7 +23,7 @@ set(CMAKE_Fortran_MODULE_DIRECTORY "${PROJECT_SOURCE_DIR}/build/mod")
 
 file(GLOB_RECURSE sources ../../src/types/PW_dataset_type.f90
                             ../../src/base/*.f90
-                            ../../src/utils/*.f90)
+                            ../../src/utils/FFT_util.f90)
 add_executable(binned_wfc_PW ${sources}
     "./binned_wfc_PW.f90")
 

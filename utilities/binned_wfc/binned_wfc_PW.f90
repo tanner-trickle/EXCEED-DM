@@ -23,7 +23,6 @@ program binned_wfc_PW
 
     character(len=512) :: q_bin_width_in
     character(len=512) :: n_q_bins_in
-    character(len=512) :: pc_vol_A_in
 
     real(dp) :: pc_vol_A
     real(dp) :: pc_vol
@@ -59,9 +58,6 @@ program binned_wfc_PW
 
     read(q_bin_width_in, *) q_bin_width
     read(n_q_bins_in, *) n_q_bins
-    read(pc_vol_A_in, *) pc_vol_A
-
-    pc_vol = Ang_to_inv_eV**3*pc_vol_A
 
     print*
     print*, '- binned wfc -'
