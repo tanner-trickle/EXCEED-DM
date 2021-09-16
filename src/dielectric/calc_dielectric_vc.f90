@@ -187,9 +187,6 @@ contains
         integer :: kf
         logical, optional :: verbose
 
-        complex(dp) :: di_unbinned(bins%n_E, &
-            numerics%n_q_grid(1), numerics%n_q_grid(2), numerics%n_q_grid(3))
-
         real(dp) :: omega
         real(dp) :: q_vec(3)
 
@@ -211,8 +208,6 @@ contains
 
         real(dp) :: Ei, Ef
 
-        integer :: num_q_in_bins(bins%n_q, bins%n_q_theta, bins%n_q_phi)
-
         integer :: q1, q2, q3
 
         real(dp) :: q_red(3)
@@ -223,9 +218,6 @@ contains
             bins%n_q_phi)
 
         ddi = (0.0_dp, 0.0_dp)
-        di_unbinned = (0.0_dp, 0.0_dp)
-
-        num_q_in_bins = 0
 
         call calc_tff_pw_pw([1, 1], f_sq, wfc_ik, wfc_fkf, &
             FFT_grid%n_grid, FFT_grid%plan, verbose = .FALSE.)
@@ -264,58 +256,22 @@ contains
                     if ( ( q_mag > 1.0e-8_dp ) .and. &
                         ( q_mag < bins%n_q*bins%q_width ) ) then
 
-                        q_ind(1) = 1 + int(numerics%n_k_vec(1)*(q_red(1) - numerics%q_grid_min(1)))
-                        q_ind(2) = 1 + int(numerics%n_k_vec(2)*(q_red(2) - numerics%q_grid_min(2)))
-                        q_ind(3) = 1 + int(numerics%n_k_vec(3)*(q_red(3) - numerics%q_grid_min(3)))
-
-                        di_unbinned(:, q_ind(1), q_ind(2), q_ind(3)) = &
-                            di_unbinned(:, q_ind(1), q_ind(2), q_ind(3)) + &
-                            (-1.0_dp)*(PW_dataset%spin_degen/2.0_dp)*&
-                            (e_EM**2/q_mag**2)*(target_mat%pc_vol)**(-1)*&
-                            PW_dataset%k_weight(k)*(1.0_dp*FFT_grid%n)**(-2)*&
-                            elec_props(:)*f_sq(g1, g2, g3)
-
-                    end if
-
-                end do
-            end do
-        end do
-
-        ! now bin the unbinned dielectric
-        do q3 = 1, numerics%n_q_grid(3)
-            do q2 = 1, numerics%n_q_grid(2)
-                do q1 = 1, numerics%n_q_grid(1) 
-
-                    q_red(1) = (1.0_dp/numerics%n_k_vec(1))*( q1 - 1 ) + numerics%q_grid_min(1)
-                    q_red(2) = (1.0_dp/numerics%n_k_vec(2))*( q2 - 1 ) + numerics%q_grid_min(2)
-                    q_red(3) = (1.0_dp/numerics%n_k_vec(3))*( q3 - 1 ) + numerics%q_grid_min(3)
-
-                    q_vec = matmul(PW_dataset%k_red_to_xyz, q_red)
-
-                    q_mag = norm2(q_vec)
-
-                    if ( ( q_mag > 1.0e-8_dp ) .and. &
-                        ( q_mag < bins%n_q*bins%q_width ) ) then
-
                         q_hat = q_vec/q_mag
-
                         q_theta = get_theta(q_hat)
                         q_phi = get_phi(q_hat)
 
                         q_theta_bin = Q_func(q_theta, 0.0_dp,&
                             pi/max(1.0_dp, 1.0_dp*bins%n_q_theta), bins%n_q_theta)
-
                         q_phi_bin = Q_func(q_phi, 0.0_dp,&
                             2.0_dp*pi/max(1.0_dp, 1.0_dp*bins%n_q_phi), bins%n_q_phi)
-
                         q_bin = 1 + floor(q_mag/bins%q_width)
-
-                        num_q_in_bins(q_bin, q_theta_bin, q_phi_bin) = &
-                            num_q_in_bins(q_bin, q_theta_bin, q_phi_bin) + 1
 
                         ddi(:, q_bin, q_theta_bin, q_phi_bin) = &
                             ddi(:, q_bin, q_theta_bin, q_phi_bin) + &
-                            di_unbinned(:, q1, q2, q3)
+                            (-1.0_dp)*(PW_dataset%spin_degen/2.0_dp)*&
+                            (e_EM**2/q_mag**2)*(target_mat%pc_vol)**(-1)*&
+                            PW_dataset%k_weight(k)*(1.0_dp*FFT_grid%n)**(-2)*&
+                            elec_props(:)*f_sq(g1, g2, g3)
 
                     end if
 
@@ -328,7 +284,7 @@ contains
             do q2 = 1, bins%n_q_theta
                 do q3 = 1, bins%n_q_phi
 
-                    ddi(:, q1, q2, q3) = ddi(:, q1, q2, q3)/max(1, num_q_in_bins(q1, q2, q3))
+                    ddi(:, q1, q2, q3) = ddi(:, q1, q2, q3)/max(1, numerics%n_q_bin(q1, q2, q3))
 
                 end do
             end do
