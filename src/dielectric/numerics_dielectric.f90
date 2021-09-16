@@ -29,6 +29,10 @@ module numerics_dielectric
             !! indicies.
         integer :: n_q_grid(3)
             !! Number of points in the q grid with \( q < bins%n_q*bins%q_width \) 
+        integer, allocatable :: n_q_bin(:, :, :)
+            !! Dim : [n_q, n_q_theta, n_q_phi]
+            !!
+            !! Number of points in the dielectric \( \mathbf{q} \) grid in each \( \{q, \theta_q, \phi_q \} \) bin.
 
         contains
 
@@ -38,10 +42,79 @@ module numerics_dielectric
             procedure :: create_val_id_list => dielectric_create_val_id_list
             procedure :: create_k_id_list => dielectric_create_k_id_list
             procedure :: define_q_grid
+            procedure :: compute_n_q_bin
 
     end type
 
 contains
+
+    subroutine compute_n_q_bin(self, bins, PW_dataset, verbose)
+        !! Find the number of \( \mathbf{q} \) points from the uniformly spaced grid that are in each
+        !! in a \( \{q, \theta_q, \phi_q \} \) bin.
+
+        use bins_dielectric_type
+        use PW_dataset_type
+        use math_mod
+
+        implicit none
+
+        class(numerics_dielectric_t) :: self
+        type(bins_dielectric_t) :: bins
+        type(PW_dataset_t) :: PW_dataset
+
+        logical, optional :: verbose
+
+        integer :: q1, q2, q3
+
+        real(dp) :: q_mag, q_theta, q_phi
+        real(dp) :: q_red(3)
+        real(dp) :: q_vec(3)
+        real(dp) :: q_hat(3)
+
+        integer :: q_bin, q_theta_bin, q_phi_bin
+
+        allocate(self%n_q_bin(bins%n_q, bins%n_q_theta, bins%n_q_phi))
+        self%n_q_bin = 0
+
+        ! now bin the unbinned dielectric
+        do q3 = 1, self%n_q_grid(3)
+            do q2 = 1, self%n_q_grid(2)
+                do q1 = 1, self%n_q_grid(1) 
+
+                    q_red(1) = (1.0_dp/self%n_k_vec(1))*( q1 - 1 ) + self%q_grid_min(1)
+                    q_red(2) = (1.0_dp/self%n_k_vec(2))*( q2 - 1 ) + self%q_grid_min(2)
+                    q_red(3) = (1.0_dp/self%n_k_vec(3))*( q3 - 1 ) + self%q_grid_min(3)
+
+                    q_vec = matmul(PW_dataset%k_red_to_xyz, q_red)
+
+                    q_mag = norm2(q_vec)
+
+                    if ( ( q_mag > 1.0e-8_dp ) .and. &
+                        ( q_mag < bins%n_q*bins%q_width ) ) then
+
+                        q_hat = q_vec/q_mag
+
+                        q_theta = get_theta(q_hat)
+                        q_phi = get_phi(q_hat)
+
+                        q_theta_bin = Q_func(q_theta, 0.0_dp,&
+                            pi/max(1.0_dp, 1.0_dp*bins%n_q_theta), bins%n_q_theta)
+
+                        q_phi_bin = Q_func(q_phi, 0.0_dp,&
+                            2.0_dp*pi/max(1.0_dp, 1.0_dp*bins%n_q_phi), bins%n_q_phi)
+
+                        q_bin = 1 + floor(q_mag/bins%q_width)
+
+                        self%n_q_bin(q_bin, q_theta_bin, q_phi_bin) = &
+                            self%n_q_bin(q_bin, q_theta_bin, q_phi_bin) + 1
+
+                    end if
+
+                end do
+            end do
+        end do
+
+    end subroutine
 
     subroutine define_q_grid(self, q_max, PW_dataset, FFT_grid)
         !! Given a uniform grid  in the 1BZ for \( \mathbf{k}, \mathbf{k}' \), 

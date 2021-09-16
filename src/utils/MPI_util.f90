@@ -30,20 +30,20 @@ module MPI_util
             procedure :: comm_abs_tran_form
             procedure :: comm_self_energies
             procedure :: comm_abs_rate
-            procedure :: comm_dielectric
 
     end type
 
 contains
 
-    subroutine comm_dielectric(self, proc_id, root_process, &
-            dielectric_job, dielectric, verbose)
+    subroutine comm_reduce_dielectric(proc_id, root_process, &
+            dielectric, verbose)
         !! Communicate the dielectric pieces computed at each processor to the total dielectric
-        !! on the main processor.
-        class(parallel_manager_t) :: self
+        !! on the main processor using MPI_Reduce.
         integer :: proc_id, root_process
-        complex(dp) :: dielectric_job(:, :, :, :, :)
         complex(dp) :: dielectric(:, :, :, :)
+        complex(dp) :: sum_dielectric(&
+            size(dielectric, 1), size(dielectric, 2), size(dielectric, 3),&
+            size(dielectric, 4))
         logical, optional :: verbose
 
         integer :: n_proc
@@ -55,50 +55,38 @@ contains
         integer :: i
 
         if ( verbose ) then
-            print*, 'Communicating dielectric...'
+            print*, 'Reducing dielectric data...'
             print*
         end if
 
-        call MPI_COMM_SIZE(MPI_COMM_WORLD, n_proc, err)
-
-        if ( proc_id /= root_process ) then
-
-            ! send to main processor
-            call MPI_SEND(dielectric_job, &
-               size(dielectric_job), MPI_DOUBLE_COMPLEX, &
-               root_process, tag, MPI_COMM_WORLD, err)
-
+        if ( verbose ) then
+            print*, 'Calling MPI_Reduce...'
+            print*
         end if
 
-        if ( proc_id == root_process ) then
-
-            ! add the main processors contribution
-            dielectric = dielectric + sum(dielectric_job, 1)
-
-            ! receive the other processors contributions
-            do i = 1, n_proc
-
-                if ( i - 1 /= root_process ) then
-
-                    call MPI_RECV(dielectric_job, &
-                       size(dielectric_job), MPI_DOUBLE_COMPLEX, &
-                       i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
-
-                    dielectric = dielectric + sum(dielectric_job, 1)
-
-                end if
-
-            end do
-
-        end if
+        call MPI_Reduce(dielectric, &
+                        sum_dielectric, &
+                        size(dielectric), &
+                        MPI_DOUBLE_COMPLEX, &
+                        MPI_SUM, &
+                        root_process, &
+                        MPI_COMM_WORLD, &
+                        err)
 
         if ( verbose ) then
-            print*, 'Done communicating dielectric!'
+            print*, 'Done calling MPI_Reduce!'
+            print*
+        end if
+
+        ! set dielectric to summed value
+        dielectric = sum_dielectric
+
+        if ( verbose ) then
+            print*, 'Done reducing dielectric!'
             print*
         end if
 
     end subroutine
-
 
     subroutine comm_abs_rate(self, proc_id, root_process, &
             abs_rate, verbose)

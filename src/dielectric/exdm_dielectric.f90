@@ -97,13 +97,6 @@ contains
             !!
             !! Units : None
 
-        complex(dp), allocatable :: dielec_job(:, :, :, :, :)
-            !! Dim : [ bins%n_E, bins%n_q, bins%n_q_theta, bins%n_q_phi ]
-            !!
-            !! Each processors contribution to the dielectric
-            !!
-            !! Units : None
-
         character(len=512) :: dielectric_output_filename
 
         if ( trim(main_control%process) == 'dielectric' ) then
@@ -162,13 +155,10 @@ contains
         ! factor of 1 in dielectric formula
         dielec = (1.0_dp, 0.0_dp)
 
-        ! allocate the binned rate arrays
-        allocate(dielec_job(ik_manager%n_jobs_per_proc, &
-            bins%n_E, bins%n_q, bins%n_q_theta, bins%n_q_phi))
-        dielec_job = (0.0_dp, 0.0_dp)
-
         call numerics%define_q_grid(bins%n_q*bins%q_width, &
             PW_dataset, FFT_grid)
+
+        call numerics%compute_n_q_bin(bins, PW_dataset, verbose = verbose)
 
         ! time calculation
         if ( ( proc_id == root_process ) .and. ( main_control%timer ) ) then
@@ -222,7 +212,7 @@ contains
                             call PW_dataset%load_wfc_ik_expanded_spin(cond_id, kf, FFT_grid, wfc_fkfs)
 
                             ! compute dielectric
-                            call dielectric_calc_vc(dielec_job(j, :, :, :, :), &
+                            call dielectric_calc_vc(dielec, &
                                 FFT_grid, PW_dataset, target_mat, bins, widths, numerics, &
                                 wfc_iks, wfc_fkfs, val_id, cond_id, k, kf, verbose = .FALSE.)
 
@@ -244,7 +234,7 @@ contains
                             call PW_dataset%load_wfc_ik_expanded_no_spin(cond_id, kf, FFT_grid, wfc_fkf)
 
                             ! compute dielectric
-                            call dielectric_calc_vc(dielec_job(j, :, :, :, :), &
+                            call dielectric_calc_vc(dielec, &
                                 FFT_grid, PW_dataset, target_mat, bins, widths, numerics, &
                                 wfc_ik, wfc_fkf, val_id, cond_id, k, kf, verbose = .FALSE.)
 
@@ -262,8 +252,7 @@ contains
             print*
         end if
 
-        call ik_manager%comm_dielectric(proc_id, root_process, &
-            dielec_job, dielec, verbose = verbose)
+        call comm_reduce_dielectric(proc_id, root_process, dielec, verbose = verbose)
 
         if ( proc_id == root_process ) then
 

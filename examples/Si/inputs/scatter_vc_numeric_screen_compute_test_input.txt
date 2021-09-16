@@ -14,7 +14,7 @@
     PW_data_filename          = './examples/Si/dft/Si_2x2x2_AE.hdf5',
     sto_data_filename         = '',
     core_elec_config_filename = '',
-    dielectric_filename       = './examples/Si/outputs/EXDMout_Si_2x2x2_dielectric_2.hdf5'
+    dielectric_filename       = './examples/Si/outputs/Si_2x2x2_dielectric_new.hdf5'
 /
 
 &material
