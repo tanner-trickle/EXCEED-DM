@@ -221,19 +221,22 @@
 <li>Name of the target material.</li>
 </ul>
 </li>
-<li><code>band_gap</code> - real<ul>
+<li><code>band_gap</code> - real - <script type="math/tex"> E_g </script>
+<ul>
 <li>Band gap of the target material.</li>
 <li>Units : <script type="math/tex"> \text{eV} </script>
 </li>
 </ul>
 </li>
-<li><code>pc_vol_A</code> - real<ul>
+<li><code>pc_vol_A</code> - real - <script type="math/tex"> \Omega </script>
+<ul>
 <li>Volume of the primitive cell</li>
 <li>Units : <script type="math/tex"> \AA^3 </script>
 </li>
 </ul>
 </li>
-<li><code>rho_T_g_per_cm3</code> - real<ul>
+<li><code>rho_T_g_per_cm3</code> - real - <script type="math/tex"> \rho_T </script>
+<ul>
 <li>Target density.</li>
 <li>Units : <script type="math/tex"> \text{g} \; \text{cm}^{-3} </script>
 </li>
@@ -242,29 +245,34 @@
 </ul>
 <h2>experiment</h2>
 <ul>
-<li><code>E_threshold</code> - real<ul>
+<li><code>E_threshold</code> - real - <script type="math/tex"> E_\mathrm{th} </script>
+<ul>
 <li>Experimental energy deposited threshold.</li>
 <li>Units : <script type="math/tex"> \text{eV} </script>
 </li>
 </ul>
 </li>
-<li><code>n_time</code> - int<ul>
+<li><code>n_time</code> - int - <script type="math/tex"> N_\mathrm{time} </script>
+<ul>
 <li>Number of times of day data is taken.</li>
 </ul>
 </li>
-<li><code>theta_E</code> - real<ul>
+<li><code>theta_E</code> - real - <script type="math/tex"> \theta_E </script>
+<ul>
 <li>Angle between the Earth's rotation axis and the DM wind.</li>
 <li>Units : <script type="math/tex"> \text{rad} </script>
 </li>
 </ul>
 </li>
-<li><code>m_T_kg</code> - real<ul>
+<li><code>m_T_kg</code> - real - <script type="math/tex"> m_T </script>
+<ul>
 <li>Mass of the target.</li>
 <li>Units : <script type="math/tex"> \text{kg} </script>
 </li>
 </ul>
 </li>
-<li><code>exposure_yr</code> - real<ul>
+<li><code>exposure_yr</code> - real - <script type="math/tex"> T </script>
+<ul>
 <li>Exposure time of the target.</li>
 <li>Units : <script type="math/tex"> \text{yr} </script>
 </li>
@@ -277,7 +285,8 @@
 <li>Dark matter particle type. Options : 'scalar', 'ps', 'vector', 'fermion'.</li>
 </ul>
 </li>
-<li><code>n_mX</code> - int<ul>
+<li><code>n_mX</code> - int - <script type="math/tex"> N_{m_\chi} </script>
+<ul>
 <li>Number of dark matter masses.</li>
 </ul>
 </li>
@@ -293,7 +302,8 @@
 <li>Number of 'extra' masses to compute for. Specifing this allows the user to also specify the <code>mX_2</code> namelist and add masses that are not uniform logarithmically spaced to the computed mass list.</li>
 </ul>
 </li>
-<li><code>n_med_FF</code> - int<ul>
+<li><code>n_med_FF</code> - int - <script type="math/tex"> N_\beta </script>
+<ul>
 <li>Number of mediator form factor parameters.</li>
 </ul>
 </li>
@@ -307,26 +317,30 @@
 </li>
 </ul>
 </li>
-<li><code>rhoX_GeV_per_cm3</code> - real<ul>
+<li><code>rhoX_GeV_per_cm3</code> - real - <script type="math/tex"> \rho_\chi </script>
+<ul>
 <li>Dark matter density.</li>
 <li>Units : <script type="math/tex"> \text{GeV} \; \text{cm}^{-3} </script>
 </li>
 </ul>
 </li>
-<li><code>v0_km_per_sec</code> - real<ul>
+<li><code>v0_km_per_sec</code> - real - <script type="math/tex"> v_0 </script>
+<ul>
 <li>
 <script type="math/tex"> v_0 </script> Dark matter velocity distribution parameter.</li>
 <li>Units : <script type="math/tex"> \text{km} \; \text{s}^{-1} </script>
 </li>
 </ul>
 </li>
-<li><code>vE_km_per_sec</code> - real<ul>
+<li><code>vE_km_per_sec</code> - real - <script type="math/tex"> v_E </script>
+<ul>
 <li>Earth velocity, dark matter velocity distribution parameter.</li>
 <li>Units : <script type="math/tex"> \text{km} \; \text{s}^{-1} </script>
 </li>
 </ul>
 </li>
-<li><code>vEsc</code> - real<ul>
+<li><code>vEsc_km_per_sec</code> - real - <script type="math/tex"> v_\mathrm{esc} </script>
+<ul>
 <li>Escape velocity, dark matter velocity distribution parameter.</li>
 <li>Units : <script type="math/tex"> \text{km} \; \text{s}^{-1} </script>
 </li>
@@ -340,21 +354,25 @@
 </ul>
 <h2>bins_scatter</h2>
 <ul>
-<li><code>n_q</code> - int<ul>
+<li><code>n_q</code> - int - <script type="math/tex"> N_q </script>
+<ul>
 <li>Number of bins in momentum deposition.</li>
 </ul>
 </li>
-<li><code>n_E</code> - int<ul>
+<li><code>n_E</code> - int - <script type="math/tex"> N_\omega </script>
+<ul>
 <li>Number of bins in energy deposition.</li>
 </ul>
 </li>
-<li><code>E_width</code> - real<ul>
+<li><code>E_width</code> - real - <script type="math/tex"> \Delta \omega </script>
+<ul>
 <li>Width of the bins in energy deposition. </li>
 <li>Units : <script type="math/tex"> \text{eV} </script>
 </li>
 </ul>
 </li>
-<li><code>q_width</code> - real<ul>
+<li><code>q_width</code> - real - <script type="math/tex"> \Delta q </script>
+<ul>
 <li>Width of the bins in momentum deposition.</li>
 <li>Units : <script type="math/tex"> \text{eV} </script>
 </li>
@@ -364,11 +382,13 @@
 <h2>numerics_s_vc</h2>
 <p>Numerics parameters specific to valence to conduction scattering rate calculations.</p>
 <ul>
-<li><code>n_val_max</code> - int<ul>
+<li><code>n_val_max</code> - int - <script type="math/tex"> N_\mathrm{val}^\mathrm{max} </script>
+<ul>
 <li>Maximum number of valence bands included in the calculation.</li>
 </ul>
 </li>
-<li><code>n_cond_max</code> - int<ul>
+<li><code>n_cond_max</code> - int - <script type="math/tex"> N_\mathrm{cond}^\mathrm{max} </script>
+<ul>
 <li>Maximum number of conduction bands included in the calculation.</li>
 </ul>
 </li>
@@ -376,12 +396,14 @@
 <h2>numerics_s_cc</h2>
 <p>Numerics parameters specific to core to conduction scattering rate calculations.</p>
 <ul>
-<li><code>n_FFT_grid</code> - int<ul>
+<li><code>n_FFT_grid</code> - int - <script type="math/tex"> \mathbf{N}_\mathrm{FFT} </script>
+<ul>
 <li>Dim : [3]</li>
 <li>FFT grid size specified on input.</li>
 </ul>
 </li>
-<li><code>n_cond_max</code> - int<ul>
+<li><code>n_cond_max</code> - int - <script type="math/tex"> N_\mathrm{cond}^\mathrm{max} </script>
+<ul>
 <li>Maximum number of conduction bands included in the calculation.</li>
 </ul>
 </li>
@@ -396,21 +418,25 @@
 </ul>
 <h2>numerics_s_vf</h2>
 <ul>
-<li><code>n_val_max</code> - int<ul>
+<li><code>n_val_max</code> - int - <script type="math/tex"> N_\mathrm{val}^\mathrm{val} </script>
+<ul>
 <li>Maximum number of valence bands included in the calculation.</li>
 </ul>
 </li>
-<li><code>n_kf_theta</code> - int<ul>
+<li><code>n_kf_theta</code> - int - <script type="math/tex"> N_{\theta_{\mathbf{k}_f}} </script>
+<ul>
 <li>Number of <script type="math/tex"> \theta </script> angles in the integration over <script type="math/tex"> \mathbf{k}_f </script>
 </li>
 </ul>
 </li>
-<li><code>n_kf_phi</code> - int<ul>
+<li><code>n_kf_phi</code> - int - <script type="math/tex"> N_{\phi_{\mathbf{k}_f}} </script>
+<ul>
 <li>Number of <script type="math/tex"> \phi </script> angles in the integration over <script type="math/tex"> \mathbf{k}_f </script>
 </li>
 </ul>
 </li>
-<li><code>n_omega</code> - int<ul>
+<li><code>n_omega</code> - int - <script type="math/tex"> N_\omega^\mathrm{vf} </script>
+<ul>
 <li>Number of <script type="math/tex"> \omega </script> parameters to compute <script type="math/tex"> \frac{dR}{d \omega} </script> for.</li>
 </ul>
 </li>
@@ -418,10 +444,18 @@
 <li>Specify how the <script type="math/tex"> Z_\text{eff} </script> parameters are computed. Options : 'one' ( <script type="math/tex"> Z_\text{eff} = 1 </script> ), 'Eb' ( <script type="math/tex"> Z_\text{eff}</script> found from binding energy.  )</li>
 </ul>
 </li>
+<li><code>Ef_min</code> - real - <script type="math/tex"> E_f^\mathrm{min} </script>
+<ul>
+<li>Minimum final electron energy.</li>
+<li>Units : <script type="math/tex"> \text{eV} </script>
+</li>
+</ul>
+</li>
 </ul>
 <h2>numerics_s_cf</h2>
 <ul>
-<li><code>Ef_min</code> - real<ul>
+<li><code>Ef_min</code> - real - <script type="math/tex"> E_f^\mathrm{min} </script>
+<ul>
 <li>Minimum final electron energy.</li>
 <li>Units : <script type="math/tex"> \text{eV} </script>
 </li>
@@ -431,37 +465,44 @@
 <li>Specify how the <script type="math/tex"> Z_\text{eff} </script> parameters are computed. Options : 'one' ( <script type="math/tex"> Z_\text{eff} = 1 </script> ), 'Eb' ( <script type="math/tex"> Z_\text{eff}</script> found from binding energy.  )</li>
 </ul>
 </li>
-<li><code>ki_min</code> - real<ul>
+<li><code>ki_min</code> - real - <script type="math/tex"> k_i^\mathrm{min} </script>
+<ul>
 <li>Minimum initial electron momentum to integrate over.</li>
 <li>Units : <script type="math/tex"> \text{eV} </script>
 </li>
 </ul>
 </li>
-<li><code>ki_s</code> - real<ul>
+<li><code>ki_s</code> - real - <script type="math/tex"> k^s_i </script>
+<ul>
 <li>Scale parameter of maximum initial electron momentum to integrate over, <script type="math/tex"> k_{i, \text{max}} = k_s Z \alpha m_e </script>
 </li>
 </ul>
 </li>
-<li><code>n_kf_theta</code> - int<ul>
+<li><code>n_kf_theta</code> - int - <script type="math/tex"> N_{\theta_{\mathbf{k}_f}} </script>
+<ul>
 <li>Number of <script type="math/tex"> \theta </script> angles in the integration over <script type="math/tex"> \mathbf{k}_f </script>
 </li>
 </ul>
 </li>
-<li><code>n_kf_phi</code> - int<ul>
+<li><code>n_kf_phi</code> - int - <script type="math/tex"> N_{\phi_{\mathbf{k}_f}} </script>
+<ul>
 <li>Number of <script type="math/tex"> \phi </script> angles in the integration over <script type="math/tex"> \mathbf{k}_f </script>
 </li>
 </ul>
 </li>
-<li><code>n_ki</code> - int<ul>
+<li><code>n_ki</code> - int - <script type="math/tex"> N_{\mathbf{k}_i} </script>
+<ul>
 <li>Number of points in <script type="math/tex"> k_i </script> to integrate over.</li>
 </ul>
 </li>
-<li><code>n_ki_theta</code> - int<ul>
+<li><code>n_ki_theta</code> - int - <script type="math/tex"> N_{\theta_{\mathbf{k}_i}} </script>
+<ul>
 <li>Number of <script type="math/tex"> \theta </script> angles in the integration over <script type="math/tex"> \mathbf{k}_i </script>
 </li>
 </ul>
 </li>
-<li><code>n_ki_phi</code> - int<ul>
+<li><code>n_ki_phi</code> - int - <script type="math/tex"> N_{\phi_{\mathbf{k}_f}} </script>
+<ul>
 <li>Number of <script type="math/tex"> \phi </script> angles in the integration over <script type="math/tex"> \mathbf{k}_i </script>
 </li>
 </ul>
@@ -474,19 +515,27 @@
 <li>Maximum principal quantum number, <script type="math/tex"> n </script>, to include in the calculation.</li>
 </ul>
 </li>
+<li><code>n_omega</code> - int - <script type="math/tex"> N_\omega^\mathrm{cf} </script>
+<ul>
+<li>Number of <script type="math/tex"> \omega </script> parameters to compute <script type="math/tex"> \frac{dR}{d \omega} </script> for.</li>
+</ul>
+</li>
 </ul>
 <h2>widths</h2>
 <p>Width parameters, <script type="math/tex"> \delta = \text{min}( \delta_\text{max}, a + b \omega ) </script>.</p>
 <ul>
-<li><code>n_a</code> - int<ul>
+<li><code>n_a</code> - int - <script type="math/tex"> N_a </script>
+<ul>
 <li>Number of <script type="math/tex"> a </script> parameters.</li>
 </ul>
 </li>
-<li><code>n_b</code> - int<ul>
+<li><code>n_b</code> - int - <script type="math/tex"> N_b </script>
+<ul>
 <li>Number of <script type="math/tex"> b </script> parameters.</li>
 </ul>
 </li>
-<li><code>n_m</code> - int<ul>
+<li><code>n_m</code> - int - <script type="math/tex"> N_m </script>
+<ul>
 <li>Number of <script type="math/tex"> \delta_\text{max} </script> parameters.</li>
 </ul>
 </li>
@@ -730,7 +779,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-10-25 17:12  
+             on 2021-10-25 20:16  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

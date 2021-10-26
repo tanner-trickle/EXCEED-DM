@@ -122,7 +122,7 @@
         <li><i class="fa fa-pencil"></i> Tanner Trickle</li>
          
          
-        <li><i class="fa fa-calendar-o"></i> v0.2.5</li>
+        <li><i class="fa fa-calendar-o"></i> v0.2.6</li>
          
 <!--
         
@@ -149,24 +149,27 @@
 <p><strong>Filetype</strong>: HDF5</p>
 <p><strong>Extension</strong>: <code>.h5</code>, <code>.hdf5</code></p>
 <p><strong>Example</strong>: <code>./examples/Si/dft/Si_2x2x2_AE.hdf5</code></p>
-<p>Holds data about the Bloch wave function coefficients, in the Fourier basis, <script type="math/tex"> \widetilde{u}_{i, \mathbf{k}, \mathbf{G}} </script>,
+<p>Holds data about the Bloch wave function coefficients, in the Fourier basis, <script type="math/tex"> \widetilde{u}_{i, \mathbf{k}, \mathbf{G}, s} </script>,
 <script type="math/tex; mode=display">\begin{align}
     \psi_{i, \mathbf{k}, s}(\mathbf{x}) = \frac{1}{\sqrt{V}} 
     \sum_\mathbf{G} \widetilde{u}_{i, \mathbf{k}, \mathbf{G}, s} e^{i (\mathbf{k} + \mathbf{G}) \cdot \mathbf{x}}
     \nonumber
 \end{align}</script>
-where <script type="math/tex"> s </script> denotes the component in the <script type="math/tex"> S_z </script> basis. </p>
+where <script type="math/tex"> s </script> denotes the component in the <script type="math/tex"> S_z </script> basis. Spin dependence is optional.</p>
 <h1>Datasets</h1>
 <ul>
-<li><code>n_k</code> - integer<ul>
+<li><code>n_k</code> - integer - <script type="math/tex"> N_\mathbf{k} </script>
+<ul>
 <li>Number of <script type="math/tex"> \mathbf{k} </script> points.</li>
 </ul>
 </li>
-<li><code>n_val</code> - integer<ul>
+<li><code>n_val</code> - integer - <script type="math/tex"> N_\mathrm{val} </script>
+<ul>
 <li>Number of valence bands.</li>
 </ul>
 </li>
-<li><code>n_cond</code> - integer<ul>
+<li><code>n_cond</code> - integer - <script type="math/tex"> N_\mathrm{cond} </script>
+<ul>
 <li>Number of conduction bands.</li>
 </ul>
 </li>
@@ -174,7 +177,8 @@ where <script type="math/tex"> s </script> denotes the component in the <script 
 <li>Number of <script type="math/tex"> \mathbf{G} </script> points.</li>
 </ul>
 </li>
-<li><code>Ef_max</code> - real<ul>
+<li><code>Ef_max</code> - real - <script type="math/tex"> E_f^\mathrm{max} </script>
+<ul>
 <li>Only conduction bands which reach below <code>Ef_max</code> are included in the calculation of the band structure. Relative to Fermi surface/valence band maximum.</li>
 <li>Units : eV</li>
 </ul>
@@ -185,34 +189,38 @@ where <script type="math/tex"> s </script> denotes the component in the <script 
 <script type="math/tex"> \mathbf{G} </script> vectors in reduced coordinates.</li>
 </ul>
 </li>
-<li><code>a_vecs_A</code> - real <ul>
+<li><code>a_vecs_A</code> - real - <script type="math/tex"> \mathbf{a}_i </script>
+<ul>
 <li>Dim : [3, 3]</li>
 <li>Primitive lattice vectors. Formatted such that <code>a_vecs_A(i, :)</code> is the ith primitive lattice vector, <script type="math/tex"> \mathbf{a}_i </script>.</li>
 <li>Units: <script type="math/tex"> \AA </script>
 </li>
 </ul>
 </li>
-<li><code>b_vecs_A</code> - real <ul>
+<li><code>b_vecs_A</code> - real  - <script type="math/tex"> \mathbf{b}_i </script>
+<ul>
 <li>Dim : [3, 3]</li>
 <li>Reciprocal lattice vectors. Formatted such that <code>b_vecs_A(i, :)</code> is the ith reciprocal lattice vector, <script type="math/tex"> \mathbf{b}_i </script>.</li>
 <li>Units: <script type="math/tex"> \AA^{-1} </script>
 </li>
 </ul>
 </li>
-<li><code>k_weight</code> - real <ul>
+<li><code>k_weight</code> - real - <script type="math/tex"> w_\mathbf{k} </script>
+<ul>
 <li>Dim : [<code>n_k</code>]</li>
 <li>Weight associated with each <script type="math/tex"> \mathbf{k} </script> point for integration over the 1BZ.</li>
 <li>Units: None</li>
 </ul>
 </li>
-<li><code>k_grid_red</code> - real <ul>
+<li><code>k_grid_red</code> - real<ul>
 <li>Dim : [<code>n_k</code>, 3]</li>
 <li>
 <script type="math/tex"> \mathbf{k} </script> vectors in reduced coordinates.</li>
 <li>Units: None</li>
 </ul>
 </li>
-<li><code>energy_bands</code> - real <ul>
+<li><code>energy_bands</code> - real - <script type="math/tex"> E_{i, \mathbf{k}} </script>
+<ul>
 <li>Dim : [<code>n_k</code>, <code>n_bands</code>]</li>
 <li><code>n_bands = n_val + n_cond</code></li>
 <li>Energy of each band, for each <script type="math/tex"> \mathbf{k} </script> point.</li>
@@ -227,7 +235,7 @@ where <script type="math/tex"> s </script> denotes the component in the <script 
 <li><code>wfc_FT_r/i_&lt;band number&gt;</code><ul>
 <li><code>wfc_FT_r/i_&lt;band number&gt;/k_&lt;k number&gt;</code><ul>
 <li>Dim : [<code>n_G</code>] ([<code>n_G</code>, 2] if spin dependent wave functions)</li>
-<li>Real part of the Bloch wave function coefficients for the <code>i</code>th band and <code>k</code>th k point, <script type="math/tex"> \text{Re} \left( \widetilde{u}_{i, \mathbf{k}, \mathbf{G}} \right) </script>.</li>
+<li>Real part of the Bloch wave function coefficients for the <code>i</code>th band and <code>k</code>th k point, <script type="math/tex"> \text{Re} \left( \widetilde{u}_{i, \mathbf{k}, \mathbf{G}} \right) </script>. <script type="math/tex"> 1 \leq i \leq N_\mathrm{val} + N_\mathrm{cond} </script> and <script type="math/tex"> 1 \leq k \leq N_\mathbf{k} </script>.</li>
 </ul>
 </li>
 </ul>
@@ -240,7 +248,7 @@ where <script type="math/tex"> s </script> denotes the component in the <script 
 <li><code>wfc_FT_c/i_&lt;band number&gt;</code><ul>
 <li><code>wfc_FT_c/i_&lt;band number&gt;/k_&lt;k number&gt;</code><ul>
 <li>Dim : [<code>n_G</code>] ([<code>n_G</code>, 2] if spin dependent wave functions)</li>
-<li>Imaginary part of the Bloch wave function coefficients for the <code>i</code>th band and <code>k</code>th k point, <script type="math/tex"> \text{Im} \left( \widetilde{u}_{i, \mathbf{k}, \mathbf{G}} \right) </script>.</li>
+<li>Imaginary part of the Bloch wave function coefficients for the <code>i</code>th band and <code>k</code>th k point, <script type="math/tex"> \text{Im} \left( \widetilde{u}_{i, \mathbf{k}, \mathbf{G}} \right) </script>. <script type="math/tex"> 1 \leq i \leq N_\mathrm{val} + N_\mathrm{cond} </script> and <script type="math/tex"> 1 \leq k \leq N_\mathbf{k} </script>.</li>
 </ul>
 </li>
 </ul>
@@ -352,7 +360,7 @@ where <script type="math/tex"> s </script> denotes the component in the <script 
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-10-25 17:12  
+             on 2021-10-25 20:16  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>
