@@ -1,4 +1,6 @@
-![exdm-prelim-logo](./docs/media/exdm-prelim-logo.png)
+<p align="center">
+    <img src="https://github.com/tanner-trickle/EXCEED-DM/blob/develop/docs/media/exdm-prelim-logo.png?raw=true" alt= "EXCEED-DM-logo"/>
+</p>
 
 # EXCEED-DM (EXtended Calculation of Electronic Excitations for Direct detection of Dark Matter)
 
@@ -10,7 +12,9 @@
 
 `EXCEED-DM` is an OpenMPI Fortran program that computes Dark Matter (DM) induced electronic transition rates for any gapped crystal target. 
 
-**Documentation**: https://tanner-trickle.github.io/EXCEED-DM
+[**Home**](https://exceed-dm.caltech.edu)
+
+[**Documentation**](https://tanner-trickle.github.io/EXCEED-DM)
 
 ## Features
 
