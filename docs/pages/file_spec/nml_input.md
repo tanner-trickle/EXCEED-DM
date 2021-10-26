@@ -56,38 +56,38 @@ sets the name of the target material to 'Si'.
 
 - `name` - str 
     - Name of the target material.
-- `band_gap` - real
+- `band_gap` - real - \( E_g \)
     - Band gap of the target material.
     - Units : \( \text{eV} \)
-- `pc_vol_A` - real
+- `pc_vol_A` - real - \( \Omega \)
     - Volume of the primitive cell
     - Units : \( \AA^3 \)
-- `rho_T_g_per_cm3` - real
+- `rho_T_g_per_cm3` - real - \( \rho_T \)
     - Target density.
     - Units : \( \text{g} \; \text{cm}^{-3} \)
 
 ## experiment
 
-- `E_threshold` - real
+- `E_threshold` - real - \( E_\mathrm{th} \)
     - Experimental energy deposited threshold.
     - Units : \( \text{eV} \)
-- `n_time` - int
+- `n_time` - int - \( N_\mathrm{time} \)
     - Number of times of day data is taken.
-- `theta_E` - real
+- `theta_E` - real - \( \theta_E \)
     - Angle between the Earth's rotation axis and the DM wind.
     - Units : \( \text{rad} \)
-- `m_T_kg` - real
+- `m_T_kg` - real - \( m_T \)
     - Mass of the target.
     - Units : \( \text{kg} \)
-- `exposure_yr` - real
+- `exposure_yr` - real - \( T \)
     - Exposure time of the target.
     - Units : \( \text{yr} \)
 
-##dm_model
+## dm_model
 
 - `particle_type` - str
     - Dark matter particle type. Options : 'scalar', 'ps', 'vector', 'fermion'.
-- `n_mX` - int
+- `n_mX` - int - \( N_{m_\chi} \)
     - Number of dark matter masses.
 - `log_mX_min` - real
     - Minimum \( \text{log10}(m_\chi / \text{eV}) \).
@@ -95,22 +95,22 @@ sets the name of the target material to 'Si'.
     - Maximum \( \text{log10}(m_\chi / \text{eV}) \).
 - `n_extra_mX` - int
     - Number of 'extra' masses to compute for. Specifing this allows the user to also specify the `mX_2` namelist and add masses that are not uniform logarithmically spaced to the computed mass list.
-- `n_med_FF` - int
+- `n_med_FF` - int - \( N_\beta \)
     - Number of mediator form factor parameters.
 - `med_FF_min` - real
     - Minimum mediator form factor parameter, \( \beta \); \( \mathcal{F}_\text{med} = \left( \frac{ \alpha m_e}{q} \right)^\beta \)
 - `med_FF_max` - real
     - Maximum mediator form factor parameter, \( \beta \); \( \mathcal{F}_\text{med} = \left( \frac{ \alpha m_e}{q} \right)^\beta \)
-- `rhoX_GeV_per_cm3` - real
+- `rhoX_GeV_per_cm3` - real - \( \rho_\chi \)
     - Dark matter density.
     - Units : \( \text{GeV} \; \text{cm}^{-3} \)
-- `v0_km_per_sec` - real
+- `v0_km_per_sec` - real - \( v_0 \)
     - \( v_0 \) Dark matter velocity distribution parameter.
     - Units : \( \text{km} \; \text{s}^{-1} \)
-- `vE_km_per_sec` - real
+- `vE_km_per_sec` - real - \( v_E \)
     - Earth velocity, dark matter velocity distribution parameter.
     - Units : \( \text{km} \; \text{s}^{-1} \)
-- `vEsc` - real
+- `vEsc_km_per_sec` - real - \( v_\mathrm{esc} \)
     - Escape velocity, dark matter velocity distribution parameter.
     - Units : \( \text{km} \; \text{s}^{-1} \)
 - `tff_id` - int
@@ -119,14 +119,14 @@ sets the name of the target material to 'Si'.
 
 ## bins_scatter
 
-- `n_q` - int
+- `n_q` - int - \( N_q \)
     - Number of bins in momentum deposition.
-- `n_E` - int
+- `n_E` - int - \( N_\omega \)
     - Number of bins in energy deposition.
-- `E_width` - real
+- `E_width` - real - \( \Delta \omega \)
     - Width of the bins in energy deposition. 
     - Units : \( \text{eV} \)
-- `q_width` - real
+- `q_width` - real - \( \Delta q \)
     - Width of the bins in momentum deposition.
     - Units : \( \text{eV} \)
 
@@ -134,19 +134,19 @@ sets the name of the target material to 'Si'.
 
 Numerics parameters specific to valence to conduction scattering rate calculations.
 
-- `n_val_max` - int
+- `n_val_max` - int - \( N_\mathrm{val}^\mathrm{max} \)
     - Maximum number of valence bands included in the calculation.
-- `n_cond_max` - int
+- `n_cond_max` - int - \( N_\mathrm{cond}^\mathrm{max} \)
     - Maximum number of conduction bands included in the calculation.
 
 ## numerics_s_cc
 
 Numerics parameters specific to core to conduction scattering rate calculations.
 
-- `n_FFT_grid` - int
+- `n_FFT_grid` - int - \( \mathbf{N}_\mathrm{FFT} \)
     - Dim : [3]
     - FFT grid size specified on input.
-- `n_cond_max` - int
+- `n_cond_max` - int - \( N_\mathrm{cond}^\mathrm{max} \)
     - Maximum number of conduction bands included in the calculation.
 - `n_principal_min` - int
     - Minimum principal quantum number, \( n \), to include in the calculation.
@@ -155,53 +155,58 @@ Numerics parameters specific to core to conduction scattering rate calculations.
 
 ## numerics_s_vf
 
-- `n_val_max` - int
+- `n_val_max` - int - \( N_\mathrm{val}^\mathrm{val} \)
     - Maximum number of valence bands included in the calculation.
-- `n_kf_theta` - int
+- `n_kf_theta` - int - \( N_{\theta_{\mathbf{k}_f}} \)
     - Number of \( \theta \) angles in the integration over \( \mathbf{k}_f \)
-- `n_kf_phi` - int
+- `n_kf_phi` - int - \( N_{\phi_{\mathbf{k}_f}} \)
     - Number of \( \phi \) angles in the integration over \( \mathbf{k}_f \)
-- `n_omega` - int
+- `n_omega` - int - \( N_\omega^\mathrm{vf} \)
     - Number of \( \omega \) parameters to compute \( \frac{dR}{d \omega} \) for.
 - `Zeff_type` - str
     - Specify how the \( Z_\text{eff} \) parameters are computed. Options : 'one' ( \( Z_\text{eff} = 1 \) ), 'Eb' ( \( Z_\text{eff}\) found from binding energy.  )
+- `Ef_min` - real - \( E_f^\mathrm{min} \)
+    - Minimum final electron energy.
+    - Units : \( \text{eV} \)
 
 ## numerics_s_cf
 
-- `Ef_min` - real
+- `Ef_min` - real - \( E_f^\mathrm{min} \)
     - Minimum final electron energy.
     - Units : \( \text{eV} \)
 - `Zeff_type` - str
     - Specify how the \( Z_\text{eff} \) parameters are computed. Options : 'one' ( \( Z_\text{eff} = 1 \) ), 'Eb' ( \( Z_\text{eff}\) found from binding energy.  )
-- `ki_min` - real
+- `ki_min` - real - \( k_i^\mathrm{min} \)
     - Minimum initial electron momentum to integrate over.
     - Units : \( \text{eV} \)
-- `ki_s` - real
+- `ki_s` - real - \( k^s_i \)
     - Scale parameter of maximum initial electron momentum to integrate over, \( k_{i, \text{max}} = k_s Z \alpha m_e \)
-- `n_kf_theta` - int
+- `n_kf_theta` - int - \( N_{\theta_{\mathbf{k}_f}} \)
     - Number of \( \theta \) angles in the integration over \( \mathbf{k}_f \)
-- `n_kf_phi` - int
+- `n_kf_phi` - int - \( N_{\phi_{\mathbf{k}_f}} \)
     - Number of \( \phi \) angles in the integration over \( \mathbf{k}_f \)
-- `n_ki` - int
+- `n_ki` - int - \( N_{\mathbf{k}_i} \)
     - Number of points in \( k_i \) to integrate over.
-- `n_ki_theta` - int
+- `n_ki_theta` - int - \( N_{\theta_{\mathbf{k}_i}} \)
     - Number of \( \theta \) angles in the integration over \( \mathbf{k}_i \)
-- `n_ki_phi` - int
+- `n_ki_phi` - int - \( N_{\phi_{\mathbf{k}_f}} \)
     - Number of \( \phi \) angles in the integration over \( \mathbf{k}_i \)
 - `n_principal_min` - int
     - Minimum principal quantum number, \( n \), to include in the calculation.
 - `n_principal_max` - int
     - Maximum principal quantum number, \( n \), to include in the calculation.
+- `n_omega` - int - \( N_\omega^\mathrm{cf} \)
+    - Number of \( \omega \) parameters to compute \( \frac{dR}{d \omega} \) for.
 
 ## widths
 
 Width parameters, \( \delta = \text{min}( \delta_\text{max}, a + b \omega ) \).
 
-- `n_a` - int
+- `n_a` - int - \( N_a \)
     - Number of \( a \) parameters.
-- `n_b` - int
+- `n_b` - int - \( N_b \)
     - Number of \( b \) parameters.
-- `n_m` - int
+- `n_m` - int - \( N_m \)
     - Number of \( \delta_\text{max} \) parameters.
 - `a_min` - real
     - Minimum value of \( a \).

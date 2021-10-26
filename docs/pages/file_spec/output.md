@@ -38,7 +38,7 @@ All of the output data from an EXCEED-DM run.
     - Target material name.
 - `band_gap` - real - \( E_g \)
     - Target material band gap.
-    - Units : eV
+    - Units: \( \text{eV} \)
 - `density` - real - \( \rho_T \)
     - Target material density.
     - Units : \( \text{g} \; \text{cm}^{-3} \)
@@ -222,9 +222,11 @@ Numerics parameters specific to core to conduction scattering rate calculations.
 - `n_omega` - int
     - Number of \( \omega \) parameters to compute \( \frac{dR}{d \omega} \) for.
 - `omega_list` - real
+    - Dim : [`n_omega']
     - List of \( \omega \) parameters \( \frac{dR}{d \omega} \) is computed for.
+    - Units : \( \text{eV} \)
 - `Zeff` - real
-    - Dim : [`n_state`, `n_k`]
+    - Dim: [`n_state`, `n_k`]
     - \( Z_\text{eff} \) parameters used in the Fermi form factor.
     - Units : None
 
@@ -255,7 +257,9 @@ Numerics parameters specific to core to conduction scattering rate calculations.
 - `n_ki_phi` - int
     - Number of \( \phi \) angles in the integration over \( \mathbf{k}_i \)
 - `omega_list` - real
+    - Dim: [`n_omega']
     - List of \( \omega \) parameters \( \frac{dR}{d \omega} \) is computed for.
+    - Units: eV
 - `n_principal_min` - int
     - Minimum principal quantum number, \( n \), to include in the calculation.
 - `n_principal_max` - int

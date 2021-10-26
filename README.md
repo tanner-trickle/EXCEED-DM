@@ -75,34 +75,27 @@ Note : It's recommended to run `sudo apt update` before, and on a completely fre
         > cmake ..
         > make
 
-4) Test the installation
+4) Test the installation from `/your/specific/path',
 
-        > mpirun -np 2 ./exdm
+        > mpirun -np 2 ./build/exdm ./examples/Si/inputs/scatter_vc_test_input.txt
 
 If installed correctly you should see something similar to,
 
-         ----------------------------------------------------------------------
+        ----------------------------------------------------------------------
 
-             EXCEED-DM - v0.2.6
+            EXCEED-DM - v1.0.0
 
-             Running on 1 processors
-             Compiled with GCC version 10.3.0
+            Running on 2 processors
+            Compiled with GCC version 9.3.0
 
-         ----------------------------------------------------------------------
+        ----------------------------------------------------------------------
 
-         Loading control parameters...
+        Loading control parameters...
 
-         !!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-             Input file for control parameters :  does NOT exist.
-
-         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-5) Perform example calculation. From `/your/specific/path` run         
-
-        > mpirun -np 2 ./build/exdm ./examples/Si/inputs/vc_test_input.txt
-
-Output data is stored in `examples/Si/outputs/`. To run from another folder, open `examples/Si/inputs/vc_test_input.txt` and change the file paths as necessary (DFT input file is stored in `examples/Si/dft/Si/Si_2x2x2_AE.hdf5`).
+        ----------------------------------------------------------------------
+            -------
+            Control
+            -------
 
 ## Support 
 
