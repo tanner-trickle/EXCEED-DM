@@ -1,3 +1,18 @@
+v0.2.7
+---
+
+- Fixed bug with `Ef_max` cutoff by shifting valence band maximum to be the zero-point energy.
+- Updated build system to `CMake`, removing FoBiS entirely.
+- The OpenMPI subroutine, `MPI_Reduce` is used when appropriate verus manual send and recieve calls.
+    - Currently implemented in scattering rate and dielectric calculations
+- Temporary file is deleted when creating the core electron configuration file with `utilities/core_elec_config/create_elec_config.ipynb`
+- Removed `TODO.md` which was not being used (may reintroduce in the future if it becomes useful).
+- Updated the `binned_wfc` utility.
+- Added documentation for the `binned_wfc` utility.
+- Optimized dielectric calculation, improved binned procedure to save memory.
+- Update to documentation and refactored main folder.
+- Added [home page](https://exceed-dm.caltech.edu) to `README.md`.
+
 v0.2.6
 ---
 
