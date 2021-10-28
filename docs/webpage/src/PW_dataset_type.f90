@@ -148,6 +148,11 @@ module PW_dataset_type
             !! SD wave functions - 1
         character(len=512) :: filename
             !! Filename of data
+        real(dp) :: q_max_1BZ
+            !* All transitions with \( q \leq \) `q_max_1BZ` are restricted to stay within the 1BZ.
+            !
+            ! Units : \( \text{eV} \)
+
         contains
 
             procedure :: load => load_PW_dataset_hdf5
@@ -332,6 +337,9 @@ contains
 
     subroutine load_PW_dataset_hdf5(self, filename, verbose)
         !! Loads `PW_dataset` parameters from an hdf5 file.
+
+        use math_mod
+
         implicit none
 
         class(PW_dataset_t) :: self
@@ -384,6 +392,8 @@ contains
             call h5ltread_dataset_double_f(file_id, 'b_vecs_A', self%b_vecs_A, dims2, error)
             self%b_vecs = inv_Ang_to_eV*self%b_vecs_A
             self%k_red_to_xyz = transpose(self%b_vecs)
+
+            self%q_max_1BZ = get_max_r_inside_parallepipid([1, 1, 1], self%k_red_to_xyz, verbose = verbose) 
 
             ! convert reduced coordinates to xyz
             allocate(self%G_grid_xyz(self%n_G, 3))
@@ -489,6 +499,11 @@ contains
                 'PW_dataset/n_G', &
                 size(dims1), dims1,&
                 self%n_G, &
+                error)
+            call h5ltmake_dataset_double_f(file_id, &
+                'PW_dataset/q_max_1BZ', &
+                size(dims1), dims1,&
+                self%q_max_1BZ, &
                 error)
             call h5ltmake_dataset_double_f(file_id, &
                 'PW_dataset/E_cut', &

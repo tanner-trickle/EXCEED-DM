@@ -10,7 +10,7 @@
     <meta name="author" content="Tanner Trickle" >
     <link rel="icon" href="../favicon.png">
 
-    <title>find_q_max &ndash; EXCEED-DM</title>
+    <title>get_max_r_inside_parallepipid &ndash; EXCEED-DM</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -114,8 +114,8 @@
     
   
   <div class="row">
-    <h1>find_q_max
-      <small>Subroutine</small>
+    <h1>get_max_r_inside_parallepipid
+      <small>Function</small>
     
     </h1>
     
@@ -132,24 +132,24 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 1.0% of total for procedures.">59 statements</a>
+    title=" 0.9% of total for procedures.">54 statements</a>
      </li> 
      
      
      
-    <li><i class="fa fa-code"></i><a href="../src/FFT_util.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/math_mod.f90"> Source File</a></li>
      
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
     
-     <li><a href='../sourcefile/fft_util.f90.html'>FFT_util.f90</a></li>
+     <li><a href='../sourcefile/math_mod.f90.html'>math_mod.f90</a></li>
     
-     <li><a href='../module/fft_util.html'>FFT_util</a></li>
+     <li><a href='../module/math_mod.html'>math_mod</a></li>
     
   
-     <li class="active">find_q_max</li>
+     <li class="active">get_max_r_inside_parallepipid</li>
   </ol>
 </div>
 </div>
@@ -199,7 +199,7 @@
     
     <div class="col-md-9" id='text'>
     <h2>
-public subroutine find_q_max(self, k_red_to_xyz, verbose)
+public function get_max_r_inside_parallepipid(n_grid, red_to_xyz, verbose) result(r_max)
     
     
    
@@ -209,20 +209,23 @@ public subroutine find_q_max(self, k_red_to_xyz, verbose)
 
 
     
-    <p>Finds the maximum <script type="math/tex"> q </script> the FFT is consistent for, <code>q_max</code>.</p>
+    <p>Given a cube of points in reduced coordinates, find the largest sphere which sits inside the parallelipipid in xyz
+coordinates. The 8 corners of the parallelipipid are related to the 8 corners in reduced coordinates by the transformation
+matrix, <code>red_to_xyz</code>. </p>
+<p>This function is useful in (at least) two settings:</p>
+<p>1) Finding the maximum <script type="math/tex"> q </script> an FFT is "consistent" for.</p>
 <p>Consider a 2D FFT computed on two square grids in xyz coordinates of dimension, 1) <script type="math/tex"> [N, N] </script> and 2) <script type="math/tex"> [2 N, 2 N] </script>,
  so the second grid includes all of the points in the first grid. Now consider two functions, <script type="math/tex"> f_1( \mathbf{q} ) </script>, <script type="math/tex">
  f_2( \mathbf{q} ) </script>, coming from the FFT of the same function on these grids, binned in <script type="math/tex"> q </script>. <script type="math/tex"> \bar{f}_1 </script> will
- equal <script type="math/tex"> \bar{f}_2 </script> up to some <script type="math/tex"> q </script>; in this case <script type="math/tex"> q = N </script>, since, e.g., the <script type="math/tex"> q = \sqrt{2} N </script> value of <script type="math/tex">
- \bar{f}_1 </script> will be different in grid 2 since grid 2 includes all <script type="math/tex"> \mathbf{q} </script> with magnitude <script type="math/tex"> \sqrt{2} N </script>,
- whereas grid 1 only contains some of them (i.e., it's missing <script type="math/tex"> \mathbf{q} = [\sqrt{2} N, 0] </script> ).</p>
-<p>However all grids larger than grid 1 will contain all <script type="math/tex"> q \le N </script>. This is the <code>q_max</code> computed here, or the largest <script type="math/tex">
- q </script> for which the FFT results will be identical if the grid size in increased.</p>
-<p>When <code>k_red_to_xyz</code> is not diagonal the problem becomes finding the closest face of the parallelipipid, which is (more
- practically) what this routine computes. </p>
-<p>shift coordinates to first corner
- define the basis vectors of the plane
- get magnitude of p perpendicular to face</p>
+ equal <script type="math/tex"> \bar{f}_2 </script> up to some <script type="math/tex"> q </script>; in this case <script type="math/tex"> q = N/2 </script>, since, e.g., the <script type="math/tex"> q = \sqrt{2} N/2 </script> value of <script type="math/tex">
+ \bar{f}_1 </script> will be different in grid 2 since grid 2 includes all <script type="math/tex"> \mathbf{q} </script> with magnitude <script type="math/tex"> \sqrt{2} N/2 </script>,
+ whereas grid 1 only contains some of them (i.e., it's missing <script type="math/tex"> \mathbf{q} = [\sqrt{2} N/2, 0] </script> ).</p>
+<p>However all grids larger than grid 1 will contain all <script type="math/tex"> q \le N/2 </script> and therefore in this example <code>r_max</code> <script type="math/tex"> = N/2).
+ More generally (3d, <code>red_to_xyz</code> \( \neq \mathbf{1} </script>) <code>q_max</code> corresponds to <code>r_max</code> when the <code>red_to_xyz</code>
+ matrix is set to <code>k_red_to_xyz</code>, and <code>n_grid</code> is the size of the FFT <code>&lt;FFT_grid_t&gt;%n_grid</code>.  </p>
+<p>2) Finding the maximum <script type="math/tex"> q </script> for which all scattering transitions are restricted to within the 1BZ, <code>q_max_1BZ</code>.</p>
+<p>Here <code>n_grid = [1, 1, 1]</code>, and <code>red_to_xyz</code> <script type="math/tex"> \rightarrow </script>
+<code>k_red_to_xyz</code>.</p>
     
 
     <h3>Arguments</h3>
@@ -243,12 +246,12 @@ public subroutine find_q_max(self, k_red_to_xyz, verbose)
   
 <tr>
   
-  <td><span class="anchor" id="variable-self~89"></span>class(<a href='../type/fft_grid_t.html'>FFT_grid_t</a>)</td>
+  <td><span class="anchor" id="variable-n_grid~2"></span>integer</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>self</strong></td><td></td>
+  <td><strong>n_grid</strong>(3)</td><td></td>
   
 </tr>
 
@@ -258,12 +261,12 @@ public subroutine find_q_max(self, k_red_to_xyz, verbose)
   
 <tr>
   
-  <td><span class="anchor" id="variable-k_red_to_xyz~4"></span>real(kind=dp)</td>
+  <td><span class="anchor" id="variable-red_to_xyz~2"></span>real(kind=dp)</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>k_red_to_xyz</strong>(3,3)</td><td></td>
+  <td><strong>red_to_xyz</strong>(3,3)</td><td></td>
   
 </tr>
 
@@ -273,7 +276,7 @@ public subroutine find_q_max(self, k_red_to_xyz, verbose)
   
 <tr>
   
-  <td><span class="anchor" id="variable-verbose~99"></span>logical,</td>
+  <td><span class="anchor" id="variable-verbose~25"></span>logical,</td>
   <td></td>
   <td>optional</td>
   
@@ -285,6 +288,15 @@ public subroutine find_q_max(self, k_red_to_xyz, verbose)
 </tbody>
 </table>
 
+    
+    
+    
+    
+    
+    
+    
+   <h3>Return Value <small><span class="anchor" id="variable-r_max"></span>real(kind=dp)
+  </small></h3>
     
     
     
@@ -357,7 +369,7 @@ public subroutine find_q_max(self, k_red_to_xyz, verbose)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-10-27 17:26  
+             on 2021-10-27 18:33  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

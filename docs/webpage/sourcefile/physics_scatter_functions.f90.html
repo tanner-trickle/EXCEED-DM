@@ -280,73 +280,73 @@
 <a id="ln-11" name="ln-11"></a>
 <a id="ln-12" name="ln-12"></a><span class="k">contains</span>
 <a id="ln-13" name="ln-13"></a>
-<a id="ln-14" name="ln-14"></a><span class="k">   function </span><span class="n">v_minus</span><span class="p">(</span><span class="n">q_vec</span><span class="p">,</span> <span class="n">mX</span><span class="p">,</span> <span class="n">vE_vec</span><span class="p">,</span> <span class="n">omega</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">v_m</span><span class="p">)</span>
-<a id="ln-15" name="ln-15"></a>       <span class="c">!! \( v_- = \frac{1}{q} </span>
-<a id="ln-16" name="ln-16"></a>       <span class="c">!! | \mathbf{q} \cdot \mathbf{v}_E + \frac{q^2}{2 m_\chi} + \omega | \)</span>
-<a id="ln-17" name="ln-17"></a>       <span class="c">!!</span>
-<a id="ln-18" name="ln-18"></a>       <span class="c">!! Note : assumes \( v_- &lt; v_\text{esc} \).</span>
-<a id="ln-19" name="ln-19"></a>       <span class="c">!!</span>
-<a id="ln-20" name="ln-20"></a>       <span class="c">!! Units : None</span>
+<a id="ln-14" name="ln-14"></a><span class="k">    function </span><span class="n">v_minus</span><span class="p">(</span><span class="n">q_vec</span><span class="p">,</span> <span class="n">mX</span><span class="p">,</span> <span class="n">vE_vec</span><span class="p">,</span> <span class="n">omega</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">v_m</span><span class="p">)</span>
+<a id="ln-15" name="ln-15"></a>        <span class="c">!! \( v_- = \frac{1}{q} </span>
+<a id="ln-16" name="ln-16"></a>        <span class="c">!! | \mathbf{q} \cdot \mathbf{v}_E + \frac{q^2}{2 m_\chi} + \omega | \)</span>
+<a id="ln-17" name="ln-17"></a>        <span class="c">!!</span>
+<a id="ln-18" name="ln-18"></a>        <span class="c">!! Note : assumes \( v_- &lt; v_\text{esc} \).</span>
+<a id="ln-19" name="ln-19"></a>        <span class="c">!!</span>
+<a id="ln-20" name="ln-20"></a>        <span class="c">!! Units : None</span>
 <a id="ln-21" name="ln-21"></a>
-<a id="ln-22" name="ln-22"></a>       <span class="k">implicit none</span>
+<a id="ln-22" name="ln-22"></a>        <span class="k">implicit none</span>
 <a id="ln-23" name="ln-23"></a>
-<a id="ln-24" name="ln-24"></a><span class="k">       </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mX</span><span class="p">,</span> <span class="n">omega</span>
-<a id="ln-25" name="ln-25"></a>       <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_mag</span>
+<a id="ln-24" name="ln-24"></a><span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mX</span><span class="p">,</span> <span class="n">omega</span>
+<a id="ln-25" name="ln-25"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_mag</span>
 <a id="ln-26" name="ln-26"></a>
-<a id="ln-27" name="ln-27"></a>       <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">v_m</span>
+<a id="ln-27" name="ln-27"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">v_m</span>
 <a id="ln-28" name="ln-28"></a>
-<a id="ln-29" name="ln-29"></a>       <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_vec</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a id="ln-30" name="ln-30"></a>       <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">vE_vec</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="ln-29" name="ln-29"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_vec</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="ln-30" name="ln-30"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">vE_vec</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <a id="ln-31" name="ln-31"></a>
-<a id="ln-32" name="ln-32"></a>       <span class="n">q_mag</span> <span class="o">=</span> <span class="nb">norm2</span><span class="p">(</span><span class="n">q_vec</span><span class="p">)</span>
-<a id="ln-33" name="ln-33"></a>       <span class="n">v_m</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">q_mag</span><span class="p">)</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="nb">dot_product</span><span class="p">(</span><span class="n">q_vec</span><span class="p">,</span> <span class="n">vE_vec</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5_dp</span><span class="o">*</span><span class="n">q_mag</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">mX</span> <span class="o">+</span> <span class="n">omega</span><span class="p">)</span>
+<a id="ln-32" name="ln-32"></a>        <span class="n">q_mag</span> <span class="o">=</span> <span class="nb">norm2</span><span class="p">(</span><span class="n">q_vec</span><span class="p">)</span>
+<a id="ln-33" name="ln-33"></a>        <span class="n">v_m</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">q_mag</span><span class="p">)</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="nb">dot_product</span><span class="p">(</span><span class="n">q_vec</span><span class="p">,</span> <span class="n">vE_vec</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5_dp</span><span class="o">*</span><span class="n">q_mag</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">mX</span> <span class="o">+</span> <span class="n">omega</span><span class="p">)</span>
 <a id="ln-34" name="ln-34"></a>
-<a id="ln-35" name="ln-35"></a>   <span class="k">end function</span>
+<a id="ln-35" name="ln-35"></a>    <span class="k">end function</span>
 <a id="ln-36" name="ln-36"></a>
-<a id="ln-37" name="ln-37"></a><span class="k">   function </span><span class="n">g_func</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">v_m</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">)</span> <span class="k">result</span> <span class="p">(</span><span class="n">g_fun</span><span class="p">)</span>
-<a id="ln-38" name="ln-38"></a>       <span class="c">!! Kinematic, \( g(v_-) \) function.</span>
-<a id="ln-39" name="ln-39"></a>       <span class="c">!!</span>
-<a id="ln-40" name="ln-40"></a>       <span class="c">!! \( g(\mathbf{q}, \omega) = 2 \pi \int d^3\mathbf{v} </span>
-<a id="ln-41" name="ln-41"></a>       <span class="c">!! f_\chi(\mathbf{v}) \delta(\omega - \omega_\mathbf{q}) \)</span>
-<a id="ln-42" name="ln-42"></a>       <span class="c">!!</span>
-<a id="ln-43" name="ln-43"></a>       <span class="c">!! \( g(v_-) = \frac{2 \pi^2 v_0^2}{N_0 q} \left( \exp{(-v_-^2/v_0^2)} - \exp{(-v_\text{esc}^2/v_0^2)} \right) \)</span>
-<a id="ln-44" name="ln-44"></a>       <span class="c">!!</span>
-<a id="ln-45" name="ln-45"></a>       <span class="c">!! Units : \( \text{eV}^{-1} \)</span>
-<a id="ln-46" name="ln-46"></a>       <span class="k">implicit none</span>
+<a id="ln-37" name="ln-37"></a><span class="k">    function </span><span class="n">g_func</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">v_m</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">)</span> <span class="k">result</span> <span class="p">(</span><span class="n">g_fun</span><span class="p">)</span>
+<a id="ln-38" name="ln-38"></a>        <span class="c">!! Kinematic, \( g(v_-) \) function.</span>
+<a id="ln-39" name="ln-39"></a>        <span class="c">!!</span>
+<a id="ln-40" name="ln-40"></a>        <span class="c">!! \( g(\mathbf{q}, \omega) = 2 \pi \int d^3\mathbf{v} </span>
+<a id="ln-41" name="ln-41"></a>        <span class="c">!! f_\chi(\mathbf{v}) \delta(\omega - \omega_\mathbf{q}) \)</span>
+<a id="ln-42" name="ln-42"></a>        <span class="c">!!</span>
+<a id="ln-43" name="ln-43"></a>        <span class="c">!! \( g(v_-) = \frac{2 \pi^2 v_0^2}{N_0 q} \left( \exp{(-v_-^2/v_0^2)} - \exp{(-v_\text{esc}^2/v_0^2)} \right) \)</span>
+<a id="ln-44" name="ln-44"></a>        <span class="c">!!</span>
+<a id="ln-45" name="ln-45"></a>        <span class="c">!! Units : \( \text{eV}^{-1} \)</span>
+<a id="ln-46" name="ln-46"></a>        <span class="k">implicit none</span>
 <a id="ln-47" name="ln-47"></a>
-<a id="ln-48" name="ln-48"></a><span class="k">       </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q</span><span class="p">,</span> <span class="n">v_m</span>
-<a id="ln-49" name="ln-49"></a>       <span class="k">type</span><span class="p">(</span><span class="n">dm_model_t</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dm_model</span>
-<a id="ln-50" name="ln-50"></a>       <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">g_fun</span>
+<a id="ln-48" name="ln-48"></a><span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q</span><span class="p">,</span> <span class="n">v_m</span>
+<a id="ln-49" name="ln-49"></a>        <span class="k">type</span><span class="p">(</span><span class="n">dm_model_t</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dm_model</span>
+<a id="ln-50" name="ln-50"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">g_fun</span>
 <a id="ln-51" name="ln-51"></a>
-<a id="ln-52" name="ln-52"></a>       <span class="n">g_fun</span> <span class="o">=</span> <span class="p">(</span><span class="n">dm_model</span><span class="p">%</span><span class="n">g_func_c1</span><span class="o">/</span><span class="n">q</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">v_m</span><span class="o">/</span><span class="n">dm_model</span><span class="p">%</span><span class="n">v0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">dm_model</span><span class="p">%</span><span class="n">g_func_c2</span><span class="p">)</span>
+<a id="ln-52" name="ln-52"></a>        <span class="n">g_fun</span> <span class="o">=</span> <span class="p">(</span><span class="n">dm_model</span><span class="p">%</span><span class="n">g_func_c1</span><span class="o">/</span><span class="n">q</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">v_m</span><span class="o">/</span><span class="n">dm_model</span><span class="p">%</span><span class="n">v0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">dm_model</span><span class="p">%</span><span class="n">g_func_c2</span><span class="p">)</span>
 <a id="ln-53" name="ln-53"></a>
-<a id="ln-54" name="ln-54"></a>   <span class="k">end function</span>
+<a id="ln-54" name="ln-54"></a>    <span class="k">end function</span>
 <a id="ln-55" name="ln-55"></a>
-<a id="ln-56" name="ln-56"></a><span class="k">   function </span><span class="n">red_mass</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span>
-<a id="ln-57" name="ln-57"></a>       <span class="c">!! \( \mu = \frac{m_1 m_2}{m_1 + m_2} \)</span>
-<a id="ln-58" name="ln-58"></a>       <span class="k">implicit none</span>
+<a id="ln-56" name="ln-56"></a><span class="k">    function </span><span class="n">red_mass</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span>
+<a id="ln-57" name="ln-57"></a>        <span class="c">!! \( \mu = \frac{m_1 m_2}{m_1 + m_2} \)</span>
+<a id="ln-58" name="ln-58"></a>        <span class="k">implicit none</span>
 <a id="ln-59" name="ln-59"></a>
-<a id="ln-60" name="ln-60"></a><span class="k">       </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span>
-<a id="ln-61" name="ln-61"></a>       <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mu</span> 
+<a id="ln-60" name="ln-60"></a><span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span>
+<a id="ln-61" name="ln-61"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mu</span> 
 <a id="ln-62" name="ln-62"></a>
-<a id="ln-63" name="ln-63"></a>       <span class="n">mu</span> <span class="o">=</span> <span class="n">m1</span><span class="o">*</span><span class="n">m2</span><span class="o">/</span><span class="p">(</span><span class="n">m1</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
+<a id="ln-63" name="ln-63"></a>        <span class="n">mu</span> <span class="o">=</span> <span class="n">m1</span><span class="o">*</span><span class="n">m2</span><span class="o">/</span><span class="p">(</span><span class="n">m1</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span>
 <a id="ln-64" name="ln-64"></a>
-<a id="ln-65" name="ln-65"></a>   <span class="k">end function</span>
+<a id="ln-65" name="ln-65"></a>    <span class="k">end function</span>
 <a id="ln-66" name="ln-66"></a>
-<a id="ln-67" name="ln-67"></a><span class="k">   function </span><span class="n">F_med_sq_func</span><span class="p">(</span><span class="n">q_mag</span><span class="p">,</span> <span class="n">power</span><span class="p">)</span> <span class="k">result</span> <span class="p">(</span><span class="n">F_med_sq_val</span><span class="p">)</span>
-<a id="ln-68" name="ln-68"></a>       <span class="c">!! Mediator form factor squared, </span>
-<a id="ln-69" name="ln-69"></a>       <span class="c">!! \( \mathcal{F}_\text{med}^2 = \left( \frac{\alpha m_e}{q} \right)^{2 \beta} \).</span>
-<a id="ln-70" name="ln-70"></a>       <span class="c">!!</span>
-<a id="ln-71" name="ln-71"></a>       <span class="c">!! Units : None</span>
-<a id="ln-72" name="ln-72"></a>       <span class="k">implicit none</span>
+<a id="ln-67" name="ln-67"></a><span class="k">    function </span><span class="n">F_med_sq_func</span><span class="p">(</span><span class="n">q_mag</span><span class="p">,</span> <span class="n">power</span><span class="p">)</span> <span class="k">result</span> <span class="p">(</span><span class="n">F_med_sq_val</span><span class="p">)</span>
+<a id="ln-68" name="ln-68"></a>        <span class="c">!! Mediator form factor squared, </span>
+<a id="ln-69" name="ln-69"></a>        <span class="c">!! \( \mathcal{F}_\text{med}^2 = \left( \frac{\alpha m_e}{q} \right)^{2 \beta} \).</span>
+<a id="ln-70" name="ln-70"></a>        <span class="c">!!</span>
+<a id="ln-71" name="ln-71"></a>        <span class="c">!! Units : None</span>
+<a id="ln-72" name="ln-72"></a>        <span class="k">implicit none</span>
 <a id="ln-73" name="ln-73"></a>
-<a id="ln-74" name="ln-74"></a><span class="k">       </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_mag</span>
-<a id="ln-75" name="ln-75"></a>       <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">F_med_sq_val</span>
-<a id="ln-76" name="ln-76"></a>       <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">power</span>
+<a id="ln-74" name="ln-74"></a><span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_mag</span>
+<a id="ln-75" name="ln-75"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">F_med_sq_val</span>
+<a id="ln-76" name="ln-76"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">power</span>
 <a id="ln-77" name="ln-77"></a>
-<a id="ln-78" name="ln-78"></a>       <span class="n">f_med_sq_val</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha_EM</span><span class="o">*</span><span class="n">m_elec</span><span class="o">/</span><span class="n">q_mag</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">power</span><span class="p">)</span>
+<a id="ln-78" name="ln-78"></a>        <span class="n">f_med_sq_val</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha_EM</span><span class="o">*</span><span class="n">m_elec</span><span class="o">/</span><span class="n">q_mag</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">power</span><span class="p">)</span>
 <a id="ln-79" name="ln-79"></a>
-<a id="ln-80" name="ln-80"></a>   <span class="k">end function</span>
+<a id="ln-80" name="ln-80"></a>    <span class="k">end function</span>
 <a id="ln-81" name="ln-81"></a>
 <a id="ln-82" name="ln-82"></a><span class="k">end module</span>
 </pre></div>
@@ -367,7 +367,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-10-27 17:26  
+             on 2021-10-27 18:33  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>

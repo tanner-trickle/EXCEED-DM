@@ -292,5 +292,114 @@ contains
 
     end function
 
-end module
+    function get_max_r_inside_parallepipid(n_grid, red_to_xyz, verbose) result ( r_max )
+        !* Given a cube of points in reduced coordinates, find the largest sphere which sits inside the parallelipipid in xyz
+        !coordinates. The 8 corners of the parallelipipid are related to the 8 corners in reduced coordinates by the transformation
+        !matrix, `red_to_xyz`. 
+        !
+        ! This function is useful in (at least) two settings:
+        !
+        ! 1) Finding the maximum \( q \) an FFT is "consistent" for.
+        !
+        ! Consider a 2D FFT computed on two square grids in xyz coordinates of dimension, 1) \( [N, N] \) and 2) \( [2 N, 2 N] \),
+        ! so the second grid includes all of the points in the first grid. Now consider two functions, \( f_1( \mathbf{q} ) \), \(
+        ! f_2( \mathbf{q} ) \), coming from the FFT of the same function on these grids, binned in \( q \). \( \bar{f}_1 \) will
+        ! equal \( \bar{f}_2 \) up to some \( q \); in this case \( q = N/2 \), since, e.g., the \( q = \sqrt{2} N/2 \) value of \(
+        ! \bar{f}_1 \) will be different in grid 2 since grid 2 includes all \( \mathbf{q} \) with magnitude \( \sqrt{2} N/2 \),
+        ! whereas grid 1 only contains some of them (i.e., it's missing \( \mathbf{q} = [\sqrt{2} N/2, 0] \) ).
+        !
+        ! However all grids larger than grid 1 will contain all \( q \le N/2 \) and therefore in this example `r_max` \( = N/2).
+        ! More generally (3d, `red_to_xyz` \( \neq \mathbf{1} \)) `q_max` corresponds to `r_max` when the `red_to_xyz`
+        ! matrix is set to `k_red_to_xyz`, and `n_grid` is the size of the FFT `<FFT_grid_t>%n_grid`.  
+        !
+        ! 2) Finding the maximum \( q \) for which all scattering transitions are restricted to within the 1BZ, `q_max_1BZ`.
+        !
+        ! Here `n_grid = [1, 1, 1]`, and `red_to_xyz` \( \rightarrow \) `k_red_to_xyz`.
 
+        implicit none
+
+        integer :: n_grid(3)
+        real(dp) :: red_to_xyz(3, 3)
+        logical, optional :: verbose
+
+        real(dp) :: r_max
+
+        real(dp) :: corners_xyz(8, 3)
+        real(dp) :: faces_xyz(6, 4, 3)
+        real(dp) :: dist_to_face(6)
+
+        integer :: f
+
+        real(dp) :: basis_vecs(2, 3)
+
+        real(dp) :: corner_to_origin(3)
+        real(dp) :: face_to_origin(3)
+
+        corners_xyz(1, :) = matmul( red_to_xyz, [ -n_grid(1), -n_grid(2), -n_grid(3) ] )/2.0_dp
+        corners_xyz(2, :) = matmul( red_to_xyz, [ -n_grid(1), -n_grid(2),  n_grid(3) ] )/2.0_dp
+        corners_xyz(3, :) = matmul( red_to_xyz, [ -n_grid(1),  n_grid(2), -n_grid(3) ] )/2.0_dp
+        corners_xyz(4, :) = matmul( red_to_xyz, [  n_grid(1), -n_grid(2), -n_grid(3) ] )/2.0_dp
+        corners_xyz(5, :) = matmul( red_to_xyz, [ -n_grid(1),  n_grid(2),  n_grid(3) ] )/2.0_dp
+        corners_xyz(6, :) = matmul( red_to_xyz, [  n_grid(1), -n_grid(2),  n_grid(3) ] )/2.0_dp
+        corners_xyz(7, :) = matmul( red_to_xyz, [  n_grid(1),  n_grid(2), -n_grid(3) ] )/2.0_dp
+        corners_xyz(8, :) = matmul( red_to_xyz, [  n_grid(1),  n_grid(2),  n_grid(3) ] )/2.0_dp
+
+        ! face 1, [1, 2, 3, 4]
+        faces_xyz(1, 1, :) = corners_xyz(1, :)
+        faces_xyz(1, 2, :) = corners_xyz(2, :)
+        faces_xyz(1, 3, :) = corners_xyz(3, :)
+        faces_xyz(1, 4, :) = corners_xyz(4, :)
+
+        ! face 2, [2, 4, 5, 8]
+        faces_xyz(2, 1, :) = corners_xyz(2, :)
+        faces_xyz(2, 2, :) = corners_xyz(4, :)
+        faces_xyz(2, 3, :) = corners_xyz(7, :)
+        faces_xyz(2, 4, :) = corners_xyz(8, :)
+
+        ! face 3, [1, 2, 5, 8]
+        faces_xyz(3, 1, :) = corners_xyz(1, :)
+        faces_xyz(3, 2, :) = corners_xyz(2, :)
+        faces_xyz(3, 3, :) = corners_xyz(5, :)
+        faces_xyz(3, 4, :) = corners_xyz(8, :)
+
+        ! face 4, [1, 3, 5, 6]
+        faces_xyz(4, 1, :) = corners_xyz(1, :)
+        faces_xyz(4, 2, :) = corners_xyz(3, :)
+        faces_xyz(4, 3, :) = corners_xyz(5, :)
+        faces_xyz(4, 4, :) = corners_xyz(6, :)
+
+        ! face 5, [5, 6, 7, 8]
+        faces_xyz(5, 1, :) = corners_xyz(5, :)
+        faces_xyz(5, 2, :) = corners_xyz(6, :)
+        faces_xyz(5, 3, :) = corners_xyz(7, :)
+        faces_xyz(5, 4, :) = corners_xyz(8, :)
+
+        ! face 6, [2, 4, 6, 7]
+        faces_xyz(6, 1, :) = corners_xyz(2, :)
+        faces_xyz(6, 2, :) = corners_xyz(4, :)
+        faces_xyz(6, 3, :) = corners_xyz(6, :)
+        faces_xyz(6, 4, :) = corners_xyz(7, :)
+
+        do f = 1, 6
+
+            ! shift coordinates to first corner
+            corner_to_origin = -faces_xyz(f, 1, :)
+
+            ! define the basis vectors of the plane
+            basis_vecs(1, :) = ( faces_xyz(f, 2, :) + corner_to_origin ) / norm2( faces_xyz(f, 2, :) + corner_to_origin )
+            basis_vecs(2, :) = ( faces_xyz(f, 3, :) + corner_to_origin ) / norm2( faces_xyz(f, 3, :) + corner_to_origin )
+
+            ! get magnitude of vector pointing from the origin perpendicular to the face
+            face_to_origin = corner_to_origin&
+                - basis_vecs(1, :)*dot_product(basis_vecs(1, :), corner_to_origin)&
+                - basis_vecs(2, :)*dot_product(basis_vecs(2, :), corner_to_origin)
+            
+            dist_to_face(f) = norm2(face_to_origin)
+
+        end do
+
+        r_max = minval(dist_to_face)
+
+    end function
+
+end module

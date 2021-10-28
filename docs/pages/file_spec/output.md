@@ -1,6 +1,6 @@
 title: EXCEED-DM Output File
 author: Tanner Trickle
-date: v0.2.5
+date: v0.2.7
 
 \(\require{mediawiki-texvc}\)
 
@@ -138,6 +138,10 @@ All of the output data from an EXCEED-DM run.
     - Units : \( \text{eV}^{-1} \)
 - `spin_degen` - real
     - Spin degeneracy of each states, \( = 2 (1) \) for spin independent (dependent) wave functions.  
+- `q_max_1BZ` - real - \( q_\text{1BZ}^\text{max} \)
+    - All transitions with \( q \leq \) `q_max_1BZ` are restricted to be within the 1BZ.
+    - Units : \( \text{eV} \)
+
 
 ## core_electron
 
