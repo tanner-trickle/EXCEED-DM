@@ -231,21 +231,20 @@ contains
     end subroutine
 
     subroutine find_q_max(self, k_red_to_xyz, verbose)
-        !! Finds the maximum \( |q| \) the FFT is consistent for.
-        !!
-        !! Consider a 2D FFT computed on two square grids in xyz coordinates, \( [N, N] \) and \( [2 N, 2 N] \), ( \( \Delta q = 1
-        !! \) ).
-        !! Now consider two functions, \( f_1( \mathbf{q} ) \), \( f_2( \mathbf{q} ) \), coming from the FFT of the same function on these grids, binned
-        !! in \( |q| \).
-        !! \( \bar{f}_1 = \bar{f}_2 \) up to some \( |q| \); in this case \( q = N \), since, e.g., \( |q|= \sqrt{2} N \) components from grid 1 will be
-        !! different in grid 2 since grid 2 includes all q with magnitude \( \sqrt(2) N \), whereas grid 1 only contains some of
-        !! them (i.e. it's missing \( \mathbf{q} = [\sqrt{2} N, 0] \) ).
-        !!
-        !! However all grids larger than grid 1 will contain all \( |q| \le N \). This is 'q_max_FFT', or the largest |q| for 
-        !! which the FFT results will be identical if the grid size in increased.
-        !!
-        !! When k_red_to_xyz is not diagonal the problem becomes finding the closest face of the parallelipipid, which is what this
-        !! routine computes. 
+        !* Finds the maximum \( q \) the FFT is consistent for, `q_max`.
+        !
+        ! Consider a 2D FFT computed on two square grids in xyz coordinates of dimension, 1) \( [N, N] \) and 2) \( [2 N, 2 N] \),
+        ! so the second grid includes all of the points in the first grid. Now consider two functions, \( f_1( \mathbf{q} ) \), \(
+        ! f_2( \mathbf{q} ) \), coming from the FFT of the same function on these grids, binned in \( q \). \( \bar{f}_1 \) will
+        ! equal \( \bar{f}_2 \) up to some \( q \); in this case \( q = N \), since, e.g., the \( q = \sqrt{2} N \) value of \(
+        ! \bar{f}_1 \) will be different in grid 2 since grid 2 includes all \( \mathbf{q} \) with magnitude \( \sqrt{2} N \),
+        ! whereas grid 1 only contains some of them (i.e., it's missing \( \mathbf{q} = [\sqrt{2} N, 0] \) ).
+        !
+        ! However all grids larger than grid 1 will contain all \( q \le N \). This is the `q_max` computed here, or the largest \(
+        ! q \) for which the FFT results will be identical if the grid size in increased.
+        !
+        ! When `k_red_to_xyz` is not diagonal the problem becomes finding the closest face of the parallelipipid, which is (more
+        ! practically) what this routine computes. 
 
         implicit none
 

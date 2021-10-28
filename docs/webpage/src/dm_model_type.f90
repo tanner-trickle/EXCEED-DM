@@ -363,6 +363,8 @@ contains
                 self%n_mX, error)
             call h5ltmake_dataset_int_f(file_id, 'dm_model/n_med_FF', size(dims1), dims1,&
                 self%n_med_FF, error)
+            call h5ltmake_dataset_double_f(file_id, 'dm_model/rhoX', size(dims1), dims1,&
+                self%rhoX_GeV_per_cm3, error)
             dims1 = [self%n_mX]
             call h5ltmake_dataset_double_f(file_id, 'dm_model/mX', size(dims1), dims1,&
                 self%mX, error)

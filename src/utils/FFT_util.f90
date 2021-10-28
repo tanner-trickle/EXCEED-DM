@@ -18,7 +18,7 @@ module FFT_util
         real(dp) :: q_max
             !! Maximum q for which the FFT is consistent for. See `find_q_max`
             !!
-            !! Units : eV
+            !! Units : \( eV \)
         integer :: plan(8)
             !! The FFTW3 plan
         integer, allocatable :: sym_G_grid_red(:, :, :, :)
@@ -39,7 +39,6 @@ module FFT_util
             procedure :: init => FFT_grid_init
             procedure :: save => FFT_grid_save
             procedure :: print => FFT_grid_print
-            procedure :: find_q_max
             procedure :: set_sym_G_grid => FFT_grid_set_sym_G_grid
 
     end type
@@ -143,6 +142,9 @@ contains
         !! 1) Find \( q^\text{FFT}_\text{max} \)
         !! 2) Initialize the FFT plan. (Default: FFTW3 'patient' planning)
         !! 3) Set the symmetric FFT grids.
+
+        use math_mod
+
         implicit none
 
         class(FFT_grid_t) :: self
@@ -155,7 +157,7 @@ contains
         self%n_grid = n_grid
         self%n = self%n_grid(1)*self%n_grid(2)*self%n_grid(3)
 
-        call self%find_q_max(k_red_to_xyz, verbose = verbose)
+        self%q_max = get_max_r_inside_parallepipid(self%n_grid, k_red_to_xyz, verbose = verbose)
 
         if ( verbose ) then
 
@@ -227,118 +229,6 @@ contains
                 end do
             end do
         end do
-
-    end subroutine
-
-    subroutine find_q_max(self, k_red_to_xyz, verbose)
-        !! Finds the maximum \( |q| \) the FFT is consistent for.
-        !!
-        !! Consider a 2D FFT computed on two square grids in xyz coordinates, \( [N, N] \) and \( [2 N, 2 N] \), ( \( \Delta q = 1
-        !! \) ).
-        !! Now consider two functions, \( f_1( \mathbf{q} ) \), \( f_2( \mathbf{q} ) \), coming from the FFT of the same function on these grids, binned
-        !! in \( |q| \).
-        !! \( \bar{f}_1 = \bar{f}_2 \) up to some \( |q| \); in this case \( q = N \), since, e.g., \( |q|= \sqrt{2} N \) components from grid 1 will be
-        !! different in grid 2 since grid 2 includes all q with magnitude \( \sqrt(2) N \), whereas grid 1 only contains some of
-        !! them (i.e. it's missing \( \mathbf{q} = [\sqrt{2} N, 0] \) ).
-        !!
-        !! However all grids larger than grid 1 will contain all \( |q| \le N \). This is 'q_max_FFT', or the largest |q| for 
-        !! which the FFT results will be identical if the grid size in increased.
-        !!
-        !! When k_red_to_xyz is not diagonal the problem becomes finding the closest face of the parallelipipid, which is what this
-        !! routine computes. 
-
-        implicit none
-
-        class(FFT_grid_t) :: self
-        real(dp) :: k_red_to_xyz(3, 3)
-        logical, optional :: verbose
-
-        real(dp) :: corners_xyz(8, 3)
-
-        real(dp) :: faces_xyz(6, 4, 3)
-
-        real(dp) :: dist_to_face(6)
-
-        integer :: f
-
-        real(dp) :: basis_vecs(2, 3)
-
-        real(dp) :: p(3)
-        real(dp) :: p_perp(3)
-
-        integer :: n_grid(3)
-
-        if ( verbose ) then
-
-            print*, 'Finding q_max for FFT...'
-            print*
-
-        end if
-
-        n_grid = self%n_grid
-
-        corners_xyz(1, :) = matmul( k_red_to_xyz, [ -n_grid(1), -n_grid(2), -n_grid(3) ] )/2.0_dp
-        corners_xyz(2, :) = matmul( k_red_to_xyz, [ -n_grid(1), -n_grid(2),  n_grid(3) ] )/2.0_dp
-        corners_xyz(3, :) = matmul( k_red_to_xyz, [ -n_grid(1),  n_grid(2), -n_grid(3) ] )/2.0_dp
-        corners_xyz(4, :) = matmul( k_red_to_xyz, [  n_grid(1), -n_grid(2), -n_grid(3) ] )/2.0_dp
-        corners_xyz(5, :) = matmul( k_red_to_xyz, [ -n_grid(1),  n_grid(2),  n_grid(3) ] )/2.0_dp
-        corners_xyz(6, :) = matmul( k_red_to_xyz, [  n_grid(1), -n_grid(2),  n_grid(3) ] )/2.0_dp
-        corners_xyz(7, :) = matmul( k_red_to_xyz, [  n_grid(1),  n_grid(2), -n_grid(3) ] )/2.0_dp
-        corners_xyz(8, :) = matmul( k_red_to_xyz, [  n_grid(1),  n_grid(2),  n_grid(3) ] )/2.0_dp
-
-        ! face 1, [1, 2, 3, 4]
-        faces_xyz(1, 1, :) = corners_xyz(1, :)
-        faces_xyz(1, 2, :) = corners_xyz(2, :)
-        faces_xyz(1, 3, :) = corners_xyz(3, :)
-        faces_xyz(1, 4, :) = corners_xyz(4, :)
-
-        ! face 2, [2, 4, 5, 8]
-        faces_xyz(2, 1, :) = corners_xyz(2, :)
-        faces_xyz(2, 2, :) = corners_xyz(4, :)
-        faces_xyz(2, 3, :) = corners_xyz(7, :)
-        faces_xyz(2, 4, :) = corners_xyz(8, :)
-
-        ! face 3, [1, 2, 5, 8]
-        faces_xyz(3, 1, :) = corners_xyz(1, :)
-        faces_xyz(3, 2, :) = corners_xyz(2, :)
-        faces_xyz(3, 3, :) = corners_xyz(5, :)
-        faces_xyz(3, 4, :) = corners_xyz(8, :)
-
-        ! face 4, [1, 3, 5, 6]
-        faces_xyz(4, 1, :) = corners_xyz(1, :)
-        faces_xyz(4, 2, :) = corners_xyz(3, :)
-        faces_xyz(4, 3, :) = corners_xyz(5, :)
-        faces_xyz(4, 4, :) = corners_xyz(6, :)
-
-        ! face 5, [5, 6, 7, 8]
-        faces_xyz(5, 1, :) = corners_xyz(5, :)
-        faces_xyz(5, 2, :) = corners_xyz(6, :)
-        faces_xyz(5, 3, :) = corners_xyz(7, :)
-        faces_xyz(5, 4, :) = corners_xyz(8, :)
-
-        ! face 6, [2, 4, 6, 7]
-        faces_xyz(6, 1, :) = corners_xyz(2, :)
-        faces_xyz(6, 2, :) = corners_xyz(4, :)
-        faces_xyz(6, 3, :) = corners_xyz(6, :)
-        faces_xyz(6, 4, :) = corners_xyz(7, :)
-
-        do f = 1, 6
-
-            !! shift coordinates to first corner
-            p = -faces_xyz(f, 1, :)
-
-            !! define the basis vectors of the plane
-            basis_vecs(1, :) = ( faces_xyz(f, 2, :) - faces_xyz(f, 1, :) ) / norm2( faces_xyz(f, 2, :) - faces_xyz(f, 1, :) )
-            basis_vecs(2, :) = ( faces_xyz(f, 3, :) - faces_xyz(f, 1, :) ) / norm2( faces_xyz(f, 3, :) - faces_xyz(f, 1, :) )
-
-            !! get magnitude of p perpendicular to face
-            p_perp = p - basis_vecs(1, :)*dot_product(basis_vecs(1, :), p) - basis_vecs(2, :)*dot_product(basis_vecs(2, :), p)
-            
-            dist_to_face(f) = norm2(p_perp)
-
-        end do
-
-        self%q_max = minval(dist_to_face)
 
     end subroutine
 
