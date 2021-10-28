@@ -73,6 +73,9 @@ All of the output data from an EXCEED-DM run.
 - `tff_id` - int
     - Dim : [2]
     - Transition form factor ID.
+- `rhoX` - real - \( \rho_\chi \)
+    - Dark matter density
+    - Units : \( \text{GeV} \; \text{cm}^{-3} \)
 
 ## experiment
 
