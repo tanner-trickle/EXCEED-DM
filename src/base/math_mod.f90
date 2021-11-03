@@ -292,12 +292,12 @@ contains
 
     end function
 
-    function get_max_r_inside_parallepipid(n_grid, red_to_xyz, verbose) result ( r_max )
+    function get_max_r_inside_parallelepiped(n_grid, red_to_xyz, verbose) result ( r_max )
         !* Given a cube of points in reduced coordinates, find the largest sphere which sits inside the parallelipipid in xyz
         !coordinates. The 8 corners of the parallelipipid are related to the 8 corners in reduced coordinates by the transformation
         !matrix, `red_to_xyz`. 
         !
-        ! This function is useful in (at least) two settings:
+        ! This function is useful for:
         !
         ! 1) Finding the maximum \( q \) an FFT is "consistent" for.
         !
@@ -311,10 +311,6 @@ contains
         ! However all grids larger than grid 1 will contain all \( q \le N/2 \) and therefore in this example `r_max` \( = N/2).
         ! More generally (3d, `red_to_xyz` \( \neq \mathbf{1} \)) `q_max` corresponds to `r_max` when the `red_to_xyz`
         ! matrix is set to `k_red_to_xyz`, and `n_grid` is the size of the FFT `<FFT_grid_t>%n_grid`.  
-        !
-        ! 2) Finding the maximum \( q \) for which all scattering transitions are restricted to within the 1BZ, `q_max_1BZ`.
-        !
-        ! Here `n_grid = [1, 1, 1]`, and `red_to_xyz` \( \rightarrow \) `k_red_to_xyz`.
 
         implicit none
 
@@ -325,7 +321,7 @@ contains
         real(dp) :: r_max
 
         real(dp) :: corners_xyz(8, 3)
-        real(dp) :: faces_xyz(6, 4, 3)
+        real(dp) :: faces_xyz(6, 3, 3)
         real(dp) :: dist_to_face(6)
 
         integer :: f
@@ -336,49 +332,43 @@ contains
         real(dp) :: face_to_origin(3)
 
         corners_xyz(1, :) = matmul( red_to_xyz, [ -n_grid(1), -n_grid(2), -n_grid(3) ] )/2.0_dp
-        corners_xyz(2, :) = matmul( red_to_xyz, [ -n_grid(1), -n_grid(2),  n_grid(3) ] )/2.0_dp
-        corners_xyz(3, :) = matmul( red_to_xyz, [ -n_grid(1),  n_grid(2), -n_grid(3) ] )/2.0_dp
-        corners_xyz(4, :) = matmul( red_to_xyz, [  n_grid(1), -n_grid(2), -n_grid(3) ] )/2.0_dp
-        corners_xyz(5, :) = matmul( red_to_xyz, [ -n_grid(1),  n_grid(2),  n_grid(3) ] )/2.0_dp
-        corners_xyz(6, :) = matmul( red_to_xyz, [  n_grid(1), -n_grid(2),  n_grid(3) ] )/2.0_dp
-        corners_xyz(7, :) = matmul( red_to_xyz, [  n_grid(1),  n_grid(2), -n_grid(3) ] )/2.0_dp
-        corners_xyz(8, :) = matmul( red_to_xyz, [  n_grid(1),  n_grid(2),  n_grid(3) ] )/2.0_dp
+        corners_xyz(2, :) = matmul( red_to_xyz, [  n_grid(1), -n_grid(2), -n_grid(3) ] )/2.0_dp
+        corners_xyz(3, :) = matmul( red_to_xyz, [  n_grid(1), -n_grid(2),  n_grid(3) ] )/2.0_dp
+        corners_xyz(4, :) = matmul( red_to_xyz, [  -n_grid(1), -n_grid(2), n_grid(3) ] )/2.0_dp
+        corners_xyz(5, :) = matmul( red_to_xyz, [ -n_grid(1),  n_grid(2),  -n_grid(3) ] )/2.0_dp
+        corners_xyz(6, :) = matmul( red_to_xyz, [  n_grid(1), n_grid(2),  -n_grid(3) ] )/2.0_dp
+        corners_xyz(7, :) = matmul( red_to_xyz, [  n_grid(1),  n_grid(2), n_grid(3) ] )/2.0_dp
+        corners_xyz(8, :) = matmul( red_to_xyz, [  -n_grid(1),  n_grid(2),  n_grid(3) ] )/2.0_dp
 
-        ! face 1, [1, 2, 3, 4]
+        ! face 1, [1, 4, 3, 2]
         faces_xyz(1, 1, :) = corners_xyz(1, :)
-        faces_xyz(1, 2, :) = corners_xyz(2, :)
-        faces_xyz(1, 3, :) = corners_xyz(3, :)
-        faces_xyz(1, 4, :) = corners_xyz(4, :)
+        faces_xyz(1, 2, :) = corners_xyz(4, :)
+        faces_xyz(1, 3, :) = corners_xyz(2, :)
 
-        ! face 2, [2, 4, 5, 8]
-        faces_xyz(2, 1, :) = corners_xyz(2, :)
-        faces_xyz(2, 2, :) = corners_xyz(4, :)
-        faces_xyz(2, 3, :) = corners_xyz(7, :)
-        faces_xyz(2, 4, :) = corners_xyz(8, :)
+        ! face 2, [1, 5, 8, 4]
+        faces_xyz(2, 1, :) = corners_xyz(1, :)
+        faces_xyz(2, 2, :) = corners_xyz(5, :)
+        faces_xyz(2, 3, :) = corners_xyz(4, :)
 
-        ! face 3, [1, 2, 5, 8]
-        faces_xyz(3, 1, :) = corners_xyz(1, :)
-        faces_xyz(3, 2, :) = corners_xyz(2, :)
-        faces_xyz(3, 3, :) = corners_xyz(5, :)
-        faces_xyz(3, 4, :) = corners_xyz(8, :)
+        ! face 3, [5, 6, 7, 8]
+        faces_xyz(3, 1, :) = corners_xyz(5, :)
+        faces_xyz(3, 2, :) = corners_xyz(6, :)
+        faces_xyz(3, 3, :) = corners_xyz(8, :)
 
-        ! face 4, [1, 3, 5, 6]
-        faces_xyz(4, 1, :) = corners_xyz(1, :)
+        ! face 4, [2, 3, 7, 6]
+        faces_xyz(4, 1, :) = corners_xyz(2, :)
         faces_xyz(4, 2, :) = corners_xyz(3, :)
-        faces_xyz(4, 3, :) = corners_xyz(5, :)
-        faces_xyz(4, 4, :) = corners_xyz(6, :)
+        faces_xyz(4, 3, :) = corners_xyz(6, :)
 
-        ! face 5, [5, 6, 7, 8]
-        faces_xyz(5, 1, :) = corners_xyz(5, :)
-        faces_xyz(5, 2, :) = corners_xyz(6, :)
-        faces_xyz(5, 3, :) = corners_xyz(7, :)
-        faces_xyz(5, 4, :) = corners_xyz(8, :)
+        ! face 5, [1, 2, 6, 5]
+        faces_xyz(5, 1, :) = corners_xyz(1, :)
+        faces_xyz(5, 2, :) = corners_xyz(2, :)
+        faces_xyz(5, 3, :) = corners_xyz(5, :)
 
-        ! face 6, [2, 4, 6, 7]
-        faces_xyz(6, 1, :) = corners_xyz(2, :)
+        ! face 6, [3, 4, 8, 7]
+        faces_xyz(6, 1, :) = corners_xyz(3, :)
         faces_xyz(6, 2, :) = corners_xyz(4, :)
-        faces_xyz(6, 3, :) = corners_xyz(6, :)
-        faces_xyz(6, 4, :) = corners_xyz(7, :)
+        faces_xyz(6, 3, :) = corners_xyz(7, :)
 
         do f = 1, 6
 
@@ -399,6 +389,60 @@ contains
         end do
 
         r_max = minval(dist_to_face)
+
+    end function
+
+    function get_q_max_1BZ(k_red_to_xyz, verbose) result ( q_max )
+        !* Given a reduce to xyz transformation matrix for points in k-space, `k_red_to_xyz`,
+        ! compute the radius of the largest sphere which can fit inside, `q_max`.
+
+        implicit none
+
+        real(dp) :: k_red_to_xyz(3, 3)
+
+        logical, optional :: verbose
+
+        real(dp) :: q_max
+
+        real(dp) :: dist_to_nearest_lattice_pts(26)
+
+        real(dp) :: k_vec_xyz(3)
+        real(dp) :: k_mag
+        real(dp) :: k_mag_min
+
+        integer :: i, j, k
+
+        do i = -1, 1
+            do j = -1, 1
+                do k = -1, 1
+
+                    if ( ( i /= 0 ) .and. ( j /= 0 ) .and. ( k /= 0 ) ) then
+
+                        k_vec_xyz = matmul(k_red_to_xyz, 1.0_dp*[i, j, k])
+
+                        k_mag = norm2(k_vec_xyz)
+
+                        if ( ( i == -1 ) .and. ( j == -1 ) .and. ( k == -1 ) ) then
+
+                            k_mag_min = k_mag
+
+                        else
+
+                            if ( k_mag <= k_mag_min ) then
+
+                                k_mag_min = k_mag
+
+                            end if
+
+                        end if
+
+                    end if
+
+                end do
+            end do
+        end do
+
+        q_max = k_mag_min/2.0_dp
 
     end function
 

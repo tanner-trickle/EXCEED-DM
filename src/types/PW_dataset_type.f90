@@ -393,7 +393,7 @@ contains
             self%b_vecs = inv_Ang_to_eV*self%b_vecs_A
             self%k_red_to_xyz = transpose(self%b_vecs)
 
-            self%q_max_1BZ = get_max_r_inside_parallepipid([1, 1, 1], self%k_red_to_xyz, verbose = verbose) 
+            self%q_max_1BZ = get_q_max_1BZ(self%k_red_to_xyz, verbose = verbose) 
 
             ! convert reduced coordinates to xyz
             allocate(self%G_grid_xyz(self%n_G, 3))
