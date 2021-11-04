@@ -501,7 +501,10 @@ contains
         integer :: n_E, n_q, n_q_theta, n_q_phi
         real(dp) :: E_width, q_width
 
+        logical :: anis_bool = .FALSE.
+
         complex(dp), allocatable :: screen_mat(:, :, :, :)
+        complex(dp), allocatable :: anis_screen_mat(:, :, :, :, :, :)
 
         call self%load_in_med_scr_nml(io_files%nml_input_filename, verbose = verbose)
 
@@ -552,6 +555,8 @@ contains
                 E_width = self%E_width
                 q_width = self%q_width
 
+                anis_bool = self%anisotropic_screen
+
             end if
 
             call MPI_Bcast(n_E, 1, MPI_INTEGER, root_process,&
@@ -568,6 +573,9 @@ contains
             call MPI_Bcast(q_width, 1, MPI_DOUBLE, root_process,&
               MPI_COMM_WORLD, err)
 
+            call MPI_Bcast(anis_bool, 1, MPI_LOGICAL, root_process,&
+              MPI_COMM_WORLD, err)
+
             if ( proc_id /= root_process ) then
 
                 self%n_E = n_E
@@ -578,26 +586,75 @@ contains
                 self%E_width = E_width
                 self%q_width = q_width
 
-                !! allocate screen_mat
-                allocate(self%numeric_screen_mat(self%n_E, &
-                    self%n_q, self%n_q_theta, self%n_q_phi))
+                self%anisotropic_screen = anis_bool
+
+                if ( self%anisotropic_screen ) then
+
+                    allocate(self%numeric_anisotropic_screen_mat(&
+                                    self%n_E,&
+                                    self%n_q,&
+                                    self%n_q_theta,&
+                                    self%n_q_phi,&
+                                    3, 3))
+
+                else
+
+                    ! allocate screen_mat
+                    allocate(self%numeric_screen_mat(self%n_E, &
+                        self%n_q, self%n_q_theta, self%n_q_phi))
+
+                end if
+
 
             end if
 
-            allocate(screen_mat(n_E, n_q, n_q_theta, n_q_phi))
+            if ( self%anisotropic_screen ) then
+
+                allocate(anis_screen_mat(n_E, n_q, n_q_theta, n_q_phi, 3, 3))
+
+            else
+
+                allocate(screen_mat(n_E, n_q, n_q_theta, n_q_phi))
+
+            end if
 
             if ( proc_id == root_process ) then
 
-                screen_mat = self%numeric_screen_mat
+                if ( self%anisotropic_screen ) then
+
+                    anis_screen_mat = self%numeric_anisotropic_screen_mat
+
+                else
+
+                    screen_mat = self%numeric_screen_mat
+
+                end if
 
             end if
 
-            call MPI_Bcast(screen_mat, size(screen_mat), MPI_DOUBLE_COMPLEX, &
-                root_process, MPI_COMM_WORLD, err)
+            if ( self%anisotropic_screen ) then
+
+                call MPI_Bcast(anis_screen_mat, size(anis_screen_mat), MPI_DOUBLE_COMPLEX, &
+                    root_process, MPI_COMM_WORLD, err)
+            
+            else
+
+                call MPI_Bcast(screen_mat, size(screen_mat), MPI_DOUBLE_COMPLEX, &
+                    root_process, MPI_COMM_WORLD, err)
+
+            end if
 
             if ( proc_id /= root_process ) then
 
-                self%numeric_screen_mat = screen_mat
+                if ( self%anisotropic_screen ) then
+
+                    self%numeric_anisotropic_screen_mat = anis_screen_mat
+
+                else
+
+                    self%numeric_screen_mat = screen_mat
+
+                end if
 
             end if
 
