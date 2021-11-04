@@ -73,11 +73,22 @@ module in_med_scr_type
         complex(dp), allocatable :: numeric_screen_mat(:, :, :, :)
             !! Dim : [ n_E, n_q, n_q_theta, n_q_phi ]
             !!
-            !! Numerically computed screening matrix, binned in []
+            !! Numerically computed screening matrix, binned in [ \( \omega, q, \theta_q, \phi_q \) ]
             !!
-            !! Numeric screening only.
+            !! Only used when `type = numeric`.
             !!
             !! Units : None
+        complex(dp), allocatable :: numeric_anisotropic_screen_mat(:, :, :, :, :, :)
+            !* Dim : [ n_E, n_q, n_q_theta, n_q_phi, 3, 3 ]
+            !
+            ! Numerically computed anisotropic screening matrix, binned in [ \( \omega, q, \theta_q, \phi_q \) ]. This will be used 
+            ! if the input dielectric file is a 3 \( \times \) 3 matrix in each bin.
+            !
+            ! Only used when `type = numeric`.
+            !
+            ! Units : None
+        logical :: anisotropic_screen = .FALSE.
+            !!Flag to check whether the loaded dielectric is a matrix or scalar quantity. If matrix -> True, if scalar -> False.
 
         contains
 
@@ -334,7 +345,7 @@ contains
     end subroutine
 
     subroutine load_computed_dielectric(self, filename, verbose)
-        !! Load the pre computed dielectric.
+        !! Load the pre-computed dielectric.
 
         use hdf5
         use h5lt
@@ -353,10 +364,14 @@ contains
 
         integer(HSIZE_T) :: dims1(1) = [1]
         integer(HSIZE_T) :: dims4(4)
+        integer(HSIZE_T) :: dims6(6)
+
+        integer :: wfc_data_rank
 
         integer :: error
 
         real(dp), allocatable :: dielectric_buff(:, :, :, :)
+        real(dp), allocatable :: anisotropic_dielectric_buff(:, :, :, :, :, :)
 
         if ( verbose ) then
             print*, 'Loading the dielectric from file...'
@@ -386,22 +401,52 @@ contains
             call h5ltread_dataset_double_f(file_id, 'bins_dielectric/q_width',&
                 self%q_width, dims1, error)
 
-            dims4 = [self%n_E, self%n_q, self%n_q_theta, self%n_q_phi]
+            ! get the dimension of the dielectric dataset
+            call h5ltget_dataset_ndims_f(file_id, 'dielectric/dielectric_r', wfc_data_rank, error)
 
-            allocate(dielectric_buff(self%n_E, self%n_q, self%n_q_theta, self%n_q_phi))
-            allocate(self%numeric_screen_mat(self%n_E, self%n_q, self%n_q_theta, self%n_q_phi))
+            if ( wfc_data_rank == 4 ) then
 
-            self%numeric_screen_mat = (0.0_dp, 0.0_dp)
+                dims4 = [self%n_E, self%n_q, self%n_q_theta, self%n_q_phi]
 
-            call h5ltread_dataset_double_f(file_id, 'dielectric/dielectric_r',&
-                dielectric_buff, dims4, error)
+                allocate(dielectric_buff(self%n_E, self%n_q, self%n_q_theta, self%n_q_phi))
+                allocate(self%numeric_screen_mat(self%n_E, self%n_q, self%n_q_theta, self%n_q_phi))
 
-            self%numeric_screen_mat = self%numeric_screen_mat + dielectric_buff
+                self%numeric_screen_mat = (0.0_dp, 0.0_dp)
 
-            call h5ltread_dataset_double_f(file_id, 'dielectric/dielectric_c',&
-                dielectric_buff, dims4, error)
+                call h5ltread_dataset_double_f(file_id, 'dielectric/dielectric_r',&
+                    dielectric_buff, dims4, error)
 
-            self%numeric_screen_mat = self%numeric_screen_mat + ii*dielectric_buff
+                self%numeric_screen_mat = self%numeric_screen_mat + dielectric_buff
+
+                call h5ltread_dataset_double_f(file_id, 'dielectric/dielectric_c',&
+                    dielectric_buff, dims4, error)
+
+                self%numeric_screen_mat = self%numeric_screen_mat + ii*dielectric_buff
+
+            else
+
+                self%anisotropic_screen = .TRUE.
+
+                ! load the anisotropic dielectric
+
+                dims6 = [self%n_E, self%n_q, self%n_q_theta, self%n_q_phi, 3, 3]
+
+                allocate(anisotropic_dielectric_buff(self%n_E, self%n_q, self%n_q_theta, self%n_q_phi, 3, 3))
+                allocate(self%numeric_anisotropic_screen_mat(self%n_E, self%n_q, self%n_q_theta, self%n_q_phi, 3, 3))
+
+                self%numeric_anisotropic_screen_mat = (0.0_dp, 0.0_dp)
+
+                call h5ltread_dataset_double_f(file_id, 'dielectric/dielectric_r',&
+                    anisotropic_dielectric_buff, dims6, error)
+
+                self%numeric_anisotropic_screen_mat = self%numeric_anisotropic_screen_mat + anisotropic_dielectric_buff
+
+                call h5ltread_dataset_double_f(file_id, 'dielectric/dielectric_c',&
+                    anisotropic_dielectric_buff, dims6, error)
+
+                self%numeric_anisotropic_screen_mat = self%numeric_anisotropic_screen_mat + ii*anisotropic_dielectric_buff
+
+            end if
 
             call h5fclose_f(file_id, error)
             call h5close_f(error)
@@ -601,8 +646,25 @@ contains
                  ( q_theta_bin <= self%n_q_theta ) .and. &
                  ( q_phi_bin <= self%n_q_phi ) ) then
 
-                scr = abs( self%numeric_screen_mat(w_bin, &
-                    q_bin, q_theta_bin, q_phi_bin) )
+                if ( self%anisotropic_screen ) then
+
+                    scr = abs(& 
+                                dot_product(q_hat,&
+                                        matmul(self%numeric_anisotropic_screen_mat(&
+                                                    w_bin,& 
+                                                    q_bin,& 
+                                                    q_theta_bin,& 
+                                                    q_phi_bin, :, :), q_hat&
+                                                )&
+                                        )&
+                                )
+                else
+
+                    scr = abs( self%numeric_screen_mat(w_bin, &
+                        q_bin, q_theta_bin, q_phi_bin) )
+
+                end if
+
 
             end if
 
