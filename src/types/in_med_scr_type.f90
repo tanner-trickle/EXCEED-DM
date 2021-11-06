@@ -695,14 +695,16 @@ contains
 
             w_bin = 1 + floor(omega/self%E_width)
             q_bin = 1 + floor(q_mag/self%q_width)
-            q_theta_bin = 1 + floor(q_theta/(pi/max(1.0_dp, 1.0_dp*self%n_q_theta)))
-            q_phi_bin = 1 + floor(q_phi/(2.0_dp*pi/max(1.0_dp, 1.0_dp*self%n_q_phi)))
+            q_theta_bin = Q_func(q_theta, 0.0_dp,&
+                pi/max(1.0_dp, 1.0_dp*self%n_q_theta), self%n_q_theta)
+            q_phi_bin = Q_func(q_phi, 0.0_dp,&
+                2.0_dp*pi/max(1.0_dp, 1.0_dp*self%n_q_phi), self%n_q_phi)
 
             if ( ( w_bin <= self%n_E ) .and. &
                  ( q_bin <= self%n_q ) .and. & 
                  ( q_theta_bin <= self%n_q_theta ) .and. &
                  ( q_phi_bin <= self%n_q_phi ) ) then
-
+                
                 if ( self%anisotropic_screen ) then
 
                     scr = abs(& 
@@ -715,6 +717,7 @@ contains
                                                 )&
                                         )&
                                 )
+
                 else
 
                     scr = abs( self%numeric_screen_mat(w_bin, &
@@ -724,6 +727,18 @@ contains
 
 
             end if
+
+        end if
+
+        if ( scr < 10.0_dp ) then
+
+            print*, 'scr < 10!'
+            print*, 'w_bin = ', w_bin
+            print*, 'q_bin = ', q_bin
+            print*, 'q_theta_bin = ', q_theta_bin
+            print*, 'q_phi_bin = ', q_phi_bin
+            print*, 'scr = ', scr
+            print*
 
         end if
 
