@@ -730,18 +730,6 @@ contains
 
         end if
 
-        if ( scr < 10.0_dp ) then
-
-            print*, 'scr < 10!'
-            print*, 'w_bin = ', w_bin
-            print*, 'q_bin = ', q_bin
-            print*, 'q_theta_bin = ', q_theta_bin
-            print*, 'q_phi_bin = ', q_phi_bin
-            print*, 'scr = ', scr
-            print*
-
-        end if
-
     end function
 
     function analytic_screening(self, q_vec, omega) result( scr )
