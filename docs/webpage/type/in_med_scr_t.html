@@ -74,8 +74,11 @@
         
         
             <li><a href="../program/exdm.html">Program</a></li>
-      
+               
+        
+        
             </ul>
+        
             </li>
 
 
@@ -94,6 +97,8 @@
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../program/exdm.html">Program</a></li>
+
+
 
           </ul>
         
@@ -127,12 +132,13 @@
      
      
      
+     
     
     
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title="<p> 7.0% of total for derived types.</p>Including implementation: 306 statements,  9.2% of total for derived types.">24 statements</a>
+    title="<p> 7.6% of total for derived types.</p>Including implementation: 353 statements, 10.4% of total for derived types.">26 statements</a>
      </li> 
      
      
@@ -203,6 +209,10 @@
       
       <a class="list-group-item" href="../type/in_med_scr_t.html#variable-numeric_screen_mat">numeric_screen_mat</a>
       
+      <a class="list-group-item" href="../type/in_med_scr_t.html#variable-numeric_anisotropic_screen_mat">numeric_anisotropic_screen_mat</a>
+      
+      <a class="list-group-item" href="../type/in_med_scr_t.html#variable-anisotropic_screen">anisotropic_screen</a>
+      
     </div>
   </div>
 </div>
@@ -260,7 +270,7 @@
     <div class="col-md-9" id='text'>
       <h2>type, public :: in_med_scr_t</h2>
     <p>Collection of parameters defining how the DM-electron scattering rate
- should be screened.</p>
+should be screened.</p>
     
     
     
@@ -303,6 +313,10 @@
       <a class="list-group-item" href="../type/in_med_scr_t.html#variable-q_width~3">q_width</a>
       
       <a class="list-group-item" href="../type/in_med_scr_t.html#variable-numeric_screen_mat">numeric_screen_mat</a>
+      
+      <a class="list-group-item" href="../type/in_med_scr_t.html#variable-numeric_anisotropic_screen_mat">numeric_anisotropic_screen_mat</a>
+      
+      <a class="list-group-item" href="../type/in_med_scr_t.html#variable-anisotropic_screen">anisotropic_screen</a>
       
     </div>
   </div>
@@ -572,9 +586,41 @@
   <td>public,</td>
   <td>allocatable</td><td>::</td>
   <td><strong>numeric_screen_mat</strong>(:,:,:,:)</td><td></td><td></td><td><p>Dim : [ n_E, n_q, n_q_theta, n_q_phi ]</p>
-<p>Numerically computed screening matrix, binned in []</p>
-<p>Numeric screening only.</p>
+<p>Numerically computed screening matrix, binned in [ <script type="math/tex"> \omega, q, \theta_q, \phi_q </script> ]</p>
+<p>Only used when <code>type = numeric</code>.</p>
 <p>Units : None</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-numeric_anisotropic_screen_mat"></span>complex(kind=dp),</td>
+  
+  <td>public,</td>
+  <td>allocatable</td><td>::</td>
+  <td><strong>numeric_anisotropic_screen_mat</strong>(:,:,:,:,:,:)</td><td></td><td></td><td><p>Dim : [ n_E, n_q, n_q_theta, n_q_phi, 3, 3 ]</p>
+<p>Numerically computed anisotropic screening matrix, binned in [ <script type="math/tex"> \omega, q, \theta_q, \phi_q </script> ]. This will be used 
+if the input dielectric file is a 3 <script type="math/tex"> \times </script> 3 matrix in each bin.</p>
+<p>Only used when <code>type = numeric</code>.</p>
+<p>Units : None</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-anisotropic_screen"></span>logical,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>anisotropic_screen</strong></td><td> =</td><td>.FALSE.</td><td><p>Flag to check whether the loaded dielectric is a matrix or scalar quantity. If matrix -&gt; True, if scalar -&gt; False.</p></td>
   
 </tr>
 
@@ -1056,8 +1102,8 @@ public subroutine <a href='../proc/load_in_med_scr.html'>load_in_med_scr</a>(sel
 
 
 <p>Loads the in medium screening parameters. If the user specifies
- that the screening should be computed numerically then <code>exdm_dielectric</code> will
- be run.</p><a href="../proc/load_in_med_scr.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+that the screening should be computed numerically then <code>exdm_dielectric</code> will
+be run.</p>
     
     <h4>Arguments</h4>
     
@@ -1423,7 +1469,7 @@ public subroutine <a href='../proc/load_computed_dielectric.html'>load_computed_
 
 
 
-<p>Load the pre computed dielectric.</p>
+<p>Load the pre-computed dielectric.</p>
     
     <h4>Arguments</h4>
     
@@ -1512,16 +1558,17 @@ public subroutine <a href='../proc/load_computed_dielectric.html'>load_computed_
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
-                                          </p></div>
-        <div class="col-xs-6 col-md-4 col-md-push-4">
+        <div class="col-xs-6 col-md-6"><p>EXCEED-DM was developed by Tanner Trickle<br>&copy; 2021 
+                                          </p>
+        </div>
+        <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-10-27 18:33  
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+             on 2021-11-15 12:59  
+            
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

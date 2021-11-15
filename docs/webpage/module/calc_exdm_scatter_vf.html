@@ -74,8 +74,11 @@
         
         
             <li><a href="../program/exdm.html">Program</a></li>
-      
+               
+        
+        
             </ul>
+        
             </li>
 
 
@@ -94,6 +97,8 @@
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../program/exdm.html">Program</a></li>
+
+
 
           </ul>
         
@@ -123,6 +128,7 @@
   <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
      
      
      
@@ -221,33 +227,33 @@
       <li class="list-group-item">
   <ul class="list-inline">
     
-    <li><a href='../module/prec.html'>prec</a></li>
-    
-    <li><a href='../module/constants.html'>constants</a></li>
-    
-    <li><a href='../module/units.html'>units</a></li>
+    <li><a href='../module/pw_dataset_type.html'>PW_dataset_type</a></li>
     
     <li><a href='../module/math_mod.html'>math_mod</a></li>
+    
+    <li><a href='../module/expt_type.html'>expt_type</a></li>
+    
+    <li><a href='../module/prec.html'>prec</a></li>
     
     <li><a href='../module/binned_scatter_rate_type.html'>binned_scatter_rate_type</a></li>
     
     <li><a href='../module/bins_scatter_type.html'>bins_scatter_type</a></li>
     
-    <li><a href='../module/expt_type.html'>expt_type</a></li>
-    
-    <li><a href='../module/material_type.html'>material_type</a></li>
+    <li><a href='../module/numerics_scatter_vf.html'>numerics_scatter_vf</a></li>
     
     <li><a href='../module/dm_model_type.html'>dm_model_type</a></li>
     
-    <li><a href='../module/pw_dataset_type.html'>PW_dataset_type</a></li>
-    
-    <li><a href='../module/in_med_scr_type.html'>in_med_scr_type</a></li>
+    <li><a href='../module/constants.html'>constants</a></li>
     
     <li><a href='../module/physics_scatter_functions.html'>physics_scatter_functions</a></li>
     
-    <li><a href='../module/transition_form_factor.html'>transition_form_factor</a></li>
+    <li><a href='../module/material_type.html'>material_type</a></li>
     
-    <li><a href='../module/numerics_scatter_vf.html'>numerics_scatter_vf</a></li>
+    <li><a href='../module/units.html'>units</a></li>
+    
+    <li><a href='../module/in_med_scr_type.html'>in_med_scr_type</a></li>
+    
+    <li><a href='../module/transition_form_factor.html'>transition_form_factor</a></li>
     
   </ul>
       </li>
@@ -343,8 +349,8 @@ public subroutine <a href='../proc/exdm_scatter_vf_calc.html'>exdm_scatter_vf_ca
 
 
 <p>Computes the valence to free scattering rate by first computing <script type="math/tex"> \frac{dR}{d \omega} </script>
- for a list of <script type="math/tex"> \omega </script> values, then interpolates and integrates to get the binned rate
- in <code>bins</code>.</p>
+for a list of <script type="math/tex"> \omega </script> values, then interpolates and integrates to get the binned rate
+in <code>bins</code>.</p>
     
     <h4>Arguments</h4>
     
@@ -569,11 +575,11 @@ public subroutine <a href='../proc/vf_interpolate_drdw_to_binned_rate.html'>vf_i
 
 
 <p>Given a list of <script type="math/tex"> \omega_i </script> values, and <script type="math/tex"> \frac{dR}{d \omega} </script> at those values, go through adjacent pairs,
- <script type="math/tex"> [\omega_{i}, \omega_{i + 1}] </script> and <script type="math/tex"> [ \frac{dR}{d \omega}(\omega_{i}), \frac{dR}{d\omega}(\omega_{i + 1})  ] </script>,
- find the power law fit parameter, <script type="math/tex"> \beta </script>, such that 
- <script type="math/tex"> \frac{dR}{d \omega}(\omega_{i + 1}) = \frac{dR}{d \omega}(\omega_i) \left( \frac{\omega_{i + 1}}{\omega_i} \right)^\beta </script>.
- Then integrate this function over each bin, <script type="math/tex"> e </script>, <script type="math/tex"> \Delta R_e = \int_{(e - 1)\Delta E}^{e \Delta E} \frac{dR}{d\omega}
- d\omega </script> for each <script type="math/tex"> i </script>. Note that <script type="math/tex"> \frac{dR}{d\omega} </script> is assumed to be zero for <script type="math/tex"> \omega \notin \omega_i </script>.</p><a href="../proc/vf_interpolate_drdw_to_binned_rate.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+<script type="math/tex"> [\omega_{i}, \omega_{i + 1}] </script> and <script type="math/tex"> [ \frac{dR}{d \omega}(\omega_{i}), \frac{dR}{d\omega}(\omega_{i + 1})  ] </script>,
+find the power law fit parameter, <script type="math/tex"> \beta </script>, such that 
+<script type="math/tex"> \frac{dR}{d \omega}(\omega_{i + 1}) = \frac{dR}{d \omega}(\omega_i) \left( \frac{\omega_{i + 1}}{\omega_i} \right)^\beta </script>.
+Then integrate this function over each bin, <script type="math/tex"> e </script>, <script type="math/tex"> \Delta R_e = \int_{(e - 1)\Delta E}^{e \Delta E} \frac{dR}{d\omega}
+d\omega </script> for each <script type="math/tex"> i </script>. Note that <script type="math/tex"> \frac{dR}{d\omega} </script> is assumed to be zero for <script type="math/tex"> \omega \notin \omega_i </script>.</p><a href="../proc/vf_interpolate_drdw_to_binned_rate.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
     <h4>Arguments</h4>
     
@@ -673,16 +679,17 @@ public subroutine <a href='../proc/vf_interpolate_drdw_to_binned_rate.html'>vf_i
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
-                                          </p></div>
-        <div class="col-xs-6 col-md-4 col-md-push-4">
+        <div class="col-xs-6 col-md-6"><p>EXCEED-DM was developed by Tanner Trickle<br>&copy; 2021 
+                                          </p>
+        </div>
+        <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-10-27 18:33  
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+             on 2021-11-15 12:59  
+            
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

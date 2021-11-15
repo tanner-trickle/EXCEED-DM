@@ -76,8 +76,11 @@ All Types &ndash; EXCEED-DM
         
         
             <li><a href="../program/exdm.html">Program</a></li>
-      
+               
+        
+        
             </ul>
+        
             </li>
 
 
@@ -96,6 +99,8 @@ All Types &ndash; EXCEED-DM
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../program/exdm.html">Program</a></li>
+
+
 
           </ul>
         
@@ -123,30 +128,30 @@ All Types &ndash; EXCEED-DM
 			 </thead><tbody>
 			 
 			   <tr><td><a href='../type/binned_scatter_rate_t.html'>binned_scatter_rate_t</a></td><td><a href='../module/binned_scatter_rate_type.html'>binned_scatter_rate_type</a></td><td>None</td><td><p>Binned scattering rate for each DM mass, mediator form factor, and time of day. Binning is
- in momentum deposition, <script type="math/tex"> q </script>  and energy deposition, <script type="math/tex"> \omega </script> (referred to as <code>E</code> in the code).</p></td></tr>
+in momentum deposition, <script type="math/tex"> q </script>  and energy deposition, <script type="math/tex"> \omega </script> (referred to as <code>E</code> in the code).</p></td></tr>
 			 
 			   <tr><td><a href='../type/bins_dielectric_t.html'>bins_dielectric_t</a></td><td><a href='../module/bins_dielectric_type.html'>bins_dielectric_type</a></td><td>None</td><td><p>Collection of parameters which specify how the dielectric function
- is binned in <script type="math/tex"> q, \theta_q, \phi_q, \omega </script>.</p></td></tr>
+is binned in <script type="math/tex"> q, \theta_q, \phi_q, \omega </script>.</p></td></tr>
 			 
 			   <tr><td><a href='../type/bins_scatter_t.html'>bins_scatter_t</a></td><td><a href='../module/bins_scatter_type.html'>bins_scatter_type</a></td><td>None</td><td><p>Collection of parameters which specify how the DM-electron scattering rate
- is binned in <script type="math/tex"> q, \omega </script>.</p></td></tr>
+is binned in <script type="math/tex"> q, \omega </script>.</p></td></tr>
 			 
 			   <tr><td><a href='../type/control_t.html'>control_t</a></td><td><a href='../module/control_input.html'>control_input</a></td><td>None</td><td><p>Stores all variables associated with the program control.</p></td></tr>
 			 
 			   <tr><td><a href='../type/core_electron_t.html'>core_electron_t</a></td><td><a href='../module/core_electron_type.html'>core_electron_type</a></td><td>None</td><td><p>Information about the core electrons for each atom in the unit cell.
- Contains the configuration information, e.g. number of atoms, number of core
- states for each atom, but also the RHF wave function coefficients to get the
- atomic wave functions, <script type="math/tex"> \psi^\text{atom}_{\kappa, n, l, m} </script>.</p></td></tr>
+Contains the configuration information, e.g. number of atoms, number of core
+states for each atom, but also the RHF wave function coefficients to get the
+atomic wave functions, <script type="math/tex"> \psi^\text{atom}_{\kappa, n, l, m} </script>.</p></td></tr>
 			 
 			   <tr><td><a href='../type/dm_model_t.html'>dm_model_t</a></td><td><a href='../module/dm_model_type.html'>dm_model_type</a></td><td>None</td><td><p>Parameters defining the dark matter (DM) model, i.e. the DM particle and mediator.</p></td></tr>
 			 
 			   <tr><td><a href='../type/expt_t.html'>expt_t</a></td><td><a href='../module/expt_type.html'>expt_type</a></td><td>None</td><td><p>Experimental parameters, e.g. threshold energy, exposure, detector orientation.</p></td></tr>
 			 
 			   <tr><td><a href='../type/fft_grid_t.html'>FFT_grid_t</a></td><td><a href='../module/fft_util.html'>FFT_util</a></td><td>None</td><td><p>Collection of parameters defining the grid the FFT is performed on, 
- and how the FFT should be performed.</p></td></tr>
+and how the FFT should be performed.</p></td></tr>
 			 
 			   <tr><td><a href='../type/in_med_scr_t.html'>in_med_scr_t</a></td><td><a href='../module/in_med_scr_type.html'>in_med_scr_type</a></td><td>None</td><td><p>Collection of parameters defining how the DM-electron scattering rate
- should be screened.</p></td></tr>
+should be screened.</p></td></tr>
 			 
 			   <tr><td><a href='../type/io_files_t.html'>io_files_t</a></td><td><a href='../module/io_input.html'>io_input</a></td><td>None</td><td><p>All input and output filenames.</p></td></tr>
 			 
@@ -165,14 +170,14 @@ All Types &ndash; EXCEED-DM
 			   <tr><td><a href='../type/numerics_scatter_vf_t.html'>numerics_scatter_vf_t</a></td><td><a href='../module/numerics_scatter_vf.html'>numerics_scatter_vf</a></td><td>None</td><td><p>Numerics parameters specific to the valence <script type="math/tex"> \rightarrow </script> free DM-electron scattering rate calculation.</p></td></tr>
 			 
 			   <tr><td><a href='../type/parallel_manager_t.html'>parallel_manager_t</a></td><td><a href='../module/mpi_util.html'>MPI_util</a></td><td>None</td><td><p>Manages indexing the jobs that each processor needs to do and 
- communicates the results to the main/root processor.</p></td></tr>
+communicates the results to the main/root processor.</p></td></tr>
 			 
 			   <tr><td><a href='../type/pw_dataset_t.html'>PW_dataset_t</a></td><td><a href='../module/pw_dataset_type.html'>PW_dataset_type</a></td><td>None</td><td><p>Stores the metadata of the Bloch wave function coefficients in the Fourier basis, 
 <script type="math/tex"> \widetilde{u}_{i, \mathbf{k}, \mathbf{G}} </script>, e.g. number of <script type="math/tex"> \mathbf{k} </script> points, <script type="math/tex"> N_\mathbf{k} </script>
  , number of bands, etc and has routines which load the coefficients from an external data file when needed.</p><a href="../type/pw_dataset_t.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../type/width_parameters_t.html'>width_parameters_t</a></td><td><a href='../module/width_parameters_type.html'>width_parameters_type</a></td><td>None</td><td><p>Electron lifetime/widths to use in calculations which require the electronic Green's
- functions (e.g. absorption calculations). width's are parameterized as</p><a href="../type/width_parameters_t.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+functions (e.g. absorption calculations). width's are parameterized as</p><a href="../type/width_parameters_t.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			 </tbody></table>
              
@@ -184,16 +189,17 @@ All Types &ndash; EXCEED-DM
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
-                                          </p></div>
-        <div class="col-xs-6 col-md-4 col-md-push-4">
+        <div class="col-xs-6 col-md-6"><p>EXCEED-DM was developed by Tanner Trickle<br>&copy; 2021 
+                                          </p>
+        </div>
+        <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-10-27 18:33  
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+             on 2021-11-15 12:59  
+            
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

@@ -74,8 +74,11 @@
         
         
             <li><a href="../program/exdm.html">Program</a></li>
-      
+               
+        
+        
             </ul>
+        
             </li>
 
 
@@ -94,6 +97,8 @@
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../program/exdm.html">Program</a></li>
+
+
 
           </ul>
         
@@ -127,12 +132,13 @@
      
      
      
+     
     
     
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title="<p>10.9% of total for derived types.</p>Including implementation: 307 statements,  9.2% of total for derived types.">37 statements</a>
+    title="<p>10.8% of total for derived types.</p>Including implementation: 307 statements,  9.1% of total for derived types.">37 statements</a>
      </li> 
      
      
@@ -498,7 +504,7 @@
   <td><strong>G_grid_red</strong>(:,:)</td><td></td><td></td><td><p>Dim : [n_G, 3]</p>
 <p>G vectors in reduced coordinates.</p>
 <p>Note : This G grid is k-independent and assumes that the <script type="math/tex"> \widetilde{u} </script>'s,
- for each <script type="math/tex"> \mathbf{k} </script>, are defined on the same grid. </p>
+for each <script type="math/tex"> \mathbf{k} </script>, are defined on the same grid. </p>
 <p>Units : None</p></td>
   
 </tr>
@@ -579,7 +585,7 @@
   <td>allocatable</td><td>::</td>
   <td><strong>energy_bands_raw</strong>(:,:)</td><td></td><td></td><td><p>Dim : [n_k, n_bands]</p>
 <p>Electron energy eigenvalues taken straight from the input file, no scissor 
- correction performed.</p>
+correction performed.</p>
 <p>Units : eV </p></td>
   
 </tr>
@@ -675,8 +681,8 @@
   <td>public</td>
   <td></td><td>::</td>
   <td><strong>red_to_xyz</strong>(3,3)</td><td></td><td></td><td><p>Matrix converting reduced cooredinate positions to physical xyz cooredinates
- in eV^(-1) via</p>
-<div class="codehilite"><pre><span></span><code>  x_xyz = matmul(red_to_xyz, x_red)
+in eV^(-1) via</p>
+<div class="codehilite"><pre><span></span><code> x_xyz = matmul(red_to_xyz, x_red)
 </code></pre></div>
 
 <p>red_to_xyz = transpose(a_vecs)</p>
@@ -711,8 +717,8 @@
   <td>public</td>
   <td></td><td>::</td>
   <td><strong>k_red_to_xyz</strong>(3,3)</td><td></td><td></td><td><p>Matrix converting reduced coordinate momentum to physical xyz coordinates
- in eV via</p>
-<div class="codehilite"><pre><span></span><code>  k_xyz = matmul(k_red_to_xyz, k_red)
+in eV via</p>
+<div class="codehilite"><pre><span></span><code> k_xyz = matmul(k_red_to_xyz, k_red)
 </code></pre></div>
 
 <p>k_red_to_xyz = transpose(b_vecs)</p>
@@ -794,7 +800,7 @@
   <td></td><td>::</td>
   <td><strong>spin_degen</strong></td><td> =</td><td>2.0_dp</td><td><p>Spin degeneracy factor.</p>
 <p>SI wave functions - 2
- SD wave functions - 1</p></td>
+SD wave functions - 1</p></td>
   
 </tr>
 
@@ -1178,7 +1184,7 @@ public subroutine <a href='../proc/load_wfc_ft_ik_no_spin.html'>load_wfc_FT_ik_n
 
 
 <p>Loads the spin independent Bloch coefficients, <script type="math/tex"> \widetilde{u}_{ i, \mathbf{k}, \mathbf{G}} </script>
- for a given <script type="math/tex"> i, \mathbf{k} </script>.</p>
+for a given <script type="math/tex"> i, \mathbf{k} </script>.</p>
     
     <h4>Arguments</h4>
     
@@ -1296,7 +1302,7 @@ public subroutine <a href='../proc/load_wfc_ik_expanded_no_spin.html'>load_wfc_i
 
 
 <p>Loads the spin independent wave function coefficients, <script type="math/tex"> \widetilde{u} </script> 
- for a given <script type="math/tex"> i, \mathbf{k} </script>, expands (zero-pads), then Fourier transforms them to get <script type="math/tex"> u </script>.</p>
+for a given <script type="math/tex"> i, \mathbf{k} </script>, expands (zero-pads), then Fourier transforms them to get <script type="math/tex"> u </script>.</p>
     
     <h4>Arguments</h4>
     
@@ -1429,7 +1435,7 @@ public subroutine <a href='../proc/load_wfc_ft_ik_spin.html'>load_wfc_FT_ik_spin
 
 
 <p>Loads the spin dependent Bloch coefficients, <script type="math/tex"> \widetilde{u}_{ i, \mathbf{k}, \mathbf{G}, s} </script>
- for a given <script type="math/tex"> i, \mathbf{k} </script>.</p>
+for a given <script type="math/tex"> i, \mathbf{k} </script>.</p>
     
     <h4>Arguments</h4>
     
@@ -1547,7 +1553,7 @@ public subroutine <a href='../proc/load_wfc_ik_expanded_spin.html'>load_wfc_ik_e
 
 
 <p>Loads the spin dependent wave function coefficients, <script type="math/tex"> \widetilde{u} </script> 
- for a given <script type="math/tex"> i, \mathbf{k} </script>, expands (zero-pads), then Fourier transforms them to get <script type="math/tex"> u </script>.</p>
+for a given <script type="math/tex"> i, \mathbf{k} </script>, expands (zero-pads), then Fourier transforms them to get <script type="math/tex"> u </script>.</p>
     
     <h4>Arguments</h4>
     
@@ -1842,16 +1848,17 @@ public subroutine <a href='../proc/do_scissor_correction.html'>do_scissor_correc
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
-                                          </p></div>
-        <div class="col-xs-6 col-md-4 col-md-push-4">
+        <div class="col-xs-6 col-md-6"><p>EXCEED-DM was developed by Tanner Trickle<br>&copy; 2021 
+                                          </p>
+        </div>
+        <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-10-27 18:33  
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+             on 2021-11-15 12:59  
+            
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

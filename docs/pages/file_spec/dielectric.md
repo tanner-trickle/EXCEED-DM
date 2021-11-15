@@ -1,19 +1,27 @@
 title: Dielectric Data File
 author: Tanner Trickle
-date: v0.2.5
+date: v0.2.7
 
-Numerically computed dielectric. Can be used as an input file to screen scattering rate calculations.
+\(\require{mediawiki-texvc}\)
+
+**Filetype**: HDF5
+
+**Extension**: `.h5`, `.hdf5`
+
+**Example**: `./examples/Si/outputs/Si_2x2x2_dielectric.hdf5`
+
+Numerically computed dielectric. Can be used as an input file to screen scattering rate calculations. For isotropic screening only the scalar value needs to be specified in each bin. If a matrix of values is specified a dielectric matrix will be used to screen.
 
 # Groups
 
 ## dielectric
 
 - `dielectric_r`
-    - Dim : [`n_E`, `n_q`, `n_q_theta`, `n_q_phi`]
-    - Real part of the dielectric function, \( \varepsilon \) averaged in \( \mathbf{q}, \omega \) bins.
+    - Dim : [`n_E`, `n_q`, `n_q_theta`, `n_q_phi`] ( or [`n_E`, `n_q`, `n_q_theta`, `n_q_phi`, 3, 3] for anisotropic dielectric)
+    - Real part of the dielectric function, \( \boldsymbol{\varepsilon} \) averaged in \( \mathbf{q}, \omega \) bins.
 - `dielectric_c`
-    - Dim : [`n_E`, `n_q`, `n_q_theta`, `n_q_phi`]
-    - Complex part of the dielectric function, \( \varepsilon \) averaged in \( \mathbf{q}, \omega \) bins.
+    - Dim : [`n_E`, `n_q`, `n_q_theta`, `n_q_phi`] ( or [`n_E`, `n_q`, `n_q_theta`, `n_q_phi`, 3, 3] for anisotropic dielectric)
+    - Complex part of the dielectric function, \( \boldsymbol{\varepsilon} \) averaged in \( \mathbf{q}, \omega \) bins.
 
 ## bins_dielectric
 

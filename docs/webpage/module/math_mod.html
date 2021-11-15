@@ -74,8 +74,11 @@
         
         
             <li><a href="../program/exdm.html">Program</a></li>
-      
+               
+        
+        
             </ul>
+        
             </li>
 
 
@@ -94,6 +97,8 @@
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../program/exdm.html">Program</a></li>
+
+
 
           </ul>
         
@@ -127,12 +132,13 @@
      
      
      
+     
     
     
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 3.1% of total for modules and submodules.">213 statements</a>
+    title=" 3.4% of total for modules and submodules.">236 statements</a>
      </li> 
      
      
@@ -205,7 +211,9 @@
       
       <a class="list-group-item" href="../module/math_mod.html#proc-get_theta">get_theta</a>
       
-      <a class="list-group-item" href="../module/math_mod.html#proc-get_max_r_inside_parallepipid">get_max_r_inside_parallepipid</a>
+      <a class="list-group-item" href="../module/math_mod.html#proc-get_max_r_inside_parallelepiped">get_max_r_inside_parallelepiped</a>
+      
+      <a class="list-group-item" href="../module/math_mod.html#proc-get_q_max_1bz">get_q_max_1BZ</a>
       
     </div>
   </div>
@@ -253,9 +261,9 @@
       <li class="list-group-item">
   <ul class="list-inline">
     
-    <li><a href='../module/prec.html'>prec</a></li>
-    
     <li>special_functions</li>
+    
+    <li><a href='../module/prec.html'>prec</a></li>
     
     <li><a href='../module/constants.html'>constants</a></li>
     
@@ -315,7 +323,9 @@
       
       <a class="list-group-item" href="../module/math_mod.html#proc-get_theta">get_theta</a>
       
-      <a class="list-group-item" href="../module/math_mod.html#proc-get_max_r_inside_parallepipid">get_max_r_inside_parallepipid</a>
+      <a class="list-group-item" href="../module/math_mod.html#proc-get_max_r_inside_parallelepiped">get_max_r_inside_parallelepiped</a>
+      
+      <a class="list-group-item" href="../module/math_mod.html#proc-get_q_max_1bz">get_q_max_1BZ</a>
       
     </div>
   </div>
@@ -498,7 +508,7 @@ public function <a href='../proc/uniform_list.html'>uniform_list</a>(N, x1, x2) 
 
 
 <p>Returns a list of <code>N</code> uniformly distributed numbers between <code>x1</code> and <code>x2</code>,
- including <code>x1</code> and <code>x2</code>.</p><a href="../proc/uniform_list.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+including <code>x1</code> and <code>x2</code>.</p><a href="../proc/uniform_list.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
     <h4>Arguments</h4>
     
@@ -597,7 +607,7 @@ public function <a href='../proc/pauli_spin_matrix.html'>pauli_spin_matrix</a>(i
 
 
 <p>Returns the <script type="math/tex">i</script>th Pauli spin matrix, <script type="math/tex"> \sigma^i</script>. Identity matrix is defined as the
- <script type="math/tex"> 0 </script>th component.</p>
+<script type="math/tex"> 0 </script>th component.</p>
     
     <h4>Arguments</h4>
     
@@ -863,7 +873,7 @@ public function <a href='../proc/generate_uniform_points_on_sphere.html'>generat
 
 <p>Generates an (<code>n_theta</code> <script type="math/tex"> \times </script>
 <code>n_phi</code>) list of <script type="math/tex"> \theta, \phi </script> coordinates
- which are uniformly distributed on the sphere.</p>
+which are uniformly distributed on the sphere.</p>
     
     <h4>Arguments</h4>
     
@@ -1248,8 +1258,8 @@ public function <a href='../proc/get_theta.html'>get_theta</a>(n_hat) result(the
     
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-get_max_r_inside_parallepipid"></span><h3>
-public function <a href='../proc/get_max_r_inside_parallepipid.html'>get_max_r_inside_parallepipid</a>(n_grid, red_to_xyz, verbose) result(r_max)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-get_max_r_inside_parallelepiped"></span><h3>
+public function <a href='../proc/get_max_r_inside_parallelepiped.html'>get_max_r_inside_parallelepiped</a>(n_grid, red_to_xyz, verbose) result(r_max)
     
     
    
@@ -1266,7 +1276,7 @@ public function <a href='../proc/get_max_r_inside_parallepipid.html'>get_max_r_i
 
 <p>Given a cube of points in reduced coordinates, find the largest sphere which sits inside the parallelipipid in xyz
 coordinates. The 8 corners of the parallelipipid are related to the 8 corners in reduced coordinates by the transformation
-matrix, <code>red_to_xyz</code>. </p><a href="../proc/get_max_r_inside_parallepipid.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+matrix, <code>red_to_xyz</code>. </p><a href="../proc/get_max_r_inside_parallelepiped.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
     <h4>Arguments</h4>
     
@@ -1308,6 +1318,90 @@ matrix, <code>red_to_xyz</code>. </p><a href="../proc/get_max_r_inside_parallepi
   
   <td></td><td>::</td>
   <td><strong>red_to_xyz</strong>(3,3)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>logical,</td>
+  <td></td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>verbose</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  
+  
+  
+  
+     <h4>Return Value <small>real(kind=dp)
+  </small></h4>
+  
+    
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-get_q_max_1bz"></span><h3>
+public function <a href='../proc/get_q_max_1bz.html'>get_q_max_1BZ</a>(k_red_to_xyz, verbose) result(q_max)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+
+
+
+
+<p>Given a reduce to xyz transformation matrix for points in k-space, <code>k_red_to_xyz</code>,
+compute the radius of the largest sphere which can fit inside, <code>q_max</code>.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>k_red_to_xyz</strong>(3,3)</td><td></td>
   
 </tr>
 
@@ -1531,16 +1625,17 @@ public subroutine <a href='../proc/calc_eig_system_33.html'>calc_eig_system_33</
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
-                                          </p></div>
-        <div class="col-xs-6 col-md-4 col-md-push-4">
+        <div class="col-xs-6 col-md-6"><p>EXCEED-DM was developed by Tanner Trickle<br>&copy; 2021 
+                                          </p>
+        </div>
+        <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-10-27 18:33  
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+             on 2021-11-15 12:59  
+            
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

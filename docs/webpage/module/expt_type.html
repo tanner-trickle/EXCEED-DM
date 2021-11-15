@@ -74,8 +74,11 @@
         
         
             <li><a href="../program/exdm.html">Program</a></li>
-      
+               
+        
+        
             </ul>
+        
             </li>
 
 
@@ -94,6 +97,8 @@
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../program/exdm.html">Program</a></li>
+
+
 
           </ul>
         
@@ -127,12 +132,13 @@
      
      
      
+     
     
     
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 1.9% of total for modules and submodules.">127 statements</a>
+    title=" 1.8% of total for modules and submodules.">127 statements</a>
      </li> 
      
      
@@ -356,7 +362,7 @@
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>E_threshold</strong></td><td> =</td><td>0.0_dp</td><td><p>Energy threshold. Only events which deposit energy omega &gt;= E_threshold will be considered.</p><a href="None" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+  <td><strong>E_threshold</strong></td><td> =</td><td>0.0_dp</td><td><p>Energy threshold. Only events which deposit energy omega &gt;= E_threshold will be considered.</p><a href="../type/expt_t.html#variable-e_threshold" class="pull-right"><emph>Read more&hellip;</emph></a></td>
   
 </tr>
 
@@ -370,7 +376,7 @@
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>m_T_kg</strong></td><td> =</td><td>1.0_dp</td><td><p>Mass of the target</p><a href="None" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+  <td><strong>m_T_kg</strong></td><td> =</td><td>1.0_dp</td><td><p>Mass of the target</p><a href="../type/expt_t.html#variable-m_t_kg" class="pull-right"><emph>Read more&hellip;</emph></a></td>
   
 </tr>
 
@@ -384,7 +390,7 @@
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>m_T</strong></td><td></td><td></td><td><p>Mass of the target</p><a href="None" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+  <td><strong>m_T</strong></td><td></td><td></td><td><p>Mass of the target</p><a href="../type/expt_t.html#variable-m_t" class="pull-right"><emph>Read more&hellip;</emph></a></td>
   
 </tr>
 
@@ -398,7 +404,7 @@
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>exposure_yr</strong></td><td> =</td><td>1.0_dp</td><td><p>Total exposure of the experiment</p><a href="None" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+  <td><strong>exposure_yr</strong></td><td> =</td><td>1.0_dp</td><td><p>Total exposure of the experiment</p><a href="../type/expt_t.html#variable-exposure_yr" class="pull-right"><emph>Read more&hellip;</emph></a></td>
   
 </tr>
 
@@ -412,7 +418,7 @@
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>exposure</strong></td><td></td><td></td><td><p>Total exposure of the experiment</p><a href="None" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+  <td><strong>exposure</strong></td><td></td><td></td><td><p>Total exposure of the experiment</p><a href="../type/expt_t.html#variable-exposure" class="pull-right"><emph>Read more&hellip;</emph></a></td>
   
 </tr>
 
@@ -440,7 +446,7 @@
   
   <td>public,</td>
   <td>allocatable</td><td>::</td>
-  <td><strong>times</strong>(:)</td><td></td><td></td><td><p>Dim : [ n_time ]</p><a href="None" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+  <td><strong>times</strong>(:)</td><td></td><td></td><td><p>Dim : [ n_time ]</p><a href="../type/expt_t.html#variable-times" class="pull-right"><emph>Read more&hellip;</emph></a></td>
   
 </tr>
 
@@ -454,7 +460,7 @@
   
   <td>public,</td>
   <td>allocatable</td><td>::</td>
-  <td><strong>vE_direction</strong>(:,:)</td><td></td><td></td><td><p>Dim : [ n_time, 3 ]</p><a href="None" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+  <td><strong>vE_direction</strong>(:,:)</td><td></td><td></td><td><p>Dim : [ n_time, 3 ]</p><a href="../type/expt_t.html#variable-ve_direction" class="pull-right"><emph>Read more&hellip;</emph></a></td>
   
 </tr>
 
@@ -468,7 +474,7 @@
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>theta_E</strong></td><td> =</td><td>42.0_dp*(pi/180.0_dp)</td><td><p>Angle between the Earth's rotation axis and the DM wind.</p><a href="None" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+  <td><strong>theta_E</strong></td><td> =</td><td>42.0_dp*(pi/180.0_dp)</td><td><p>Angle between the Earth's rotation axis and the DM wind.</p><a href="../type/expt_t.html#variable-theta_e" class="pull-right"><emph>Read more&hellip;</emph></a></td>
   
 </tr>
 
@@ -775,16 +781,17 @@ public subroutine <a href='../proc/save_expt.html'>save_expt</a>(self, filename,
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
-                                          </p></div>
-        <div class="col-xs-6 col-md-4 col-md-push-4">
+        <div class="col-xs-6 col-md-6"><p>EXCEED-DM was developed by Tanner Trickle<br>&copy; 2021 
+                                          </p>
+        </div>
+        <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-10-27 18:33  
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+             on 2021-11-15 12:59  
+            
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> EXCEED-DM was developed by Tanner Trickle</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

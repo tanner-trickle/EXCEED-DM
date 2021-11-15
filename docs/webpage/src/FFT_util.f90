@@ -157,7 +157,7 @@ contains
         self%n_grid = n_grid
         self%n = self%n_grid(1)*self%n_grid(2)*self%n_grid(3)
 
-        self%q_max = get_max_r_inside_parallepipid(self%n_grid, k_red_to_xyz, verbose = verbose)
+        self%q_max = get_max_r_inside_parallelepiped(self%n_grid, k_red_to_xyz, verbose = verbose)
 
         if ( verbose ) then
 
