@@ -406,35 +406,27 @@ contains
 
         real(dp) :: dist_to_nearest_lattice_pts(26)
 
-        real(dp) :: k_vec_xyz(3)
-        real(dp) :: k_mag
-        real(dp) :: k_mag_min
+        real(dp) :: k_lat_vec_xyz(3)
+        real(dp) :: k_lat_mag_min
+        real(dp) :: k_lat_mag
 
-        integer :: i, j, k
+        integer :: i, j, k, counter
 
+        counter = 0
         do i = -1, 1
             do j = -1, 1
                 do k = -1, 1
 
-                    if ( ( i /= 0 ) .and. ( j /= 0 ) .and. ( k /= 0 ) ) then
+                    if ( ( i /= 0 ) .or. ( j /= 0 ) .or. ( k /= 0 ) ) then
 
-                        k_vec_xyz = matmul(k_red_to_xyz, 1.0_dp*[i, j, k])
+                        counter = counter + 1
 
-                        k_mag = norm2(k_vec_xyz)
+                        k_lat_vec_xyz = matmul(k_red_to_xyz, 1.0_dp*[i, j, k])
 
-                        if ( ( i == -1 ) .and. ( j == -1 ) .and. ( k == -1 ) ) then
+                        ! distance to lattice point
+                        k_lat_mag = norm2(k_lat_vec_xyz)
 
-                            k_mag_min = k_mag
-
-                        else
-
-                            if ( k_mag <= k_mag_min ) then
-
-                                k_mag_min = k_mag
-
-                            end if
-
-                        end if
+                        dist_to_nearest_lattice_pts(counter) = k_lat_mag
 
                     end if
 
@@ -442,7 +434,10 @@ contains
             end do
         end do
 
-        q_max = k_mag_min/2.0_dp
+        ! minimum distance to lattice point
+        k_lat_mag_min = minval(dist_to_nearest_lattice_pts)
+
+        q_max = k_lat_mag_min/2.0_dp
 
     end function
 
