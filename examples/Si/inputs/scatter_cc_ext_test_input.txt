@@ -1,0 +1,67 @@
+! v0.2.7
+
+&control
+    process          = 'scatter',
+    calc_mode        = 'cc_ext',
+    overwrite_output = .TRUE.,
+    timer            = .TRUE.,
+    quiet            = .FALSE.
+/
+
+&io
+    out_folder                = './examples/Si/outputs',
+    run_description           = 'scatter_cc_ext_test',
+    PW_data_filename          = './examples/Si/dft/Si_2x2x2_AE.hdf5',
+    sto_data_filename         = './examples/RHF_wf_data.hdf5',
+    core_elec_config_filename = './examples/Si/core/Si_core_elec_config.hdf5',
+    dielectric_filename       = ''
+/
+
+&material
+    name            = 'Si'
+    pc_vol_A        = 40.888 
+    rho_T_g_per_cm3 = 2.281  
+    band_gap        = 1.11 
+/
+
+&experiment
+    E_threshold = 0,
+    m_T_kg      = 1,
+    exposure_yr = 1,
+    n_time      = 1,
+    theta_E     = 7.33D-1
+/
+
+&dm_model
+	n_mX             = 1,
+    log_mX_min       = 10,
+    log_mX_max       = 10,
+    n_extra_mX       = 0,
+    n_med_FF         = 1,
+    med_FF_min       = 2,
+    med_FF_max       = 2,
+    rhoX_GeV_per_cm3 = 0.4,
+    v0_km_per_sec    = 230,
+    vE_km_per_sec    = 240,
+    vEsc_km_per_sec  = 600,
+    tff_id           = 1, 1
+/
+
+&bins_scatter
+    q_width = 1D3,
+    E_width = 1,
+    n_E    = 1,
+    n_q    = 1
+/
+
+&numerics_s_cc_ext
+    n_principal_min = 1,
+    n_principal_max = 3,
+    n_cond_max = 0,
+    n_q = 100,
+    n_q_theta = 10,
+    n_q_phi = 11,
+    q_min = 1D3
+/
+
+!

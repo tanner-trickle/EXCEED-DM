@@ -127,7 +127,7 @@ module PW_dataset_type
             !!
             !! Units : eV 
         real(dp), allocatable :: G_grid_xyz(:, :)
-            !! Dim : [n_in_G, 3]
+            !! Dim : [`n_G`, 3]
             !!
             !! G vectors in physical xyz coordinates
             !!
