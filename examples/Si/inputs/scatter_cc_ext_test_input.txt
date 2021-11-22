@@ -38,8 +38,8 @@
     log_mX_max       = 10,
     n_extra_mX       = 0,
     n_med_FF         = 1,
-    med_FF_min       = 2,
-    med_FF_max       = 2,
+    med_FF_min       = 0,
+    med_FF_max       = 0,
     rhoX_GeV_per_cm3 = 0.4,
     v0_km_per_sec    = 230,
     vE_km_per_sec    = 240,
@@ -51,7 +51,7 @@
     q_width = 1D3,
     E_width = 1,
     n_E    = 1,
-    n_q    = 1
+    n_q    = 1000
 /
 
 &numerics_s_cc_ext
@@ -59,9 +59,9 @@
     n_principal_max = 3,
     n_cond_max = 0,
     n_q = 100,
-    n_q_theta = 10,
-    n_q_phi = 11,
-    q_min = 1D3
+    n_q_theta = 2,
+    n_q_phi = 2,
+    q_min = 105D3
 /
 
 !

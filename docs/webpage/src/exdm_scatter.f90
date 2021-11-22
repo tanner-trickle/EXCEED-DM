@@ -22,6 +22,7 @@ module exdm_scatter
     use exdm_scatter_cc
     use exdm_scatter_vf
     use exdm_scatter_cf
+    use exdm_scatter_cc_ext
 
     implicit none
 
@@ -63,7 +64,11 @@ contains
         integer :: n_init
             !! Number of initial states
 
-        character(len=64) :: calc_modes_list(4) = ['vc', 'vf', 'cc', 'cf']
+        character(len=64) :: calc_modes_list(5) = ['vc    ',&
+                                                   'vf    ',&
+                                                   'cc    ',&
+                                                   'cf    ',&
+                                                   'cc_ext']
 
         if ( verbose ) then
             print*, 'Starting scattering rate calculation...'
@@ -86,6 +91,8 @@ contains
             call exdm_scatter_vf_set_n_init(io_files, n_init)
         else if ( trim(main_control%calc_mode) == 'cf' ) then
             call exdm_scatter_cf_set_n_init(io_files, n_init)
+        else if ( trim(main_control%calc_mode) == 'cc_ext' ) then
+            call exdm_scatter_cc_ext_set_n_init(io_files, n_init)
         end if
 
         allocate(binned_rate_init(n_init))
@@ -114,6 +121,12 @@ contains
         else if ( trim(main_control%calc_mode) == 'cf' ) then
 
             call run_exdm_scatter_cf(n_init, n_proc, proc_id, root_process, &
+                binned_rate_init, main_control, io_files, target_mat, dm_model, &
+                bins, expt, in_med_scr, verbose = verbose)
+
+        else if ( trim(main_control%calc_mode) == 'cc_ext' ) then
+
+            call run_exdm_scatter_cc_ext(n_init, n_proc, proc_id, root_process, &
                 binned_rate_init, main_control, io_files, target_mat, dm_model, &
                 bins, expt, in_med_scr, verbose = verbose)
 

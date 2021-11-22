@@ -217,6 +217,14 @@ Specific to the  core <script type="math/tex"> \rightarrow </script> conduction 
 			   <tr><td><a href='../proc/cc_create_k_id_list.html'>cc_create_k_id_list</a></td><td><a href='../module/numerics_scatter_cc.html'>numerics_scatter_cc</a></td><td>Subroutine</td><td><p>Specify the indicies for each <script type="math/tex"> \mathbf{k} </script> point that should be included. 
 Specific to the core <script type="math/tex"> \rightarrow </script> conduction DM-electron scattering rate calculations. </p></td></tr>
 			 
+			   <tr><td><a href='../proc/cc_ext_create_core_id_list.html'>cc_ext_create_core_id_list</a></td><td><a href='../module/numerics_scatter_cc_ext.html'>numerics_scatter_cc_ext</a></td><td>Subroutine</td><td><p>Specify the indicies for each core state that should be included. 
+Specific to the  core <script type="math/tex"> \rightarrow </script> conduction (extended) DM-electron scattering rate calculation. </p></td></tr>
+			 
+			   <tr><td><a href='../proc/cc_ext_create_k_id_list.html'>cc_ext_create_k_id_list</a></td><td><a href='../module/numerics_scatter_cc_ext.html'>numerics_scatter_cc_ext</a></td><td>Subroutine</td><td><p>Specify the indicies for each <script type="math/tex"> \mathbf{k} </script> point that should be included. 
+Specific to the core <script type="math/tex"> \rightarrow </script> conduction DM-electron scattering rate calculations. </p></td></tr>
+			 
+			   <tr><td><a href='../proc/cc_ext_interpolate_drdq_to_binned_rate.html'>cc_ext_interpolate_dRdq_to_binned_rate</a></td><td><a href='../module/calc_exdm_scatter_cc_ext.html'>calc_exdm_scatter_cc_ext</a></td><td>Subroutine</td><td></td></tr>
+			 
 			   <tr><td><a href='../proc/cf_create_core_id_list.html'>cf_create_core_id_list</a></td><td><a href='../module/numerics_scatter_cf.html'>numerics_scatter_cf</a></td><td>Subroutine</td><td><p>Create the list of core id's to compute for.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/cf_create_w_id_list.html'>cf_create_w_id_list</a></td><td><a href='../module/numerics_scatter_cf.html'>numerics_scatter_cf</a></td><td>Subroutine</td><td><p>Specify the indicies for each <script type="math/tex"> \omega </script> point that should be included. 
@@ -284,6 +292,12 @@ Specific to the dielectric calculation. </p></td></tr>
 			 
 			   <tr><td><a href='../proc/exdm_scatter_cc_calc.html'>exdm_scatter_cc_calc</a></td><td><a href='../module/calc_exdm_scatter_cc.html'>calc_exdm_scatter_cc</a></td><td>Subroutine</td><td><p>Compute <script type="math/tex">i, f, \mathbf{k}_f </script> contributions to the core <script type="math/tex"> \rightarrow </script> conduction DM-electron scattering rate.</p></td></tr>
 			 
+			   <tr><td><a href='../proc/exdm_scatter_cc_ext_calc.html'>exdm_scatter_cc_ext_calc</a></td><td><a href='../module/calc_exdm_scatter_cc_ext.html'>calc_exdm_scatter_cc_ext</a></td><td>Subroutine</td><td></td></tr>
+			 
+			   <tr><td><a href='../proc/exdm_scatter_cc_ext_set_n_init.html'>exdm_scatter_cc_ext_set_n_init</a></td><td><a href='../module/exdm_scatter_cc_ext.html'>exdm_scatter_cc_ext</a></td><td>Subroutine</td><td><p>Sets the number of initial states to record the rate for.
+Specific to the core <script type="math/tex"> \rightarrow </script> conduction (extended) DM-electron
+scattering rate calculation.</p></td></tr>
+			 
 			   <tr><td><a href='../proc/exdm_scatter_cc_set_n_init.html'>exdm_scatter_cc_set_n_init</a></td><td><a href='../module/exdm_scatter_cc.html'>exdm_scatter_cc</a></td><td>Subroutine</td><td><p>Sets the number of initial states to record the rate for.
 Specific to the core <script type="math/tex"> \rightarrow </script> conduction DM-electron
 scattering rate calculation.</p></td></tr>
@@ -313,6 +327,8 @@ in <code>bins</code>.</p></td></tr>
 			   <tr><td><a href='../proc/exdm_scatter_vf_set_n_init.html'>exdm_scatter_vf_set_n_init</a></td><td><a href='../module/exdm_scatter_vf.html'>exdm_scatter_vf</a></td><td>Subroutine</td><td><p>Sets the number of initial states to record the rate for.
 Specific to the valence <script type="math/tex"> \rightarrow </script> free DM-electron
 scattering rate calculation.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/exdm_shutdown_message.html'>exdm_shutdown_message</a></td><td><a href='../module/info_messages.html'>info_messages</a></td><td>Subroutine</td><td><p>Message to display when EXCEED-DM starts.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/exdm_startup_message.html'>exdm_startup_message</a></td><td><a href='../module/info_messages.html'>info_messages</a></td><td>Subroutine</td><td><p>Message to display when EXCEED-DM starts.</p></td></tr>
 			 
@@ -355,7 +371,12 @@ proton number, <script type="math/tex"> Z </script>, and quantum numbers, <scrip
 			 
 			   <tr><td><a href='../proc/get_width.html'>get_width</a></td><td><a href='../module/width_parameters_type.html'>width_parameters_type</a></td><td>Function</td><td><p>Returns <script type="math/tex"> \delta(\omega) </script> for a given id.</p></td></tr>
 			 
+			   <tr><td><a href='../proc/int_method_power_law_interp.html'>int_method_power_law_interp</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Function</td><td><p>Integration method assuming <script type="math/tex"> dy/dx </script> is a power law between points.</p><a href="../proc/int_method_power_law_interp.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
+			 
 			   <tr><td><a href='../proc/int_to_str.html'>int_to_str</a></td><td><a href='../module/info_messages.html'>info_messages</a></td><td>Function</td><td><p>Converts an integer to a string.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/integrate_log_interpolate.html'>integrate_log_interpolate</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Function</td><td><p>Given <script type="math/tex"> \frac{dy}{dx} </script> evaluated at a list of points in <script type="math/tex"> x </script>, numerically integrate between <script type="math/tex"> [ x_1, x_2 ]</script>
+while modelling <script type="math/tex"> \frac{dy}{dx} </script> as a power law between points.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/integrate_power_law.html'>integrate_power_law</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Function</td><td><p>Integral of a power law function. </p><a href="../proc/integrate_power_law.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
@@ -416,6 +437,12 @@ for a given <script type="math/tex"> i, \mathbf{k} </script>, expands (zero-pads
 			 
 			   <tr><td><a href='../proc/numerics_dielectric_save.html'>numerics_dielectric_save</a></td><td><a href='../module/numerics_dielectric.html'>numerics_dielectric</a></td><td>Subroutine</td><td><p>Saves <code>numerics_dielectric</code>.</p></td></tr>
 			 
+			   <tr><td><a href='../proc/numerics_scatter_cc_ext_load_nml.html'>numerics_scatter_cc_ext_load_nml</a></td><td><a href='../module/numerics_scatter_cc_ext.html'>numerics_scatter_cc_ext</a></td><td>Subroutine</td><td><p>Loads <code>numerics_scatter_cc</code> parameters from a namelist.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/numerics_scatter_cc_ext_print.html'>numerics_scatter_cc_ext_print</a></td><td><a href='../module/numerics_scatter_cc_ext.html'>numerics_scatter_cc_ext</a></td><td>Subroutine</td><td><p>Prints <code>numerics_scatter_cc</code> components.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/numerics_scatter_cc_ext_save.html'>numerics_scatter_cc_ext_save</a></td><td><a href='../module/numerics_scatter_cc_ext.html'>numerics_scatter_cc_ext</a></td><td>Subroutine</td><td><p>Saves <code>numerics_scatter_cc_ext</code>.</p></td></tr>
+			 
 			   <tr><td><a href='../proc/numerics_scatter_cc_load_nml.html'>numerics_scatter_cc_load_nml</a></td><td><a href='../module/numerics_scatter_cc.html'>numerics_scatter_cc</a></td><td>Subroutine</td><td><p>Loads <code>numerics_scatter_cc</code> parameters from a namelist.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/numerics_scatter_cc_print.html'>numerics_scatter_cc_print</a></td><td><a href='../module/numerics_scatter_cc.html'>numerics_scatter_cc</a></td><td>Subroutine</td><td><p>Prints <code>numerics_scatter_cc</code> components.</p></td></tr>
@@ -447,6 +474,8 @@ for a given <script type="math/tex"> i, \mathbf{k} </script>, expands (zero-pads
 			 
 			   <tr><td><a href='../proc/power_law_fit.html'>power_law_fit</a></td><td><a href='../module/math_mod.html'>math_mod</a></td><td>Function</td><td><p>Finds <script type="math/tex"> \beta </script> such that <script type="math/tex"> y_2 = y_1 \left( \frac{x_2}{x_1} \right)^\beta </script>.</p></td></tr>
 			 
+			   <tr><td><a href='../proc/pretty_date_and_time.html'>pretty_date_and_time</a></td><td><a href='../module/timing.html'>timing</a></td><td>Function</td><td><p>Returns a nicely formatted string of the current date and time.</p></td></tr>
+			 
 			   <tr><td><a href='../proc/pretty_time_format.html'>pretty_time_format</a></td><td><a href='../module/timing.html'>timing</a></td><td>Function</td><td><p>Returns a nicely formatted string of the time.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/print_bins.html'>print_bins</a></td><td><a href='../module/bins_scatter_type.html'>bins_scatter_type</a></td><td>Subroutine</td><td><p>Print <code>bins_scatter</code> components.</p></td></tr>
@@ -477,7 +506,7 @@ for a given <script type="math/tex"> i, \mathbf{k} </script>, expands (zero-pads
 			 
 			   <tr><td><a href='../proc/print_section_seperator.html'>print_section_seperator</a></td><td><a href='../module/info_messages.html'>info_messages</a></td><td>Subroutine</td><td><p>Prints the section seperator.</p></td></tr>
 			 
-			   <tr><td><a href='../proc/print_timing_info.html'>print_timing_info</a></td><td><a href='../module/timing.html'>timing</a></td><td>Subroutine</td><td><p>Prints a program timing info.</p></td></tr>
+			   <tr><td><a href='../proc/print_timing_info.html'>print_timing_info</a></td><td><a href='../module/info_messages.html'>info_messages</a></td><td>Subroutine</td><td><p>Prints a program timing info.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/print_warning_message.html'>print_warning_message</a></td><td><a href='../module/info_messages.html'>info_messages</a></td><td>Subroutine</td><td><p>Prints a warning message.</p></td></tr>
 			 
@@ -502,6 +531,8 @@ for a given <script type="math/tex"> i, \mathbf{k} </script>, expands (zero-pads
 			   <tr><td><a href='../proc/run_exdm_scatter.html'>run_exdm_scatter</a></td><td><a href='../module/exdm_scatter.html'>exdm_scatter</a></td><td>Subroutine</td><td><p>Compute the DM-electron scattering rate.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/run_exdm_scatter_cc.html'>run_exdm_scatter_cc</a></td><td><a href='../module/exdm_scatter_cc.html'>exdm_scatter_cc</a></td><td>Subroutine</td><td><p>Compute the core <script type="math/tex"> \rightarrow </script> conduction DM-electron scattering rate.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/run_exdm_scatter_cc_ext.html'>run_exdm_scatter_cc_ext</a></td><td><a href='../module/exdm_scatter_cc_ext.html'>exdm_scatter_cc_ext</a></td><td>Subroutine</td><td><p>Compute the core <script type="math/tex"> \rightarrow </script> conduction DM-electron scattering rate by computing <script type="math/tex"> \frac{dR}{dq} </script>.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/run_exdm_scatter_cf.html'>run_exdm_scatter_cf</a></td><td><a href='../module/exdm_scatter_cf.html'>exdm_scatter_cf</a></td><td>Subroutine</td><td><p>Compute the core <script type="math/tex"> \rightarrow </script> free DM-electron scattering rate.</p></td></tr>
 			 
@@ -536,6 +567,8 @@ for a given <script type="math/tex"> i, \mathbf{k} </script>, expands (zero-pads
 			   <tr><td><a href='../proc/save_scatter_rates.html'>save_scatter_rates</a></td><td><a href='../module/exdm_scatter.html'>exdm_scatter</a></td><td>Subroutine</td><td><p>Saves the binned and total scattering rates.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/save_self_energies.html'>save_self_energies</a></td><td><a href='../module/abs_calc_pi.html'>abs_calc_PI</a></td><td>Subroutine</td><td><p>Saves the self energies, <script type="math/tex"> \Pi_{\mathcal{O}_1, \mathcal{O}_2} </script>.</p></td></tr>
+			 
+			   <tr><td><a href='../proc/save_timing_info.html'>save_timing_info</a></td><td><a href='../module/timing.html'>timing</a></td><td>Subroutine</td><td><p>Saves the version number.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/save_tran_form.html'>save_tran_form</a></td><td><a href='../module/abs_tran_form_calc.html'>abs_tran_form_calc</a></td><td>Subroutine</td><td><p>Saves the transition form factors, <script type="math/tex"> f_{i, i', \mathbf{k}}, 
 \mathbf{f}_{i, i', \mathbf{k}}, \widetilde{f}_{i, i', k}</script>, 
@@ -612,7 +645,7 @@ d\omega </script> for each <script type="math/tex"> i </script>. Note that <scri
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-11-15 12:59  
+             on 2021-11-22 15:48  
             
           </p>
         </div>

@@ -76,12 +76,12 @@ module core_electron_type
             !!
             !! Units : None
         ! generated
-        real(dp), allocatable :: eq_pos_xyz(:, :)
-            !! Dim : [n_atom, 3]
-            !!
-            !! Equilibrium positions in xyz coordinates.
-            !!
-            !! Units : eV^(-1)
+        !real(dp), allocatable :: eq_pos_xyz(:, :)
+        !    !! Dim : [n_atom, 3]
+        !    !!
+        !    !! Equilibrium positions in xyz coordinates.
+        !    !!
+        !    !! Units : eV^(-1)
         integer :: STO_max_nj
             !! Maximum value of nj across all states.
         character(len=512) :: config_filename

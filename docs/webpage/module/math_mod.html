@@ -138,7 +138,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 3.4% of total for modules and submodules.">236 statements</a>
+    title=" 4.3% of total for modules and submodules.">325 statements</a>
      </li> 
      
      
@@ -191,11 +191,15 @@
   <div id="funcs-0" class="panel-collapse collapse">
     <div class="list-group">
       
+      <a class="list-group-item" href="../module/math_mod.html#proc-integrate_log_interpolate">integrate_log_interpolate</a>
+      
       <a class="list-group-item" href="../module/math_mod.html#proc-q_func">Q_func</a>
       
       <a class="list-group-item" href="../module/math_mod.html#proc-uniform_list">uniform_list</a>
       
       <a class="list-group-item" href="../module/math_mod.html#proc-pauli_spin_matrix">pauli_spin_matrix</a>
+      
+      <a class="list-group-item" href="../module/math_mod.html#proc-int_method_power_law_interp">int_method_power_law_interp</a>
       
       <a class="list-group-item" href="../module/math_mod.html#proc-integrate_power_law">integrate_power_law</a>
       
@@ -303,11 +307,15 @@
   <div id="funcs-1" class="panel-collapse collapse">
     <div class="list-group">
       
+      <a class="list-group-item" href="../module/math_mod.html#proc-integrate_log_interpolate">integrate_log_interpolate</a>
+      
       <a class="list-group-item" href="../module/math_mod.html#proc-q_func">Q_func</a>
       
       <a class="list-group-item" href="../module/math_mod.html#proc-uniform_list">uniform_list</a>
       
       <a class="list-group-item" href="../module/math_mod.html#proc-pauli_spin_matrix">pauli_spin_matrix</a>
+      
+      <a class="list-group-item" href="../module/math_mod.html#proc-int_method_power_law_interp">int_method_power_law_interp</a>
       
       <a class="list-group-item" href="../module/math_mod.html#proc-integrate_power_law">integrate_power_law</a>
       
@@ -373,6 +381,120 @@
      
     <section>
     <h2>Functions</h2>
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-integrate_log_interpolate"></span><h3>
+public function <a href='../proc/integrate_log_interpolate.html'>integrate_log_interpolate</a>(x_data, dydx_data, x1, x2) result(integral)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+
+
+
+
+<p>Given <script type="math/tex"> \frac{dy}{dx} </script> evaluated at a list of points in <script type="math/tex"> x </script>, numerically integrate between <script type="math/tex"> [ x_1, x_2 ]</script>
+while modelling <script type="math/tex"> \frac{dy}{dx} </script> as a power law between points.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>x_data</strong>(:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>dydx_data</strong>(:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>x1</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>x2</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  
+  
+  
+  
+     <h4>Return Value <small>real(kind=dp)
+  </small></h4>
+  
+    
+
+  </div>
+  </div>
+
     
     
   <div class="panel panel-default">
@@ -650,6 +772,119 @@ public function <a href='../proc/pauli_spin_matrix.html'>pauli_spin_matrix</a>(i
   
      <h4>Return Value <small>complex(kind=dp)
   (2,2)</small></h4>
+  
+    
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-int_method_power_law_interp"></span><h3>
+public function <a href='../proc/int_method_power_law_interp.html'>int_method_power_law_interp</a>(x1, x2, dydx1, dydx2) result(integral)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+
+
+
+
+<p>Integration method assuming <script type="math/tex"> dy/dx </script> is a power law between points.</p><a href="../proc/int_method_power_law_interp.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>x1</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>x2</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>dydx1</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>dydx2</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  
+  
+  
+  
+     <h4>Return Value <small>real(kind=dp)
+  </small></h4>
   
     
 
@@ -1632,7 +1867,7 @@ public subroutine <a href='../proc/calc_eig_system_33.html'>calc_eig_system_33</
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-11-15 12:59  
+             on 2021-11-22 15:48  
             
           </p>
         </div>

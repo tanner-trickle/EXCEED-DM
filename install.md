@@ -25,14 +25,16 @@ CMake allows the user to change many of the build parameters at the command line
 
         -DCMAKE_BUILD_TYPE=<build-type>
 
-    Options are: `Release`, `Debug`
+Options are: `Release`, `Debug`
 
 ### Cluster/Supercomputer
 
 Large computing systems should have a way to load the pre-requisite software, e.g. `module load openmpi`. Once all of the prerequisites are loaded cmake should automatically find the correct file locations. 
 
 Notes:
+
 - You might have to specify the compiler directly with a build option.
+
 - Your version of HDF5 should have been compiled with the same compiler you're using. There seems to be some wiggle room with different versions of the same compiler, but expect errors if you compiled HDF5 with GNU Fortran and want to compile the main program with an Intel compiler.
 
 ### Check Build
@@ -49,7 +51,7 @@ To remove the current build of the program, run
 
     cmake --build . --target clean
 
-from the `build/` folder.
+from the `build/` folder, or simply remove the build directory, `rm -r build` from the main folder.
 
 ## Pre-requisites
 

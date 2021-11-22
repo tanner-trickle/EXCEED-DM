@@ -138,9 +138,16 @@ program exdm
 
     ! Time program
     if ( proc_id == root_process ) then
+
         time(2) = MPI_Wtime()
+
         call print_timing_info(time(2) - time(1), verbose = verbose)
+
+        call save_timing_info(io_files%out_filename, time(2) - time(1), verbose = verbose)
+
     end if
+
+    call exdm_shutdown_message(proc_id, root_process)
 
     call MPI_FINALIZE(err)
 

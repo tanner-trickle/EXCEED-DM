@@ -3,10 +3,69 @@ module info_messages
 
     implicit none
 
+    integer :: sec_length = 80
+
 contains
+
+    subroutine exdm_shutdown_message(proc_id, root_process)
+        !! Message to display when EXCEED-DM starts.
+
+        use iso_fortran_env
+        use timing
+
+        implicit none
+
+        integer :: proc_id
+        integer :: root_process
+        integer :: n_proc
+        character(len=64) :: version
+
+        character(len=64) :: n_proc_str
+
+        if ( proc_id == root_process ) then
+
+            call print_section_seperator()
+            print*
+            print*, '    Ended at', trim(pretty_date_and_time())
+            print*
+            call print_section_seperator()
+            print*
+
+        end if
+
+    end subroutine
+
+    subroutine print_timing_info(dt, verbose)
+        !! Prints a program timing info.
+
+        use timing
+
+        implicit none
+
+        real(dp) :: dt
+        logical, optional :: verbose
+
+        if ( verbose ) then
+
+            call print_section_seperator()
+            print*, '    ------'
+            print*, '    Timing'
+            print*, '    ------'
+            print*
+            print*, '        Run time : '
+            print*, '        ', trim(pretty_time_format(dt))
+            print*
+            call print_section_seperator()
+            print*
+
+        end if
+
+    end subroutine
 
     subroutine print_warning_message(message, verbose)
         !! Prints a warning message.
+
+        implicit none
 
         character(len=*) :: message
         logical, optional :: verbose
@@ -26,6 +85,8 @@ contains
 
     subroutine print_error_message(message, verbose)
         !! Prints an error message.
+
+        implicit none
 
         character(len=*) :: message
         logical, optional :: verbose
@@ -47,6 +108,7 @@ contains
         !! Message to display when EXCEED-DM starts.
 
         use iso_fortran_env
+        use timing
 
         implicit none
 
@@ -69,6 +131,8 @@ contains
             print*, '    Running on ', trim(adjustl(n_proc_str)), ' processors'
             print*, '    Compiled with ', compiler_version()
             print*
+            print*, '    Started at', trim(pretty_date_and_time())
+            print*
             call print_section_seperator()
             print*
 
@@ -81,7 +145,7 @@ contains
 
         implicit none
 
-        print*, '----------------------------------------------------------------------'
+        print*, repeat('-', sec_length)
 
     end subroutine
 
@@ -90,7 +154,7 @@ contains
 
         implicit none
 
-        print*, '!!! ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+        print*, repeat('!', 3)//' ERROR '//repeat('!', sec_length - 10)
 
     end subroutine
 
@@ -99,7 +163,7 @@ contains
 
         implicit none
 
-        print*, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+        print*, repeat('!', sec_length)
 
     end subroutine
 
@@ -108,7 +172,7 @@ contains
 
         implicit none
 
-        print*, '~~~ WARNING ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+        print*, repeat('~', 3)//' WARNING '//repeat('~', sec_length - 12)
 
     end subroutine
 
@@ -117,7 +181,7 @@ contains
 
         implicit none
 
-        print*, '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+        print*, repeat('~', sec_length)
 
     end subroutine
 

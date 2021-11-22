@@ -9,6 +9,163 @@ module math_mod
 
 contains
 
+    function integrate_log_interpolate(x_data, dydx_data, x1, x2) result( integral )
+        !* Given \( \frac{dy}{dx} \) evaluated at a list of points in \( x \), numerically integrate between \( [ x_1, x_2 ]\)
+        !while modelling \( \frac{dy}{dx} \) as a power law between points.
+
+        real(dp) :: x_data(:)
+        real(dp) :: dydx_data(:)
+        real(dp) :: x1, x2
+
+        real(dp) :: integral
+
+        real(dp), allocatable :: sub_x_data(:)
+
+        integer :: n_sub_x_data
+
+        integer :: x1_index
+        integer :: x2_index
+        integer :: xL_index
+        integer :: xR_index
+
+        real(dp) :: xL, xR
+        real(dp) :: dydx_L, dydx_R
+
+        real(dp) :: power_law_b
+
+        integer :: i
+
+        real(dp) :: b_1, b_2
+
+        integral = 0.0_dp
+
+        ! make sure input bounds make sense
+        if ( x2 < x1 ) then
+            return
+        end if
+
+        ! make sure bounds overlap computed data
+        if ( x2 < x_data(1) ) then
+            return
+        end if
+
+        if ( x1 > x_data(size(x_data)) ) then
+            return
+        end if
+
+        ! find all points enclosed by [x1, x2]
+
+        ! x1_index is the index of the closest x point which is > x1
+        ! x2_index is the index of the closest x point which is < x2
+        
+        if ( x1 < x_data(1) ) then
+
+            x1_index = 1
+
+        else
+
+            do i = 1, size(x_data) - 1
+
+                if ( ( x_data(i) < x1 ) .and. ( x1 < x_data(i + 1) ) ) then
+
+                    x1_index = i + 1
+
+                end if
+
+            end do
+
+        end if
+
+        if ( x2 < x_data(size(x_data)) ) then
+
+            x2_index = size(x_data)
+
+        else
+
+            do i = 1, size(x_data) - 1
+
+                if ( ( x_data(i) < x2 ) .and. ( x2 < x_data(i + 1) ) ) then
+
+                    x2_index = i
+
+                end if
+
+            end do
+
+        end if
+
+        ! get non-endpoint contribution
+        n_sub_x_data = x2_index - x1_index + 1
+
+        ! make sure at least two points are enclosed
+        if ( n_sub_x_data > 1 ) then
+
+            ! go through pairs of points and add to the integral
+            do i = 1, n_sub_x_data - 1
+
+                xL_index = x1_index + ( i - 1 )
+                xR_index = xL_index + 1
+
+                xL = x_data(xL_index)
+                xR = x_data(xR_index)
+
+                dydx_L = dydx_data(xL_index)
+                dydx_R = dydx_data(xR_index)
+
+                ! Here we choose a specific interpolation method. To change the method just change this function.
+                integral = integral + int_method_power_law_interp(xL, xR, &
+                                                                    dydx_L, dydx_R)
+
+            end do
+
+        end if
+
+        ! contributions from the end points.
+
+        ! if x1 is close to an already computed data point, ignore
+        if ( x1 > x_data(1) ) then
+
+            if ( abs(x1 - x_data(x1_index)) > 1.0e-8_dp ) then
+
+                b_1 = (log(dydx_data(x1_index)) - log(dydx_data(x1_index - 1)))/&
+                            (log(x_data(x1_index)) - log(x_data(x1_index - 1)))
+
+                xL = x1
+                xR = x_data(x1_index)
+
+                dydx_L = dydx_data(x1_index - 1)*( x1 / x_data(x1_index - 1) )**b_1 
+                dydx_R = dydx_data(x1_index)
+
+                integral = integral + int_method_power_law_interp(xL, xR, &
+                                                                    dydx_L, dydx_R)
+
+            end if
+
+        end if
+
+        ! if x2 is close to an already computed data point, ignore
+        if ( x2 < x_data(size(x_data)) ) then
+
+            if ( abs(x2 - x_data(x2_index)) > 1.0e-8_dp ) then
+
+                b_2 = (log(dydx_data(x2_index + 1)) - log(dydx_data(x2_index)))/&
+                            (log(x_data(x2_index + 1)) - log(x_data(x2_index)))
+
+                xL = x_data(x2_index)
+                xR = x2
+
+                dydx_L = dydx_data(x2_index) 
+                dydx_R = dydx_data(x2_index - 1)*( x2 / x_data(x2_index - 1) )**b_2
+
+                integral = integral + int_method_power_law_interp(xL, xR, &
+                                                                    dydx_L, dydx_R)
+
+            end if
+
+        end if
+
+    end function
+
     function Q_func(x, a, b, Q_max) result(Q)
         !! \( Q = \text{min} \left( Q_\text{max}, 1 + \lfloor \frac{x - a}{b} \rfloor \right) \)
         !!
@@ -131,6 +288,45 @@ contains
                 mat(2, 2) = (1.0_dp, 0.0_dp)
 
         end select
+
+    end function
+
+    function int_method_power_law_interp(x1, x2, dydx1, dydx2) result( integral )
+        !! Integration method assuming \( dy/dx \) is a power law between points.
+        !!
+        !! $$\begin{align*}
+        !!  \frac{dy}{dx}(x) & = \frac{dy}{dx}_1 \left( \frac{x}{x_1} \right)^b \\
+        !!  b & = \frac{ \log{\left( \frac{dy}{dx}_2 \right)} - \log{\left( \frac{dy}{dx}_1 \right)}}{ \log{x_2} - \log{x_1}} \\
+        !!  \mathcal{I} & = \int_{x_1}^{x_2} \frac{dy}{dx}(x) dx \\
+        !! & = \frac{dy}{dx}_1 \frac{x_1}{b + 1} ( \exp( (b + 1) \log(x_2/x_1) ) - 1 )
+        !! \end{align*}$$
+        !!
+        !! The complicated implementation is due to problems when \( b \) is large.
+
+        implicit none
+
+        real(dp) :: x1, x2
+        real(dp) :: dydx1, dydx2
+
+        real(dp) :: integral
+
+        real(dp) :: b
+
+        real(dp) :: eps
+
+        eps = 1.0e-8_dp
+
+        b = (log(dydx2) - log(dydx1))/(log(x2) - log(x1))
+
+        if ( abs(b + 1.0_dp) < eps ) then
+
+            integral = dydx1*x1*log(x2/x1)
+
+        else 
+
+            integral = dydx1*( b + 1.0_dp )**(-1)*x1*( exp( (b + 1.0_dp)*log(x2/x1) ) - 1.0_dp )
+
+        end if
 
     end function
 
