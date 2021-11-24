@@ -10,7 +10,7 @@ k! v0.2.5
 
 &io
     out_folder                = './examples/Si/outputs',
-    run_description           = 'scatter_cf_test',
+    run_description           = 'scatter_cf_test_2',
     PW_data_filename          = '',
     sto_data_filename         = './examples/RHF_wf_data.hdf5',
     core_elec_config_filename = './examples/Si/core/Si_core_elec_config.hdf5',
@@ -33,13 +33,13 @@ k! v0.2.5
 /
 
 &dm_model
-	n_mX             = 4,
-    log_mX_min       = 7,
+	n_mX             = 1,
+    log_mX_min       = 10,
     log_mX_max       = 10,
     n_extra_mX       = 0,
     n_med_FF         = 1,
-    med_FF_min       = 2,
-    med_FF_max       = 2,
+    med_FF_min       = 0,
+    med_FF_max       = 0,
     rhoX_GeV_per_cm3 = 0.4,
     v0_km_per_sec    = 230,
     vE_km_per_sec    = 240,
@@ -50,13 +50,13 @@ k! v0.2.5
 &bins_scatter
     q_width = 1D3,
     E_width = 1,
-    n_E    = 200,
+    n_E    = 10000,
     n_q    = 1
 /
 
 &numerics_s_cf
     n_principal_min = 1,
-    n_principal_max = 10,
+    n_principal_max = 2,
     n_omega         = 100,
     n_kf_theta      = 10,
     n_kf_phi        = 10,
