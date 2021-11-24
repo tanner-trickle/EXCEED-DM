@@ -10,7 +10,7 @@
 
 &io
     out_folder                = './examples/Si/outputs',
-    run_description           = 'scatter_cc_test',
+    run_description           = 'scatter_cc_test_2',
     PW_data_filename          = './examples/Si/dft/Si_2x2x2_AE.hdf5',
     sto_data_filename         = './examples/RHF_wf_data.hdf5',
     core_elec_config_filename = './examples/Si/core/Si_core_elec_config.hdf5',
@@ -57,7 +57,7 @@
 &numerics_s_cc
     n_principal_min = 1,
     n_principal_max = 3,
-    n_FFT_grid = 64, 64, 64,
+    n_FFT_grid = 128, 128, 128,
     n_cond_max = 0
 /
 

@@ -19,9 +19,7 @@ contains
 
         real(dp) :: integral
 
-        real(dp), allocatable :: sub_x_data(:)
-
-        integer :: n_sub_x_data
+        integer :: n_enclosed_pts
 
         integer :: x1_index
         integer :: x2_index
@@ -76,7 +74,7 @@ contains
 
         end if
 
-        if ( x2 < x_data(size(x_data)) ) then
+        if ( x2 > x_data(size(x_data)) ) then
 
             x2_index = size(x_data)
 
@@ -94,14 +92,79 @@ contains
 
         end if
 
-        ! get non-endpoint contribution
-        n_sub_x_data = x2_index - x1_index + 1
+        ! Number of x_data points between x1, x2
+        n_enclosed_pts = x2_index - x1_index + 1
+
+        ! integration bounds are between points.
+        if ( n_enclosed_pts == 0 ) then
+
+            xL = x1
+            xR = x2
+
+            b_1 = (log(dydx_data(x1_index)) - log(dydx_data(x2_index)))/&
+                        (log(x_data(x1_index)) - log(x_data(x2_index)))
+
+            dydx_L = dydx_data(x2_index)*( x1 / x_data(x2_index) )**b_1
+            dydx_R = dydx_data(x2_index)*( x2 / x_data(x2_index) )**b_1
+
+            integral = integral + int_method_power_law_interp(xL, xR, &
+                                                                dydx_L, dydx_R)
+
+        end if
+
+        ! only edge cases
+        if ( n_enclosed_pts == 1 ) then
+
+            ! if x1 < x_data(1) ignore
+            if ( x1 > x_data(1) ) then
+
+                ! if x1 is close to an already computed data point, ignore
+                if ( abs(x1 - x_data(x1_index)) > 1.0e-8_dp ) then
+
+                    b_1 = (log(dydx_data(x1_index)) - log(dydx_data(x1_index - 1)))/&
+                                (log(x_data(x1_index)) - log(x_data(x1_index - 1)))
+
+                    xL = x1
+                    xR = x_data(x1_index)
+
+                    dydx_L = dydx_data(x1_index - 1)*( x1 / x_data(x1_index - 1) )**b_1 
+                    dydx_R = dydx_data(x1_index)
+
+                    integral = integral + int_method_power_law_interp(xL, xR, &
+                                                                        dydx_L, dydx_R)
+
+                end if
+
+            end if
+
+            if ( x2 < x_data(size(x_data)) ) then
+
+                ! if x2 is close to an already computed data point, ignore
+                if ( abs(x2 - x_data(x2_index)) > 1.0e-8_dp ) then
+
+                    b_2 = (log(dydx_data(x2_index + 1)) - log(dydx_data(x2_index)))/&
+                                (log(x_data(x2_index + 1)) - log(x_data(x2_index)))
+
+                    xL = x_data(x2_index)
+                    xR = x2
+
+                    dydx_L = dydx_data(x2_index) 
+                    dydx_R = dydx_data(x2_index)*( x2 / x_data(x2_index) )**b_2
+
+                    integral = integral + int_method_power_law_interp(xL, xR, &
+                                                                        dydx_L, dydx_R)
+
+                end if
+
+            end if
+
+        end if
 
         ! make sure at least two points are enclosed
-        if ( n_sub_x_data > 1 ) then
+        if ( n_enclosed_pts > 1 ) then
 
             ! go through pairs of points and add to the integral
-            do i = 1, n_sub_x_data - 1
+            do i = 1, n_enclosed_pts - 1
 
                 xL_index = x1_index + ( i - 1 )
                 xR_index = xL_index + 1
@@ -118,47 +181,49 @@ contains
 
             end do
 
-        end if
+            ! and add contribution from the end points.
 
-        ! contributions from the end points.
+            ! if x1 < x_data(1) ignore
+            if ( x1 > x_data(1) ) then
 
-        ! if x1 is close to an already computed data point, ignore
-        if ( x1 > x_data(1) ) then
+                ! if x1 is close to an already computed data point, ignore
+                if ( abs(x1 - x_data(x1_index)) > 1.0e-8_dp ) then
 
-            if ( abs(x1 - x_data(x1_index)) > 1.0e-8_dp ) then
+                    b_1 = (log(dydx_data(x1_index)) - log(dydx_data(x1_index - 1)))/&
+                                (log(x_data(x1_index)) - log(x_data(x1_index - 1)))
 
-                b_1 = (log(dydx_data(x1_index)) - log(dydx_data(x1_index - 1)))/&
-                            (log(x_data(x1_index)) - log(x_data(x1_index - 1)))
+                    xL = x1
+                    xR = x_data(x1_index)
 
-                xL = x1
-                xR = x_data(x1_index)
+                    dydx_L = dydx_data(x1_index - 1)*( x1 / x_data(x1_index - 1) )**b_1 
+                    dydx_R = dydx_data(x1_index)
 
-                dydx_L = dydx_data(x1_index - 1)*( x1 / x_data(x1_index - 1) )**b_1 
-                dydx_R = dydx_data(x1_index)
+                    integral = integral + int_method_power_law_interp(xL, xR, &
+                                                                        dydx_L, dydx_R)
 
-                integral = integral + int_method_power_law_interp(xL, xR, &
-                                                                    dydx_L, dydx_R)
+                end if
 
             end if
 
-        end if
+            ! if x2 > ( last x point ) ignore
+            if ( x2 < x_data(size(x_data)) ) then
 
-        ! if x2 is close to an already computed data point, ignore
-        if ( x2 < x_data(size(x_data)) ) then
+                ! if x2 is close to an already computed data point, ignore
+                if ( abs(x2 - x_data(x2_index)) > 1.0e-8_dp ) then
 
-            if ( abs(x2 - x_data(x2_index)) > 1.0e-8_dp ) then
+                    b_2 = (log(dydx_data(x2_index + 1)) - log(dydx_data(x2_index)))/&
+                                (log(x_data(x2_index + 1)) - log(x_data(x2_index)))
 
-                b_2 = (log(dydx_data(x2_index + 1)) - log(dydx_data(x2_index)))/&
-                            (log(x_data(x2_index + 1)) - log(x_data(x2_index)))
+                    xL = x_data(x2_index)
+                    xR = x2
 
-                xL = x_data(x2_index)
-                xR = x2
+                    dydx_L = dydx_data(x2_index) 
+                    dydx_R = dydx_data(x2_index)*( x2 / x_data(x2_index) )**b_2
 
-                dydx_L = dydx_data(x2_index) 
-                dydx_R = dydx_data(x2_index - 1)*( x2 / x_data(x2_index - 1) )**b_2
+                    integral = integral + int_method_power_law_interp(xL, xR, &
+                                                                        dydx_L, dydx_R)
 
-                integral = integral + int_method_power_law_interp(xL, xR, &
-                                                                    dydx_L, dydx_R)
+                end if
 
             end if
 

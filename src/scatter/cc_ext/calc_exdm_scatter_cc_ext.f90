@@ -130,7 +130,6 @@ contains
 
                             form_fac = (0.0_dp, 0.0_dp)
 
-
                             do g = 1, PW_dataset%n_G
 
                                 G_vec = PW_dataset%G_grid_xyz(g, :)
