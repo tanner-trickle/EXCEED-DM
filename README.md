@@ -9,7 +9,6 @@
 
 **NOTICE: This program is in active development and the code, as well as required inputs and outputs, are subject to change. Star and watch the repository to stay up to date!**
 
-
 `EXCEED-DM` is an OpenMPI Fortran program that computes Dark Matter (DM) induced electronic transition rates for any gapped crystal target. 
 
 [**Home**](https://exceed-dm.caltech.edu)
@@ -83,7 +82,7 @@ If installed correctly you should see something similar to,
 
         ----------------------------------------------------------------------
 
-            EXCEED-DM - v0.2.7
+            EXCEED-DM - v0.2.8
 
             Running on 2 processors
             Compiled with GCC version 9.3.0

@@ -71,7 +71,7 @@ contains
         integer :: m, w, a, t, q, g, f
 
         b_rate = 0.0_dp
-        dRdw = 0.0_dp
+        dRdw = 1.0e-100_dp
 
         do m = 1, dm_model%n_mX
 
@@ -178,7 +178,7 @@ contains
                             call vf_interpolate_dRdw_to_binned_rate(numerics%omega_list, &
                                 dRdw(q, :, m, f, t), &
                                 b_rate(q, :, m, f, t), &
-                                bins%E_width)
+                                bins%E_width, target_mat%band_gap)
 
                         end do
                     end do
@@ -192,7 +192,7 @@ contains
 
     end subroutine
 
-    subroutine vf_interpolate_dRdw_to_binned_rate(omega_list, dRdw, b_rate, E_bin_width)
+    subroutine vf_interpolate_dRdw_to_binned_rate(omega_list, dRdw, b_rate, E_bin_width, band_gap)
         !! Given a list of \( \omega_i \) values, and \( \frac{dR}{d \omega} \) at those values, go through adjacent pairs,
         !! \( [\omega_{i}, \omega_{i + 1}] \) and \( [ \frac{dR}{d \omega}(\omega_{i}), \frac{dR}{d\omega}(\omega_{i + 1})  ] \),
         !! find the power law fit parameter, \( \beta \), such that 
@@ -219,48 +219,31 @@ contains
 
         real(dp) :: E1, E2
 
-        ! go through pairs of points
+        real(dp) :: E_bin_L, E_bin_R
 
-        do w = 1, size(dRdw) - 1
+        real(dp) :: band_gap
 
-            omega_bounds(1) = omega_list(w)
-            omega_bounds(2) = omega_list(w + 1)
+        if ( size(b_rate) > 1 ) then
 
-            dRdw_pair(1) = dRdw(w)
-            dRdw_pair(2) = dRdw(w + 1)
+            do e = 1, size(b_rate) - 1
 
-            ! make sure both end points aren't zero
-            if ( ( dRdw_pair(1) > 0 ) .and. ( dRdw_pair(2) > 0 ) ) then
+                E_bin_L = band_gap + (e - 1)*E_bin_width
+                E_bin_R = band_gap + e*E_bin_width
 
-                ! find the fit parameters
-                fit_params = power_law_fit(&
-                    log10(omega_bounds), &
-                    log10(dRdw_pair))
+                b_rate(e) = b_rate(e) + integrate_log_interpolate(&
+                    omega_list,& 
+                    dRdw, E_bin_L, E_bin_R)
 
-                ! now we 'know' dRdw between these two points, lets integrate this function 
-                ! over each bin
-                do e = 1, size(b_rate)
 
-                    ! edges of the bin
-                    E1 = (e - 1)*E_bin_width
-                    E2 = e*E_bin_width
+            end do
 
-                    if ( ( E2 > omega_bounds(1) ) & 
-                        .and. ( E1 < omega_bounds(2) ) &
-                        .and. ( E1 > 0.0_dp ) ) then
+        end if
 
-                        ! integrate 
-                        b_rate(e) = b_rate(e) + dRdw_pair(1)*&
-                            integrate_power_law(fit_params, max(E1, omega_bounds(1)), &
-                                            min(E2, omega_bounds(2)), omega_bounds(1))
-
-                    end if
-
-                end do
-
-            end if
-
-        end do
+        ! last bin integrates over the rest of the list
+        b_rate(size(b_rate)) = b_rate(size(b_rate)) + integrate_log_interpolate(&
+                                omega_list, dRdw,&
+                                band_gap + (size(b_rate) - 1)*E_bin_width,&
+                                omega_list(size(omega_list)))
 
     end subroutine
 

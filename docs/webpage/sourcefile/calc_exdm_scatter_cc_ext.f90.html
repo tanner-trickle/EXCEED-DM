@@ -405,129 +405,128 @@
 <a id="ln-130" name="ln-130"></a>
 <a id="ln-131" name="ln-131"></a>                            <span class="n">form_fac</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0_dp</span><span class="p">,</span> <span class="mf">0.0_dp</span><span class="p">)</span>
 <a id="ln-132" name="ln-132"></a>
-<a id="ln-133" name="ln-133"></a>
-<a id="ln-134" name="ln-134"></a>                            <span class="k">do </span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_G</span>
-<a id="ln-135" name="ln-135"></a>
-<a id="ln-136" name="ln-136"></a>                                <span class="n">G_vec</span> <span class="o">=</span> <span class="n">PW_dataset</span><span class="p">%</span><span class="n">G_grid_xyz</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">:)</span>
-<a id="ln-137" name="ln-137"></a>
-<a id="ln-138" name="ln-138"></a>                                <span class="n">wfc_i_FT</span> <span class="o">=</span> <span class="n">core_electron</span><span class="p">%</span><span class="n">atomic_sto_wf_FT</span><span class="p">(</span><span class="n">init_id</span><span class="p">,</span> <span class="p">&amp;</span> 
-<a id="ln-139" name="ln-139"></a>                                    <span class="n">G_vec</span> <span class="o">+</span> <span class="n">kf_vec</span> <span class="o">-</span> <span class="n">q_vec</span><span class="p">)</span>
-<a id="ln-140" name="ln-140"></a>
-<a id="ln-141" name="ln-141"></a>                                <span class="n">form_fac</span> <span class="o">=</span> <span class="n">form_fac</span> <span class="o">+</span> <span class="nb">conjg</span><span class="p">(</span><span class="n">wfc_FT_fkf</span><span class="p">(</span><span class="n">g</span><span class="p">))</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-142" name="ln-142"></a>                                                        <span class="n">wfc_i_FT</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-143" name="ln-143"></a>                                                        <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">ii</span><span class="o">*</span><span class="nb">dot_product</span><span class="p">(</span><span class="n">G_vec</span><span class="p">,</span> <span class="n">eq_pos</span><span class="p">))</span>
-<a id="ln-144" name="ln-144"></a>
-<a id="ln-145" name="ln-145"></a>                            <span class="k">end do</span>
-<a id="ln-146" name="ln-146"></a>
-<a id="ln-147" name="ln-147"></a><span class="k">                            </span><span class="n">f_sq_val</span> <span class="o">=</span> <span class="nb">conjg</span><span class="p">(</span><span class="n">form_fac</span><span class="p">)</span><span class="o">*</span><span class="n">form_fac</span>
-<a id="ln-148" name="ln-148"></a>
-<a id="ln-149" name="ln-149"></a>                            <span class="n">scr</span> <span class="o">=</span> <span class="n">in_med_scr</span><span class="p">%</span><span class="n">screening</span><span class="p">(</span><span class="n">q_vec</span><span class="p">,</span> <span class="n">omega</span><span class="p">)</span>
-<a id="ln-150" name="ln-150"></a>
-<a id="ln-151" name="ln-151"></a>                            <span class="k">do </span><span class="n">f</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">%</span><span class="n">n_med_FF</span>
-<a id="ln-152" name="ln-152"></a>
-<a id="ln-153" name="ln-153"></a>                                <span class="n">F_med_sq</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">=</span> <span class="n">F_med_sq_func</span><span class="p">(</span><span class="n">q_mag</span><span class="p">,</span> <span class="p">&amp;</span>
-<a id="ln-154" name="ln-154"></a>                                    <span class="n">dm_model</span><span class="p">%</span><span class="n">med_FF</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-<a id="ln-155" name="ln-155"></a>
-<a id="ln-156" name="ln-156"></a>                            <span class="k">end do</span>
-<a id="ln-157" name="ln-157"></a>
-<a id="ln-158" name="ln-158"></a><span class="k">                            do </span><span class="n">t</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">expt</span><span class="p">%</span><span class="n">n_time</span>
-<a id="ln-159" name="ln-159"></a>
-<a id="ln-160" name="ln-160"></a>                                <span class="n">v_m</span> <span class="o">=</span> <span class="n">v_minus</span><span class="p">(</span><span class="n">q_vec</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">%</span><span class="n">mX</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="p">&amp;</span>
-<a id="ln-161" name="ln-161"></a>                                    <span class="n">dm_model</span><span class="p">%</span><span class="n">vE</span><span class="o">*</span><span class="n">expt</span><span class="p">%</span><span class="n">vE_direction</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">:),</span> <span class="p">&amp;</span>
-<a id="ln-162" name="ln-162"></a>                                    <span class="n">omega</span><span class="p">)</span>
-<a id="ln-163" name="ln-163"></a>
-<a id="ln-164" name="ln-164"></a>                                <span class="k">if</span> <span class="p">(</span> <span class="n">v_m</span> <span class="o">&lt;</span> <span class="n">dm_model</span><span class="p">%</span><span class="n">vEsc</span> <span class="p">)</span> <span class="k">then </span>
-<a id="ln-165" name="ln-165"></a>
-<a id="ln-166" name="ln-166"></a><span class="k">                                    </span><span class="n">g_func_val</span> <span class="o">=</span> <span class="n">g_func</span><span class="p">(</span><span class="n">q_mag</span><span class="p">,</span> <span class="n">v_m</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">)</span>
-<a id="ln-167" name="ln-167"></a>
-<a id="ln-168" name="ln-168"></a>                                    <span class="n">dRdq</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">E_bin</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="p">:,</span> <span class="n">t</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
-<a id="ln-169" name="ln-169"></a>                                        <span class="n">dRdq</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">E_bin</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="p">:,</span> <span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="p">&amp;</span>
-<a id="ln-170" name="ln-170"></a>                                            <span class="n">q_mag</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-171" name="ln-171"></a>                                            <span class="n">scr</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-172" name="ln-172"></a>                                            <span class="n">F_med_sq</span><span class="p">(:)</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-173" name="ln-173"></a>                                            <span class="n">g_func_val</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-174" name="ln-174"></a>                                            <span class="n">f_sq_val</span>
-<a id="ln-175" name="ln-175"></a>
-<a id="ln-176" name="ln-176"></a>                                <span class="k">end if </span>
-<a id="ln-177" name="ln-177"></a>
-<a id="ln-178" name="ln-178"></a><span class="k">                            end do </span>
-<a id="ln-179" name="ln-179"></a>
-<a id="ln-180" name="ln-180"></a><span class="k">                        end do</span>
-<a id="ln-181" name="ln-181"></a>
-<a id="ln-182" name="ln-182"></a><span class="k">                    end do</span>
-<a id="ln-183" name="ln-183"></a>
-<a id="ln-184" name="ln-184"></a><span class="k">                end if</span>
-<a id="ln-185" name="ln-185"></a>
-<a id="ln-186" name="ln-186"></a>                <span class="c">! overall constants</span>
-<a id="ln-187" name="ln-187"></a>                <span class="n">dRdq</span><span class="p">(:,</span> <span class="p">:,</span> <span class="n">m</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">k_weight</span><span class="p">(</span><span class="n">kf</span><span class="p">)</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-188" name="ln-188"></a>                   <span class="p">(</span><span class="n">dm_model</span><span class="p">%</span><span class="n">rhoX</span><span class="o">/</span><span class="n">target_mat</span><span class="p">%</span><span class="n">rho_T</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">target_mat</span><span class="p">%</span><span class="n">pc_vol</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-189" name="ln-189"></a>                   <span class="p">((</span><span class="mi">4</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">numerics</span><span class="p">%</span><span class="n">n_q_theta</span><span class="o">*</span><span class="n">numerics</span><span class="p">%</span><span class="n">n_q_phi</span><span class="o">*</span><span class="mf">1.0_dp</span><span class="p">))</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-190" name="ln-190"></a>                   <span class="p">(</span><span class="n">dm_model</span><span class="p">%</span><span class="n">mX</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="n">red_mass</span><span class="p">(</span><span class="n">m_elec</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">%</span><span class="n">mX</span><span class="p">(</span><span class="n">m</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-191" name="ln-191"></a>                   <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-192" name="ln-192"></a>                   <span class="n">expt</span><span class="p">%</span><span class="n">m_T</span><span class="o">*</span><span class="n">expt</span><span class="p">%</span><span class="n">exposure</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-193" name="ln-193"></a>                   <span class="n">eV_to_inv_cm</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">&amp;</span>
-<a id="ln-194" name="ln-194"></a>                   <span class="n">dRdq</span><span class="p">(:,</span> <span class="p">:,</span> <span class="n">m</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:)</span>
-<a id="ln-195" name="ln-195"></a>
-<a id="ln-196" name="ln-196"></a>                <span class="c">! interpolate/integrate to get b_rate</span>
-<a id="ln-197" name="ln-197"></a>                <span class="k">do </span><span class="n">w</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bins</span><span class="p">%</span><span class="n">n_E</span>
-<a id="ln-198" name="ln-198"></a>                    <span class="k">do </span><span class="n">t</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">expt</span><span class="p">%</span><span class="n">n_time</span>
-<a id="ln-199" name="ln-199"></a>                        <span class="k">do </span><span class="n">f</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">%</span><span class="n">n_med_FF</span>
-<a id="ln-200" name="ln-200"></a>
-<a id="ln-201" name="ln-201"></a>                            <span class="k">call </span><span class="n">cc_ext_interpolate_dRdq_to_binned_rate</span><span class="p">(</span><span class="n">q_list</span><span class="p">,</span> <span class="p">&amp;</span>
-<a id="ln-202" name="ln-202"></a>                                <span class="n">dRdq</span><span class="p">(:,</span> <span class="n">w</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="p">&amp;</span>
-<a id="ln-203" name="ln-203"></a>                                <span class="n">b_rate</span><span class="p">(:,</span> <span class="n">w</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="p">&amp;</span>
-<a id="ln-204" name="ln-204"></a>                                <span class="n">bins</span><span class="p">%</span><span class="n">q_width</span><span class="p">)</span>
-<a id="ln-205" name="ln-205"></a>
-<a id="ln-206" name="ln-206"></a>                        <span class="k">end do</span>
-<a id="ln-207" name="ln-207"></a><span class="k">                    end do</span>
-<a id="ln-208" name="ln-208"></a><span class="k">                end do</span>
-<a id="ln-209" name="ln-209"></a>
-<a id="ln-210" name="ln-210"></a><span class="k">            end do</span>
-<a id="ln-211" name="ln-211"></a>
-<a id="ln-212" name="ln-212"></a><span class="k">        end if</span>
-<a id="ln-213" name="ln-213"></a>
-<a id="ln-214" name="ln-214"></a><span class="k">        </span><span class="n">binned_rate</span><span class="p">%</span><span class="n">binned_rate</span> <span class="o">=</span> <span class="n">binned_rate</span><span class="p">%</span><span class="n">binned_rate</span> <span class="o">+</span> <span class="n">b_rate</span>
-<a id="ln-215" name="ln-215"></a>
-<a id="ln-216" name="ln-216"></a>    <span class="k">end subroutine</span>
-<a id="ln-217" name="ln-217"></a>
-<a id="ln-218" name="ln-218"></a><span class="k">    subroutine </span><span class="n">cc_ext_interpolate_dRdq_to_binned_rate</span><span class="p">(</span><span class="n">q_list</span><span class="p">,</span> <span class="n">dRdq</span><span class="p">,</span> <span class="n">b_rate</span><span class="p">,</span> <span class="n">q_bin_width</span><span class="p">)</span>
-<a id="ln-219" name="ln-219"></a>
-<a id="ln-220" name="ln-220"></a>        <span class="k">implicit none</span>
-<a id="ln-221" name="ln-221"></a>
-<a id="ln-222" name="ln-222"></a><span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_list</span><span class="p">(:)</span>
-<a id="ln-223" name="ln-223"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dRdq</span><span class="p">(:)</span>
-<a id="ln-224" name="ln-224"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">b_rate</span><span class="p">(:)</span>
-<a id="ln-225" name="ln-225"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_bin_width</span>
-<a id="ln-226" name="ln-226"></a>
-<a id="ln-227" name="ln-227"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_bin_L</span><span class="p">,</span> <span class="n">q_bin_R</span>
-<a id="ln-228" name="ln-228"></a>
-<a id="ln-229" name="ln-229"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">q</span>
-<a id="ln-230" name="ln-230"></a>
-<a id="ln-231" name="ln-231"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">eps</span>
-<a id="ln-232" name="ln-232"></a>
-<a id="ln-233" name="ln-233"></a>        <span class="n">eps</span> <span class="o">=</span> <span class="mf">1.0e-3_dp</span>
-<a id="ln-234" name="ln-234"></a>
-<a id="ln-235" name="ln-235"></a>        <span class="c">! go through all the bins (except last)</span>
-<a id="ln-236" name="ln-236"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="p">)</span> <span class="k">then</span>
-<a id="ln-237" name="ln-237"></a>
-<a id="ln-238" name="ln-238"></a><span class="k">            do </span><span class="n">q</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-<a id="ln-239" name="ln-239"></a>                
-<a id="ln-240" name="ln-240"></a>                <span class="n">q_bin_L</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">q_bin_width</span> <span class="o">+</span> <span class="n">eps</span>
-<a id="ln-241" name="ln-241"></a>                <span class="n">q_bin_R</span> <span class="o">=</span> <span class="n">q</span><span class="o">*</span><span class="n">q_bin_width</span>
-<a id="ln-242" name="ln-242"></a>
-<a id="ln-243" name="ln-243"></a>                <span class="n">b_rate</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">=</span> <span class="n">integrate_log_interpolate</span><span class="p">(</span><span class="n">q_list</span><span class="p">,</span> <span class="n">dRdq</span><span class="p">,</span> <span class="n">q_bin_L</span><span class="p">,</span> <span class="n">q_bin_R</span><span class="p">)</span>
-<a id="ln-244" name="ln-244"></a>
-<a id="ln-245" name="ln-245"></a>            <span class="k">end do</span>
-<a id="ln-246" name="ln-246"></a>
-<a id="ln-247" name="ln-247"></a><span class="k">        end if</span>
-<a id="ln-248" name="ln-248"></a>
-<a id="ln-249" name="ln-249"></a>        <span class="c">! last bin integrates over the rest of the list</span>
-<a id="ln-250" name="ln-250"></a>        <span class="n">b_rate</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">))</span> <span class="o">=</span> <span class="n">integrate_log_interpolate</span><span class="p">(</span><span class="n">q_list</span><span class="p">,</span> <span class="n">dRdq</span><span class="p">,&amp;</span>
-<a id="ln-251" name="ln-251"></a>             <span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">q_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">q_bin_width</span><span class="p">,</span> <span class="n">q_list</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">q_list</span><span class="p">)))</span>
-<a id="ln-252" name="ln-252"></a>
-<a id="ln-253" name="ln-253"></a>    <span class="k">end subroutine</span>
-<a id="ln-254" name="ln-254"></a>
-<a id="ln-255" name="ln-255"></a><span class="k">end module</span>
+<a id="ln-133" name="ln-133"></a>                            <span class="k">do </span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">PW_dataset</span><span class="p">%</span><span class="n">n_G</span>
+<a id="ln-134" name="ln-134"></a>
+<a id="ln-135" name="ln-135"></a>                                <span class="n">G_vec</span> <span class="o">=</span> <span class="n">PW_dataset</span><span class="p">%</span><span class="n">G_grid_xyz</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">:)</span>
+<a id="ln-136" name="ln-136"></a>
+<a id="ln-137" name="ln-137"></a>                                <span class="n">wfc_i_FT</span> <span class="o">=</span> <span class="n">core_electron</span><span class="p">%</span><span class="n">atomic_sto_wf_FT</span><span class="p">(</span><span class="n">init_id</span><span class="p">,</span> <span class="p">&amp;</span> 
+<a id="ln-138" name="ln-138"></a>                                    <span class="n">G_vec</span> <span class="o">+</span> <span class="n">kf_vec</span> <span class="o">-</span> <span class="n">q_vec</span><span class="p">)</span>
+<a id="ln-139" name="ln-139"></a>
+<a id="ln-140" name="ln-140"></a>                                <span class="n">form_fac</span> <span class="o">=</span> <span class="n">form_fac</span> <span class="o">+</span> <span class="nb">conjg</span><span class="p">(</span><span class="n">wfc_FT_fkf</span><span class="p">(</span><span class="n">g</span><span class="p">))</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-141" name="ln-141"></a>                                                        <span class="n">wfc_i_FT</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-142" name="ln-142"></a>                                                        <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">ii</span><span class="o">*</span><span class="nb">dot_product</span><span class="p">(</span><span class="n">G_vec</span><span class="p">,</span> <span class="n">eq_pos</span><span class="p">))</span>
+<a id="ln-143" name="ln-143"></a>
+<a id="ln-144" name="ln-144"></a>                            <span class="k">end do</span>
+<a id="ln-145" name="ln-145"></a>
+<a id="ln-146" name="ln-146"></a><span class="k">                            </span><span class="n">f_sq_val</span> <span class="o">=</span> <span class="nb">conjg</span><span class="p">(</span><span class="n">form_fac</span><span class="p">)</span><span class="o">*</span><span class="n">form_fac</span>
+<a id="ln-147" name="ln-147"></a>
+<a id="ln-148" name="ln-148"></a>                            <span class="n">scr</span> <span class="o">=</span> <span class="n">in_med_scr</span><span class="p">%</span><span class="n">screening</span><span class="p">(</span><span class="n">q_vec</span><span class="p">,</span> <span class="n">omega</span><span class="p">)</span>
+<a id="ln-149" name="ln-149"></a>
+<a id="ln-150" name="ln-150"></a>                            <span class="k">do </span><span class="n">f</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">%</span><span class="n">n_med_FF</span>
+<a id="ln-151" name="ln-151"></a>
+<a id="ln-152" name="ln-152"></a>                                <span class="n">F_med_sq</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">=</span> <span class="n">F_med_sq_func</span><span class="p">(</span><span class="n">q_mag</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-153" name="ln-153"></a>                                    <span class="n">dm_model</span><span class="p">%</span><span class="n">med_FF</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+<a id="ln-154" name="ln-154"></a>
+<a id="ln-155" name="ln-155"></a>                            <span class="k">end do</span>
+<a id="ln-156" name="ln-156"></a>
+<a id="ln-157" name="ln-157"></a><span class="k">                            do </span><span class="n">t</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">expt</span><span class="p">%</span><span class="n">n_time</span>
+<a id="ln-158" name="ln-158"></a>
+<a id="ln-159" name="ln-159"></a>                                <span class="n">v_m</span> <span class="o">=</span> <span class="n">v_minus</span><span class="p">(</span><span class="n">q_vec</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">%</span><span class="n">mX</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="p">&amp;</span>
+<a id="ln-160" name="ln-160"></a>                                    <span class="n">dm_model</span><span class="p">%</span><span class="n">vE</span><span class="o">*</span><span class="n">expt</span><span class="p">%</span><span class="n">vE_direction</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">:),</span> <span class="p">&amp;</span>
+<a id="ln-161" name="ln-161"></a>                                    <span class="n">omega</span><span class="p">)</span>
+<a id="ln-162" name="ln-162"></a>
+<a id="ln-163" name="ln-163"></a>                                <span class="k">if</span> <span class="p">(</span> <span class="n">v_m</span> <span class="o">&lt;</span> <span class="n">dm_model</span><span class="p">%</span><span class="n">vEsc</span> <span class="p">)</span> <span class="k">then </span>
+<a id="ln-164" name="ln-164"></a>
+<a id="ln-165" name="ln-165"></a><span class="k">                                    </span><span class="n">g_func_val</span> <span class="o">=</span> <span class="n">g_func</span><span class="p">(</span><span class="n">q_mag</span><span class="p">,</span> <span class="n">v_m</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">)</span>
+<a id="ln-166" name="ln-166"></a>
+<a id="ln-167" name="ln-167"></a>                                    <span class="n">dRdq</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">E_bin</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="p">:,</span> <span class="n">t</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
+<a id="ln-168" name="ln-168"></a>                                        <span class="n">dRdq</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">E_bin</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="p">:,</span> <span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="p">&amp;</span>
+<a id="ln-169" name="ln-169"></a>                                            <span class="n">q_mag</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-170" name="ln-170"></a>                                            <span class="n">scr</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-171" name="ln-171"></a>                                            <span class="n">F_med_sq</span><span class="p">(:)</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-172" name="ln-172"></a>                                            <span class="n">g_func_val</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-173" name="ln-173"></a>                                            <span class="n">f_sq_val</span>
+<a id="ln-174" name="ln-174"></a>
+<a id="ln-175" name="ln-175"></a>                                <span class="k">end if </span>
+<a id="ln-176" name="ln-176"></a>
+<a id="ln-177" name="ln-177"></a><span class="k">                            end do </span>
+<a id="ln-178" name="ln-178"></a>
+<a id="ln-179" name="ln-179"></a><span class="k">                        end do</span>
+<a id="ln-180" name="ln-180"></a>
+<a id="ln-181" name="ln-181"></a><span class="k">                    end do</span>
+<a id="ln-182" name="ln-182"></a>
+<a id="ln-183" name="ln-183"></a><span class="k">                end if</span>
+<a id="ln-184" name="ln-184"></a>
+<a id="ln-185" name="ln-185"></a>                <span class="c">! overall constants</span>
+<a id="ln-186" name="ln-186"></a>                <span class="n">dRdq</span><span class="p">(:,</span> <span class="p">:,</span> <span class="n">m</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">PW_dataset</span><span class="p">%</span><span class="n">k_weight</span><span class="p">(</span><span class="n">kf</span><span class="p">)</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-187" name="ln-187"></a>                   <span class="p">(</span><span class="n">dm_model</span><span class="p">%</span><span class="n">rhoX</span><span class="o">/</span><span class="n">target_mat</span><span class="p">%</span><span class="n">rho_T</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">target_mat</span><span class="p">%</span><span class="n">pc_vol</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-188" name="ln-188"></a>                   <span class="p">((</span><span class="mi">4</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">numerics</span><span class="p">%</span><span class="n">n_q_theta</span><span class="o">*</span><span class="n">numerics</span><span class="p">%</span><span class="n">n_q_phi</span><span class="o">*</span><span class="mf">1.0_dp</span><span class="p">))</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-189" name="ln-189"></a>                   <span class="p">(</span><span class="n">dm_model</span><span class="p">%</span><span class="n">mX</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="n">red_mass</span><span class="p">(</span><span class="n">m_elec</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">%</span><span class="n">mX</span><span class="p">(</span><span class="n">m</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-190" name="ln-190"></a>                   <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-191" name="ln-191"></a>                   <span class="n">expt</span><span class="p">%</span><span class="n">m_T</span><span class="o">*</span><span class="n">expt</span><span class="p">%</span><span class="n">exposure</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-192" name="ln-192"></a>                   <span class="n">eV_to_inv_cm</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">&amp;</span>
+<a id="ln-193" name="ln-193"></a>                   <span class="n">dRdq</span><span class="p">(:,</span> <span class="p">:,</span> <span class="n">m</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:)</span>
+<a id="ln-194" name="ln-194"></a>
+<a id="ln-195" name="ln-195"></a>                <span class="c">! interpolate/integrate to get b_rate</span>
+<a id="ln-196" name="ln-196"></a>                <span class="k">do </span><span class="n">w</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bins</span><span class="p">%</span><span class="n">n_E</span>
+<a id="ln-197" name="ln-197"></a>                    <span class="k">do </span><span class="n">t</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">expt</span><span class="p">%</span><span class="n">n_time</span>
+<a id="ln-198" name="ln-198"></a>                        <span class="k">do </span><span class="n">f</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dm_model</span><span class="p">%</span><span class="n">n_med_FF</span>
+<a id="ln-199" name="ln-199"></a>
+<a id="ln-200" name="ln-200"></a>                            <span class="k">call </span><span class="n">cc_ext_interpolate_dRdq_to_binned_rate</span><span class="p">(</span><span class="n">q_list</span><span class="p">,</span> <span class="p">&amp;</span>
+<a id="ln-201" name="ln-201"></a>                                <span class="n">dRdq</span><span class="p">(:,</span> <span class="n">w</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="p">&amp;</span>
+<a id="ln-202" name="ln-202"></a>                                <span class="n">b_rate</span><span class="p">(:,</span> <span class="n">w</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="p">&amp;</span>
+<a id="ln-203" name="ln-203"></a>                                <span class="n">bins</span><span class="p">%</span><span class="n">q_width</span><span class="p">)</span>
+<a id="ln-204" name="ln-204"></a>
+<a id="ln-205" name="ln-205"></a>                        <span class="k">end do</span>
+<a id="ln-206" name="ln-206"></a><span class="k">                    end do</span>
+<a id="ln-207" name="ln-207"></a><span class="k">                end do</span>
+<a id="ln-208" name="ln-208"></a>
+<a id="ln-209" name="ln-209"></a><span class="k">            end do</span>
+<a id="ln-210" name="ln-210"></a>
+<a id="ln-211" name="ln-211"></a><span class="k">        end if</span>
+<a id="ln-212" name="ln-212"></a>
+<a id="ln-213" name="ln-213"></a><span class="k">        </span><span class="n">binned_rate</span><span class="p">%</span><span class="n">binned_rate</span> <span class="o">=</span> <span class="n">binned_rate</span><span class="p">%</span><span class="n">binned_rate</span> <span class="o">+</span> <span class="n">b_rate</span>
+<a id="ln-214" name="ln-214"></a>
+<a id="ln-215" name="ln-215"></a>    <span class="k">end subroutine</span>
+<a id="ln-216" name="ln-216"></a>
+<a id="ln-217" name="ln-217"></a><span class="k">    subroutine </span><span class="n">cc_ext_interpolate_dRdq_to_binned_rate</span><span class="p">(</span><span class="n">q_list</span><span class="p">,</span> <span class="n">dRdq</span><span class="p">,</span> <span class="n">b_rate</span><span class="p">,</span> <span class="n">q_bin_width</span><span class="p">)</span>
+<a id="ln-218" name="ln-218"></a>
+<a id="ln-219" name="ln-219"></a>        <span class="k">implicit none</span>
+<a id="ln-220" name="ln-220"></a>
+<a id="ln-221" name="ln-221"></a><span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_list</span><span class="p">(:)</span>
+<a id="ln-222" name="ln-222"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dRdq</span><span class="p">(:)</span>
+<a id="ln-223" name="ln-223"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">b_rate</span><span class="p">(:)</span>
+<a id="ln-224" name="ln-224"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_bin_width</span>
+<a id="ln-225" name="ln-225"></a>
+<a id="ln-226" name="ln-226"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">q_bin_L</span><span class="p">,</span> <span class="n">q_bin_R</span>
+<a id="ln-227" name="ln-227"></a>
+<a id="ln-228" name="ln-228"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">q</span>
+<a id="ln-229" name="ln-229"></a>
+<a id="ln-230" name="ln-230"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">eps</span>
+<a id="ln-231" name="ln-231"></a>
+<a id="ln-232" name="ln-232"></a>        <span class="n">eps</span> <span class="o">=</span> <span class="mf">1.0e-3_dp</span>
+<a id="ln-233" name="ln-233"></a>
+<a id="ln-234" name="ln-234"></a>        <span class="c">! go through all the bins (except last)</span>
+<a id="ln-235" name="ln-235"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-236" name="ln-236"></a>
+<a id="ln-237" name="ln-237"></a><span class="k">            do </span><span class="n">q</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+<a id="ln-238" name="ln-238"></a>                
+<a id="ln-239" name="ln-239"></a>                <span class="n">q_bin_L</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">q_bin_width</span> <span class="o">+</span> <span class="n">eps</span>
+<a id="ln-240" name="ln-240"></a>                <span class="n">q_bin_R</span> <span class="o">=</span> <span class="n">q</span><span class="o">*</span><span class="n">q_bin_width</span>
+<a id="ln-241" name="ln-241"></a>
+<a id="ln-242" name="ln-242"></a>                <span class="n">b_rate</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">=</span> <span class="n">integrate_log_interpolate</span><span class="p">(</span><span class="n">q_list</span><span class="p">,</span> <span class="n">dRdq</span><span class="p">,</span> <span class="n">q_bin_L</span><span class="p">,</span> <span class="n">q_bin_R</span><span class="p">)</span>
+<a id="ln-243" name="ln-243"></a>
+<a id="ln-244" name="ln-244"></a>            <span class="k">end do</span>
+<a id="ln-245" name="ln-245"></a>
+<a id="ln-246" name="ln-246"></a><span class="k">        end if</span>
+<a id="ln-247" name="ln-247"></a>
+<a id="ln-248" name="ln-248"></a>        <span class="c">! last bin integrates over the rest of the list</span>
+<a id="ln-249" name="ln-249"></a>        <span class="n">b_rate</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">))</span> <span class="o">=</span> <span class="n">integrate_log_interpolate</span><span class="p">(</span><span class="n">q_list</span><span class="p">,</span> <span class="n">dRdq</span><span class="p">,&amp;</span>
+<a id="ln-250" name="ln-250"></a>             <span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">q_bin_width</span><span class="p">,</span> <span class="n">q_list</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">q_list</span><span class="p">)))</span>
+<a id="ln-251" name="ln-251"></a>
+<a id="ln-252" name="ln-252"></a>    <span class="k">end subroutine</span>
+<a id="ln-253" name="ln-253"></a>
+<a id="ln-254" name="ln-254"></a><span class="k">end module</span>
 </pre></div>
 
     </section>
@@ -547,7 +546,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-11-22 15:48  
+             on 2021-11-23 17:24  
             
           </p>
         </div>

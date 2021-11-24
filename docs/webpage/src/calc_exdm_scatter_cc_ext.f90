@@ -130,7 +130,6 @@ contains
 
                             form_fac = (0.0_dp, 0.0_dp)
 
-
                             do g = 1, PW_dataset%n_G
 
                                 G_vec = PW_dataset%G_grid_xyz(g, :)
@@ -248,7 +247,7 @@ contains
 
         ! last bin integrates over the rest of the list
         b_rate(size(b_rate)) = integrate_log_interpolate(q_list, dRdq,&
-             (size(q_list) - 1)*q_bin_width, q_list(size(q_list)))
+             (size(b_rate) - 1)*q_bin_width, q_list(size(q_list)))
 
     end subroutine
 

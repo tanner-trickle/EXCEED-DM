@@ -51,6 +51,11 @@ contains
                 trim(adjustl(pretty_time_format(dt))), &
                 error)
 
+            call h5ltmake_dataset_string_f(file_id, &
+                'timing/start_date_str', &
+                trim(adjustl(pretty_date_and_time())), &
+                error)
+
             call h5ltmake_dataset_double_f(file_id, &
                 'timing/total_run_time_s', &
                 size(dims1), dims1, &

@@ -42,7 +42,7 @@ contains
         integer :: init_id, w_id
         logical, optional :: verbose
 
-        real(dp) :: dRdw(bins%n_q, numerics%n_omega, dm_model%n_mX, dm_model%n_med_FF, expt%n_time)
+        real(dp) :: dRdw(bins%n_q, 2, dm_model%n_mX, dm_model%n_med_FF, expt%n_time)
 
         real(dp) :: b_rate(bins%n_q, bins%n_E, dm_model%n_mX, dm_model%n_med_FF, expt%n_time)
 
@@ -70,7 +70,7 @@ contains
         integer :: m, w, ki, a, b, t, f, q
 
         b_rate = 0.0_dp
-        dRdw = 0.0_dp
+        dRdw = 1.0e-100_dp
 
         Ei = core_electron%energy(init_id)
 
@@ -193,7 +193,8 @@ contains
                         do f = 1, dm_model%n_med_FF
                             
                             call cf_interpolate_dRdw_to_binned_rate(w_id, &
-                                numerics%omega_list, dRdw(q, :, m, f, t), b_rate(q, :, m, f, t), bins%E_width)
+                                numerics%omega_list, dRdw(q, :, m, f, t), b_rate(q, :, m, f, t),&
+                                bins%E_width, target_mat%band_gap)
 
                         end do
                     end do
@@ -207,7 +208,7 @@ contains
 
     end subroutine
 
-    subroutine cf_interpolate_dRdw_to_binned_rate(w_id, omega_list, dRdw, b_rate, E_bin_width)
+    subroutine cf_interpolate_dRdw_to_binned_rate(w_id, omega_list, dRdw, b_rate, E_bin_width, band_gap)
         !! Given \( [\omega_1, \omega_2] \) and \( [ \frac{dR}{d \omega}(\omega_1), \frac{dR}{d\omega}(\omega_2)  ] \),
         !! find the power law fit parameter, \( \beta \), such that 
         !! \( \frac{dR}{d \omega}(\omega_2) = \frac{dR}{d \omega}(\omega_1) \left( \frac{\omega_2}{\omega_1} \right)^\beta \).
@@ -228,50 +229,39 @@ contains
         real(dp) :: omega_bounds(2)
         real(dp) :: dRdw_pair(2)
 
+        real(dp) :: band_gap
+
         real(dp) :: fit_params
 
-        integer :: w, e
+        integer :: e
+
+        real(dp) :: E_bin_L, E_bin_R
 
         real(dp) :: E1, E2
 
-        if ( w_id < size(omega_list) ) then
+        if ( w_id < size(omega_list) ) then 
 
-            omega_bounds(1) = omega_list(w_id)
-            omega_bounds(2) = omega_list(w_id + 1)
+            if ( size(b_rate) > 1 ) then
 
-            dRdw_pair(1) = dRdw(1)
-            dRdw_pair(2) = dRdw(2)
+                do e = 1, size(b_rate) - 1
 
-            ! make sure both end points aren't zero
-            if ( ( dRdw_pair(1) > 0 ) .and. ( dRdw_pair(2) > 0 ) ) then
+                    E_bin_L = band_gap + (e - 1)*E_bin_width
+                    E_bin_R = band_gap + e*E_bin_width
 
-                ! find the fit parameters
-                fit_params = power_law_fit(&
-                    log10(omega_bounds), &
-                    log10(dRdw_pair))
+                    b_rate(e) = b_rate(e) + integrate_log_interpolate(&
+                        [ omega_list(w_id), omega_list(w_id + 1) ],& 
+                        dRdw, E_bin_L, E_bin_R)
 
-                ! now we 'know' dRdw between these two points, lets integrate this function 
-                ! over each bin
-                do e = 1, size(b_rate)
-
-                    ! edges of the bin
-                    E1 = (e - 1)*E_bin_width
-                    E2 = e*E_bin_width
-
-                    if ( ( E2 > omega_bounds(1) ) & 
-                        .and. ( E1 < omega_bounds(2) ) &
-                        .and. ( E1 > 0.0_dp ) ) then
-
-                        ! integrate 
-                        b_rate(e) = b_rate(e) + dRdw_pair(1)*&
-                            integrate_power_law(fit_params, max(E1, omega_bounds(1)), &
-                                            min(E2, omega_bounds(2)), omega_bounds(1))
-
-                    end if
 
                 end do
 
             end if
+
+            ! last bin integrates over the rest of the list
+            b_rate(size(b_rate)) = b_rate(size(b_rate)) + integrate_log_interpolate(&
+                                    [ omega_list(w_id), omega_list(w_id + 1) ], dRdw,&
+                                    band_gap + (size(b_rate) - 1)*E_bin_width,&
+                                    omega_list(size(omega_list)))
 
         end if
 

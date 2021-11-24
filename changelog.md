@@ -1,3 +1,14 @@
+v0.2.8
+---
+
+- Minor updates to `dm_model` and `PW_dataset` types
+- Added routine to find the maximum momentum transfer within the 1BZ, `get_q_max_1BZ`.
+- Generalized dielectric inputs, anisotropic dielectrics in each (q, omega) bin are now accepted. See the `Dielectric Data File` documentation for more details. 
+- Added `cc_ext` calculation mode, a new way to compute the core -> conduction contribution which allows the q range to extend to the kinematic bound.
+- Added a new integration routine when going from differential quantities such as dR/d omega, dR/dq to the binned values.
+- Added timing information to printed and saved output.
+- Updated documentation.
+
 v0.2.7
 ---
 
