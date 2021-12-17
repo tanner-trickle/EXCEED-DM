@@ -104,7 +104,7 @@ module core_electron_type
 
 contains
 
-        function atomic_sto_wf_FT_radial(self, id, k_mag) result(chi)
+    function atomic_sto_wf_FT_radial(self, id, k_mag) result(chi)
         !! Radial part of `atomic_sto_wf`.
         !!
         !! Units : \( \text{eV}^{-3/2} \)

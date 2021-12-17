@@ -239,7 +239,14 @@ contains
 
     subroutine calc_pi_v2_v2_no_spin(pi_v2_v2, tran_form_v2, &
             dm_model, widths, PW_dataset, target_mat, val_id, k)
-        !! Compute \( \Pi_{\bar v^2, \bar v^2} \) from spin independent wave functions.
+        !* Compute \( \Pi_{\bar v^2, \bar v^2} \) from spin independent wave functions.
+        !
+        ! Note: this calculation has some subtleties due to having to take care of divergent terms. Specifically, it can be shown
+        ! that \( \mathrm{Im} \Pi_{\bar{v}^2, \bar{v}^2} \sim \omega^2 \) as \( \omega \rightarrow 0 \) (for the gapped targets of
+        ! interest here). See discussion in calculation of \( \Pi_{v_i, v_j} \) for more details.
+        !
+        ! [TODO] Check if this procedure is valid for \( \mathrm{Re} \Pi_{\bar{v}^2, \bar{v}^2} \) or 
+        ! \( \mathrm{Re}\Pi_{\bar{v}^2, \bar{v}^2} + \) (constant term).
 
         implicit none
 
@@ -271,6 +278,7 @@ contains
 
                         pi_v2_v2(w, p) = pi_v2_v2(w, p) + &
                            (target_mat%pc_vol)**(-1)*PW_dataset%k_weight(k)*(0.25_dp)*&
+                           ( omega / omega_if )**2*&
                            (&
                                 ( omega - omega_if + ii*width )**(-1) - &
                                 ( omega + omega_if - ii*width )**(-1) &
@@ -288,7 +296,14 @@ contains
 
     subroutine calc_pi_v2_v2_spin(pi_v2_v2, tran_form_v2, &
             dm_model, widths, PW_dataset, target_mat, val_id, k)
-        !! Compute \( \Pi_{\bar v^2, \bar v^2} \) from spin dependent wave functions.
+        !* Compute \( \Pi_{\bar v^2, \bar v^2} \) from spin dependent wave functions.
+        !
+        ! Note: this calculation has some subtleties due to having to take care of divergent terms. Specifically, it can be shown
+        ! that \( \mathrm{Im} \Pi_{\bar{v}^2, \bar{v}^2} \sim \omega^2 \) as \( \omega \rightarrow 0 \) (for the gapped targets of
+        ! interest here). See discussion in calculation of \( \Pi_{v_i, v_j} \) for more details.
+        !
+        ! [TODO] Check if this procedure is valid for \( \mathrm{Re} \Pi_{\bar{v}^2, \bar{v}^2} \) or 
+        ! \( \mathrm{Re}\Pi_{\bar{v}^2, \bar{v}^2} + \) (constant term).
 
         implicit none
 
@@ -328,6 +343,7 @@ contains
 
                         pi_v2_v2(w, p) = pi_v2_v2(w, p) + &
                            (target_mat%pc_vol)**(-1)*PW_dataset%k_weight(k)*(0.25_dp)*&
+                           ( omega / omega_if )**2*&
                            (&
                                 ( omega - omega_if + ii*width )**(-1) - &
                                 ( omega + omega_if - ii*width )**(-1) &
@@ -487,7 +503,20 @@ contains
 
     subroutine calc_pi_vi_vj_no_spin(pi_vi_vj, tran_form_v, &
             dm_model, widths, PW_dataset, target_mat, val_id, k)
-        !! Compute \( \Pi_{v^i, v^j} \) from spin independent wave functions.
+        !* Compute \( \Pi_{v^i, v^j} \) from spin independent wave functions.
+        ! 
+        ! Note: this calculation has some subtleties due to having to take care of divergent terms. Specifically, it can be shown
+        ! that \( \mathrm{Im} \Pi_{v_i, v_j} \sim \omega^2 \) as \( \omega \rightarrow 0 \) (for the gapped targets of interest
+        ! here). If one naively computes \( \Pi_{v_i, v_j} \) numerically you find that \( \Pi_{v_i, v_j} \sim \delta \) as \(
+        ! \omega \rightarow 0 \). While alone this does not look problematic since \( \Pi_{v_i, v_j} \) itself is converging, the
+        ! calculation of other physical quantities, such as the dielectric \( \propto \Pi_{v_i, v_j}/\omega^2 \), will diverge.
+        !
+        ! This is remedied by explicitly only computing the first non-divergent term, which can be shown, see 
+        ! https://journals.aps.org/prb/pdf/10.1103/PhysRevB.48.11705, to be related to the naive calculation with the addition of a
+        ! \( ( \omega / \omega_{ii'\mathbf{k}})^2 \) term inside the 1BZ sum. We follow that procedure here.
+        !
+        ! [TODO] Check if this procedure is valid for \( \mathrm{Re} \Pi_{v_i, v_j} \) or \( \mathrm{Re} \Pi_{v_i, v_j} + \) 
+        ! (constant term).
 
         implicit none
 
@@ -536,6 +565,7 @@ contains
 
                         pi_vi_vj(:, :, w, p) = pi_vi_vj(:, :, w, p) + &
                            (target_mat%pc_vol)**(-1)*PW_dataset%k_weight(k)*&
+                           ( omega / omega_if )**2*&
                            ( &
                                 ( omega - omega_if + ii*width )**(-1) - &
                                 ( omega + omega_if - ii*width )**(-1) &
@@ -553,7 +583,20 @@ contains
 
     subroutine calc_pi_vi_vj_spin(pi_vi_vj, tran_form_v, &
             dm_model, widths, PW_dataset, target_mat, val_id, k)
-        !! Compute \( \Pi_{v^i, v^j} \) from spin dependent wave functions.
+        !* Compute \( \Pi_{v^i, v^j} \) from spin dependent wave functions.
+        !
+        ! Note: this calculation has some subtleties due to having to take care of divergent terms. Specifically, it can be shown
+        ! that \( \mathrm{Im} \Pi_{v_i, v_j} \sim \omega^2 \) as \( \omega \rightarrow 0 \) (for the gapped targets of interest
+        ! here). If one naively computes \( \Pi_{v_i, v_j} \) numerically you find that \( \Pi_{v_i, v_j} \sim \delta \) as \(
+        ! \omega \rightarow 0 \). While alone this does not look problematic since \( \Pi_{v_i, v_j} \) itself is converging, the
+        ! calculation of other physical quantities, such as the dielectric \( \propto \Pi_{v_i, v_j}/\omega^2 \), will diverge.
+        !
+        ! This is remedied by explicitly only computing the first non-divergent term, which can be shown, see 
+        ! https://journals.aps.org/prb/pdf/10.1103/PhysRevB.48.11705, to be related to the naive calculation with the addition of a
+        ! \( ( \omega / \omega_{ii'\mathbf{k}})^2 \) term inside the 1BZ sum. We follow that procedure here.
+        !
+        ! [TODO] Check if this procedure is valid for \( \mathrm{Re} \Pi_{v_i, v_j} \) or \( \mathrm{Re} \Pi_{v_i, v_j} + \) 
+        ! (constant term).
 
         implicit none
 
@@ -612,6 +655,7 @@ contains
 
                         pi_vi_vj(:, :, w, p) = pi_vi_vj(:, :, w, p) + &
                            (target_mat%pc_vol)**(-1)*PW_dataset%k_weight(k)*&
+                           ( omega / omega_if )**2*&
                            ( &
                                 ( omega - omega_if + ii*width )**(-1) - &
                                 ( omega + omega_if - ii*width )**(-1) &
