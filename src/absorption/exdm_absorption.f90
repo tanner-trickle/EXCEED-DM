@@ -242,9 +242,19 @@ contains
 
                 else if ( trim(dm_model%particle_type) == 'ps' ) then
 
-                    call calc_rate_ps(pi_1_1_mat, v_vec, &
-                        dm_model, expt, widths, target_mat, numerics, &
-                        abs_rate, verbose = verbose)
+                    if ( PW_dataset%include_spin ) then
+
+                        call calc_rate_ps_SD(pi_vs_vs, v_vec, &
+                            dm_model, expt, widths, target_mat, numerics, &
+                            abs_rate, verbose = verbose)
+
+                    else
+
+                        call calc_rate_ps(pi_1_1_mat, v_vec, &
+                            dm_model, expt, widths, target_mat, numerics, &
+                            abs_rate, verbose = verbose)
+
+                    end if
 
                 else if ( trim(dm_model%particle_type) == 'scalar' ) then
 
