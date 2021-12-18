@@ -41,7 +41,8 @@ contains
 
     subroutine calc_abs_Pi_no_spin(proc_id, root_process, &
             tran_form_1_job, tran_form_v_job, tran_form_v2_job, &
-            pi_v2_v2, pi_vi_vj, pi_1_1_mat, ik_manager, job_id_to_ik, &
+            tran_form_vs_job, &
+            pi_v2_v2, pi_vi_vj, pi_1_1_mat, pi_vs_vs, ik_manager, job_id_to_ik, &
             PW_dataset, widths, dm_model, target_mat, filename, verbose)
         !! Compute the self energies with spin independent wave functions.
         implicit none
@@ -51,9 +52,11 @@ contains
         complex(dp) :: tran_form_1_job(:, :)
         complex(dp) :: tran_form_v_job(:, :, :)
         complex(dp) :: tran_form_v2_job(:, :)
+        complex(dp) :: tran_form_vs_job(:, :)
         complex(dp) :: pi_v2_v2(:, :)
         complex(dp) :: pi_vi_vj(:, :, :, :)
         complex(dp) :: pi_1_1_mat(:, :, :, :)
+        complex(dp) :: pi_vs_vs(:, :)
         type(parallel_manager_t) :: ik_manager
         integer :: job_id_to_ik(:, :)
         type(PW_dataset_t) :: PW_dataset
@@ -67,6 +70,11 @@ contains
             !! Dim : [n_omega, n_widths, n_tran_per_proc]
             !! 
             !! self energy with two v^2 insertions
+            !!
+            !! Units : eV^2
+
+        complex(dp), allocatable :: pi_vs_vs_job(:, :, :)
+            !! Dim : [n_omega, n_widths, n_tran_per_proc]
             !!
             !! Units : eV^2
 
@@ -98,6 +106,8 @@ contains
         pi_vi_vj_job = (0.0_dp, 0.0_dp)
         allocate(pi_1_1_mat_job(3, 3, size(pi_v2_v2, 1), size(pi_v2_v2, 2), ik_manager%n_jobs_per_proc))
         pi_1_1_mat_job = (0.0_dp, 0.0_dp)
+        allocate(pi_vs_vs_job(size(pi_v2_v2, 1), size(pi_v2_v2, 2), ik_manager%n_jobs_per_proc))
+        pi_vs_vs_job = (0.0_dp, 0.0_dp)
 
         do j = 1, ik_manager%n_jobs_per_proc
 
@@ -127,12 +137,12 @@ contains
         end if
 
         call ik_manager%comm_self_energies(proc_id, root_process, &
-            pi_v2_v2_job, pi_1_1_mat_job, pi_vi_vj_job, &
-            pi_v2_v2, pi_1_1_mat, pi_vi_vj, verbose = verbose)
+            pi_v2_v2_job, pi_1_1_mat_job, pi_vi_vj_job, pi_vs_vs_job, &
+            pi_v2_v2, pi_1_1_mat, pi_vi_vj, pi_vs_vs, verbose = verbose)
 
         if ( proc_id == root_process ) then
 
-            call save_self_energies(filename, pi_v2_v2, pi_1_1_mat, pi_vi_vj, verbose = verbose)
+            call save_self_energies(filename, pi_v2_v2, pi_1_1_mat, pi_vi_vj, pi_vs_vs, verbose = verbose)
 
         end if
 
@@ -140,19 +150,25 @@ contains
 
     subroutine calc_abs_Pi_spin(proc_id, root_process, &
             tran_form_1_job, tran_form_v_job, tran_form_v2_job, &
-            pi_v2_v2, pi_vi_vj, pi_1_1_mat, ik_manager, job_id_to_ik, &
+            tran_form_vs_job, &
+            pi_v2_v2, pi_vi_vj, pi_1_1_mat, pi_vs_vs, ik_manager, job_id_to_ik, &
             PW_dataset, widths, dm_model, target_mat, filename, verbose)
         !! Compute the self energies with spin dependent wave functions.
         implicit none
 
         integer :: proc_id
         integer :: root_process
+
         complex(dp) :: tran_form_1_job(:, :, :, :)
         complex(dp) :: tran_form_v_job(:, :, :, :, :)
         complex(dp) :: tran_form_v2_job(:, :, :, :)
+        complex(dp) :: tran_form_vs_job(:, :)
+
         complex(dp) :: pi_v2_v2(:, :)
         complex(dp) :: pi_vi_vj(:, :, :, :)
         complex(dp) :: pi_1_1_mat(:, :, :, :)
+        complex(dp) :: pi_vs_vs(:, :)
+
         type(parallel_manager_t) :: ik_manager
         integer :: job_id_to_ik(:, :)
         type(PW_dataset_t) :: PW_dataset
@@ -181,6 +197,13 @@ contains
             !!
             !! Units : eV^2
 
+        complex(dp), allocatable :: pi_vs_vs_job(:, :, :)
+            !! Dim : [n_omega, n_widths, n_tran_per_proc]
+            !! 
+            !! self energy with two \( \mathbf{v} \cdot \mathbf{\sigma} \) insertions.
+            !!
+            !! Units : eV^2
+
         integer :: j, job_id, val_id, k
 
         if ( verbose ) then
@@ -197,6 +220,8 @@ contains
         pi_vi_vj_job = (0.0_dp, 0.0_dp)
         allocate(pi_1_1_mat_job(3, 3, size(pi_v2_v2, 1), size(pi_v2_v2, 2), ik_manager%n_jobs_per_proc))
         pi_1_1_mat_job = (0.0_dp, 0.0_dp)
+        allocate(pi_vs_vs_job(size(pi_v2_v2, 1), size(pi_v2_v2, 2), ik_manager%n_jobs_per_proc))
+        pi_vs_vs_job = (0.0_dp, 0.0_dp)
 
         do j = 1, ik_manager%n_jobs_per_proc
 
@@ -214,6 +239,13 @@ contains
                 call calc_pi_vi_vj(pi_vi_vj_job(:, :, :, :, j), tran_form_v_job(:, j, :, :, :), &
                     dm_model, widths, PW_dataset, target_mat, val_id, k)
 
+                if ( PW_dataset%include_spin ) then
+
+                    call calc_pi_vs_vs_spin(pi_vs_vs_job(:, :, j), tran_form_vs_job(j, :), &
+                        dm_model, widths, PW_dataset, target_mat, val_id, k)
+
+                end if
+
             end if
 
         end do
@@ -227,11 +259,16 @@ contains
 
         call ik_manager%comm_self_energies(proc_id, root_process, &
             pi_v2_v2_job, pi_1_1_mat_job, pi_vi_vj_job, &
-            pi_v2_v2, pi_1_1_mat, pi_vi_vj, verbose = verbose)
+            pi_vs_vs_job, &
+            pi_v2_v2, pi_1_1_mat, pi_vi_vj, &
+            pi_vs_vs, &
+            verbose = verbose)
 
         if ( proc_id == root_process ) then
 
-            call save_self_energies(filename, pi_v2_v2, pi_1_1_mat, pi_vi_vj, verbose = verbose)
+            call save_self_energies(filename, &
+                pi_v2_v2, pi_1_1_mat, pi_vi_vj, pi_vs_vs, &
+                verbose = verbose)
 
         end if
 
@@ -581,6 +618,57 @@ contains
 
     end subroutine
 
+    subroutine calc_pi_vs_vs_spin(pi_vs_vs, tran_form_vs, &
+            dm_model, widths, PW_dataset, target_mat, val_id, k)
+        !* Compute \( \Pi_{\mathbf{v} \cdot \mathbf{\sigma}, \mathbf{v} \cdot \mathbf{sigma}} \) from spin dependent wave functions.
+
+        implicit none
+
+        complex(dp) :: pi_vs_vs(:, :)
+        complex(dp) :: tran_form_vs(:)
+        type(dm_model_t) :: dm_model
+        type(width_parameters_t) :: widths
+        type(PW_dataset_t) :: PW_dataset
+        type(material_t) :: target_mat
+        integer :: val_id, k
+
+        integer :: w, p, f, cond_id, s, i, j
+
+        real(dp) :: omega, width, omega_if
+
+        do p = 1, widths%n
+            do w = 1, dm_model%n_mX
+
+                omega = dm_model%mX(w)
+                width = widths%get_width(p, omega)
+
+                do f = 1, size(tran_form_vs, 1)
+
+                    cond_id = f + PW_dataset%n_val
+
+                    omega_if = PW_dataset%energy_bands(k, cond_id) - PW_dataset%energy_bands(k, val_id)
+
+                    if ( abs(omega - omega_if) < widths%sigma*width ) then
+
+                        pi_vs_vs(w, p) = pi_vs_vs(w, p) + &
+                            (target_mat%pc_vol)**(-1)*PW_dataset%k_weight(k)*&
+                            ( omega / omega_if )**2*&
+                            ( &
+                                ( omega - omega_if + ii*width )**(-1) - &
+                                ( omega + omega_if - ii*width )**(-1) &
+                            )*&
+                            abs(tran_form_vs(f))**2*&
+                            (PW_dataset%spin_degen/2.0_dp)
+
+                    end if
+
+                end do
+
+            end do
+        end do
+
+    end subroutine
+
     subroutine calc_pi_vi_vj_spin(pi_vi_vj, tran_form_v, &
             dm_model, widths, PW_dataset, target_mat, val_id, k)
         !* Compute \( \Pi_{v^i, v^j} \) from spin dependent wave functions.
@@ -672,15 +760,18 @@ contains
     end subroutine
 
     subroutine save_self_energies(filename, &
-            pi_v2_v2, pi_1_1_mat, pi_vi_vj, verbose)
+            pi_v2_v2, pi_1_1_mat, pi_vi_vj, pi_vs_vs, verbose)
         !! Saves the self energies, \( \Pi_{\mathcal{O}_1, \mathcal{O}_2} \).
 
         implicit none
 
         character(len=*) :: filename
+
         complex(dp) :: pi_v2_v2(:, :)
         complex(dp) :: pi_vi_vj(:, :, :, :)
         complex(dp) :: pi_1_1_mat(:, :, :, :)
+        complex(dp) :: pi_vs_vs(:, :)
+
         logical, optional :: verbose
 
         integer(HID_T) :: file_id
@@ -736,6 +827,20 @@ contains
                     '/pi_v2_v2_c', &
                     size(dims1), dims1,&
                     aimag(pi_v2_v2(:, i)), error)
+
+                call h5ltmake_dataset_double_f(file_id,&
+                    'self_energies'//&
+                    '/width_'//trim(adjustl(int_to_str(i)))//&
+                    '/pi_vs_vs_r', &
+                    size(dims1), dims1,&
+                    real(pi_vs_vs(:, i)), error)
+
+                call h5ltmake_dataset_double_f(file_id,&
+                    'self_energies'//&
+                    '/width_'//trim(adjustl(int_to_str(i)))//&
+                    '/pi_vs_vs_c', &
+                    size(dims1), dims1,&
+                    aimag(pi_vs_vs(:, i)), error)
 
                 dims3 = [3, 3, size(pi_v2_v2, 1)]
 

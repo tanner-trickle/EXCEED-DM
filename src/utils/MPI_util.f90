@@ -164,8 +164,8 @@ contains
     end subroutine
 
     subroutine comm_self_energies(self, proc_id, root_process, &
-           pi_v2_v2_job, pi_1_1_mat_job, pi_vi_vj_job, &
-           pi_v2_v2, pi_1_1_mat, pi_vi_vj, verbose)
+           pi_v2_v2_job, pi_1_1_mat_job, pi_vi_vj_job, pi_vs_vs_job, &
+           pi_v2_v2, pi_1_1_mat, pi_vi_vj, pi_vs_vs, verbose)
         !! Communicate the self energies computed at each processor to the main processor.
         implicit none
 
@@ -189,9 +189,17 @@ contains
             !! Dim : [3, 3, n_omega, n_widths, n_tran_per_proc] 
             !!
             !! Units : eV^2
+
+        complex(dp) :: pi_vs_vs_job(:, :, :)
+            !! Dim : [n_omega, n_widths, n_tran_per_proc] 
+            !!
+            !! Units : eV^2
+
         complex(dp) :: pi_v2_v2(:, :)
         complex(dp) :: pi_vi_vj(:, :, :, :)
         complex(dp) :: pi_1_1_mat(:, :, :, :)
+        complex(dp) :: pi_vs_vs(:, :)
+
         logical, optional :: verbose
 
         integer :: n_proc
@@ -221,6 +229,9 @@ contains
             call MPI_SEND(pi_vi_vj_job, &
                size(pi_vi_vj_job), MPI_DOUBLE_COMPLEX, root_process, tag, MPI_COMM_WORLD, err)
 
+            call MPI_SEND(pi_vs_vs_job, &
+               size(pi_vs_vs_job), MPI_DOUBLE_COMPLEX, root_process, tag, MPI_COMM_WORLD, err)
+
         end if
 
         if ( proc_id == root_process ) then
@@ -229,6 +240,7 @@ contains
             pi_v2_v2 = pi_v2_v2 + sum(pi_v2_v2_job, 3)
             pi_1_1_mat = pi_1_1_mat + sum(pi_1_1_mat_job, 5)
             pi_vi_vj = pi_vi_vj + sum(pi_vi_vj_job, 5)
+            pi_vs_vs = pi_vs_vs + sum(pi_vs_vs_job, 3)
 
             do i = 1, n_proc
                 if ( (i - 1) /= root_process ) then
@@ -242,10 +254,14 @@ contains
                     call MPI_RECV(pi_vi_vj_job, &
                        size(pi_vi_vj_job), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
 
+                    call MPI_RECV(pi_vs_vs_job, &
+                       size(pi_vs_vs_job), MPI_DOUBLE_COMPLEX, i - 1, MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
+
                     ! add other processors contributions
                     pi_v2_v2 = pi_v2_v2 + sum(pi_v2_v2_job, 3)
                     pi_1_1_mat = pi_1_1_mat + sum(pi_1_1_mat_job, 5)
                     pi_vi_vj = pi_vi_vj + sum(pi_vi_vj_job, 5)
+                    pi_vs_vs = pi_vs_vs + sum(pi_vs_vs_job, 3)
 
                 end if
             end do
@@ -263,6 +279,9 @@ contains
         call MPI_Bcast(pi_vi_vj, size(pi_vi_vj), &
             MPI_DOUBLE_COMPLEX, root_process, MPI_COMM_WORLD, err)
 
+        call MPI_Bcast(pi_vs_vs, size(pi_v2_v2), &
+            MPI_DOUBLE_COMPLEX, root_process, MPI_COMM_WORLD, err)
+
         if ( verbose ) then
 
             print*, 'Done communicating self energies!'
@@ -276,9 +295,11 @@ contains
             tran_form_1_no_spin_job, tran_form_1_spin_job, &
             tran_form_v_no_spin_job, tran_form_v_spin_job, &
             tran_form_v2_no_spin_job, tran_form_v2_spin_job, &
+            tran_form_vs_spin_job, &
             tran_form_1_no_spin, tran_form_1_spin, &
             tran_form_v_no_spin, tran_form_v_spin, &
-            tran_form_v2_no_spin, tran_form_v2_spin, numerics, verbose)
+            tran_form_v2_no_spin, tran_form_v2_spin, &
+            tran_form_vs_spin, numerics, verbose)
         !! Communicate the transition form factors computed at each processor to the main processor. 
 
         use numerics_abs
@@ -313,6 +334,10 @@ contains
             !! Dim : [n_jobs_per_proc, n_cond_max, 2, 2]
             !!
             !! Units : None
+        complex(dp), allocatable:: tran_form_vs_spin_job_buff(:, :)
+            !! Dim : [n_jobs_per_proc, n_cond_max]
+            !!
+            !! Units : None
 
         complex(dp) :: tran_form_1_no_spin_job(:, :)
             !! Dim : [n_jobs_per_proc, n_cond_max]
@@ -336,6 +361,10 @@ contains
             !! Units : None
         complex(dp) :: tran_form_v2_spin_job(:, :, :, :)
             !! Dim : [n_jobs_per_proc, n_cond_max, 2, 2]
+            !!
+            !! Units : None
+        complex(dp) :: tran_form_vs_spin_job(:, :)
+            !! Dim : [n_jobs_per_proc, n_cond_max]
             !!
             !! Units : None
 
@@ -363,6 +392,11 @@ contains
             !! Dim : [n_init, n_fin, n_k, 2, 2]
             !!
             !! Units : None
+        complex(dp) :: tran_form_vs_spin(:, :, :)
+            !! Dim : [n_jobs_per_proc, n_cond_max, n_k]
+            !!
+            !! Units : None
+
         logical, optional :: verbose
 
         integer :: n_proc
@@ -396,6 +430,8 @@ contains
             tran_form_v2_no_spin_job_buff  = (0.0_dp, 0.0_dp)
             allocate(tran_form_v2_spin_job_buff(self%n_jobs_per_proc, numerics%n_cond_max, 2, 2))
             tran_form_v2_spin_job_buff  = (0.0_dp, 0.0_dp)
+            allocate(tran_form_vs_spin_job_buff(self%n_jobs_per_proc, numerics%n_cond_max))
+            tran_form_vs_spin_job_buff  = (0.0_dp, 0.0_dp)
 
         end if
 
@@ -425,6 +461,10 @@ contains
                 size(tran_form_v2_spin_job), MPI_DOUBLE_COMPLEX, root_process, &
                 tag, MPI_COMM_WORLD, err)
 
+            call MPI_SEND(tran_form_vs_spin_job, &
+                size(tran_form_vs_spin_job), MPI_DOUBLE_COMPLEX, root_process, &
+                tag, MPI_COMM_WORLD, err)
+
         end if
 
         ! receive data at main processor and put in total
@@ -447,6 +487,7 @@ contains
                     tran_form_v_spin(:, init_id, :, k, :, :) = tran_form_v_spin_job(:, j, :, :, :)
                     tran_form_v2_no_spin(init_id, :, k) = tran_form_v2_no_spin_job(j, :)
                     tran_form_v2_spin(init_id, :, k, :, :) = tran_form_v2_spin_job(j, :, :, :)
+                    tran_form_vs_spin(init_id, :, k) = tran_form_vs_spin_job(j, :)
 
                 end if
 
@@ -482,6 +523,10 @@ contains
                         size(tran_form_v2_spin_job_buff), MPI_DOUBLE_COMPLEX, i - 1, &
                         MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
 
+                    call MPI_RECV(tran_form_vs_spin_job_buff, &
+                        size(tran_form_vs_spin_job_buff), MPI_DOUBLE_COMPLEX, i - 1, &
+                        MPI_ANY_TAG, MPI_COMM_WORLD, status, err)
+
                     ! add other processors contributions
                     do j = 1, self%n_jobs_per_proc
 
@@ -498,6 +543,8 @@ contains
                             tran_form_v_spin(:, init_id, :, k, :, :) = tran_form_v_spin_job_buff(:, j, :, :, :)
                             tran_form_v2_no_spin(init_id, :, k) = tran_form_v2_no_spin_job_buff(j, :)
                             tran_form_v2_spin(init_id, :, k, :, :) = tran_form_v2_spin_job_buff(j, :, :, :)
+
+                            tran_form_vs_spin(init_id, :, k) = tran_form_vs_spin_job_buff(j, :)
 
                         end if
 
