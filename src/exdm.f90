@@ -7,7 +7,8 @@ program exdm
     use mpi 
 
     use info_messages
-    use timing
+    ! use timing
+    use timer_util
 
     use version_control
 
@@ -48,6 +49,8 @@ program exdm
         !! Dark matter model parameters
     type(expt_t) :: expt
         !! Experimental parameters
+    type(timer_t) :: timer_total
+        !! time the whole execution
 
     ! Initialize MPI
     call MPI_INIT(err)
@@ -56,12 +59,12 @@ program exdm
 
     call exdm_startup_message(proc_id, root_process, n_proc, version)
 
-    call get_command_argument(1, nml_input_filename)
-
-    ! start timing the program
-    if ( proc_id == root_process ) then 
-        time(1) = MPI_Wtime()
+    ! start timing
+    if ( proc_id == root_process ) then
+        call timer_total%start()
     end if
+
+    call get_command_argument(1, nml_input_filename)
 
     ! load inputs
     if ( proc_id == root_process ) then
@@ -136,14 +139,10 @@ program exdm
         call save_version(io_files%out_filename, verbose = verbose)
     end if
 
-    ! Time program
     if ( proc_id == root_process ) then
 
-        time(2) = MPI_Wtime()
-
-        call print_timing_info(time(2) - time(1), verbose = verbose)
-
-        call save_timing_info(io_files%out_filename, time(2) - time(1), verbose = verbose)
+        call timer_total%end()
+        call timer_total%save(io_files%out_filename, 'total', verbose = verbose)
 
     end if
 

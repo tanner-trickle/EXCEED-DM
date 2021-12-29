@@ -124,14 +124,14 @@ contains
             job_id_to_ik, verbose = verbose)
 
         ! time calculation
-        if ( ( proc_id == root_process ) .and. ( main_control%timer ) ) then
+        ! if ( ( proc_id == root_process ) .and. ( main_control%timer ) ) then
 
-            call time_exdm_scatter_vc_calc(FFT_grid, PW_dataset, target_mat, &
-                                bins, dm_model, expt, in_med_scr, &
-                                numerics, ik_manager%n_jobs_per_proc, &
-                                PW_dataset%n_val, PW_dataset%n_val + 1, 1, 1, verbose = verbose)
+        !     call time_exdm_scatter_vc_calc(FFT_grid, PW_dataset, target_mat, &
+        !                         bins, dm_model, expt, in_med_scr, &
+        !                         numerics, ik_manager%n_jobs_per_proc, &
+        !                         PW_dataset%n_val, PW_dataset%n_val + 1, 1, 1, verbose = verbose)
 
-        end if
+        ! end if
 
         ! allocate wave functions
         if ( PW_dataset%include_spin ) then
@@ -230,103 +230,103 @@ contains
 
     end subroutine
 
-    subroutine time_exdm_scatter_vc_calc(FFT_grid, PW_dataset, target_mat, &
-            bins, dm_model, expt, in_med_scr, &
-            numerics, n_jobs_per_proc, val_id, cond_id, k, kf, verbose)
-        !! Clocks the valence \( \rightarrow \) conduction DM-electron scattering rate calculation
-        !! by running a smaller version of the program.
-        use timing 
-        use mpi
+    ! subroutine time_exdm_scatter_vc_calc(FFT_grid, PW_dataset, target_mat, &
+    !         bins, dm_model, expt, in_med_scr, &
+    !         numerics, n_jobs_per_proc, val_id, cond_id, k, kf, verbose)
+    !     !! Clocks the valence \( \rightarrow \) conduction DM-electron scattering rate calculation
+    !     !! by running a smaller version of the program.
+    !     use timing 
+    !     use mpi
 
-        implicit none
+    !     implicit none
 
-        type(FFT_grid_t) :: FFT_grid
-        type(PW_dataset_t) :: PW_dataset
-        type(material_t) :: target_mat
-        type(bins_scatter_t) :: bins
-        type(dm_model_t) :: dm_model
-        type(expt_t) :: expt
-        type(in_med_scr_t) :: in_med_scr
-        type(numerics_scatter_vc_t) :: numerics
-        integer :: n_jobs_per_proc
-        integer :: val_id, cond_id, k, kf
-        logical, optional :: verbose
+    !     type(FFT_grid_t) :: FFT_grid
+    !     type(PW_dataset_t) :: PW_dataset
+    !     type(material_t) :: target_mat
+    !     type(bins_scatter_t) :: bins
+    !     type(dm_model_t) :: dm_model
+    !     type(expt_t) :: expt
+    !     type(in_med_scr_t) :: in_med_scr
+    !     type(numerics_scatter_vc_t) :: numerics
+    !     integer :: n_jobs_per_proc
+    !     integer :: val_id, cond_id, k, kf
+    !     logical, optional :: verbose
 
-        complex(dp), allocatable :: wfc_ik(:, :, :)
-        complex(dp), allocatable :: wfc_iks(:, :, :, :)
+    !     complex(dp), allocatable :: wfc_ik(:, :, :)
+    !     complex(dp), allocatable :: wfc_iks(:, :, :, :)
 
-        complex(dp), allocatable :: wfc_fkf(:, :, :)
-        complex(dp), allocatable :: wfc_fkfs(:, :, :, :)
+    !     complex(dp), allocatable :: wfc_fkf(:, :, :)
+    !     complex(dp), allocatable :: wfc_fkfs(:, :, :, :)
 
-        type(binned_scatter_rate_t) :: b_rate
+    !     type(binned_scatter_rate_t) :: b_rate
 
-        if ( verbose ) then
-            print*, 'Timing v -> c calculation...'
-            print*
-        end if
+    !     if ( verbose ) then
+    !         print*, 'Timing v -> c calculation...'
+    !         print*
+    !     end if
 
-        if ( PW_dataset%include_spin ) then
+    !     if ( PW_dataset%include_spin ) then
 
-            allocate(wfc_iks(2, FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
-            allocate(wfc_fkfs(2, FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
+    !         allocate(wfc_iks(2, FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
+    !         allocate(wfc_fkfs(2, FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
 
-            call PW_dataset%load_wfc_ik_expanded_spin(val_id, k, FFT_grid, wfc_iks)
+    !         call PW_dataset%load_wfc_ik_expanded_spin(val_id, k, FFT_grid, wfc_iks)
 
-        else
+    !     else
 
-            allocate(wfc_ik(FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
-            allocate(wfc_fkf(FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
+    !         allocate(wfc_ik(FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
+    !         allocate(wfc_fkf(FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
 
-            call PW_dataset%load_wfc_ik_expanded_no_spin(val_id, k, FFT_grid, wfc_ik)
+    !         call PW_dataset%load_wfc_ik_expanded_no_spin(val_id, k, FFT_grid, wfc_ik)
 
-        end if
+    !     end if
 
-        call b_rate%init(bins, dm_model, expt)
+    !     call b_rate%init(bins, dm_model, expt)
 
-        time(3) = MPI_Wtime()
+    !     time(3) = MPI_Wtime()
 
-        if ( PW_dataset%include_spin ) then
+    !     if ( PW_dataset%include_spin ) then
 
-            call PW_dataset%load_wfc_ik_expanded_spin(cond_id, kf, FFT_grid, wfc_fkfs)
+    !         call PW_dataset%load_wfc_ik_expanded_spin(cond_id, kf, FFT_grid, wfc_fkfs)
 
-            call exdm_scatter_vc_calc(b_rate, &
-                FFT_grid, PW_dataset, target_mat, &
-                bins, dm_model, expt, in_med_scr, &
-                wfc_iks, wfc_fkfs, &
-                val_id, cond_id, k, kf, verbose = .FALSE.)
+    !         call exdm_scatter_vc_calc(b_rate, &
+    !             FFT_grid, PW_dataset, target_mat, &
+    !             bins, dm_model, expt, in_med_scr, &
+    !             wfc_iks, wfc_fkfs, &
+    !             val_id, cond_id, k, kf, verbose = .FALSE.)
 
-        else
+    !     else
 
-            call PW_dataset%load_wfc_ik_expanded_no_spin(cond_id, kf, FFT_grid, wfc_fkf)
+    !         call PW_dataset%load_wfc_ik_expanded_no_spin(cond_id, kf, FFT_grid, wfc_fkf)
 
-            call exdm_scatter_vc_calc(b_rate, &
-                FFT_grid, PW_dataset, target_mat, &
-                bins, dm_model, expt, in_med_scr, &
-                wfc_ik, wfc_fkf, &
-                val_id, cond_id, k, kf, verbose = .FALSE.)
+    !         call exdm_scatter_vc_calc(b_rate, &
+    !             FFT_grid, PW_dataset, target_mat, &
+    !             bins, dm_model, expt, in_med_scr, &
+    !             wfc_ik, wfc_fkf, &
+    !             val_id, cond_id, k, kf, verbose = .FALSE.)
 
-        end if
+    !     end if
 
-        time(4) = MPI_Wtime()
+    !     time(4) = MPI_Wtime()
 
-        if ( verbose ) then
-            call print_section_seperator()
-            print*, '    -------------'
-            print*, '    Timing (TEST)'
-            print*, '    -------------'
-            print*
-            print*, '        (TEST) Run time: '
-            print*, '            ', trim(pretty_time_format(time(4) - time(3)))
-            print*
-            print*, '        Expected run time for whole calculation : '
-            print*, '            ', trim(pretty_time_format(&
-                n_jobs_per_proc*PW_dataset%n_k*numerics%n_cond_max*(time(4) - time(3))&
-                ))
-            print*
-            call print_section_seperator()
-            print*
-        end if
+    !     if ( verbose ) then
+    !         call print_section_seperator()
+    !         print*, '    -------------'
+    !         print*, '    Timing (TEST)'
+    !         print*, '    -------------'
+    !         print*
+    !         print*, '        (TEST) Run time: '
+    !         print*, '            ', trim(pretty_time_format(time(4) - time(3)))
+    !         print*
+    !         print*, '        Expected run time for whole calculation : '
+    !         print*, '            ', trim(pretty_time_format(&
+    !             n_jobs_per_proc*PW_dataset%n_k*numerics%n_cond_max*(time(4) - time(3))&
+    !             ))
+    !         print*
+    !         call print_section_seperator()
+    !         print*
+    !     end if
 
-    end subroutine
+    ! end subroutine
 
 end module
