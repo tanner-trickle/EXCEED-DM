@@ -114,15 +114,6 @@ contains
 
         if ( log_omega_max > log_omega_min ) then
 
-            !     ! time calculation
-
-            !     if ( ( proc_id == root_process ) .and. ( timer ) ) then
-
-            !         call time_exdm_scatter_vf_calc(DFT_input_filename, 1, log_omega_table, &
-            !            angular_mesh, verbose = verbose)
-
-            !     end if
-
             numerics%omega_list = 10.0_dp**uniform_list(numerics%n_omega, log_omega_min, log_omega_max)
 
             if ( verbose ) then
@@ -175,74 +166,5 @@ contains
         end if
 
     end subroutine
-
-    ! subroutine time_exdm_scatter_vf_calc(DFT_input_filename, tran_id, log_omega_table, &
-    !         angular_mesh, verbose)
-    !     !! Times the v -> f scattering rate calculation
-    !     use timing 
-    !     use mpi
-
-    !     implicit none
-
-    !     real(dp) :: log_omega_table(n_fin, 2)
-    !     real(dp) :: log_omegas(2)
-
-    !     real(dp) :: angular_mesh(n_kf_theta*n_kf_phi, 2)
-
-    !     character(len=*) :: DFT_input_filename
-
-    !     integer :: tran_id
-
-    !     logical, optional :: verbose
-    !     real(dp) :: b_rate(n_q_bins + 1, n_E_bins + 1, n_mX, n_FDM, n_time)
-
-    !     complex(dp), allocatable :: wfc_FT_i(:, :)
-
-    !     integer :: val_id, fin_id
-
-    !     if ( verbose ) then
-
-    !         print*, 'Timing v -> f calculation...'
-    !         print*
-
-    !     end if
-
-    !     allocate(wfc_FT_i(n_k, n_in_G))
-
-    !     val_id = tran_to_init_fin_id(tran_id, 1)
-    !     fin_id = tran_to_init_fin_id(tran_id, 2)
-
-    !     call get_in_wfc_FT(DFT_input_filename, val_id, wfc_FT_i)
-
-    !     log_omegas = log_omega_table(fin_id, :)
-
-    !     time(3) = MPI_Wtime()
-
-    !     call dme_scatter_vf_calc(b_rate,& 
-    !         wfc_FT_i, val_id, log_omegas, 1, angular_mesh, verbose = verbose)
-
-    !     time(4) = MPI_Wtime()
-
-    !     if ( verbose ) then
-
-    !         print*, '----------------------------------------'
-    !         print*, '    -------------'
-    !         print*, '    Timing (TEST)'
-    !         print*, '    -------------'
-    !         print*
-    !         print*, '        (TEST) Run time : '
-    !         print*, '            ', trim(pretty_time_format(time(4) - time(3)))
-    !         print*
-    !         print*, '        Expected run time for whole calculation :'
-    !         print*, '            ', trim(pretty_time_format(&
-    !             n_tran_per_proc*n_k*(time(4) - time(3))&
-    !             ))
-    !         print*
-    !         print*, '----------------------------------------'
-    !         print*
-
-    !     end if
-
-    ! end subroutine
 
 end module

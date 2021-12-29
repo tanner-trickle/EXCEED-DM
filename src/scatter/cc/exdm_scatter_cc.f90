@@ -137,16 +137,6 @@ contains
             numerics%k_id_list, &
             job_id_to_ikf, verbose = verbose)
 
-        ! ! time calculation
-
-        ! if ( ( proc_id == root_process ) .and. ( main_control%timer ) ) then
-
-        !     call time_exdm_scatter_cc_calc(FFT_grid, core_electron, PW_dataset, target_mat, &
-        !                 bins, dm_model, expt, in_med_scr, numerics, ikf_manager%n_jobs_per_proc, &
-        !                 core_electron%n_state, PW_dataset%n_val + 1, 1, verbose = verbose)
-
-        ! end if
-
         ! allocate wave functions
         allocate(wfc_i(FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
         allocate(wfc_fkf(FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
@@ -203,96 +193,5 @@ contains
         end if
 
     end subroutine
-
-    ! subroutine time_exdm_scatter_cc_calc(FFT_grid, core_electron, PW_dataset, target_mat, &
-    !                     bins, dm_model, expt, in_med_scr, numerics, n_jobs_per_proc, &
-    !                     init_id, cond_id, kf, verbose)
-    !     !! Clocks the core \( \rightarrow \) conduction DM-electron scattering rate calculation
-    !     !! by running a smaller version of the program.
-    !     use timing 
-    !     use mpi
-
-    !     implicit none
-
-    !     type(FFT_grid_t) :: FFT_grid
-    !     type(core_electron_t) :: core_electron
-    !     type(PW_dataset_t) :: PW_dataset
-    !     type(material_t) :: target_mat
-    !     type(bins_scatter_t) :: bins
-    !     type(dm_model_t) :: dm_model
-    !     type(expt_t) :: expt
-    !     type(in_med_scr_t) :: in_med_scr
-    !     type(numerics_scatter_cc_t) :: numerics
-    !     integer :: n_jobs_per_proc
-    !     integer :: init_id, cond_id, k, kf
-    !     logical, optional :: verbose
-
-    !     type(binned_scatter_rate_t) :: b_rate
-
-    !     complex(dp), allocatable :: wfc_i(:, :, :)
-    !     complex(dp), allocatable :: wfc_fkf(:, :, :)
-
-    !     if ( verbose ) then
-    !         print*, 'Timing c -> c calculation...'
-    !         print*
-    !     end if
-
-    !     call b_rate%init(bins, dm_model, expt)
-
-    !     allocate(wfc_i(FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
-    !     allocate(wfc_fkf(FFT_grid%n_grid(1), FFT_grid%n_grid(2), FFT_grid%n_grid(3)))
-
-    !     time(3) = MPI_Wtime()
-
-    !     call core_electron%bloch_wf_on_grid(FFT_grid%n_grid, &
-    !         wfc_i, init_id, target_mat%pc_vol, PW_dataset%red_to_xyz, &
-    !         shift = .TRUE., verbose = .FALSE.)
-
-    !     time(4) = MPI_Wtime()
-
-    !     call PW_dataset%load_wfc_ik_expanded_no_spin(cond_id, kf, FFT_grid, wfc_fkf)
-
-    !     call exdm_scatter_cc_calc(b_rate,&
-    !         FFT_grid, core_electron, PW_dataset, target_mat, &
-    !         bins, dm_model, expt, in_med_scr, &
-    !         wfc_i, wfc_fkf, &
-    !         init_id, cond_id, kf, verbose = .FALSE.)
-
-    !     time(5) = MPI_Wtime()
-
-    !     if ( verbose ) then
-    !         call print_section_seperator()
-    !         print*, '    -------------'
-    !         print*, '    Timing (TEST)'
-    !         print*, '    -------------'
-    !         print*
-    !         print*, '        (TEST) Compute core WF :'
-    !         print*, '            ', trim(pretty_time_format(time(4) - time(3)))
-    !         print*
-    !         print*, '        (Total) Compute core WF :'
-    !         print*, '            ', trim(pretty_time_format(&
-    !             n_jobs_per_proc*(time(4) - time(3))&
-    !             ))
-    !         print*
-    !         print*, '        (TEST) Rate : '
-    !         print*, '            ', trim(pretty_time_format(time(5) - time(4)))
-    !         print*
-    !         print*, '        (Total) Rate : '
-    !         print*, '            ', trim(pretty_time_format(&
-    !             n_jobs_per_proc*numerics%n_cond_max*(time(5) - time(4))&
-    !             ))
-    !         print*
-    !         print*, '        Expected run time for whole calculation :'
-    !         print*, '            ', trim(pretty_time_format(&
-    !             n_jobs_per_proc*(time(4) - time(3)) &
-    !             + n_jobs_per_proc*numerics%n_cond_max*(time(5) - time(4))&
-    !             ))
-    !         print*
-    !         call print_section_seperator()
-    !         print*
-
-    !     end if
-
-    ! end subroutine
 
 end module
