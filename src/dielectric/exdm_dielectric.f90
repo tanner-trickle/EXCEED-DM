@@ -29,6 +29,7 @@ module exdm_dielectric
 
     use FFT_util
     use MPI_util
+    use timer_util
 
     use numerics_dielectric
     use calc_dielectric_vc
@@ -70,6 +71,9 @@ contains
         type(parallel_manager_t) :: ik_manager
         type(width_parameters_t) :: widths
 
+        type(timer_t) :: timer_send
+        type(timer_t) :: timer_compute
+
         integer :: i
         integer :: n_FFT_grid(3)
 
@@ -83,6 +87,8 @@ contains
 
         integer :: job_id, j
         integer :: val_id, cond_id, f, k, kf
+
+        integer :: ierr
 
         complex(dp), allocatable :: dielec(:, :, :, :)
             !! Dim : [ bins%n_E, bins%n_q, bins%n_q_theta, bins%n_q_phi ]
@@ -178,6 +184,10 @@ contains
             print*
         end if
 
+        if ( proc_id == root_process ) then
+            call timer_compute%start()
+        end if
+
         do j = 1, ik_manager%n_jobs_per_proc
             
             job_id = ik_manager%job_table(proc_id + 1, j)
@@ -238,18 +248,33 @@ contains
 
         end do
 
+        ! communicate computed data
+        call MPI_Barrier(MPI_COMM_WORLD, ierr)
+
         if ( verbose ) then
             print*, 'Done calculating the dielectric!'
             print*
         end if
 
+        if ( proc_id == root_process ) then
+            call timer_compute%end()
+            call timer_send%start()
+        end if
+
         call comm_reduce_dielectric(proc_id, root_process, dielec, verbose = verbose)
+
+        if ( proc_id == root_process ) then
+            call timer_send%end()
+        end if
 
         if ( proc_id == root_process ) then
 
             call numerics%save(dielectric_output_filename, verbose = verbose)
             call bins%save(dielectric_output_filename, verbose = verbose)
             call save_dielectric(dielectric_output_filename, dielec, verbose = verbose)
+
+            call timer_compute%save(dielectric_output_filename, 'compute', verbose = verbose)
+            call timer_send%save(dielectric_output_filename, 'send', verbose = verbose)
 
         end if
 

@@ -138,7 +138,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 2.5% of total for modules and submodules.">185 statements</a>
+    title=" 1.6% of total for modules and submodules.">123 statements</a>
      </li> 
      
      
@@ -196,8 +196,6 @@
       
       <a class="list-group-item" href="../module/exdm_scatter_vc.html#proc-run_exdm_scatter_vc">run_exdm_scatter_vc</a>
       
-      <a class="list-group-item" href="../module/exdm_scatter_vc.html#proc-time_exdm_scatter_vc_calc">time_exdm_scatter_vc_calc</a>
-      
     </div>
   </div>
 </div>
@@ -229,33 +227,33 @@
       <li class="list-group-item">
   <ul class="list-inline">
     
-    <li><a href='../module/fft_util.html'>FFT_util</a></li>
-    
-    <li><a href='../module/prec.html'>prec</a></li>
-    
-    <li><a href="http://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node410.htm">mpi</a></li>
-    
     <li><a href='../module/pw_dataset_type.html'>PW_dataset_type</a></li>
-    
-    <li><a href='../module/numerics_scatter_vc.html'>numerics_scatter_vc</a></li>
-    
-    <li><a href='../module/mpi_util.html'>MPI_util</a></li>
     
     <li><a href='../module/calc_exdm_scatter_vc.html'>calc_exdm_scatter_vc</a></li>
     
-    <li><a href='../module/binned_scatter_rate_type.html'>binned_scatter_rate_type</a></li>
+    <li><a href='../module/fft_util.html'>FFT_util</a></li>
+    
+    <li><a href='../module/numerics_scatter_vc.html'>numerics_scatter_vc</a></li>
     
     <li><a href='../module/expt_type.html'>expt_type</a></li>
+    
+    <li><a href='../module/binned_scatter_rate_type.html'>binned_scatter_rate_type</a></li>
+    
+    <li><a href='../module/control_input.html'>control_input</a></li>
     
     <li><a href='../module/in_med_scr_type.html'>in_med_scr_type</a></li>
     
     <li><a href='../module/dm_model_type.html'>dm_model_type</a></li>
     
-    <li><a href='../module/io_input.html'>io_input</a></li>
-    
     <li><a href='../module/material_type.html'>material_type</a></li>
     
-    <li><a href='../module/control_input.html'>control_input</a></li>
+    <li><a href='../module/mpi_util.html'>MPI_util</a></li>
+    
+    <li><a href='../module/io_input.html'>io_input</a></li>
+    
+    <li><a href='../module/prec.html'>prec</a></li>
+    
+    <li><a href="http://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node410.htm">mpi</a></li>
     
   </ul>
       </li>
@@ -297,8 +295,6 @@
       <a class="list-group-item" href="../module/exdm_scatter_vc.html#proc-exdm_scatter_vc_set_n_init">exdm_scatter_vc_set_n_init</a>
       
       <a class="list-group-item" href="../module/exdm_scatter_vc.html#proc-run_exdm_scatter_vc">run_exdm_scatter_vc</a>
-      
-      <a class="list-group-item" href="../module/exdm_scatter_vc.html#proc-time_exdm_scatter_vc_calc">time_exdm_scatter_vc_calc</a>
       
     </div>
   </div>
@@ -649,261 +645,6 @@ public subroutine <a href='../proc/run_exdm_scatter_vc.html'>run_exdm_scatter_vc
   </div>
 
     
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-time_exdm_scatter_vc_calc"></span><h3>
-public subroutine <a href='../proc/time_exdm_scatter_vc_calc.html'>time_exdm_scatter_vc_calc</a>(FFT_grid, PW_dataset, target_mat, bins, dm_model, expt, in_med_scr, numerics, n_jobs_per_proc, val_id, cond_id, k, kf, verbose)
-    
-    
-   
-</h3></div>
-  <div class="panel-body">
-       
-    
-
-
-
-
-
-
-
-<p>Clocks the valence <script type="math/tex"> \rightarrow </script> conduction DM-electron scattering rate calculation
-by running a smaller version of the program.</p>
-    
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
-<tbody>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(FFT_grid_t)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>FFT_grid</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(PW_dataset_t)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>PW_dataset</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(<a href='../type/material_t.html'>material_t</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>target_mat</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(<a href='../type/bins_scatter_t.html'>bins_scatter_t</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>bins</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(<a href='../type/dm_model_t.html'>dm_model_t</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>dm_model</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(<a href='../type/expt_t.html'>expt_t</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>expt</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(<a href='../type/in_med_scr_t.html'>in_med_scr_t</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>in_med_scr</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(<a href='../type/numerics_scatter_vc_t.html'>numerics_scatter_vc_t</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>numerics</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>integer</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>n_jobs_per_proc</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>integer</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>val_id</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>integer</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>cond_id</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>integer</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>k</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>integer</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>kf</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>logical,</td>
-  <td></td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
-  <td><strong>verbose</strong></td><td></td>
-  
-</tr>
-
-</tbody>
-</table>
-
-      
-    
-    
-
-  </div>
-  </div>
-
-    
     </section>    
     <br>
     
@@ -925,7 +666,7 @@ by running a smaller version of the program.</p>
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-12-17 10:20  
+             on 2021-12-29 20:43  
             
           </p>
         </div>

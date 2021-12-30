@@ -11,7 +11,6 @@ contains
         !! Message to display when EXCEED-DM starts.
 
         use iso_fortran_env
-        use timing
 
         implicit none
 
@@ -27,33 +26,6 @@ contains
             call print_section_seperator()
             print*
             print*, '    Ended at', trim(pretty_date_and_time())
-            print*
-            call print_section_seperator()
-            print*
-
-        end if
-
-    end subroutine
-
-    subroutine print_timing_info(dt, verbose)
-        !! Prints a program timing info.
-
-        use timing
-
-        implicit none
-
-        real(dp) :: dt
-        logical, optional :: verbose
-
-        if ( verbose ) then
-
-            call print_section_seperator()
-            print*, '    ------'
-            print*, '    Timing'
-            print*, '    ------'
-            print*
-            print*, '        Run time : '
-            print*, '        ', trim(pretty_time_format(dt))
             print*
             call print_section_seperator()
             print*
@@ -108,7 +80,6 @@ contains
         !! Message to display when EXCEED-DM starts.
 
         use iso_fortran_env
-        use timing
 
         implicit none
 
@@ -194,6 +165,94 @@ contains
         character(len=64) :: string
 
         write(string, *) num
+
+    end function
+
+    function pretty_date_and_time() result( dt_str )
+        !! Returns a nicely formatted string of the current date and time.
+
+        implicit none
+
+        integer :: dt_values(8)
+
+        character(len=512) :: dt_str
+
+        character(len=30) :: hr_str
+        character(len=30) :: min_str
+        character(len=30) :: s_str
+        character(len=30) :: ms_str
+
+        character(len=30) :: month_str 
+        character(len=30) :: day_str 
+        character(len=30) :: year_str 
+
+        call date_and_time(values=dt_values)
+
+        write(year_str, *) dt_values(1)
+        write(month_str, *) dt_values(2)
+        write(day_str, *) dt_values(3)
+
+        ! ! append zeros for pretty printing
+        if ( dt_values(5) < 10 ) then
+
+            write(hr_str, *) dt_values(5)
+            write(hr_str, *) '0'//trim(adjustl(hr_str))
+
+        else
+
+            write(hr_str, *) dt_values(5)
+
+        end if
+
+        if ( dt_values(6) < 10 ) then
+
+            write(min_str, *) dt_values(6)
+            write(min_str, *) '0'//trim(adjustl(min_str))
+
+        else
+
+            write(min_str, *) dt_values(6)
+
+        end if
+
+        if ( dt_values(7) < 10 ) then
+
+            write(s_str, *) dt_values(7)
+            write(s_str, *) '0'//trim(adjustl(s_str))
+
+        else
+
+            write(s_str, *) dt_values(7)
+
+        end if
+
+        if ( dt_values(8) < 10 ) then
+
+            write(ms_str, *) dt_values(8)
+            write(ms_str, *) '00'//trim(adjustl(ms_str))
+
+        end if
+
+        if ( ( dt_values(8) >= 10 ) .and. ( dt_values(8) < 100 ) ) then
+
+            write(ms_str, *) dt_values(8)
+            write(ms_str, *) '0'//trim(adjustl(ms_str))
+
+        end if
+
+        if ( dt_values(8) >= 100 ) then
+
+            write(ms_str, *) dt_values(8)
+
+        end if
+
+        write(dt_str, *) trim(adjustl(hr_str)),&
+                         ':', trim(adjustl(min_str)),&
+                         ':', trim(adjustl(s_str)),&
+                         '.', trim(adjustl(ms_str)), &
+                         ' ', trim(adjustl(month_str)),&
+                         '/', trim(adjustl(day_str)),&
+                         '/', trim(adjustl(year_str))
 
     end function
 

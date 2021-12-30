@@ -439,72 +439,7 @@
 <a id="ln-164" name="ln-164"></a>
 <a id="ln-165" name="ln-165"></a><span class="k">    end subroutine</span>
 <a id="ln-166" name="ln-166"></a>
-<a id="ln-167" name="ln-167"></a>    <span class="c">! subroutine time_exdm_scatter_cf_calc(log_omega_table, &amp;</span>
-<a id="ln-168" name="ln-168"></a>    <span class="c">!         ki_angular_mesh, kf_angular_mesh, verbose)</span>
-<a id="ln-169" name="ln-169"></a>    <span class="c">!     !! Times the v -&gt; f scattering rate calculation</span>
-<a id="ln-170" name="ln-170"></a>    <span class="c">!     use timing </span>
-<a id="ln-171" name="ln-171"></a>    <span class="c">!     use mpi</span>
-<a id="ln-172" name="ln-172"></a>
-<a id="ln-173" name="ln-173"></a>    <span class="c">!     implicit none</span>
-<a id="ln-174" name="ln-174"></a>
-<a id="ln-175" name="ln-175"></a>    <span class="c">!     real(dp) :: log_omega_table(n_fin, 2)</span>
-<a id="ln-176" name="ln-176"></a>    <span class="c">!     real(dp) :: log_omegas(2)</span>
-<a id="ln-177" name="ln-177"></a>
-<a id="ln-178" name="ln-178"></a>    <span class="c">!     real(dp) :: ki_angular_mesh(:, :)</span>
-<a id="ln-179" name="ln-179"></a>    <span class="c">!     real(dp) :: kf_angular_mesh(:, :)</span>
-<a id="ln-180" name="ln-180"></a>
-<a id="ln-181" name="ln-181"></a>    <span class="c">!     integer :: tran_id</span>
-<a id="ln-182" name="ln-182"></a>
-<a id="ln-183" name="ln-183"></a>    <span class="c">!     logical, optional :: verbose</span>
-<a id="ln-184" name="ln-184"></a>    <span class="c">!     real(dp) :: b_rate(n_q_bins + 1, n_E_bins + 1, n_mX, n_FDM, n_time)</span>
-<a id="ln-185" name="ln-185"></a>
-<a id="ln-186" name="ln-186"></a>    <span class="c">!     integer :: init_id, fin_id</span>
-<a id="ln-187" name="ln-187"></a>
-<a id="ln-188" name="ln-188"></a>    <span class="c">!     if ( verbose ) then</span>
-<a id="ln-189" name="ln-189"></a>
-<a id="ln-190" name="ln-190"></a>    <span class="c">!         print*, &#39;Timing c -&gt; f calculation...&#39;</span>
-<a id="ln-191" name="ln-191"></a>    <span class="c">!         print*</span>
-<a id="ln-192" name="ln-192"></a>
-<a id="ln-193" name="ln-193"></a>    <span class="c">!     end if</span>
-<a id="ln-194" name="ln-194"></a>
-<a id="ln-195" name="ln-195"></a>    <span class="c">!     ! one of the jobs which takes longer</span>
-<a id="ln-196" name="ln-196"></a>    <span class="c">!     tran_id = job_table(12, n_tran_per_proc)</span>
-<a id="ln-197" name="ln-197"></a>
-<a id="ln-198" name="ln-198"></a>    <span class="c">!     init_id = tran_to_init_fin_id(tran_id, 1)</span>
-<a id="ln-199" name="ln-199"></a>    <span class="c">!     fin_id = tran_to_init_fin_id(tran_id, 2)</span>
-<a id="ln-200" name="ln-200"></a>
-<a id="ln-201" name="ln-201"></a>    <span class="c">!     log_omegas = log_omega_table(fin_id, :)</span>
-<a id="ln-202" name="ln-202"></a>
-<a id="ln-203" name="ln-203"></a>    <span class="c">!     time(3) = MPI_Wtime()</span>
-<a id="ln-204" name="ln-204"></a>
-<a id="ln-205" name="ln-205"></a>    <span class="c">!     call exdm_scatter_cf_calc(b_rate,&amp; </span>
-<a id="ln-206" name="ln-206"></a>    <span class="c">!         init_id, log_omegas, n_ki, ki_angular_mesh, kf_angular_mesh, verbose = verbose)</span>
-<a id="ln-207" name="ln-207"></a>
-<a id="ln-208" name="ln-208"></a>    <span class="c">!     time(4) = MPI_Wtime()</span>
-<a id="ln-209" name="ln-209"></a>
-<a id="ln-210" name="ln-210"></a>    <span class="c">!     if ( verbose ) then</span>
-<a id="ln-211" name="ln-211"></a>
-<a id="ln-212" name="ln-212"></a>    <span class="c">!         print*, &#39;----------------------------------------&#39;</span>
-<a id="ln-213" name="ln-213"></a>    <span class="c">!         print*, &#39;    -------------&#39;</span>
-<a id="ln-214" name="ln-214"></a>    <span class="c">!         print*, &#39;    Timing (TEST)&#39;</span>
-<a id="ln-215" name="ln-215"></a>    <span class="c">!         print*, &#39;    -------------&#39;</span>
-<a id="ln-216" name="ln-216"></a>    <span class="c">!         print*</span>
-<a id="ln-217" name="ln-217"></a>    <span class="c">!         print*, &#39;        (TEST) Run time : &#39;</span>
-<a id="ln-218" name="ln-218"></a>    <span class="c">!         print*, &#39;            &#39;, trim(pretty_time_format(time(4) - time(3)))</span>
-<a id="ln-219" name="ln-219"></a>    <span class="c">!         print*</span>
-<a id="ln-220" name="ln-220"></a>    <span class="c">!         print*, &#39;        Expected run time for whole calculation :&#39;</span>
-<a id="ln-221" name="ln-221"></a>    <span class="c">!         print*, &#39;            &#39;, trim(pretty_time_format(&amp;</span>
-<a id="ln-222" name="ln-222"></a>    <span class="c">!             n_tran_per_proc*(time(4) - time(3))&amp;</span>
-<a id="ln-223" name="ln-223"></a>    <span class="c">!             ))</span>
-<a id="ln-224" name="ln-224"></a>    <span class="c">!         print*</span>
-<a id="ln-225" name="ln-225"></a>    <span class="c">!         print*, &#39;----------------------------------------&#39;</span>
-<a id="ln-226" name="ln-226"></a>    <span class="c">!         print*</span>
-<a id="ln-227" name="ln-227"></a>
-<a id="ln-228" name="ln-228"></a>    <span class="c">!     end if</span>
-<a id="ln-229" name="ln-229"></a>
-<a id="ln-230" name="ln-230"></a>    <span class="c">! end subroutine</span>
-<a id="ln-231" name="ln-231"></a>
-<a id="ln-232" name="ln-232"></a><span class="k">end module</span>
+<a id="ln-167" name="ln-167"></a><span class="k">end module</span>
 </pre></div>
 
     </section>
@@ -524,7 +459,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-12-17 10:20  
+             on 2021-12-29 20:43  
             
           </p>
         </div>

@@ -84,6 +84,10 @@ contains
             !! Dim : [n_jobs_per_proc, n_cond_max, 2, 2]
             !!
             !! Units : None
+        complex(dp), allocatable :: tran_form_vs_spin_job(:, :)
+            !! Dim : [n_jobs_per_proc, n_cond_max]
+            !!
+            !! Units : None
 
         complex(dp), allocatable :: pi_v2_v2(:, :)
             !! Dim : [n_mX, n_widths]
@@ -105,6 +109,13 @@ contains
             !! Dim : [3, 3, n_omega, n_widths] 
             !!
             !! \( \Pi_{v^i, v^j} \) self energy.
+            !!
+            !! Units : eV^2
+
+        complex(dp), allocatable :: pi_vs_vs(:, :)
+            !! Dim : [n_mX, n_widths]
+            !! 
+            !! \( \Pi_{\mathbf{v} \cdot \mathbf{\sigma}, \mathbf{v} \cdot \mathbf{\sigma}} \) - self energy with two v^2 insertions.
             !!
             !! Units : eV^2
 
@@ -156,12 +167,15 @@ contains
         tran_form_v2_no_spin_job  = (0.0_dp, 0.0_dp)
         allocate(tran_form_v2_spin_job(ik_manager%n_jobs_per_proc, numerics%n_cond_max, 2, 2))
         tran_form_v2_spin_job  = (0.0_dp, 0.0_dp)
+        allocate(tran_form_vs_spin_job(ik_manager%n_jobs_per_proc, numerics%n_cond_max))
+        tran_form_vs_spin_job  = (0.0_dp, 0.0_dp)
 
         ! compute the transition form factors
         call calc_abs_tran_form(proc_id, root_process, &
                                   tran_form_1_no_spin_job, tran_form_1_spin_job, &
                                   tran_form_v_no_spin_job, tran_form_v_spin_job, &
                                   tran_form_v2_no_spin_job, tran_form_v2_spin_job, &
+                                  tran_form_vs_spin_job, &
                                   PW_dataset, ik_manager, job_id_to_ik, numerics, &
                                   io_files%out_filename, &
                                   verbose = verbose)
@@ -176,18 +190,23 @@ contains
         allocate(pi_vi_vj(3, 3, dm_model%n_mX, widths%n))
         pi_vi_vj = (0.0_dp, 0.0_dp)
 
+        allocate(pi_vs_vs(dm_model%n_mX, widths%n))
+        pi_vs_vs = (0.0_dp, 0.0_dp)
+
         if ( PW_dataset%include_spin ) then
 
             call calc_abs_Pi(proc_id, root_process, &
                 tran_form_1_spin_job, tran_form_v_spin_job, tran_form_v2_spin_job, &
-                pi_v2_v2, pi_vi_vj, pi_1_1_mat, ik_manager, job_id_to_ik, &
+                tran_form_vs_spin_job, &
+                pi_v2_v2, pi_vi_vj, pi_1_1_mat, pi_vs_vs, ik_manager, job_id_to_ik, &
                 PW_dataset, widths, dm_model, target_mat, io_files%out_filename, verbose = verbose)
 
         else
 
             call calc_abs_Pi(proc_id, root_process, &
                 tran_form_1_no_spin_job, tran_form_v_no_spin_job, tran_form_v2_no_spin_job, &
-                pi_v2_v2, pi_vi_vj, pi_1_1_mat, ik_manager, job_id_to_ik, &
+                tran_form_vs_spin_job, &
+                pi_v2_v2, pi_vi_vj, pi_1_1_mat, pi_vs_vs, ik_manager, job_id_to_ik, &
                 PW_dataset, widths, dm_model, target_mat, io_files%out_filename, verbose = verbose)
 
         end if
@@ -223,9 +242,19 @@ contains
 
                 else if ( trim(dm_model%particle_type) == 'ps' ) then
 
-                    call calc_rate_ps(pi_1_1_mat, v_vec, &
-                        dm_model, expt, widths, target_mat, numerics, &
-                        abs_rate, verbose = verbose)
+                    if ( PW_dataset%include_spin ) then
+
+                        call calc_rate_ps_SD(pi_vs_vs, v_vec, &
+                            dm_model, expt, widths, target_mat, numerics, &
+                            abs_rate, verbose = verbose)
+
+                    else
+
+                        call calc_rate_ps(pi_1_1_mat, v_vec, &
+                            dm_model, expt, widths, target_mat, numerics, &
+                            abs_rate, verbose = verbose)
+
+                    end if
 
                 else if ( trim(dm_model%particle_type) == 'scalar' ) then
 

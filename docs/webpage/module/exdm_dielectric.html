@@ -138,7 +138,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 2.7% of total for modules and submodules.">205 statements</a>
+    title=" 2.1% of total for modules and submodules.">162 statements</a>
      </li> 
      
      
@@ -194,8 +194,6 @@
       
       <a class="list-group-item" href="../module/exdm_dielectric.html#proc-run_exdm_dielectric">run_exdm_dielectric</a>
       
-      <a class="list-group-item" href="../module/exdm_dielectric.html#proc-time_exdm_dielectric_calc">time_exdm_dielectric_calc</a>
-      
       <a class="list-group-item" href="../module/exdm_dielectric.html#proc-save_dielectric">save_dielectric</a>
       
     </div>
@@ -240,33 +238,35 @@
       <li class="list-group-item">
   <ul class="list-inline">
     
-    <li><a href='../module/fft_util.html'>FFT_util</a></li>
-    
-    <li><a href='../module/prec.html'>prec</a></li>
-    
-    <li><a href="http://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node410.htm">mpi</a></li>
-    
     <li><a href='../module/pw_dataset_type.html'>PW_dataset_type</a></li>
-    
-    <li><a href='../module/mpi_util.html'>MPI_util</a></li>
-    
-    <li><a href='../module/calc_dielectric_vc.html'>calc_dielectric_vc</a></li>
     
     <li><a href='../module/width_parameters_type.html'>width_parameters_type</a></li>
     
-    <li><a href='../module/numerics_dielectric.html'>numerics_dielectric</a></li>
+    <li><a href='../module/fft_util.html'>FFT_util</a></li>
     
     <li><a href='../module/expt_type.html'>expt_type</a></li>
     
     <li><a href='../module/control_input.html'>control_input</a></li>
     
-    <li><a href='../module/dm_model_type.html'>dm_model_type</a></li>
+    <li><a href='../module/numerics_dielectric.html'>numerics_dielectric</a></li>
     
-    <li><a href='../module/io_input.html'>io_input</a></li>
+    <li><a href='../module/dm_model_type.html'>dm_model_type</a></li>
     
     <li><a href='../module/material_type.html'>material_type</a></li>
     
+    <li><a href='../module/mpi_util.html'>MPI_util</a></li>
+    
+    <li><a href='../module/timer_util.html'>timer_util</a></li>
+    
+    <li><a href='../module/io_input.html'>io_input</a></li>
+    
     <li><a href='../module/bins_dielectric_type.html'>bins_dielectric_type</a></li>
+    
+    <li><a href='../module/prec.html'>prec</a></li>
+    
+    <li><a href='../module/calc_dielectric_vc.html'>calc_dielectric_vc</a></li>
+    
+    <li><a href="http://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node410.htm">mpi</a></li>
     
   </ul>
       </li>
@@ -306,8 +306,6 @@
     <div id="subs-1" class="panel-collapse collapse">
       
       <a class="list-group-item" href="../module/exdm_dielectric.html#proc-run_exdm_dielectric">run_exdm_dielectric</a>
-      
-      <a class="list-group-item" href="../module/exdm_dielectric.html#proc-time_exdm_dielectric_calc">time_exdm_dielectric_calc</a>
       
       <a class="list-group-item" href="../module/exdm_dielectric.html#proc-save_dielectric">save_dielectric</a>
       
@@ -496,231 +494,6 @@ public subroutine <a href='../proc/run_exdm_dielectric.html'>run_exdm_dielectric
     
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-time_exdm_dielectric_calc"></span><h3>
-public subroutine <a href='../proc/time_exdm_dielectric_calc.html'>time_exdm_dielectric_calc</a>(FFT_grid, PW_dataset, target_mat, bins, widths, numerics, n_jobs_per_proc, val_id, cond_id, k, kf, verbose)
-    
-    
-   
-</h3></div>
-  <div class="panel-body">
-       
-    
-
-
-
-
-
-
-
-<p>Clocks the valence <script type="math/tex"> \rightarrow </script> conduction dielectric calculation
-by running a smaller version of the program.</p>
-    
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
-<tbody>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(FFT_grid_t)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>FFT_grid</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(PW_dataset_t)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>PW_dataset</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(<a href='../type/material_t.html'>material_t</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>target_mat</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(<a href='../type/bins_dielectric_t.html'>bins_dielectric_t</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>bins</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(<a href='../type/width_parameters_t.html'>width_parameters_t</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>widths</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(<a href='../type/numerics_dielectric_t.html'>numerics_dielectric_t</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>numerics</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>integer</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>n_jobs_per_proc</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>integer</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>val_id</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>integer</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>cond_id</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>integer</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>k</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>integer</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>kf</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>logical,</td>
-  <td></td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
-  <td><strong>verbose</strong></td><td></td>
-  
-</tr>
-
-</tbody>
-</table>
-
-      
-    
-    
-
-  </div>
-  </div>
-
-    
-    
-  <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-save_dielectric"></span><h3>
 public subroutine <a href='../proc/save_dielectric.html'>save_dielectric</a>(filename, dielectric, verbose)
     
@@ -829,7 +602,7 @@ public subroutine <a href='../proc/save_dielectric.html'>save_dielectric</a>(fil
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-12-17 10:20  
+             on 2021-12-29 20:43  
             
           </p>
         </div>

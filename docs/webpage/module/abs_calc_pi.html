@@ -138,7 +138,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 5.0% of total for modules and submodules.">380 statements</a>
+    title=" 5.6% of total for modules and submodules.">421 statements</a>
      </li> 
      
      
@@ -224,6 +224,8 @@
       
       <a class="list-group-item" href="../module/abs_calc_pi.html#proc-calc_pi_vi_vj_no_spin">calc_pi_vi_vj_no_spin</a>
       
+      <a class="list-group-item" href="../module/abs_calc_pi.html#proc-calc_pi_vs_vs_spin">calc_pi_vs_vs_spin</a>
+      
       <a class="list-group-item" href="../module/abs_calc_pi.html#proc-calc_pi_vi_vj_spin">calc_pi_vi_vj_spin</a>
       
       <a class="list-group-item" href="../module/abs_calc_pi.html#proc-save_self_energies">save_self_energies</a>
@@ -259,25 +261,25 @@
       <li class="list-group-item">
   <ul class="list-inline">
     
-    <li><a href='../module/prec.html'>prec</a></li>
+    <li>h5lt</li>
     
-    <li><a href="http://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node410.htm">mpi</a></li>
+    <li><a href='../module/width_parameters_type.html'>width_parameters_type</a></li>
     
     <li><a href='../module/pw_dataset_type.html'>PW_dataset_type</a></li>
+    
+    <li><a href='../module/constants.html'>constants</a></li>
+    
+    <li><a href='../module/dm_model_type.html'>dm_model_type</a></li>
+    
+    <li><a href='../module/material_type.html'>material_type</a></li>
     
     <li><a href='../module/mpi_util.html'>MPI_util</a></li>
     
     <li>hdf5</li>
     
-    <li><a href='../module/width_parameters_type.html'>width_parameters_type</a></li>
+    <li><a href='../module/prec.html'>prec</a></li>
     
-    <li><a href='../module/constants.html'>constants</a></li>
-    
-    <li>h5lt</li>
-    
-    <li><a href='../module/dm_model_type.html'>dm_model_type</a></li>
-    
-    <li><a href='../module/material_type.html'>material_type</a></li>
+    <li><a href="http://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node410.htm">mpi</a></li>
     
   </ul>
       </li>
@@ -347,6 +349,8 @@
       <a class="list-group-item" href="../module/abs_calc_pi.html#proc-calc_pi_1_1_mat_spin">calc_pi_1_1_mat_spin</a>
       
       <a class="list-group-item" href="../module/abs_calc_pi.html#proc-calc_pi_vi_vj_no_spin">calc_pi_vi_vj_no_spin</a>
+      
+      <a class="list-group-item" href="../module/abs_calc_pi.html#proc-calc_pi_vs_vs_spin">calc_pi_vs_vs_spin</a>
       
       <a class="list-group-item" href="../module/abs_calc_pi.html#proc-calc_pi_vi_vj_spin">calc_pi_vi_vj_spin</a>
       
@@ -1403,7 +1407,7 @@ public subroutine <a href='../proc/calc_pi_vi_vj_spin.html'>calc_pi_vi_vj_spin</
     
     
     <h3>
-public subroutine <a href='../proc/calc_abs_pi_no_spin.html'>calc_abs_Pi_no_spin</a>(proc_id, root_process, tran_form_1_job, tran_form_v_job, tran_form_v2_job, pi_v2_v2, pi_vi_vj, pi_1_1_mat, ik_manager, job_id_to_ik, PW_dataset, widths, dm_model, target_mat, filename, verbose)
+public subroutine <a href='../proc/calc_abs_pi_no_spin.html'>calc_abs_Pi_no_spin</a>(proc_id, root_process, tran_form_1_job, tran_form_v_job, tran_form_v2_job, tran_form_vs_job, pi_v2_v2, pi_vi_vj, pi_1_1_mat, pi_vs_vs, ik_manager, job_id_to_ik, PW_dataset, widths, dm_model, target_mat, filename, verbose)
     
     
    
@@ -1517,6 +1521,21 @@ public subroutine <a href='../proc/calc_abs_pi_no_spin.html'>calc_abs_Pi_no_spin
   <td></td>
   
   <td></td><td>::</td>
+  <td><strong>tran_form_vs_job</strong>(:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
   <td><strong>pi_v2_v2</strong>(:,:)</td><td></td>
   
 </tr>
@@ -1548,6 +1567,21 @@ public subroutine <a href='../proc/calc_abs_pi_no_spin.html'>calc_abs_Pi_no_spin
   
   <td></td><td>::</td>
   <td><strong>pi_1_1_mat</strong>(:,:,:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>pi_vs_vs</strong>(:,:)</td><td></td>
   
 </tr>
 
@@ -1684,7 +1718,7 @@ public subroutine <a href='../proc/calc_abs_pi_no_spin.html'>calc_abs_Pi_no_spin
     
     
     <h3>
-public subroutine <a href='../proc/calc_abs_pi_spin.html'>calc_abs_Pi_spin</a>(proc_id, root_process, tran_form_1_job, tran_form_v_job, tran_form_v2_job, pi_v2_v2, pi_vi_vj, pi_1_1_mat, ik_manager, job_id_to_ik, PW_dataset, widths, dm_model, target_mat, filename, verbose)
+public subroutine <a href='../proc/calc_abs_pi_spin.html'>calc_abs_Pi_spin</a>(proc_id, root_process, tran_form_1_job, tran_form_v_job, tran_form_v2_job, tran_form_vs_job, pi_v2_v2, pi_vi_vj, pi_1_1_mat, pi_vs_vs, ik_manager, job_id_to_ik, PW_dataset, widths, dm_model, target_mat, filename, verbose)
     
     
    
@@ -1798,6 +1832,21 @@ public subroutine <a href='../proc/calc_abs_pi_spin.html'>calc_abs_Pi_spin</a>(p
   <td></td>
   
   <td></td><td>::</td>
+  <td><strong>tran_form_vs_job</strong>(:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
   <td><strong>pi_v2_v2</strong>(:,:)</td><td></td>
   
 </tr>
@@ -1829,6 +1878,21 @@ public subroutine <a href='../proc/calc_abs_pi_spin.html'>calc_abs_Pi_spin</a>(p
   
   <td></td><td>::</td>
   <td><strong>pi_1_1_mat</strong>(:,:,:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>pi_vs_vs</strong>(:,:)</td><td></td>
   
 </tr>
 
@@ -1983,7 +2047,7 @@ public subroutine <a href='../proc/calc_abs_pi_spin.html'>calc_abs_Pi_spin</a>(p
     
   <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-calc_abs_pi_no_spin"></span><h3>
-public subroutine <a href='../proc/calc_abs_pi_no_spin.html'>calc_abs_Pi_no_spin</a>(proc_id, root_process, tran_form_1_job, tran_form_v_job, tran_form_v2_job, pi_v2_v2, pi_vi_vj, pi_1_1_mat, ik_manager, job_id_to_ik, PW_dataset, widths, dm_model, target_mat, filename, verbose)
+public subroutine <a href='../proc/calc_abs_pi_no_spin.html'>calc_abs_Pi_no_spin</a>(proc_id, root_process, tran_form_1_job, tran_form_v_job, tran_form_v2_job, tran_form_vs_job, pi_v2_v2, pi_vi_vj, pi_1_1_mat, pi_vs_vs, ik_manager, job_id_to_ik, PW_dataset, widths, dm_model, target_mat, filename, verbose)
     
     
    
@@ -2099,6 +2163,21 @@ public subroutine <a href='../proc/calc_abs_pi_no_spin.html'>calc_abs_Pi_no_spin
   <td></td>
   
   <td></td><td>::</td>
+  <td><strong>tran_form_vs_job</strong>(:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
   <td><strong>pi_v2_v2</strong>(:,:)</td><td></td>
   
 </tr>
@@ -2130,6 +2209,21 @@ public subroutine <a href='../proc/calc_abs_pi_no_spin.html'>calc_abs_Pi_no_spin
   
   <td></td><td>::</td>
   <td><strong>pi_1_1_mat</strong>(:,:,:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>pi_vs_vs</strong>(:,:)</td><td></td>
   
 </tr>
 
@@ -2267,7 +2361,7 @@ public subroutine <a href='../proc/calc_abs_pi_no_spin.html'>calc_abs_Pi_no_spin
     
   <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-calc_abs_pi_spin"></span><h3>
-public subroutine <a href='../proc/calc_abs_pi_spin.html'>calc_abs_Pi_spin</a>(proc_id, root_process, tran_form_1_job, tran_form_v_job, tran_form_v2_job, pi_v2_v2, pi_vi_vj, pi_1_1_mat, ik_manager, job_id_to_ik, PW_dataset, widths, dm_model, target_mat, filename, verbose)
+public subroutine <a href='../proc/calc_abs_pi_spin.html'>calc_abs_Pi_spin</a>(proc_id, root_process, tran_form_1_job, tran_form_v_job, tran_form_v2_job, tran_form_vs_job, pi_v2_v2, pi_vi_vj, pi_1_1_mat, pi_vs_vs, ik_manager, job_id_to_ik, PW_dataset, widths, dm_model, target_mat, filename, verbose)
     
     
    
@@ -2383,6 +2477,21 @@ public subroutine <a href='../proc/calc_abs_pi_spin.html'>calc_abs_Pi_spin</a>(p
   <td></td>
   
   <td></td><td>::</td>
+  <td><strong>tran_form_vs_job</strong>(:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
   <td><strong>pi_v2_v2</strong>(:,:)</td><td></td>
   
 </tr>
@@ -2414,6 +2523,21 @@ public subroutine <a href='../proc/calc_abs_pi_spin.html'>calc_abs_Pi_spin</a>(p
   
   <td></td><td>::</td>
   <td><strong>pi_1_1_mat</strong>(:,:,:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>pi_vs_vs</strong>(:,:)</td><td></td>
   
 </tr>
 
@@ -3370,6 +3494,170 @@ public subroutine <a href='../proc/calc_pi_vi_vj_no_spin.html'>calc_pi_vi_vj_no_
     
     
   <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-calc_pi_vs_vs_spin"></span><h3>
+public subroutine <a href='../proc/calc_pi_vs_vs_spin.html'>calc_pi_vs_vs_spin</a>(pi_vs_vs, tran_form_vs, dm_model, widths, PW_dataset, target_mat, val_id, k)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+
+
+
+
+<p>Compute <script type="math/tex"> \Pi_{\mathbf{v} \cdot \mathbf{\sigma}, \mathbf{v} \cdot \mathbf{sigma}} </script> from spin dependent wave functions.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>pi_vs_vs</strong>(:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>tran_form_vs</strong>(:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(<a href='../type/dm_model_t.html'>dm_model_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>dm_model</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(<a href='../type/width_parameters_t.html'>width_parameters_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>widths</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(PW_dataset_t)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>PW_dataset</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(<a href='../type/material_t.html'>material_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>target_mat</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>val_id</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>k</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-calc_pi_vi_vj_spin"></span><h3>
 public subroutine <a href='../proc/calc_pi_vi_vj_spin.html'>calc_pi_vi_vj_spin</a>(pi_vi_vj, tran_form_v, dm_model, widths, PW_dataset, target_mat, val_id, k)
     
@@ -3535,7 +3823,7 @@ public subroutine <a href='../proc/calc_pi_vi_vj_spin.html'>calc_pi_vi_vj_spin</
     
   <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-save_self_energies"></span><h3>
-public subroutine <a href='../proc/save_self_energies.html'>save_self_energies</a>(filename, pi_v2_v2, pi_1_1_mat, pi_vi_vj, verbose)
+public subroutine <a href='../proc/save_self_energies.html'>save_self_energies</a>(filename, pi_v2_v2, pi_1_1_mat, pi_vi_vj, pi_vs_vs, verbose)
     
     
    
@@ -3631,6 +3919,21 @@ public subroutine <a href='../proc/save_self_energies.html'>save_self_energies</
   
 <tr>
   
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>pi_vs_vs</strong>(:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
   <td><span class="anchor" ></span>logical,</td>
   <td></td>
   <td>optional</td>
@@ -3672,7 +3975,7 @@ public subroutine <a href='../proc/save_self_energies.html'>save_self_energies</
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-12-17 10:20  
+             on 2021-12-29 20:43  
             
           </p>
         </div>

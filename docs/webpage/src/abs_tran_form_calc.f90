@@ -35,6 +35,7 @@ contains
                                   tran_form_1_no_spin_job, tran_form_1_spin_job, &
                                   tran_form_v_no_spin_job, tran_form_v_spin_job, &
                                   tran_form_v2_no_spin_job, tran_form_v2_spin_job, &
+                                  tran_form_vs_spin_job, &
                                   PW_dataset, ik_manager, job_id_to_ik, numerics, &
                                   filename, &
                                   verbose)
@@ -47,12 +48,15 @@ contains
 
         integer :: proc_id
         integer :: root_process
+
         complex(dp) :: tran_form_1_no_spin_job(:, :) 
         complex(dp) :: tran_form_1_spin_job(:, :, :, :) 
         complex(dp) :: tran_form_v_no_spin_job(:, :, :)
         complex(dp) :: tran_form_v_spin_job(:, :, :, :, :)
         complex(dp) :: tran_form_v2_no_spin_job(:, :)
         complex(dp) :: tran_form_v2_spin_job(:, :, :, :)
+        complex(dp) :: tran_form_vs_spin_job(:, :)
+
         type(PW_dataset_t) :: PW_dataset
         type(parallel_manager_t) :: ik_manager
         integer :: job_id_to_ik(:, :)
@@ -84,7 +88,10 @@ contains
             !! Dim : [n_init, n_fin, n_k, 2, 2]
             !!
             !! Units : None
-
+        complex(dp), allocatable :: tran_form_vs_spin(:, :, :)
+            !! Dim : [n_init, n_fin, n_k]
+            !!
+            !! Units : None
 
         integer :: j, job_id, f
         integer :: val_id, k, cond_id
@@ -147,6 +154,9 @@ contains
                         call calc_tran_form_v2(tran_form_v2_spin_job(j, f, :, :), &
                             PW_dataset, val_id, cond_id, k, wfc_FT_iks, wfc_FT_fks)
 
+                        call calc_tran_form_vs_spin(tran_form_vs_spin_job(j, f), &
+                            PW_dataset, val_id, cond_id, k, wfc_FT_iks, wfc_FT_fks)
+
                     end do
 
                 else
@@ -200,6 +210,8 @@ contains
                 tran_form_v2_no_spin = (0.0_dp, 0.0_dp)
                 allocate(tran_form_v2_spin(numerics%n_val_max, numerics%n_cond_max, PW_dataset%n_k, 2, 2))
                 tran_form_v2_spin    = (0.0_dp, 0.0_dp)
+                allocate(tran_form_vs_spin(numerics%n_val_max, numerics%n_cond_max, PW_dataset%n_k))
+                tran_form_vs_spin     = (0.0_dp, 0.0_dp)
 
             end if
 
@@ -208,9 +220,11 @@ contains
                 tran_form_1_no_spin_job, tran_form_1_spin_job, &
                 tran_form_v_no_spin_job, tran_form_v_spin_job, &
                 tran_form_v2_no_spin_job, tran_form_v2_spin_job, &
+                tran_form_vs_spin_job, &
                 tran_form_1_no_spin, tran_form_1_spin, &
                 tran_form_v_no_spin, tran_form_v_spin, &
-                tran_form_v2_no_spin, tran_form_v2_spin, numerics, verbose = verbose)
+                tran_form_v2_no_spin, tran_form_v2_spin, &
+                tran_form_vs_spin, numerics, verbose = verbose)
 
             ! save data
             if ( proc_id == root_process ) then
@@ -367,6 +381,61 @@ contains
                 end do
 
             end do
+
+        end do
+
+    end subroutine
+
+    subroutine calc_tran_form_vs_spin(tran_form_vs, &
+            PW_dataset, val_id, cond_id, k, wfc_FT_ik, wfc_FT_fk)
+        !* Computes the spin dependent \( \mathbf{v} \cdot \mathbf{\sigma} \) transition form factor:
+        !
+        ! $$
+        ! \begin{align*}
+        !      f_{i, i', \mathbf{k}} = \frac{1}{m_e} \sum_\mathbf{G} \mathbf{\widetilde{u}}_{i' \mathbf{k} \mathbf{G}}^* \cdot (
+        !      (\mathbf{k} + \mathbf{G}) \cdot \sigma ) \cdot \mathbf{\widetilde{u}}_{i \mathbf{k} \mathbf{G}} 
+        !  \end{align*}$$ 
+        !
+        ! for a given i, i', k.
+
+        complex(dp) :: tran_form_vs
+        type(PW_dataset_t) :: PW_dataset
+        integer :: val_id
+        integer :: cond_id
+        integer :: k
+        complex(dp) :: wfc_FT_ik(:, :)
+        complex(dp) :: wfc_FT_fk(:, :)
+
+        integer :: g, s, sp
+
+        real(dp) :: p_vec(3)
+
+        complex(dp) :: p_dot_sigma(2, 2)
+
+        do g = 1, PW_dataset%n_G
+
+            p_vec = PW_dataset%k_grid_xyz(k, :) + PW_dataset%G_grid_xyz(g, :)
+
+            p_dot_sigma(1, 1) = p_vec(3)
+            p_dot_sigma(1, 2) = p_vec(1) - ii*p_vec(2)
+            p_dot_sigma(2, 1) = p_vec(1) + ii*p_vec(2)
+            p_dot_sigma(2, 2) = -p_vec(3)
+
+            tran_form_vs = tran_form_vs + &
+                (1.0_dp/m_elec)*&
+                p_dot_sigma(1, 1)*conjg(wfc_FT_fk(g, 1))*wfc_FT_ik(g, 1)
+
+            tran_form_vs = tran_form_vs + &
+                (1.0_dp/m_elec)*&
+                p_dot_sigma(1, 2)*conjg(wfc_FT_fk(g, 1))*wfc_FT_ik(g, 2)
+
+            tran_form_vs = tran_form_vs + &
+                (1.0_dp/m_elec)*&
+                p_dot_sigma(2, 1)*conjg(wfc_FT_fk(g, 2))*wfc_FT_ik(g, 1)
+
+            tran_form_vs = tran_form_vs + &
+                (1.0_dp/m_elec)*&
+                p_dot_sigma(2, 2)*conjg(wfc_FT_fk(g, 2))*wfc_FT_ik(g, 2)
 
         end do
 

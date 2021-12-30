@@ -138,7 +138,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.8% of total for modules and submodules.">59 statements</a>
+    title=" 1.4% of total for modules and submodules.">103 statements</a>
      </li> 
      
      
@@ -192,6 +192,8 @@
   <div class="list-group">
     <div id="subs-0" class="panel-collapse collapse">
       
+      <a class="list-group-item" href="../module/rate_calc_ps.html#proc-calc_rate_ps_sd">calc_rate_ps_SD</a>
+      
       <a class="list-group-item" href="../module/rate_calc_ps.html#proc-calc_rate_ps">calc_rate_ps</a>
       
     </div>
@@ -225,13 +227,9 @@
       <li class="list-group-item">
   <ul class="list-inline">
     
-    <li><a href='../module/prec.html'>prec</a></li>
-    
-    <li><a href='../module/numerics_abs.html'>numerics_abs</a></li>
+    <li><a href='../module/math_mod.html'>math_mod</a></li>
     
     <li><a href='../module/width_parameters_type.html'>width_parameters_type</a></li>
-    
-    <li><a href='../module/math_mod.html'>math_mod</a></li>
     
     <li><a href='../module/expt_type.html'>expt_type</a></li>
     
@@ -239,9 +237,13 @@
     
     <li><a href='../module/dm_model_type.html'>dm_model_type</a></li>
     
+    <li><a href='../module/material_type.html'>material_type</a></li>
+    
     <li><a href='../module/physics_abs_functions.html'>physics_abs_functions</a></li>
     
-    <li><a href='../module/material_type.html'>material_type</a></li>
+    <li><a href='../module/prec.html'>prec</a></li>
+    
+    <li><a href='../module/numerics_abs.html'>numerics_abs</a></li>
     
   </ul>
       </li>
@@ -280,6 +282,8 @@
   <div class="list-group">
     <div id="subs-1" class="panel-collapse collapse">
       
+      <a class="list-group-item" href="../module/rate_calc_ps.html#proc-calc_rate_ps_sd">calc_rate_ps_SD</a>
+      
       <a class="list-group-item" href="../module/rate_calc_ps.html#proc-calc_rate_ps">calc_rate_ps</a>
       
     </div>
@@ -315,6 +319,185 @@
     
     <section>
     <h2>Subroutines</h2>
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-calc_rate_ps_sd"></span><h3>
+public subroutine <a href='../proc/calc_rate_ps_sd.html'>calc_rate_ps_SD</a>(pi_vs_vs, v_vec, dm_model, expt, widths, target_mat, numerics, abs_rate, verbose)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+
+
+
+
+<p>Compute the pseudoscalar DM absorption rate at a given <script type="math/tex"> \mathbf{v} </script>.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>complex(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>pi_vs_vs</strong>(:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>v_vec</strong>(3)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(<a href='../type/dm_model_t.html'>dm_model_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>dm_model</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(<a href='../type/expt_t.html'>expt_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>expt</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(<a href='../type/width_parameters_t.html'>width_parameters_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>widths</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(<a href='../type/material_t.html'>material_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>target_mat</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(<a href='../type/numerics_abs_t.html'>numerics_abs_t</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>numerics</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=dp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>abs_rate</strong>(:,:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>logical,</td>
+  <td></td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>verbose</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  </div>
+  </div>
+
     
     
   <div class="panel panel-default">
@@ -516,7 +699,7 @@ public subroutine <a href='../proc/calc_rate_ps.html'>calc_rate_ps</a>(pi_1_1_ma
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-12-17 10:20  
+             on 2021-12-29 20:43  
             
           </p>
         </div>

@@ -10,6 +10,7 @@ module exdm_scatter
     use control_input
     use io_input
     use MPI_util
+    use timer_util
 
     use material_type
     use dm_model_type
@@ -43,6 +44,8 @@ contains
         type(dm_model_t) :: dm_model
         type(expt_t)     :: expt
         type(bins_scatter_t)     :: bins
+        type(timer_t) :: timer_send
+        type(timer_t) :: timer_compute
 
         type(in_med_scr_t) :: in_med_scr
 
@@ -100,6 +103,10 @@ contains
             call binned_rate_init(i)%init(bins, dm_model, expt)
         end do
 
+        if ( proc_id == root_process ) then
+            call timer_compute%start()
+        end if
+
         if ( trim(main_control%calc_mode) == 'vc' ) then
 
             call run_exdm_scatter_vc(n_init, n_proc, proc_id, root_process, &
@@ -139,8 +146,19 @@ contains
         end if
 
         ! communicate computed data
+        call MPI_Barrier(MPI_COMM_WORLD, ierr)
+
+        if ( proc_id == root_process ) then
+            call timer_compute%end()
+            call timer_send%start()
+        end if
+
         call comm_reduce_binned_rate_init(proc_id, root_process, binned_rate_init, &
             verbose)
+
+        if ( proc_id == root_process ) then
+            call timer_send%end()
+        end if
 
         ! save data
         if ( proc_id == root_process ) then
@@ -149,6 +167,9 @@ contains
             call in_med_scr%save(io_files%out_filename, verbose = verbose)
             call save_scatter_rates(io_files%out_filename, &
                 bins, expt, dm_model, binned_rate_init, verbose = verbose)
+
+            call timer_compute%save(io_files%out_filename, 'compute', verbose = verbose)
+            call timer_send%save(io_files%out_filename, 'send', verbose = verbose)
 
         end if
 

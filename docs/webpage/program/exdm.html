@@ -191,17 +191,19 @@
       
       <a class="list-group-item" href="../program/exdm.html#variable-nml_input_filename~2">nml_input_filename</a>
       
-      <a class="list-group-item" href="../program/exdm.html#variable-verbose~114">verbose</a>
+      <a class="list-group-item" href="../program/exdm.html#variable-verbose~111">verbose</a>
       
       <a class="list-group-item" href="../program/exdm.html#variable-main_control~10">main_control</a>
       
       <a class="list-group-item" href="../program/exdm.html#variable-io_files~16">io_files</a>
       
-      <a class="list-group-item" href="../program/exdm.html#variable-target_mat~33">target_mat</a>
+      <a class="list-group-item" href="../program/exdm.html#variable-target_mat~32">target_mat</a>
       
       <a class="list-group-item" href="../program/exdm.html#variable-dm_model~34">dm_model</a>
       
-      <a class="list-group-item" href="../program/exdm.html#variable-expt~22">expt</a>
+      <a class="list-group-item" href="../program/exdm.html#variable-expt~21">expt</a>
+      
+      <a class="list-group-item" href="../program/exdm.html#variable-timer_total">timer_total</a>
       
     </div>
   </div>
@@ -245,29 +247,29 @@
     
     <li><a href="http://fortranwiki.org/fortran/show/iso_fortran_env">iso_fortran_env</a></li>
     
-    <li><a href="http://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node410.htm">mpi</a></li>
-    
-    <li><a href='../module/dm_model_type.html'>dm_model_type</a></li>
-    
     <li><a href='../module/exdm_absorption.html'>exdm_absorption</a></li>
-    
-    <li><a href='../module/exdm_scatter.html'>exdm_scatter</a></li>
-    
-    <li><a href='../module/exdm_dielectric.html'>exdm_dielectric</a></li>
-    
-    <li><a href='../module/expt_type.html'>expt_type</a></li>
-    
-    <li><a href='../module/version_control.html'>version_control</a></li>
     
     <li><a href='../module/info_messages.html'>info_messages</a></li>
     
+    <li><a href='../module/expt_type.html'>expt_type</a></li>
+    
+    <li><a href='../module/control_input.html'>control_input</a></li>
+    
     <li><a href='../module/material_type.html'>material_type</a></li>
+    
+    <li><a href='../module/dm_model_type.html'>dm_model_type</a></li>
+    
+    <li><a href='../module/version_control.html'>version_control</a></li>
+    
+    <li><a href='../module/timer_util.html'>timer_util</a></li>
     
     <li><a href='../module/io_input.html'>io_input</a></li>
     
-    <li><a href='../module/timing.html'>timing</a></li>
+    <li><a href='../module/exdm_scatter.html'>exdm_scatter</a></li>
     
-    <li><a href='../module/control_input.html'>control_input</a></li>
+    <li><a href="http://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node410.htm">mpi</a></li>
+    
+    <li><a href='../module/exdm_dielectric.html'>exdm_dielectric</a></li>
     
   </ul>
       </li>
@@ -305,17 +307,19 @@
       
       <a class="list-group-item" href="../program/exdm.html#variable-nml_input_filename~2">nml_input_filename</a>
       
-      <a class="list-group-item" href="../program/exdm.html#variable-verbose~114">verbose</a>
+      <a class="list-group-item" href="../program/exdm.html#variable-verbose~111">verbose</a>
       
       <a class="list-group-item" href="../program/exdm.html#variable-main_control~10">main_control</a>
       
       <a class="list-group-item" href="../program/exdm.html#variable-io_files~16">io_files</a>
       
-      <a class="list-group-item" href="../program/exdm.html#variable-target_mat~33">target_mat</a>
+      <a class="list-group-item" href="../program/exdm.html#variable-target_mat~32">target_mat</a>
       
       <a class="list-group-item" href="../program/exdm.html#variable-dm_model~34">dm_model</a>
       
-      <a class="list-group-item" href="../program/exdm.html#variable-expt~22">expt</a>
+      <a class="list-group-item" href="../program/exdm.html#variable-expt~21">expt</a>
+      
+      <a class="list-group-item" href="../program/exdm.html#variable-timer_total">timer_total</a>
       
     </div>
   </div>
@@ -435,7 +439,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-verbose~114"></span>logical</td>
+  <td><span class="anchor" id="variable-verbose~111"></span>logical</td>
   
   
   <td></td><td>::</td>
@@ -477,7 +481,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-target_mat~33"></span>type(<a href='../type/material_t.html'>material_t</a>)</td>
+  <td><span class="anchor" id="variable-target_mat~32"></span>type(<a href='../type/material_t.html'>material_t</a>)</td>
   
   
   <td></td><td>::</td>
@@ -505,11 +509,25 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-expt~22"></span>type(<a href='../type/expt_t.html'>expt_t</a>)</td>
+  <td><span class="anchor" id="variable-expt~21"></span>type(<a href='../type/expt_t.html'>expt_t</a>)</td>
   
   
   <td></td><td>::</td>
   <td><strong>expt</strong></td><td></td><td></td><td><p>Experimental parameters</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-timer_total"></span>type(<a href='../type/timer_t.html'>timer_t</a>)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>timer_total</strong></td><td></td><td></td><td><p>time the whole execution</p></td>
   
 </tr>
 
@@ -551,7 +569,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-12-17 10:20  
+             on 2021-12-29 20:43  
             
           </p>
         </div>
