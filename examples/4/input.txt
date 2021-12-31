@@ -1,4 +1,4 @@
-! v0.2.5
+! v0.2.8
 
 &control
     process          = 'scatter',
@@ -9,12 +9,9 @@
 /
 
 &io
-    out_folder                = './examples/Si/outputs',
-    run_description           = 'scatter_vc_spin_test',
-    PW_data_filename          = './examples/Si/dft/Si_2x2x2_AE_spin.hdf5',
-    sto_data_filename         = '',
-    core_elec_config_filename = '',
-    dielectric_filename       = ''
+    out_folder                = './examples/4/output',
+    run_description           = '4',
+    PW_data_filename          = './examples/data/Si/dft/Si_2x2x2_AE.hdf5'
 /
 
 &material
@@ -50,13 +47,22 @@
 &bins_scatter
     q_width = 1D3,
     E_width = 1,
-    n_E    = 1,
-    n_q    = 1
+    n_E    = 100,
+    n_q    = 100
 /
 
 &numerics_s_vc
-    n_val_max = 0,
-    n_cond_max = 0
+    n_val_max = 1,
+    n_cond_max = 1
+/
+
+&in_med_scr
+    include_screen = .TRUE.,
+    type           = 'analytic',
+    e0             = 11.3,
+    q_tf           = 4.13D3,
+    omega_p        = 16.6,
+    alpha          = 1.563
 /
 
 !

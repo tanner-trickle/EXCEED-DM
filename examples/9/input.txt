@@ -1,20 +1,17 @@
-! v0.2.5
+! v0.2.8
 
 &control
     process          = 'scatter',
-    calc_mode        = 'vc',
+    calc_mode        = 'vf',
     overwrite_output = .TRUE.,
     timer            = .TRUE.,
     quiet            = .FALSE.
 /
 
 &io
-    out_folder                = './examples/Si/outputs',
-    run_description           = 'scatter_vc_analytic_screen_test',
-    PW_data_filename          = './examples/Si/dft/Si_2x2x2_AE.hdf5',
-    sto_data_filename         = '',
-    core_elec_config_filename = '',
-    dielectric_filename       = ''
+    out_folder                = './examples/9/output',
+    run_description           = '9',
+    PW_data_filename          = './examples/data/Si/dft/Si_2x2x2_AE.hdf5',
 /
 
 &material
@@ -38,8 +35,8 @@
     log_mX_max       = 10,
     n_extra_mX       = 0,
     n_med_FF         = 1,
-    med_FF_min       = 2,
-    med_FF_max       = 2,
+    med_FF_min       = 0,
+    med_FF_max       = 0,
     rhoX_GeV_per_cm3 = 0.4,
     v0_km_per_sec    = 230,
     vE_km_per_sec    = 240,
@@ -50,22 +47,16 @@
 &bins_scatter
     q_width = 1D3,
     E_width = 1,
-    n_E    = 1,
-    n_q    = 1
+    n_E     = 10000,
+    n_q     = 1
 /
 
-&numerics_s_vc
-    n_val_max  = 0,
-    n_cond_max = 0
-/
-
-&in_med_scr
-    include_screen = .TRUE.,
-    type           = 'analytic',
-    e0             = 11.3,
-    q_tf           = 4.13D3,
-    omega_p        = 16.6,
-    alpha          = 1.563
+&numerics_s_vf
+    n_val_max  = 1,
+    n_omega    = 1000,
+    n_kf_theta = 10,
+    n_kf_phi   = 10,
+    Zeff_type  = 'one'
 /
 
 !

@@ -1,4 +1,4 @@
-! v0.2.5
+! v0.2.8
 
 &control
     process          = 'scatter',
@@ -9,12 +9,9 @@
 /
 
 &io
-    out_folder                = './examples/Si/outputs',
-    run_description           = 'scatter_vc_spin_tff2_test',
-    PW_data_filename          = './examples/Si/dft/Si_2x2x2_AE_spin.hdf5',
-    sto_data_filename         = '',
-    core_elec_config_filename = '',
-    dielectric_filename       = ''
+    out_folder                = './examples/3/output',
+    run_description           = '3',
+    PW_data_filename          = './examples/data/Si/dft/Si_2x2x2_AE_spin.hdf5'
 /
 
 &material
@@ -50,13 +47,13 @@
 &bins_scatter
     q_width = 1D3,
     E_width = 1,
-    n_E    = 400,
-    n_q    = 1
+    n_E    = 100,
+    n_q    = 100
 /
 
 &numerics_s_vc
-    n_val_max = 0,
-    n_cond_max = 0
+    n_val_max = 1,
+    n_cond_max = 1
 /
 
 !

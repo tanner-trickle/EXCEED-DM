@@ -1,4 +1,4 @@
-! v0.2.7
+! v0.2.8
 
 &control
     process          = 'scatter',
@@ -9,12 +9,11 @@
 /
 
 &io
-    out_folder                = './examples/Si/outputs',
-    run_description           = 'scatter_cc_test_2',
-    PW_data_filename          = './examples/Si/dft/Si_2x2x2_AE.hdf5',
-    sto_data_filename         = './examples/RHF_wf_data.hdf5',
-    core_elec_config_filename = './examples/Si/core/Si_core_elec_config.hdf5',
-    dielectric_filename       = ''
+    out_folder                = './examples/6/output',
+    run_description           = '6',
+    PW_data_filename          = './examples/data/Si/dft/Si_2x2x2_AE.hdf5'
+    sto_data_filename         = './examples/data/RHF_wf_data.hdf5',
+    core_elec_config_filename = './examples/data/Si/core/Si_core_elec_config.hdf5',
 /
 
 &material
@@ -50,15 +49,15 @@
 &bins_scatter
     q_width = 1D3,
     E_width = 1,
-    n_E    = 1,
-    n_q    = 200
+    n_E    = 100,
+    n_q    = 100
 /
 
 &numerics_s_cc
     n_principal_min = 1,
-    n_principal_max = 3,
-    n_FFT_grid = 128, 128, 128,
-    n_cond_max = 0
+    n_principal_max = 2,
+    n_FFT_grid = 64, 64, 64,
+    n_cond_max = 1
 /
 
 !

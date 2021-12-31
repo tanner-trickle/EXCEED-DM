@@ -248,14 +248,18 @@ contains
                     E_bin_L = band_gap + (e - 1)*E_bin_width
                     E_bin_R = band_gap + e*E_bin_width
 
-                    b_rate(e) = b_rate(e) + integrate_log_interpolate(&
-                        [ omega_list(w_id), omega_list(w_id + 1) ],& 
-                        dRdw, E_bin_L, E_bin_R)
-
+                    ! b_rate(e) = b_rate(e) + integrate_log_interpolate(&
+                    !     [ omega_list(w_id), omega_list(w_id + 1) ],& 
+                    !     dRdw, E_bin_L, E_bin_R)
 
                 end do
 
             end if
+
+            ! print*, 'x_data = ', omega_list(w_id), omega_list(w_id + 1) 
+            ! print*, 'E LHS = ', band_gap + (size(b_rate) - 1)*E_bin_width
+            ! print*, 'E RHS = ', omega_list(size(omega_list))
+            ! print*, 'dRdw = ', dRdw
 
             ! last bin integrates over the rest of the list
             b_rate(size(b_rate)) = b_rate(size(b_rate)) + integrate_log_interpolate(&

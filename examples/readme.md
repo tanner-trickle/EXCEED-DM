@@ -14,4 +14,18 @@
 
 where `<n_proc>` is the number of processors to run on and `<example_ID>` is the example ID you want to compute for.
 
+- To run all the examples, from the main folder run
+
+        ./examples/run_all_examples.sh <n_proc>
+
+where `<n_proc>` is the number of processors to run on. WARNING: might take a while.
+
 {!../examples/1/readme.md!}
+{!../examples/2/readme.md!}
+{!../examples/3/readme.md!}
+{!../examples/4/readme.md!}
+{!../examples/5/readme.md!}
+{!../examples/6/readme.md!}
+{!../examples/7/readme.md!}
+{!../examples/8/readme.md!}
+{!../examples/9/readme.md!}

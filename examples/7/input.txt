@@ -1,20 +1,19 @@
-! v0.2.5
+! v0.2.8
 
 &control
     process          = 'scatter',
-    calc_mode        = 'vf',
+    calc_mode        = 'cc_ext',
     overwrite_output = .TRUE.,
     timer            = .TRUE.,
     quiet            = .FALSE.
 /
 
 &io
-    out_folder                = './examples/Si/outputs',
-    run_description           = 'scatter_vf_test_2',
-    PW_data_filename          = './examples/Si/dft/Si_2x2x2_AE.hdf5',
-    sto_data_filename         = '',
-    core_elec_config_filename = '',
-    dielectric_filename       = ''
+    out_folder                = './examples/7/output',
+    run_description           = '7',
+    PW_data_filename          = './examples/data/Si/dft/Si_2x2x2_AE.hdf5'
+    sto_data_filename         = './examples/data/RHF_wf_data.hdf5',
+    core_elec_config_filename = './examples/data/Si/core/Si_core_elec_config.hdf5',
 /
 
 &material
@@ -50,16 +49,18 @@
 &bins_scatter
     q_width = 1D3,
     E_width = 1,
-    n_E    = 500,
-    n_q    = 1
+    n_E    = 100,
+    n_q    = 100
 /
 
-&numerics_s_vf
-    n_val_max  = 0,
-    n_omega = 1000,
-    n_kf_theta = 10,
-    n_kf_phi   = 10,
-    Zeff_type  = 'one'
+&numerics_s_cc_ext
+    n_principal_min = 1,
+    n_principal_max = 2,
+    n_cond_max = 1,
+    n_q = 50,
+    n_q_theta = 4,
+    n_q_phi = 4,
+    q_min = 10D3
 /
 
 !

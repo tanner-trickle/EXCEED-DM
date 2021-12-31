@@ -138,7 +138,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 1.8% of total for source files.">137 statements</a>
+    title=" 1.8% of total for source files.">136 statements</a>
      </li> 
      
      
@@ -523,26 +523,30 @@
 <a id="ln-248" name="ln-248"></a>                    <span class="n">E_bin_L</span> <span class="o">=</span> <span class="n">band_gap</span> <span class="o">+</span> <span class="p">(</span><span class="n">e</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">E_bin_width</span>
 <a id="ln-249" name="ln-249"></a>                    <span class="n">E_bin_R</span> <span class="o">=</span> <span class="n">band_gap</span> <span class="o">+</span> <span class="n">e</span><span class="o">*</span><span class="n">E_bin_width</span>
 <a id="ln-250" name="ln-250"></a>
-<a id="ln-251" name="ln-251"></a>                    <span class="n">b_rate</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span> <span class="n">b_rate</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="n">integrate_log_interpolate</span><span class="p">(&amp;</span>
-<a id="ln-252" name="ln-252"></a>                        <span class="p">[</span> <span class="n">omega_list</span><span class="p">(</span><span class="n">w_id</span><span class="p">),</span> <span class="n">omega_list</span><span class="p">(</span><span class="n">w_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">],&amp;</span> 
-<a id="ln-253" name="ln-253"></a>                        <span class="n">dRdw</span><span class="p">,</span> <span class="n">E_bin_L</span><span class="p">,</span> <span class="n">E_bin_R</span><span class="p">)</span>
+<a id="ln-251" name="ln-251"></a>                    <span class="c">! b_rate(e) = b_rate(e) + integrate_log_interpolate(&amp;</span>
+<a id="ln-252" name="ln-252"></a>                    <span class="c">!     [ omega_list(w_id), omega_list(w_id + 1) ],&amp; </span>
+<a id="ln-253" name="ln-253"></a>                    <span class="c">!     dRdw, E_bin_L, E_bin_R)</span>
 <a id="ln-254" name="ln-254"></a>
-<a id="ln-255" name="ln-255"></a>
-<a id="ln-256" name="ln-256"></a>                <span class="k">end do</span>
-<a id="ln-257" name="ln-257"></a>
-<a id="ln-258" name="ln-258"></a><span class="k">            end if</span>
-<a id="ln-259" name="ln-259"></a>
-<a id="ln-260" name="ln-260"></a>            <span class="c">! last bin integrates over the rest of the list</span>
-<a id="ln-261" name="ln-261"></a>            <span class="n">b_rate</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">))</span> <span class="o">=</span> <span class="n">b_rate</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">))</span> <span class="o">+</span> <span class="n">integrate_log_interpolate</span><span class="p">(&amp;</span>
-<a id="ln-262" name="ln-262"></a>                                    <span class="p">[</span> <span class="n">omega_list</span><span class="p">(</span><span class="n">w_id</span><span class="p">),</span> <span class="n">omega_list</span><span class="p">(</span><span class="n">w_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">],</span> <span class="n">dRdw</span><span class="p">,&amp;</span>
-<a id="ln-263" name="ln-263"></a>                                    <span class="n">band_gap</span> <span class="o">+</span> <span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">E_bin_width</span><span class="p">,&amp;</span>
-<a id="ln-264" name="ln-264"></a>                                    <span class="n">omega_list</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">omega_list</span><span class="p">)))</span>
-<a id="ln-265" name="ln-265"></a>
-<a id="ln-266" name="ln-266"></a>        <span class="k">end if</span>
-<a id="ln-267" name="ln-267"></a>
-<a id="ln-268" name="ln-268"></a><span class="k">    end subroutine</span>
+<a id="ln-255" name="ln-255"></a>                <span class="k">end do</span>
+<a id="ln-256" name="ln-256"></a>
+<a id="ln-257" name="ln-257"></a><span class="k">            end if</span>
+<a id="ln-258" name="ln-258"></a>
+<a id="ln-259" name="ln-259"></a>            <span class="c">! print*, &#39;x_data = &#39;, omega_list(w_id), omega_list(w_id + 1) </span>
+<a id="ln-260" name="ln-260"></a>            <span class="c">! print*, &#39;E LHS = &#39;, band_gap + (size(b_rate) - 1)*E_bin_width</span>
+<a id="ln-261" name="ln-261"></a>            <span class="c">! print*, &#39;E RHS = &#39;, omega_list(size(omega_list))</span>
+<a id="ln-262" name="ln-262"></a>            <span class="c">! print*, &#39;dRdw = &#39;, dRdw</span>
+<a id="ln-263" name="ln-263"></a>
+<a id="ln-264" name="ln-264"></a>            <span class="c">! last bin integrates over the rest of the list</span>
+<a id="ln-265" name="ln-265"></a>            <span class="n">b_rate</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">))</span> <span class="o">=</span> <span class="n">b_rate</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">))</span> <span class="o">+</span> <span class="n">integrate_log_interpolate</span><span class="p">(&amp;</span>
+<a id="ln-266" name="ln-266"></a>                                    <span class="p">[</span> <span class="n">omega_list</span><span class="p">(</span><span class="n">w_id</span><span class="p">),</span> <span class="n">omega_list</span><span class="p">(</span><span class="n">w_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">],</span> <span class="n">dRdw</span><span class="p">,&amp;</span>
+<a id="ln-267" name="ln-267"></a>                                    <span class="n">band_gap</span> <span class="o">+</span> <span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">b_rate</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">E_bin_width</span><span class="p">,&amp;</span>
+<a id="ln-268" name="ln-268"></a>                                    <span class="n">omega_list</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">omega_list</span><span class="p">)))</span>
 <a id="ln-269" name="ln-269"></a>
-<a id="ln-270" name="ln-270"></a><span class="k">end module</span>
+<a id="ln-270" name="ln-270"></a>        <span class="k">end if</span>
+<a id="ln-271" name="ln-271"></a>
+<a id="ln-272" name="ln-272"></a><span class="k">    end subroutine</span>
+<a id="ln-273" name="ln-273"></a>
+<a id="ln-274" name="ln-274"></a><span class="k">end module</span>
 </pre></div>
 
     </section>
@@ -562,7 +566,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-12-29 20:43  
+             on 2021-12-30 18:47  
             
           </p>
         </div>

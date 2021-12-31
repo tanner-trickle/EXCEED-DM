@@ -313,16 +313,16 @@
 <a id="ln-38" name="ln-38"></a>        <span class="n">integral</span> <span class="o">=</span> <span class="mf">0.0_dp</span>
 <a id="ln-39" name="ln-39"></a>
 <a id="ln-40" name="ln-40"></a>        <span class="c">! make sure input bounds make sense</span>
-<a id="ln-41" name="ln-41"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">x2</span> <span class="o">&lt;</span> <span class="n">x1</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-41" name="ln-41"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">x2</span> <span class="o">&lt;=</span> <span class="n">x1</span> <span class="p">)</span> <span class="k">then</span>
 <a id="ln-42" name="ln-42"></a><span class="k">            return</span>
 <a id="ln-43" name="ln-43"></a><span class="k">        end if</span>
 <a id="ln-44" name="ln-44"></a>
 <a id="ln-45" name="ln-45"></a>        <span class="c">! make sure bounds overlap computed data</span>
-<a id="ln-46" name="ln-46"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">x2</span> <span class="o">&lt;</span> <span class="n">x_data</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-46" name="ln-46"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">x2</span> <span class="o">&lt;=</span> <span class="n">x_data</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span> <span class="k">then</span>
 <a id="ln-47" name="ln-47"></a><span class="k">            return</span>
 <a id="ln-48" name="ln-48"></a><span class="k">        end if</span>
 <a id="ln-49" name="ln-49"></a>
-<a id="ln-50" name="ln-50"></a><span class="k">        if</span> <span class="p">(</span> <span class="n">x1</span> <span class="o">&gt;</span> <span class="n">x_data</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">x_data</span><span class="p">))</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-50" name="ln-50"></a><span class="k">        if</span> <span class="p">(</span> <span class="n">x1</span> <span class="o">&gt;=</span> <span class="n">x_data</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">x_data</span><span class="p">))</span> <span class="p">)</span> <span class="k">then</span>
 <a id="ln-51" name="ln-51"></a><span class="k">            return</span>
 <a id="ln-52" name="ln-52"></a><span class="k">        end if</span>
 <a id="ln-53" name="ln-53"></a>
@@ -331,7 +331,7 @@
 <a id="ln-56" name="ln-56"></a>        <span class="c">! x1_index is the index of the closest x point which is &gt; x1</span>
 <a id="ln-57" name="ln-57"></a>        <span class="c">! x2_index is the index of the closest x point which is &lt; x2</span>
 <a id="ln-58" name="ln-58"></a>        
-<a id="ln-59" name="ln-59"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">x1</span> <span class="o">&lt;</span> <span class="n">x_data</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-59" name="ln-59"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">x1</span> <span class="o">&lt;=</span> <span class="n">x_data</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span> <span class="k">then</span>
 <a id="ln-60" name="ln-60"></a>
 <a id="ln-61" name="ln-61"></a><span class="k">            </span><span class="n">x1_index</span> <span class="o">=</span> <span class="mi">1</span>
 <a id="ln-62" name="ln-62"></a>
@@ -339,7 +339,7 @@
 <a id="ln-64" name="ln-64"></a>
 <a id="ln-65" name="ln-65"></a><span class="k">            do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
 <a id="ln-66" name="ln-66"></a>
-<a id="ln-67" name="ln-67"></a>                <span class="k">if</span> <span class="p">(</span> <span class="p">(</span> <span class="n">x_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">x1</span> <span class="p">)</span> <span class="p">.</span><span class="nb">and</span><span class="p">.</span> <span class="p">(</span> <span class="n">x1</span> <span class="o">&lt;</span> <span class="n">x_data</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-67" name="ln-67"></a>                <span class="k">if</span> <span class="p">(</span> <span class="p">(</span> <span class="n">x_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">x1</span> <span class="p">)</span> <span class="p">.</span><span class="nb">and</span><span class="p">.</span> <span class="p">(</span> <span class="n">x1</span> <span class="o">&lt;=</span> <span class="n">x_data</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="k">then</span>
 <a id="ln-68" name="ln-68"></a>
 <a id="ln-69" name="ln-69"></a><span class="k">                    </span><span class="n">x1_index</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
 <a id="ln-70" name="ln-70"></a>
@@ -349,7 +349,7 @@
 <a id="ln-74" name="ln-74"></a>
 <a id="ln-75" name="ln-75"></a><span class="k">        end if</span>
 <a id="ln-76" name="ln-76"></a>
-<a id="ln-77" name="ln-77"></a><span class="k">        if</span> <span class="p">(</span> <span class="n">x2</span> <span class="o">&gt;</span> <span class="n">x_data</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">x_data</span><span class="p">))</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-77" name="ln-77"></a><span class="k">        if</span> <span class="p">(</span> <span class="n">x2</span> <span class="o">&gt;=</span> <span class="n">x_data</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">x_data</span><span class="p">))</span> <span class="p">)</span> <span class="k">then</span>
 <a id="ln-78" name="ln-78"></a>
 <a id="ln-79" name="ln-79"></a><span class="k">            </span><span class="n">x2_index</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
 <a id="ln-80" name="ln-80"></a>
@@ -357,7 +357,7 @@
 <a id="ln-82" name="ln-82"></a>
 <a id="ln-83" name="ln-83"></a><span class="k">            do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
 <a id="ln-84" name="ln-84"></a>
-<a id="ln-85" name="ln-85"></a>                <span class="k">if</span> <span class="p">(</span> <span class="p">(</span> <span class="n">x_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">x2</span> <span class="p">)</span> <span class="p">.</span><span class="nb">and</span><span class="p">.</span> <span class="p">(</span> <span class="n">x2</span> <span class="o">&lt;</span> <span class="n">x_data</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="k">then</span>
+<a id="ln-85" name="ln-85"></a>                <span class="k">if</span> <span class="p">(</span> <span class="p">(</span> <span class="n">x_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">x2</span> <span class="p">)</span> <span class="p">.</span><span class="nb">and</span><span class="p">.</span> <span class="p">(</span> <span class="n">x2</span> <span class="o">&lt;</span> <span class="n">x_data</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="k">then</span>
 <a id="ln-86" name="ln-86"></a>
 <a id="ln-87" name="ln-87"></a><span class="k">                    </span><span class="n">x2_index</span> <span class="o">=</span> <span class="n">i</span>
 <a id="ln-88" name="ln-88"></a>
@@ -435,7 +435,7 @@
 <a id="ln-160" name="ln-160"></a>
 <a id="ln-161" name="ln-161"></a><span class="k">        end if</span>
 <a id="ln-162" name="ln-162"></a>
-<a id="ln-163" name="ln-163"></a>        <span class="c">! make sure at least two points are enclosed</span>
+<a id="ln-163" name="ln-163"></a>        <span class="c">! ! make sure at least two points are enclosed</span>
 <a id="ln-164" name="ln-164"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">n_enclosed_pts</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="p">)</span> <span class="k">then</span>
 <a id="ln-165" name="ln-165"></a>
 <a id="ln-166" name="ln-166"></a>            <span class="c">! go through pairs of points and add to the integral</span>
@@ -997,7 +997,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2021-12-29 20:43  
+             on 2021-12-30 18:47  
             
           </p>
         </div>

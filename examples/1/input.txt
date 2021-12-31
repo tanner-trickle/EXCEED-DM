@@ -10,7 +10,7 @@
 
 &io
     out_folder                = './examples/1/output',
-    run_description           = 'scatter_vc_test',
+    run_description           = '1',
     PW_data_filename          = './examples/data/Si/dft/Si_2x2x2_AE.hdf5'
 /
 

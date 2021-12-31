@@ -1,4 +1,4 @@
-k! v0.2.5
+! v0.2.8
 
 &control
     process          = 'scatter',
@@ -9,12 +9,10 @@ k! v0.2.5
 /
 
 &io
-    out_folder                = './examples/Si/outputs',
-    run_description           = 'scatter_cf_test_2',
-    PW_data_filename          = '',
-    sto_data_filename         = './examples/RHF_wf_data.hdf5',
-    core_elec_config_filename = './examples/Si/core/Si_core_elec_config.hdf5',
-    dielectric_filename       = ''
+    out_folder                = './examples/8/output',
+    run_description           = '8',
+    sto_data_filename         = './examples/data/RHF_wf_data.hdf5',
+    core_elec_config_filename = './examples/data/Si/core/Si_core_elec_config.hdf5',
 /
 
 &material
@@ -66,7 +64,7 @@ k! v0.2.5
     n_ki            = 10,
     ki_s            = 100,
     ki_min          = 1D3,
-    Ef_min       = 60
+    Ef_min          = 60
 /
 
 !

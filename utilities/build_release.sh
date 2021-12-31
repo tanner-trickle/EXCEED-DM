@@ -1,14 +1,12 @@
 #!/bin/bash
 
 # version number of the build
-version_number="0.2.0"
+version_number="0.3.0"
 
 # folders to include in release build
 folders=(\
-    # "../docs" \
-    # "../docs-extra" \
+    "../docs"\
     "../examples" \
-    "../tests" \
     "../src" \
     "../utilities"
     "../CMakeModules")
@@ -18,8 +16,7 @@ files=(\
     "LICENSE" \
     "README.md" \
     "changelog.md" \
-    # "EXCEED-DM-docs.md" \
-    # "install-cmake.md" \
+    "install.md" \
     "CMakeLists.txt")
 
 # create the folder
@@ -42,4 +39,3 @@ tar -czvf "../EXCEED-DM-v${version_number}.tar.gz" .
 cd ../
 # remove the version folder (no reason to save all that)
 rm -r "./v${version_number}"
-

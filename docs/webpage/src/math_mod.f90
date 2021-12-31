@@ -38,16 +38,16 @@ contains
         integral = 0.0_dp
 
         ! make sure input bounds make sense
-        if ( x2 < x1 ) then
+        if ( x2 <= x1 ) then
             return
         end if
 
         ! make sure bounds overlap computed data
-        if ( x2 < x_data(1) ) then
+        if ( x2 <= x_data(1) ) then
             return
         end if
 
-        if ( x1 > x_data(size(x_data)) ) then
+        if ( x1 >= x_data(size(x_data)) ) then
             return
         end if
 
@@ -56,7 +56,7 @@ contains
         ! x1_index is the index of the closest x point which is > x1
         ! x2_index is the index of the closest x point which is < x2
         
-        if ( x1 < x_data(1) ) then
+        if ( x1 <= x_data(1) ) then
 
             x1_index = 1
 
@@ -64,7 +64,7 @@ contains
 
             do i = 1, size(x_data) - 1
 
-                if ( ( x_data(i) < x1 ) .and. ( x1 < x_data(i + 1) ) ) then
+                if ( ( x_data(i) < x1 ) .and. ( x1 <= x_data(i + 1) ) ) then
 
                     x1_index = i + 1
 
@@ -74,7 +74,7 @@ contains
 
         end if
 
-        if ( x2 > x_data(size(x_data)) ) then
+        if ( x2 >= x_data(size(x_data)) ) then
 
             x2_index = size(x_data)
 
@@ -82,7 +82,7 @@ contains
 
             do i = 1, size(x_data) - 1
 
-                if ( ( x_data(i) < x2 ) .and. ( x2 < x_data(i + 1) ) ) then
+                if ( ( x_data(i) <= x2 ) .and. ( x2 < x_data(i + 1) ) ) then
 
                     x2_index = i
 
@@ -160,7 +160,7 @@ contains
 
         end if
 
-        ! make sure at least two points are enclosed
+        ! ! make sure at least two points are enclosed
         if ( n_enclosed_pts > 1 ) then
 
             ! go through pairs of points and add to the integral
