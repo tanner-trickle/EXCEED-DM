@@ -1,26 +1,23 @@
-! v0.2.7
+! v0.2.8
 
 &control
     process          = 'scatter',
-    calc_mode        = 'cc',
+    calc_mode        = 'vc',
     overwrite_output = .TRUE.,
     timer            = .TRUE.,
     quiet            = .FALSE.
 /
 
 &io
-    out_folder                = './examples/Ge/outputs',
-    run_description           = 'scatter_cc_test_2',
-    PW_data_filename          = './examples/Ge/dft/Ge_2x2x2_AE.hdf5',
-    sto_data_filename         = './examples/RHF_wf_data.hdf5',
-    core_elec_config_filename = './examples/Ge/core/Ge_core_elec_config.hdf5',
-    dielectric_filename       = ''
+    out_folder                = './examples/15/output',
+    run_description           = '15',
+    PW_data_filename          = './examples/data/Ge/dft/Ge_2x2x2_AE.hdf5'
 /
 
 &material
     name            = 'Ge'
     pc_vol_A        = 47.847 
-    rho_T_g_per_cm3 = 5.042  
+    rho_T_g_per_cm3 = 5.042 
     band_gap        = 0.67
 /
 
@@ -50,15 +47,13 @@
 &bins_scatter
     q_width = 1D3,
     E_width = 1,
-    n_E    = 1,
-    n_q    = 200
+    n_E    = 100,
+    n_q    = 100
 /
 
-&numerics_s_cc
-    n_principal_min = 3,
-    n_principal_max = 3,
-    n_FFT_grid = 128, 128, 128,
-    n_cond_max = 0
+&numerics_s_vc
+    n_val_max = 1,
+    n_cond_max = 1
 /
 
 !

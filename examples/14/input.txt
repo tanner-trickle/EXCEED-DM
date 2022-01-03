@@ -1,4 +1,4 @@
-! v0.2.5
+! v0.2.8
 
 &control
     process          = 'dielectric',
@@ -9,12 +9,9 @@
 /
 
 &io
-    out_folder                = './examples/Si/outputs',
-    run_description           = 'Si_2x2x2_dielectric',
-    PW_data_filename          = './examples/Si/dft/Si_2x2x2_AE.hdf5',
-    sto_data_filename         = '',
-    core_elec_config_filename = '',
-    dielectric_filename       = ''
+    out_folder                = './examples/14/output',
+    run_description           = '14',
+    PW_data_filename          = './examples/data/Si/dft/Si_2x2x2_AE.hdf5',
 /
 
 &material
@@ -42,8 +39,8 @@
 /
 
 &numerics_dielectric
-    n_val_max = 0,
-    n_cond_max = 0, 
+    n_val_max = 1,
+    n_cond_max = 1, 
     n_k_vec = 2, 2, 2
 /
 
@@ -57,7 +54,7 @@
     log_b_max = 0,
     m_min     = 0.2,
     m_max     = 0.2,
-    sigma     = 3
+    sigma     = 1D10
 /
 
 !

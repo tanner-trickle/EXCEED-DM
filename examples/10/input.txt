@@ -1,4 +1,4 @@
-! v0.2.5
+! v0.2.8
 
 &control
     process          = 'absorption',
@@ -9,18 +9,15 @@
 /
 
 &io
-    out_folder                = './examples/Si/outputs',
-    run_description           = 'absorp_ps_spin_test',
-    PW_data_filename          = './examples/Si/dft/Si_2x2x2_AE_spin.hdf5',
-    sto_data_filename         = '',
-    core_elec_config_filename = '',
-    dielectric_filename       = ''
+    out_folder                = './examples/10/output',
+    run_description           = '10',
+    PW_data_filename          = './examples/data/Si/dft/Si_2x2x2_AE.hdf5',
 /
 
 &material
-    name        = 'Si',
-    pc_vol_A        = 40.888, 
-    rho_T_g_per_cm3 = 2.281,  
+    name            = 'Si'
+    pc_vol_A        = 40.888 
+    rho_T_g_per_cm3 = 2.281  
     band_gap        = 1.11 
 /
 
@@ -41,7 +38,7 @@
     v0_km_per_sec    = 230,
     vE_km_per_sec    = 240,
     vEsc_km_per_sec  = 600, 
-    particle_type    = 'ps'
+    particle_type    = 'vector'
 /
 
 &widths
@@ -54,7 +51,7 @@
     log_b_max = 0,
     m_min     = 0.2,
     m_max     = 0.2,
-    sigma     = 3
+    sigma     = 1D10
 /
 
 &numerics_abs
