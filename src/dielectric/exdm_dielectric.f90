@@ -273,8 +273,8 @@ contains
             call bins%save(dielectric_output_filename, verbose = verbose)
             call save_dielectric(dielectric_output_filename, dielec, verbose = verbose)
 
-            call timer_compute%save(dielectric_output_filename, 'compute', verbose = verbose)
-            call timer_send%save(dielectric_output_filename, 'send', verbose = verbose)
+            call timer_compute%save(dielectric_output_filename, 'compute_dielectric', verbose = verbose)
+            call timer_send%save(dielectric_output_filename, 'send_dielectric', verbose = verbose)
 
         end if
 
