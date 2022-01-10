@@ -14,6 +14,7 @@ module timer_util
         real(dp) :: start_time
         real(dp) :: end_time
         real(dp) :: dt
+            !! Units : s
 
         ! year/month/day
         integer :: start_date(3)
