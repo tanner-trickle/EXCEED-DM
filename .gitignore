@@ -1,13 +1,6 @@
 build/
-data/
-*.mod
-*.o
+output/
 ./utilites/binned_wfc/*.hdf5
-./utilities/binned_wfc/binned_wfc
-myTODO.md
 .ipynb_checkpoints
 __pycache__
-tests/Si/outputs/
-examples/Si/outputs/
-*_spin.hdf5
 *.swp
