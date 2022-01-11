@@ -157,24 +157,21 @@ def create_input(
     
     with h5py.File(out_filename, "w") as f:
     
-        f.create_dataset('mat_name', data=mat_name)
-        f.create_dataset('band_gap', data=band_gap)
         f.create_dataset('n_k', data=data['n_k'])
         f.create_dataset('n_val', data=data['n_val'])
         f.create_dataset('n_cond', data=data['n_cond'])
-        f.create_dataset('pc_vol_A', data=data['pc_vol_A'])
-        f.create_dataset('k_weight', data=data['k_weight'])
-        f.create_dataset('k_red', data=data['k_red'].T)
+        f.create_dataset('n_G', data=ngpoints)
+        f.create_dataset('G_grid_red', data=unique_gpoints.T)
         f.create_dataset('a_vecs_A', data=data['a_vecs_A'].T)
         f.create_dataset('b_vecs_A', data=data['b_vecs_A'].T)
-        f.create_dataset('energy_bands_raw', data=data['energy'].T)
-        
-        f.create_dataset('n_in_G', data=ngpoints)
-        f.create_dataset('in_G_grid_red', data=unique_gpoints.T)
+        f.create_dataset('k_weight', data=data['k_weight'])
+        f.create_dataset('k_grid_red', data=data['k_red'].T)
+        f.create_dataset('energy_bands', data=data['energy'].T)
         
         for band_idx, band_data in enumerate(wfc_data):   
-            f.create_dataset('in_wfc_FT_r/{}'.format(band_idx + 1), data=band_data.real.T)
-            f.create_dataset('in_wfc_FT_c/{}'.format(band_idx + 1), data=band_data.imag.T)
+            for k in range(data['n_k']):
+                f.create_dataset('wfc_FT_r/i_{}/k_{}'.format(band_idx + 1, k + 1), data=band_data[k].real)
+                f.create_dataset('wfc_FT_c/i_{}/k_{}'.format(band_idx + 1, k + 1), data=band_data[k].imag)
 
 
 
