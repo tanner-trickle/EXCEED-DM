@@ -41,49 +41,122 @@ module numerics_dielectric
             procedure :: save => numerics_dielectric_save
             procedure :: create_val_id_list => dielectric_create_val_id_list
             procedure :: create_k_id_list => dielectric_create_k_id_list
-            procedure :: define_q_grid
             procedure :: compute_n_q_bin
 
     end type
 
 contains
 
-    subroutine compute_n_q_bin(self, bins, PW_dataset, verbose)
+    subroutine compute_n_q_bin(self, bins, PW_dataset, FFT_grid, proc_id, root_process, verbose)
         !! Find the number of \( \mathbf{q} \) points from the uniformly spaced grid that are in each
         !! in a \( \{q, \theta_q, \phi_q \} \) bin.
 
-        use bins_dielectric_type
+        use MPI_util
         use PW_dataset_type
+        use FFT_util
         use math_mod
-
-        implicit none
+        use bins_dielectric_type
 
         class(numerics_dielectric_t) :: self
         type(bins_dielectric_t) :: bins
         type(PW_dataset_t) :: PW_dataset
+        type(FFT_grid_t) :: FFT_grid
+        integer :: proc_id, root_process
+
+        type(parallel_manager_t) :: ki_kf_manager
+        integer :: k_id_list(PW_dataset%n_k)
+        integer :: k, j, ki_id, kf_id, g1, g2, g3
+        integer :: job_id
+
+        integer, allocatable :: job_id_to_ki_kf(:, :)
+
+        integer, allocatable :: total_n_q_bin(:, :, :)
 
         logical, optional :: verbose
 
+        integer :: err
+
+        real(dp) :: q_vec(3), q_hat(3)
+        real(dp) :: q_mag, q_theta, q_phi
+
+        integer :: q_theta_bin, q_phi_bin, q_bin
+
+        real(dp) :: dk_grid_min(3)
+        real(dp) :: dk_grid_max(3)
+
+        real(dp) :: G_grid_min(3)
+        real(dp) :: G_grid_max(3)
+
+        real(dp) :: q_grid_min(3)
+        real(dp) :: q_grid_max(3)
+
+        integer :: n_q_grid(3)
+
         integer :: q1, q2, q3
 
-        real(dp) :: q_mag, q_theta, q_phi
-        real(dp) :: q_red(3)
-        real(dp) :: q_vec(3)
-        real(dp) :: q_hat(3)
+        integer :: G_red(3)
 
-        integer :: q_bin, q_theta_bin, q_phi_bin
+        real(dp) :: q_red(3)
+
+        if ( verbose ) then
+
+            print*, 'Starting calculation of number of q points in each bin...'
+            print*
+
+        end if
 
         allocate(self%n_q_bin(bins%n_q, bins%n_q_theta, bins%n_q_phi))
         self%n_q_bin = 0
 
-        ! now bin the unbinned dielectric
-        do q3 = 1, self%n_q_grid(3)
-            do q2 = 1, self%n_q_grid(2)
-                do q1 = 1, self%n_q_grid(1) 
+        dk_grid_min(1) = minval(PW_dataset%k_grid_red(:, 1)) &
+            - maxval(PW_dataset%k_grid_red(:, 1))
+        dk_grid_min(2) = minval(PW_dataset%k_grid_red(:, 2)) &
+            - maxval(PW_dataset%k_grid_red(:, 2))
+        dk_grid_min(3) = minval(PW_dataset%k_grid_red(:, 3)) &
+            - maxval(PW_dataset%k_grid_red(:, 3))
 
-                    q_red(1) = (1.0_dp/self%n_k_vec(1))*( q1 - 1 ) + self%q_grid_min(1)
-                    q_red(2) = (1.0_dp/self%n_k_vec(2))*( q2 - 1 ) + self%q_grid_min(2)
-                    q_red(3) = (1.0_dp/self%n_k_vec(3))*( q3 - 1 ) + self%q_grid_min(3)
+        dk_grid_max(1) = maxval(PW_dataset%k_grid_red(:, 1)) &
+            - minval(PW_dataset%k_grid_red(:, 1))
+        dk_grid_max(2) = maxval(PW_dataset%k_grid_red(:, 2)) &
+            - minval(PW_dataset%k_grid_red(:, 2))
+        dk_grid_max(3) = maxval(PW_dataset%k_grid_red(:, 3)) &
+            - minval(PW_dataset%k_grid_red(:, 3))
+
+        G_grid_min = 0.0_dp
+        G_grid_max = 0.0_dp
+
+        do g3 = 1, FFT_grid%n_grid(3)
+            do g2 = 1, FFT_grid%n_grid(2)
+                do g1 = 1, FFT_grid%n_grid(1)
+
+                    G_red = FFT_grid%sym_G_grid_red(g1, g2, g3, :)
+                    
+                    G_grid_min(1) = min(1.0_dp*G_red(1), G_grid_min(1))
+                    G_grid_min(2) = min(1.0_dp*G_red(2), G_grid_min(2))
+                    G_grid_min(3) = min(1.0_dp*G_red(3), G_grid_min(3))
+
+                    G_grid_max(1) = max(1.0_dp*G_red(1), G_grid_max(1))
+                    G_grid_max(2) = max(1.0_dp*G_red(2), G_grid_max(2))
+                    G_grid_max(3) = max(1.0_dp*G_red(3), G_grid_max(3))
+
+                end do
+            end do
+        end do
+
+        q_grid_min = dk_grid_min + G_grid_min
+        q_grid_max = dk_grid_min + G_grid_max
+
+        n_q_grid(1) = 1 + int( self%n_k_vec(1)*( q_grid_max(1) - q_grid_min(1) ) )
+        n_q_grid(2) = 1 + int( self%n_k_vec(2)*( q_grid_max(2) - q_grid_min(2) ) )
+        n_q_grid(3) = 1 + int( self%n_k_vec(3)*( q_grid_max(3) - q_grid_min(3) ) )
+
+        do q1 = 1, n_q_grid(1)
+            do q2 = 1, n_q_grid(2)
+                do q3 = 1, n_q_grid(3)
+
+                    q_red(1) = q_grid_min(1) + ( q1 - 1.0_dp )/self%n_k_vec(1) 
+                    q_red(2) = q_grid_min(2) + ( q2 - 1.0_dp )/self%n_k_vec(2) 
+                    q_red(3) = q_grid_min(3) + ( q3 - 1.0_dp )/self%n_k_vec(3) 
 
                     q_vec = matmul(PW_dataset%k_red_to_xyz, q_red)
 
@@ -114,90 +187,12 @@ contains
             end do
         end do
 
-    end subroutine
+        if ( verbose ) then
 
-    subroutine define_q_grid(self, q_max, PW_dataset, FFT_grid)
-        !! Given a uniform grid  in the 1BZ for \( \mathbf{k}, \mathbf{k}' \), 
-        !! and a uniform grid of \( \mathbf{G} \)'s, finds the uniform lattice of 
-        !! \( \mathbf{q} = \mathbf{k}' - \mathbf{k}  + \mathbf{G} \) points which have \( q < q_\text{max} \).
-        !!
-        !! The fundamental lattice spacing is \( 1/\mathbf{N}_\mathbf{k} \),
-        !! where \( \mathbf{N}_\mathbf{k} \) is the numebr of \( \mathbf{k} \) points in each direction. Therefore every \( \mathbf{q} \) point
-        !! in the grid is uniquely indexed, `index` = [1, 1, 1] 
-        !! + \( \mathbf{N}_\mathbf{k} ( \mathbf{q}_\text{red} - \mathbf{q}_\text{red, min} ) \) once the minimum \(
-        !! \mathbf{q}_\text{red} \) in the grid is known. We also find the number of \( \mathbf{q} \) points in the
-        !! grid, \( \mathbf{N}_q = \mathbf{N}_k \left( \mathbf{q}_\text{red, max} - \mathbf{q}_\text{red, min} \right) \).
+            print*, 'Done computing number of q points in each bin!'
+            print*
 
-        use PW_dataset_type
-        use FFT_util
-
-        implicit none
-
-        class(numerics_dielectric_t) :: self
-        real(dp) :: q_max
-        type(PW_dataset_t) :: PW_dataset
-        type(FFT_grid_t) :: FFT_grid
-
-        integer :: k, kp, g1, g2, g3
-
-        real(dp) :: q_mag
-        real(dp) :: q_xyz(3)
-
-        real(dp) :: dk_red(3)
-        real(dp) :: dk_red_min(3)
-        real(dp) :: dk_red_max(3)
-
-        integer :: G_red(3)
-        integer :: G_red_min(3)
-        integer :: G_red_max(3)
-
-        real(dp) :: q_red(3)
-        real(dp) :: q_red_min(3)
-        real(dp) :: q_red_max(3)
-
-        q_red_min = 0.0_dp
-        q_red_max = 0.0_dp
-
-        do k = 1, PW_dataset%n_k
-            do kp = 1, PW_dataset%n_k
-
-                dk_red = PW_dataset%k_grid_red(kp, :) - PW_dataset%k_grid_red(k, :)
-
-                do g3 = 1, FFT_grid%n_grid(3)
-                    do g2 = 1, FFT_grid%n_grid(2)
-                        do g1 = 1, FFT_grid%n_grid(1)
-
-                            G_red = FFT_grid%sym_G_grid_red(g1, g2, g3, :)
-
-                            q_red = dk_red + G_red
-
-                            q_xyz = matmul(PW_dataset%k_red_to_xyz, q_red)
-
-                            q_mag = norm2(q_xyz)
-
-                            if ( q_mag <= q_max ) then
-
-                                q_red_min(1) = min(q_red(1), q_red_min(1))
-                                q_red_min(2) = min(q_red(2), q_red_min(2))
-                                q_red_min(3) = min(q_red(3), q_red_min(3))
-
-                                q_red_max(1) = max(q_red(1), q_red_max(1))
-                                q_red_max(2) = max(q_red(2), q_red_max(2))
-                                q_red_max(3) = max(q_red(3), q_red_max(3))
-
-                            end if
-
-                        end do
-                    end do
-                end do
-            end do
-        end do
-
-        self%n_q_grid(1) = 1 + int( self%n_k_vec(1)*( q_red_max(1) - q_red_min(1) ) )
-        self%n_q_grid(2) = 1 + int( self%n_k_vec(2)*( q_red_max(2) - q_red_min(2) ) )
-        self%n_q_grid(3) = 1 + int( self%n_k_vec(3)*( q_red_max(3) - q_red_min(3) ) )
-
-        self%q_grid_min = q_red_min
+        end if
 
     end subroutine
 

@@ -33,14 +33,14 @@
     q_width = 100,
     E_width = 0.1,
     n_E    = 100,
-    n_q    = 100, 
+    n_q    = 500, 
     n_q_theta = 1,
     n_q_phi = 1
 /
 
 &numerics_dielectric
-    n_val_max = 1,
-    n_cond_max = 1, 
+    n_val_max = 0,
+    n_cond_max = 0, 
     n_k_vec = 2, 2, 2
 /
 

@@ -73,6 +73,7 @@ contains
 
         type(timer_t) :: timer_send
         type(timer_t) :: timer_compute
+        type(timer_t) :: timer_q_bin
 
         integer :: i
         integer :: n_FFT_grid(3)
@@ -158,13 +159,10 @@ contains
             job_id_to_ik, verbose = verbose)
 
         allocate(dielec(bins%n_E, bins%n_q, bins%n_q_theta, bins%n_q_phi))
-        ! factor of 1 in dielectric formula
-        dielec = (1.0_dp, 0.0_dp)
+        dielec = (0.0_dp, 0.0_dp)
 
-        call numerics%define_q_grid(bins%n_q*bins%q_width, &
-            PW_dataset, FFT_grid)
-
-        call numerics%compute_n_q_bin(bins, PW_dataset, verbose = verbose)
+        call numerics%compute_n_q_bin(bins, PW_dataset, FFT_grid, proc_id, root_process,&
+            verbose = verbose)
 
         ! allocate wave functions
         if ( PW_dataset%include_spin ) then
@@ -271,7 +269,7 @@ contains
 
             call numerics%save(dielectric_output_filename, verbose = verbose)
             call bins%save(dielectric_output_filename, verbose = verbose)
-            call save_dielectric(dielectric_output_filename, dielec, verbose = verbose)
+            call save_dielectric(dielectric_output_filename, dielec + 1.0_dp, verbose = verbose)
 
             call timer_compute%save(dielectric_output_filename, 'compute_dielectric', verbose = verbose)
             call timer_send%save(dielectric_output_filename, 'send_dielectric', verbose = verbose)
