@@ -3,6 +3,7 @@
 &control
     process          = 'scatter',
     calc_mode        = 'vc',
+    overwrite_output = .TRUE.
 /
 
 &io
@@ -27,12 +28,12 @@
 /
 
 &dm_model
-	n_mX             = 20,
-    log_mX_min       = 6,
+	n_mX             = 30,
+    log_mX_min       = 5,
     log_mX_max       = 9,
     n_extra_mX       = 0,
-    n_med_FF         = 2,
-    med_FF_min       = 0,
+    n_med_FF         = 1,
+    med_FF_min       = 2,
     med_FF_max       = 2,
     rhoX_GeV_per_cm3 = 0.4,
     v0_km_per_sec    = 230,

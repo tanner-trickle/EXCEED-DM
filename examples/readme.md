@@ -35,3 +35,4 @@ where `<n_proc>` is the number of processors to run on. WARNING: might take a wh
 {!../examples/13/readme.md!}
 {!../examples/14/readme.md!}
 {!../examples/15/readme.md!}
+{!../examples/16/readme.md!}
