@@ -1,3 +1,14 @@
+v0.3.0
+---
+
+- Updated calculation of some self energies to avoid numerically small numbers. For example, the dielectric computed with either \( \Pi_{1, 1} \) or \( \Pi_{v^i, v^j} \) is identical. 
+- Added the calculation of \( \Pi_{\mathbf{v} \cdot \sigma, \mathbf{v} \cdot \sigma} \).
+    - Used in generalizing the pseudoscalar absorption rate for spin dependent wave functions.  
+- Added a timer type for more granular timing data.
+- Complete rework of examples so each example has a specific ID and `readme.md` description file.
+    - Removed tests in favor of a script which runs all the examples, `examples/run_all_examples.sh`. 
+- Speed improvement of the dielectric calculation in the scattering ( \( q \gg \omega \) ) regime.
+
 v0.2.8
 ---
 

@@ -82,7 +82,7 @@ If installed correctly you should see something similar to,
 
         ----------------------------------------------------------------------
 
-            EXCEED-DM - v0.2.8
+            EXCEED-DM - v0.3.0
 
             Running on 2 processors
             Compiled with GCC version 9.3.0
