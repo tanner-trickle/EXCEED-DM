@@ -78,8 +78,6 @@ contains
 
         integer :: q1, q2, q3
 
-        real(dp) :: q_red(3)
-
         integer :: q_ind(3)
 
         real(dp) :: ddi(bins%n_E, bins%n_q, bins%n_q_theta, bins%n_q_phi)
@@ -113,10 +111,6 @@ contains
                     q_vec = PW_dataset%k_grid_xyz(kf, :) &
                         - PW_dataset%k_grid_xyz(k, :) + &
                         FFT_grid%sym_G_grid_xyz(g1, g2, g3, :)
-
-                    q_red = PW_dataset%k_grid_red(kf, :) &
-                        - PW_dataset%k_grid_red(k, :) + &
-                        FFT_grid%sym_G_grid_red(g1, g2, g3, :)
 
                     q_mag = norm2(q_vec)
 
@@ -210,8 +204,6 @@ contains
 
         integer :: q1, q2, q3
 
-        real(dp) :: q_red(3)
-
         integer :: q_ind(3)
 
         complex(dp) :: ddi(bins%n_E, bins%n_q, bins%n_q_theta, &
@@ -246,10 +238,6 @@ contains
                     q_vec = PW_dataset%k_grid_xyz(kf, :) &
                         - PW_dataset%k_grid_xyz(k, :) + &
                         FFT_grid%sym_G_grid_xyz(g1, g2, g3, :)
-
-                    q_red = PW_dataset%k_grid_red(kf, :) &
-                        - PW_dataset%k_grid_red(k, :) + &
-                        FFT_grid%sym_G_grid_red(g1, g2, g3, :)
 
                     q_mag = norm2(q_vec)
 

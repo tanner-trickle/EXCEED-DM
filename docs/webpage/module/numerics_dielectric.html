@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.2.8</small></a>
+          <a class="navbar-brand" href="../index.html">EXCEED-DM <small>0.3.0</small></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -206,8 +206,6 @@
       
       <a class="list-group-item" href="../module/numerics_dielectric.html#proc-compute_n_q_bin">compute_n_q_bin</a>
       
-      <a class="list-group-item" href="../module/numerics_dielectric.html#proc-define_q_grid">define_q_grid</a>
-      
       <a class="list-group-item" href="../module/numerics_dielectric.html#proc-dielectric_create_k_id_list">dielectric_create_k_id_list</a>
       
       <a class="list-group-item" href="../module/numerics_dielectric.html#proc-dielectric_create_val_id_list">dielectric_create_val_id_list</a>
@@ -305,8 +303,6 @@
     <div id="subs-1" class="panel-collapse collapse">
       
       <a class="list-group-item" href="../module/numerics_dielectric.html#proc-compute_n_q_bin">compute_n_q_bin</a>
-      
-      <a class="list-group-item" href="../module/numerics_dielectric.html#proc-define_q_grid">define_q_grid</a>
       
       <a class="list-group-item" href="../module/numerics_dielectric.html#proc-dielectric_create_k_id_list">dielectric_create_k_id_list</a>
       
@@ -512,9 +508,6 @@ indicies.</p></td>
        <tr><td>procedure, public :: <strong><a href='../type/numerics_dielectric_t.html#boundprocedure-create_k_id_list~2'>create_k_id_list</a></strong>  => dielectric_create_k_id_list </td>
        <td></td></tr>
       
-       <tr><td>procedure, public :: <strong><a href='../type/numerics_dielectric_t.html#boundprocedure-define_q_grid'>define_q_grid</a></strong>  </td>
-       <td></td></tr>
-      
        <tr><td>procedure, public :: <strong><a href='../type/numerics_dielectric_t.html#boundprocedure-compute_n_q_bin'>compute_n_q_bin</a></strong>  </td>
        <td></td></tr>
       
@@ -538,7 +531,7 @@ indicies.</p></td>
     
   <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-compute_n_q_bin"></span><h3>
-public subroutine <a href='../proc/compute_n_q_bin.html'>compute_n_q_bin</a>(self, bins, PW_dataset, verbose)
+public subroutine <a href='../proc/compute_n_q_bin.html'>compute_n_q_bin</a>(self, bins, PW_dataset, FFT_grid, proc_id, root_process, verbose)
     
     
    
@@ -620,118 +613,57 @@ in a <script type="math/tex"> \{q, \theta_q, \phi_q \} </script> bin.</p>
   
 <tr>
   
-  <td><span class="anchor" ></span>logical,</td>
-  <td></td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
-  <td><strong>verbose</strong></td><td></td>
-  
-</tr>
-
-</tbody>
-</table>
-
-      
-    
-    
-
-  </div>
-  </div>
-
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-define_q_grid"></span><h3>
-public subroutine <a href='../proc/define_q_grid.html'>define_q_grid</a>(self, q_max, PW_dataset, FFT_grid)
-    
-    
-   
-</h3></div>
-  <div class="panel-body">
-       
-    
-
-
-
-
-
-
-
-<p>Given a uniform grid  in the 1BZ for <script type="math/tex"> \mathbf{k}, \mathbf{k}' </script>, 
-and a uniform grid of <script type="math/tex"> \mathbf{G} </script>'s, finds the uniform lattice of 
-<script type="math/tex"> \mathbf{q} = \mathbf{k}' - \mathbf{k}  + \mathbf{G} </script> points which have <script type="math/tex"> q < q_\text{max} </script>.</p><a href="../proc/define_q_grid.html" class="pull-right"><emph>Read more&hellip;</emph></a>
-    
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
-<tbody>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>class(<a href='../type/numerics_dielectric_t.html'>numerics_dielectric_t</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>self</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>real(kind=dp)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>q_max</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>type(PW_dataset_t)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>PW_dataset</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
   <td><span class="anchor" ></span>type(FFT_grid_t)</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
   <td><strong>FFT_grid</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>proc_id</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>root_process</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>logical,</td>
+  <td></td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>verbose</strong></td><td></td>
   
 </tr>
 
@@ -1274,7 +1206,7 @@ much memory.</p>
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-             on 2022-01-03 09:44  
+             on 2022-02-15 15:20  
             
           </p>
         </div>

@@ -168,8 +168,8 @@ contains
             call save_scatter_rates(io_files%out_filename, &
                 bins, expt, dm_model, binned_rate_init, verbose = verbose)
 
-            call timer_compute%save(io_files%out_filename, 'compute', verbose = verbose)
-            call timer_send%save(io_files%out_filename, 'send', verbose = verbose)
+            call timer_compute%save(io_files%out_filename, 'compute_scatter', verbose = verbose)
+            call timer_send%save(io_files%out_filename, 'send_scatter', verbose = verbose)
 
         end if
 
