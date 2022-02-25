@@ -106,6 +106,8 @@ If installed correctly you should see something similar to,
 - Documentation can be found [here](https://tanner-trickle.github.io/EXCEED-DM), as well as the `docs/` folder.
 - Larger DFT input files can be found here: 
     - Si/Ge - [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4735777.svg)](https://doi.org/10.5281/zenodo.4735777)
+    - Si/Ge (compatible with v>=0.2.8) - [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6015637.svg)](https://doi.org/10.5281/zenodo.6015637)
+
 
 ## Papers using `EXCEED-DM`
 
