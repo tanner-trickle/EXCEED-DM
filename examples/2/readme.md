@@ -1,7 +1,7 @@
-## ID: 2
+# Example 2: Si Binned Scatter Rate, core to conduction
+
+- Calculation: Binned scatter rate
 
 - Target: Si
 
-- Process: scattering
-
-- Description: Spin independent valence to conduction transition from highest valence band to lowest conduction band with (mock) spin dependent wave functions (wave functions have two components but only one is filled, bands doubled so one copy has spin down wave functions the other has spin up). Output should be identical to example #1. Single dark matter mass and form factor. Useful for timing the total calculation.
+Core to conduction transitions in Si. Core states are RHF wave functions with $1 \leq n \leq 2$ in an STO basis. Conduction states are the same as in example 1; PW basis wave functions on a $2 \times 2 \times 2$ $\mathbf{k}$-mesh. 

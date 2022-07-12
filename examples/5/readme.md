@@ -1,11 +1,7 @@
-## ID: 5
+# Example 5: Si Binned Scatter Rate, All Transitions Included
+
+- Calculation: Binned scatter rate
 
 - Target: Si
 
-- Process: scattering
-
-- Description: Spin independent valence to conduction transition from highest valence band to lowest conduction band. Single dark matter mass and form factor. Screening effects included by numerically computing the dielectric and screening the rate with it.
-
-If `./output/dielectric.hdf5` does not exist the dielectric will be computed from scratch. If the file does exist, e.g. after running the example once, then the file will be loaded and will not be computed from scratch.
-
-Note that the total scattering rate should be smaller than the one computed in example #1.
+Complete calculation of transition rates in Si. Initial electronic states are a combination of the valence and core states from examples 1 and 2. Final electronic states are a combination of the conduction and free states from examples 2 and 3. See those example `readme`'s for more details.

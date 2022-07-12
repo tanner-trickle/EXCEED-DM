@@ -1,66 +1,31 @@
-! v0.2.8
+# Input file for EXCEED-DMv1.0.0
 
-&control
-    process          = 'absorption',
-    calc_mode        = '',
-    overwrite_output = .TRUE.,
-    timer            = .TRUE.,
-    quiet            = .FALSE.
-/
+[control]
+    calculation                     = 'absorption_rate'
+    run_description                 = 'example_10'
+    out_folder                      = './examples/10/output/'
 
-&io
-    out_folder                = './examples/10/output',
-    run_description           = '10',
-    PW_data_filename          = './examples/data/Si/dft/Si_2x2x2_AE.hdf5',
-/
+[elec_config_input]
+    filename = './examples/10/elec_config.hdf5'
 
-&material
+[material]
     name            = 'Si'
-    pc_vol_A        = 40.888 
-    rho_T_g_per_cm3 = 2.281  
-    band_gap        = 1.11 
-/
+    rho_T_g_per_cm3 = 2.281
+    band_gap        = 1.11
 
-&experiment
-    E_threshold = 0,
-    m_T_kg      = 1,
-    exposure_yr = 1,
-    n_time      = 1,
-    theta_E     = 7.33D-1
-/
+    a_vecs_Ang      = 0.00000, 2.73437, 2.73437
+    a_vecs_Ang     += 2.73437, 0.00000, 2.73437
+    a_vecs_Ang     += 2.73437, 2.73437, 0.00000
 
-&dm_model
-	n_mX             = 100,
-    log_mX_min       = 0,
-    log_mX_max       = 2,
-    n_extra_mX       = 0,
-    rhoX_GeV_per_cm3 = 0.4,
-    v0_km_per_sec    = 230,
-    vE_km_per_sec    = 240,
-    vEsc_km_per_sec  = 600, 
-    particle_type    = 'vector'
-/
+[dm_model]
 
-&widths
-    n_a       = 1,
-    n_b       = 1,
-    n_m       = 1
-    a_min     = 0.2,
-    a_max     = 0.2,
-    log_b_min = 0,
-    log_b_max = 0,
-    m_min     = 0.2,
-    m_max     = 0.2,
-    sigma     = 1D10
-/
+    particle_type = 'ps'
 
-&numerics_abs
-    n_v            = 100,
-    n_v_theta      = 10,
-    n_v_phi        = 10,
-    n_val_max      = 0,
-    n_cond_max     = 0,
-    save_tran_form = .FALSE.
-/
+    mX_logspace = 100, 1, 1000
 
-!
+[numerics_absorption_rate]
+
+    smear_type = 'gauss'
+
+    widths = 0.2, 0.1, 1000
+    widths += 1, 1, 1

@@ -1,3 +1,37 @@
+v1.0.0-beta
+---
+
+- New Electronic Configuration file
+    - Contains all the relevant information about the electronic configuration, no more need to separate ‘core’, ‘free’, and ‘valence and conduction’ states
+- Extended absorption and dielectric calculations
+    - Include all states (e.g. core and free)
+- Separated electronic state and calculation dependence
+    - Generalized input electronic states, initial/final states can now be specified in different bases, i.e., PW basis, STO basis, or single PW’s (previously ‘free’ states)
+        - For example, allows for calculation of STO basis → STO basis transitions
+    - Easily add different bases
+    - Only need to specify how matrix elements are computed for a specific approximation of the wave functions, the ‘particle physics’ part of the code base doesn’t need to change
+- Automatically generated input documentation
+- Increased use of CMake and preprocessor directives
+    - Version number automatically passed to program and documentation
+- Use hdf5_utils for even easier access to data inside an hdf5 file
+- Building new documentation with Sphinx
+- Improved parallelizability
+    - Everything is parallelized over total number of transitions
+
+    - All calculations use MPI_Reduce commands
+- Removed dependence on k_weight which only caused confusion (sum to 1 or 2?)
+- New input format - Configuration File
+    - Major reasons
+        - Dynamically sized 1D arrays
+            - No need to specify number of elements in an input array
+        - Enforced defaults
+        - Easily add documentation
+
+        - Split in to as many files as you want
+    - Minor reasons
+        - No need for ! at end of file
+- Added many new examples which all use the new input, and electronic configuration files.
+
 v0.3.0
 ---
 

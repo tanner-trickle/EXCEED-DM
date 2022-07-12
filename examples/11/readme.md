@@ -1,7 +1,15 @@
-## ID: 11
+# Example 11: Si Dielectric
+
+- Calculation: Dielectric
 
 - Target: Si
 
-- Process: absorption
+Compute the (averaged) dielectric, $\bar{\varepsilon}(\mathbf{q}, \omega)$, of Si.
 
-- Description: Spin independent scalar DM absorption rate via valence to conduction transitions. Only computes contributions from the dominant \( \Pi_{ \bar{v}^2, \bar{v}^2 } \) self energy.
+```{note}
+This electronic configuration is the same as Example 5.
+```
+
+```{warning}
+The transition form factors used in this calculation are **not** in the $q \rightarrow 0$ limit. This is appropriate for screening scattering rate calculations, but not for absorption calculations which, sometimes, may be written in terms of the long wavelength dielectric, $\varepsilon(\mathbf{q} \rightarrow 0, \omega)$.
+```

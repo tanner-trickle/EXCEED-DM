@@ -1,0 +1,754 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>astroph_model &#8212; EXCEED-DM 1.0.0 documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">EXCEED-DM 1.0.0 documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../getting_started.html">
+   Getting Started
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../examples_link.html">
+   Examples
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="index.html">
+   Configuration Files
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="inputs_link.html">
+     Input
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../papers.html">
+   Papers
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../source/index.html">
+   Source Code
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../source/utils/index.html">
+     Utilities
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../source/utils/logger.html">
+       Logger
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../source/utils/constants.html">
+       Constants
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/pages/file_spec/inputs.md.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   astroph_model
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#control">
+   control
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dm-model">
+   dm_model
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#elec-config-input">
+   elec_config_input
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiment">
+   experiment
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#material">
+   material
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerics-absorption-rate">
+   numerics_absorption_rate
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerics-binned-scatter-rate">
+   numerics_binned_scatter_rate
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerics-dielectric">
+   numerics_dielectric
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#screening">
+   screening
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>astroph_model</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   astroph_model
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#control">
+   control
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dm-model">
+   dm_model
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#elec-config-input">
+   elec_config_input
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiment">
+   experiment
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#material">
+   material
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerics-absorption-rate">
+   numerics_absorption_rate
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerics-binned-scatter-rate">
+   numerics_binned_scatter_rate
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerics-dielectric">
+   numerics_dielectric
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#screening">
+   screening
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="astroph-model">
+<h1>astroph_model<a class="headerlink" href="#astroph-model" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>Dark matter SHM velocity distribution parameter, ( v_0 ) <br />Units : km/s</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  v_0_km_per_sec = 2.200000E+02
+</pre></div>
+</div>
+</li>
+<li><p>List of Earth velocity vectors in the galactic frame, ( \mathbf{v}_e ). Every three elements defines a ( \mathbf{v}_e ) vector<br />Units : km/sDim : [:, 3]</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  v_e_km_per_sec = 0.000000E+00 0.000000E+00 2.300000E+02
+</pre></div>
+</div>
+</li>
+<li><p>Dark matter SHM velocity distribution parameter, ( v_\mathrm{esc} ) <br />Units : km/s</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  v_esc_km_per_sec = 6.000000E+02
+</pre></div>
+</div>
+</li>
+<li><p>Specify the velocity distribution to use in the calculation.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  vel_distribution_name = &#39;SHM&#39;
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="control">
+<h1>control<a class="headerlink" href="#control" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>Which calculation to perform</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  calculation = &#39;&#39;
+</pre></div>
+</div>
+</li>
+<li><p>Filename to store default input parameters in markdown format to</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  default_input_markdown_filename = &#39;./default_inputs.md&#39;
+</pre></div>
+</div>
+</li>
+<li><p>Filename to store input parameters in markdown format to</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  input_markdown_filename = &#39;./inputs.md&#39;
+</pre></div>
+</div>
+</li>
+<li><p>Folder to store the ouput data</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  out_folder = &#39;./&#39;
+</pre></div>
+</div>
+</li>
+<li><p>Small description of calculation which will be appended to ‘EXDM_out_’ to set the output filename</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  run_description = &#39;&#39;
+</pre></div>
+</div>
+</li>
+<li><p>Toggle to save the default input parameters to a markdown file</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  save_default_inputs_markdown = F
+</pre></div>
+</div>
+</li>
+<li><p>Toggle to save the input parameters to a markdown file</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  save_inputs_markdown = F
+</pre></div>
+</div>
+</li>
+<li><p>Toggle output printing to the console</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  verbose = T
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="dm-model">
+<h1>dm_model<a class="headerlink" href="#dm-model" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>Form factor ID to compute for</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  FIF_id = &#39;SI&#39;
+</pre></div>
+</div>
+</li>
+<li><p>Dark matter masses, <span class="math notranslate nohighlight">\(m_\chi\)</span><br />Units : eV<br />Dim : [:]</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  mX = 0.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Add linearly spaced dark matter masses. [ N, mX_min, mX_max] (eV)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  mX_linspace = 0.000000E+00 1.000000E+00 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Add logarithmically spaced dark matter masses. [ N, mX_min, mX_max] (eV)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  mX_logspace = 0.000000E+00 1.000000E+00 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Mediator form factor powers, ( \beta )<br />Formula: ( \mathcal{F}_\text{med} = \left( \frac{\alpha m_e}{q} \right)^\beta )<br />Dim : [:]</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  med_FF = 0.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Type of incoming dark matter particle</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  particle_type = &#39;fermion&#39;
+</pre></div>
+</div>
+</li>
+<li><p>Local dark matter density (GeV/cm^3)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  rho_X_GeV_per_cm3 = 4.000000E-01
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="elec-config-input">
+<h1>elec_config_input<a class="headerlink" href="#elec-config-input" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>File containing the electronic configuration</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  filename = &#39;&#39;
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="experiment">
+<h1>experiment<a class="headerlink" href="#experiment" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>Mass of the experimental target <br />Units: kg</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  M_kg = 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Exposure time of the experimental target <br />Units: yr</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  T_year = 1.000000E+00
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="material">
+<h1>material<a class="headerlink" href="#material" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>Lattice vectors of the target material, ( \mathbf{a}_i ). Each row is a different lattice vector<br />Units : ( \mathrm{\AA} )<br />Dim : [3, 3]</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  a_vecs_Ang = 1.000000E+00 0.000000E+00 0.000000E+00 0.000000E+00 1.000000E+00 0.000000E+00 0.000000E+00 0.000000E+00 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Band gap of the target material, ( E_g )<br />Units: ( \mathrm{g}/\mathrm{cm}^3 )</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  band_gap = 0.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Materials Project ID of the target material</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  materials_project_ID = &#39;&#39;
+</pre></div>
+</div>
+</li>
+<li><p>Name of the target material</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  name = &#39;&#39;
+</pre></div>
+</div>
+</li>
+<li><p>Mass density of the target material, ( \rho_T )<br />Units: ( \mathrm{g}/\mathrm{cm}^3 )</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  rho_T_g_per_cm3 = 1.000000E+00
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="numerics-absorption-rate">
+<h1>numerics_absorption_rate<a class="headerlink" href="#numerics-absorption-rate" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>Defines broadening behavior for the imaginary part of the Greens function.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  smear_type = &#39;lorentz&#39;
+</pre></div>
+</div>
+</li>
+<li><p>List of widths to compute for<br />Dim : [:, 3]</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  widths = 0.000000E+00 1.000000E-01 1.000000E+02
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="numerics-binned-scatter-rate">
+<h1>numerics_binned_scatter_rate<a class="headerlink" href="#numerics-binned-scatter-rate" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>Width of bins in ( \omega ) space<br />Units : eV</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  E_bin_width = 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Number of bins in ( \omega ) space</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  n_E_bins = 1
+</pre></div>
+</div>
+</li>
+<li><p>Number of bins in ( q ) space</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  n_q_bins = 1
+</pre></div>
+</div>
+</li>
+<li><p>Width of bins in ( q ) space<br />Units : keV</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  q_bin_width = 1.000000E+00
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="numerics-dielectric">
+<h1>numerics_dielectric<a class="headerlink" href="#numerics-dielectric" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>Width of bins in <span class="math notranslate nohighlight">\(\omega\)</span><br />Units: eV</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  E_bin_width = 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Number of bins in <span class="math notranslate nohighlight">\(\omega\)</span></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  n_E_bins = 1
+</pre></div>
+</div>
+</li>
+<li><p>Number of bins in <span class="math notranslate nohighlight">\(q\)</span></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  n_q_bins = 1
+</pre></div>
+</div>
+</li>
+<li><p>Number of bins in <span class="math notranslate nohighlight">\(\phi_\mathbf{q}\)</span></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  n_q_phi = 1
+</pre></div>
+</div>
+</li>
+<li><p>Number of bins in <span class="math notranslate nohighlight">\(\theta_\mathbf{q}\)</span></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  n_q_theta = 1
+</pre></div>
+</div>
+</li>
+<li><p>Width of bins in <span class="math notranslate nohighlight">\(q\)</span><br />Units: keV</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  q_bin_width = 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Defines broadening behavior for the imaginary part of the Greens function.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  smear_type = &#39;lorentz&#39;
+</pre></div>
+</div>
+</li>
+<li><p>List of widths to compute for<br />Dim. - [:, 3]</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  widths = 0.000000E+00 1.000000E-01 1.000000E+02
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="screening">
+<h1>screening<a class="headerlink" href="#screening" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>Width of the bins in <span class="math notranslate nohighlight">\(\omega\)</span>. Only used for the numeric screening.<br />Units : eV</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  E_bin_width = 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Shape parameter for analytic screening, <span class="math notranslate nohighlight">\(\alpha\)</span> in Eq. (6) of <a class="reference external" href="https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892">https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</a><br />Units : None</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  alpha = 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Location of the numerically computed dielectric to use as the screening factor.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  dielectric_filename = &#39;&#39;
+</pre></div>
+</div>
+</li>
+<li><p>Static dielectric parameter for analytic screening, <span class="math notranslate nohighlight">\(\epsilon(0)\)</span> in Eq. (6) of<a class="reference external" href="https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892">https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</a>&lt;br</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  e0 = 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Plasma frequency parameter for analytic screening, <span class="math notranslate nohighlight">\(\omega_p\)</span> in Eq. (6) of <a class="reference external" href="https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892">https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</a><br /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  omega_p = 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Width of the bins in <span class="math notranslate nohighlight">\(q\)</span>. Only used for the numeric screening.<br />Units : keV</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  q_bin_width = 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Thomas-Fermi momentum parameter for analytic screening, <span class="math notranslate nohighlight">\(q_\text{TF}\)</span> in Eq. (6) of[https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892](https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  q_tf = 1.000000E+00
+</pre></div>
+</div>
+</li>
+<li><p>Model to use for the screening factor. Default is a screening factor of 1.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  type = &#39;&#39;
+</pre></div>
+</div>
+</li>
+<li><p>Width ID number to use for the numeric dielectric.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  width_id = 1
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Tanner Trickle<br/>
+  
+      &copy; Copyright 2022, Tanner Trickle.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

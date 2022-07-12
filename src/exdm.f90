@@ -1,153 +1,140 @@
 program exdm
-    !! EXCEED-DM : EXtended Calculation of Electronic Excitations for Direct detection of Dark Matter
-    !!
-    !! Github    : https://github.com/tanner-trickle/EXCEED-DM 
+    ! EXCEED-DM : EXtended Calculation of Electronic Excitations for Direct detection of Dark Matter
+    ! 
+    ! The main program.
 
     use iso_fortran_env
-    use mpi 
+    use mpi
 
-    use info_messages
-    ! use timing
-    use timer_util
+    use hdf5_utils
 
-    use version_control
+    use logger_util, only: logger_t
+    use timer_util, only: timer_t
 
-    use control_input
-    use io_input
+    use exdm_inputs_type, only: exdm_inputs_t
+    use exdm_elec_config_type, only: exdm_elec_config_t
 
-    use material_type
-    use dm_model_type
-    use expt_type
-
-    use exdm_absorption
-    use exdm_scatter
-    use exdm_dielectric
+    ! calculations
+    use exdm_calc_binned_scatter_rate, only: exdm_binned_scatter_rate
+    use exdm_calc_absorption_rate, only: exdm_absorption_rate
+    use exdm_calc_dielectric, only: exdm_dielectric
 
     implicit none
 
+    ! MPI variables
     integer :: proc_id
-        !! Processor ID
+        ! processor ID
+    integer :: root_proc_id = 0
+        ! root process ID
     integer :: n_proc
-        !! Number of processors
-    integer :: root_process = 0
-        !! Root processor ID 
-    integer :: err
-        !! Error code
-    character(len=512) :: nml_input_filename = ''
-        !! Namelist input filename.
+        ! number of processors
+    integer :: mpi_err
+        ! MPI error code
 
-    logical :: verbose = .FALSE.
-        !! If verbose = .TRUE., print output
+    ! hdf5_utils
+    integer(HID_T) :: file_id
 
-    type(control_t) :: main_control
-        !! Control parameters
-    type(io_files_t) :: io_files
-        !! Input/output filenames
-    type(material_t) :: target_mat
-        !! The target material
-    type(dm_model_t) :: dm_model
-        !! Dark matter model parameters
-    type(expt_t) :: expt
-        !! Experimental parameters
-    type(timer_t) :: timer_total
-        !! time the whole execution
+    ! utilities
+    type(logger_t) :: logger
+        ! Handles logging messages to user
+    type(timer_t) :: timer
+        ! Handles timing the program
 
-    ! Initialize MPI
-    call MPI_INIT(err)
-    call MPI_COMM_RANK(MPI_COMM_WORLD, proc_id, err)
-    call MPI_COMM_SIZE(MPI_COMM_WORLD, n_proc, err)
+    ! EXDM specific types
+    type(exdm_inputs_t) :: exdm_inputs 
+    type(exdm_elec_config_t) :: exdm_elec_config
 
-    call exdm_startup_message(proc_id, root_process, n_proc, version)
+    ! initialize MPI
+    call MPI_INIT(mpi_err)
+    call MPI_COMM_RANK(MPI_COMM_WORLD, proc_id, mpi_err)
+    call MPI_COMM_SIZE(MPI_COMM_WORLD, n_proc, mpi_err)
 
-    ! start timing
-    if ( proc_id == root_process ) then
-        call timer_total%start()
+    if ( proc_id == root_proc_id ) then
+
+        ! start up message
+        call logger%startup_message('EXCEED-DM', _cmake_version, n_proc)
+
+        ! start timer
+        call timer%start()
+
     end if
-
-    call get_command_argument(1, nml_input_filename)
 
     ! load inputs
-    if ( proc_id == root_process ) then
+    call exdm_inputs%load(proc_id, root_proc_id, logger)
 
-        call main_control%load(nml_input_filename, verbose = .TRUE.)
+    ! create output file
+    if ( exdm_inputs%control%verbose ) then
+        print*, 'Creating output file...'
+        print*
+    end if
 
-        if ( main_control%quiet ) then
-            verbose = .FALSE.
-        else
-            verbose = .TRUE.
-        end if
+    if ( proc_id == root_proc_id ) then
+        ! call hdf_set_print_messages(exdm_inputs%control%verbose)
+        call hdf_open_file(file_id, exdm_inputs%control%out_filename, status='NEW')
+        call hdf_create_group(file_id, 'timing')
+        call hdf_close_file(file_id)
 
-    else
+        ! save inputs
+        call exdm_inputs%save()
+    end if
 
-        call main_control%load(nml_input_filename, verbose = .FALSE.)
+    if ( exdm_inputs%control%verbose ) then
+        print*, 'Done creating output file!'
+        print*
+    end if
+
+    ! initialize electronic configuration
+    call exdm_elec_config%load(exdm_inputs)
+
+    ! perform calculation
+    select case ( trim(adjustl(exdm_inputs%control%calculation)) )
+
+        case ( 'binned_scatter_rate' )
+
+            call exdm_binned_scatter_rate(n_proc, proc_id, root_proc_id, &
+                exdm_inputs, exdm_elec_config)
+
+        case ( 'absorption_rate' )
+
+            call exdm_absorption_rate(n_proc, proc_id, root_proc_id, &
+                exdm_inputs, exdm_elec_config)
+
+        case ( 'dielectric' )
+
+            call exdm_dielectric(n_proc, proc_id, root_proc_id, &
+                exdm_inputs, exdm_elec_config)
+
+        case default
+
+            print*, 'Please specify a calculation type in the [control] input.'
+            print*
+            
+    end select
+
+    if ( proc_id == root_proc_id ) then
+
+        ! end timer
+        call timer%end()
+
+        call hdf_open_file(file_id, exdm_inputs%control%out_filename, &
+            status='OLD', action='WRITE')
+
+        ! save timing information
+        call hdf_write_dataset(file_id, 'timing/dt_total', timer%dt)
+        call hdf_write_dataset(file_id, 'timing/start_date', timer%start_date)
+        call hdf_write_dataset(file_id, 'timing/end_date', timer%end_date)
+
+        ! save version information
+        call hdf_write_dataset(file_id, 'exdm_version', _cmake_version) 
+
+        call hdf_close_file(file_id)
+
+        ! shut down message
+        call logger%shutdown_message(timer%pretty_dt_str())
 
     end if
 
-    call io_files%load(nml_input_filename, verbose = verbose)
-    call target_mat%load(io_files%nml_input_filename, verbose = verbose)
-    call dm_model%load(io_files%nml_input_filename, verbose = verbose)
-    call expt%load(io_files%nml_input_filename, verbose = verbose)
-
-    ! create the output file
-    if ( proc_id == root_process ) then
-        call create_output_file(&
-            io_files,& 
-            main_control%overwrite_output,&
-            verbose = verbose)
-    end if
-
-    ! compute and save data
-    if ( trim(main_control%process) == 'scatter' ) then
-
-        call run_exdm_scatter(proc_id, root_process, n_proc, &
-            io_files, main_control, target_mat, expt, &
-            dm_model, verbose = verbose)
-
-    else if ( trim(main_control%process) == 'absorption' ) then
-
-        call run_exdm_absorption(proc_id, root_process, n_proc, &
-            io_files, main_control, target_mat, expt, &
-            dm_model, verbose = verbose)
-
-    else if ( trim(main_control%process) ==  'dielectric' ) then
-
-        call run_exdm_dielectric(proc_id, root_process, n_proc, &
-            io_files, main_control, target_mat, verbose = verbose)
-
-    else
-
-        call print_error_message(&
-            'Process : '//trim(main_control%process)//' is not implemented.', &
-            verbose = verbose)
-        stop
-
-    end if
-
-    ! save input data common to all processes
-    if ( proc_id == root_process ) then
-        call target_mat%save(io_files%out_filename, verbose = verbose)
-
-        call io_files%save(io_files%out_filename, verbose = verbose)
-        call main_control%save(io_files%out_filename, verbose = verbose)
-
-        if ( trim(main_control%process) /= 'dielectric' ) then
-
-            call dm_model%save(io_files%out_filename, verbose = verbose)
-            call expt%save(io_files%out_filename, verbose = verbose)
-
-        end if
-        call save_version(io_files%out_filename, verbose = verbose)
-    end if
-
-    if ( proc_id == root_process ) then
-
-        call timer_total%end()
-        call timer_total%save(io_files%out_filename, 'total', verbose = verbose)
-
-    end if
-
-    call exdm_shutdown_message(proc_id, root_process)
-
-    call MPI_FINALIZE(err)
+    ! Finalize MPI
+    call MPI_FINALIZE(mpi_err)
 
 end program

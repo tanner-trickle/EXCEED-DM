@@ -1,7 +1,7 @@
-## ID: 7
+# Example 7: Si Axion Absorption Rate, core to conduction
+
+- Calculation: Absorption rate
 
 - Target: Si
 
-- Process: scattering
-
-- Description: Spin independent core to conduction transition from \( 1 \leq n \leq 2 \), where \( n\) is the principal quantum number, to the lowest conduction band. Extended to kinematic boundary by performing the calculation in different manner than example #6. Disadvantage is slow run time. Single dark matter mass and form factor.
+Absorption rate of an axion-like particle, for two $\delta$: $\delta = 1 \, \mathrm{eV}$ and $\delta = 0.2 + 10^{-1} \omega$. Only core to conduction transitions are included.

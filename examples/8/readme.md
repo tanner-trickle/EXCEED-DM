@@ -1,7 +1,8 @@
-## ID: 8
+# Example 8: Si Axion Absorption Rate, valence to free
+
+- Calculation: Absorption rate
 
 - Target: Si
 
-- Process: scattering
+Absorption rate of an axion-like particle, for two $\delta$: $\delta = 1 \, \mathrm{eV}$ and $\delta = 0.2 + 10^{-1} \omega$. Only valence to free transitions are included.
 
-- Description: Spin independent core to free transition from \( 1 \leq n \leq 2 \), where \( n\) is the principal quantum number. Single dark matter mass and form factor. \( Z_\text{eff} = 1 \). Useful for timing information.

@@ -1,7 +1,11 @@
-## ID: 6
+# Example 6: Si Axion Absorption Rate, valence to conduction
+
+- Calculation: Absorption rate
 
 - Target: Si
 
-- Process: scattering
+Absorption rate of an axion-like particle, for two $\delta$: $\delta = 1 \, \mathrm{eV}$ and $\delta = 0.2 + 10^{-1} \omega$. Only valence to conduction transitions are included.
 
-- Description: Spin independent core to conduction transition from \( 1 \leq n \leq 2 \), where \( n\) is the principal quantum number, to the lowest conduction band. Single dark matter mass and form factor. Useful for timing the total calculation.
+```{note}
+This electronic state configuration is identical to Example 1.
+```
