@@ -4,6 +4,7 @@ module FIF_calculator_type
 
     use FIF_calculator_SI_type
     use FIF_calculator_SD_type
+    use FIF_calculator_VA1_type
 
     implicit none
 
@@ -13,6 +14,7 @@ module FIF_calculator_type
 
         type(FIF_calculator_SI_t) :: FIF_calculator_SI
         type(FIF_calculator_SD_t) :: FIF_calculator_SD
+        type(FIF_calculator_VA1_t) :: FIF_calculator_VA1
 
         contains
 
@@ -37,12 +39,13 @@ contains
         select case ( trim(adjustl(FIF_id)) )
 
             case ( 'SI' )
-
                 call self%FIF_calculator_SI%compute(TIF_calculator, self%FIF)
 
             case ( 'SD' )
-
                 call self%FIF_calculator_SD%compute(TIF_calculator, self%FIF)
+
+            case ( 'VA1' )
+                call self%FIF_calculator_VA1%compute(TIF_calculator, self%FIF)
 
         end select
 
@@ -60,12 +63,13 @@ contains
         select case ( trim(adjustl(FIF_id)) )
 
             case ( 'SI' )
-
                 call self%FIF_calculator_SI%set_TIF_mask(TIF_mask)
 
             case ( 'SD' )
-
                 call self%FIF_calculator_SD%set_TIF_mask(TIF_mask)
+
+            case ( 'VA1' )
+                call self%FIF_calculator_VA1%set_TIF_mask(TIF_mask)
 
         end select
 
