@@ -24,6 +24,8 @@ contains
 
         real(dp) :: FIF(:)
 
+        FIF = 0.0_dp
+
         FIF = abs(TIF_calculator%TIF_1)**2
 
     end subroutine

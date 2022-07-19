@@ -1,0 +1,35 @@
+# Input file for EXCEED-DMv1.0.0
+
+[control]
+    calculation                     = 'binned_scatter_rate'
+    run_description                 = 'example_14'
+    out_folder                      = './examples/14/output/'
+
+[elec_config_input]
+    filename = './examples/14/elec_config.hdf5'
+
+[material]
+    name            = 'Si'
+    rho_T_g_per_cm3 = 2.281
+    band_gap        = 1.11
+
+    a_vecs_Ang      = 0.00000, 2.73437, 2.73437
+    a_vecs_Ang     += 2.73437, 0.00000, 2.73437
+    a_vecs_Ang     += 2.73437, 2.73437, 0.00000
+
+[dm_model]
+
+    FIF_id = 'SD'
+
+    mX = 1e6, 1e7, 1e8, 1e9
+
+    mX_logspace = 20, 1e5, 1e10
+
+    med_FF = 0
+
+[numerics_binned_scatter_rate]
+
+    n_q_bins = 1
+    n_E_bins = 100
+    q_bin_width = 1
+    E_bin_width = 1

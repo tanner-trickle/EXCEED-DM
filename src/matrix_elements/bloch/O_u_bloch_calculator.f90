@@ -132,7 +132,7 @@ contains
 
         integer :: g1, g2, g3
 
-        real(dp) :: sigma_d(2, 2)
+        complex(dp) :: sigma_d(2, 2)
 
         if ( size(u, 4) == 1 ) then
 
