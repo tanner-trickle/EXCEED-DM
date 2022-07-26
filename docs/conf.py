@@ -73,4 +73,3 @@ html_theme = 'sphinx_book_theme'
 html_static_path = ['_static']
 
 myst_enable_extensions = ["dollarmath", "smartquotes"]
-

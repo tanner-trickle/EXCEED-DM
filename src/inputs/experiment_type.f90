@@ -57,14 +57,20 @@ contains
         type(CFG_t) :: cfg
 
         call CFG_add(cfg, &
-                        "experiment%M_kg", &
-                        1.0_dp, &
-                        "Mass of the experimental target <br />Units: kg")
+                     "experiment%M_kg", &
+                     1.0_dp, &
+                     "Mass of the experimental target<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{kg}$</li>"//&
+                     "</ul>")
 
         call CFG_add(cfg, &
-                        "experiment%T_year", &
-                        1.0_dp, &
-                        "Exposure time of the experimental target <br />Units: yr")
+                     "experiment%T_year", &
+                     1.0_dp, &
+                     "Exposure time of the experimental target<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{yr}$</li>"//&
+                     "</ul>")
 
     end subroutine
 

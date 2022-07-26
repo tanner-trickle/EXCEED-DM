@@ -56,22 +56,28 @@ contains
         call CFG_add(cfg, &
                     "numerics_binned_scatter_rate%n_q_bins", &
                     1, &
-                    "Number of bins in \( q \) space")
+                    "Number of bins in $q$ space")
 
         call CFG_add(cfg, &
                     "numerics_binned_scatter_rate%n_E_bins", &
                     1, &
-                    "Number of bins in \( \omega \) space")
+                    "Number of bins in $\omega$ space")
 
         call CFG_add(cfg, &
                     "numerics_binned_scatter_rate%q_bin_width", &
                     1.0_dp, &
-                    "Width of bins in \( q \) space<br />Units : keV")
+                    "Width of bins in $q$ space<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{keV}$</li>"//&
+                     "</ul>")
 
         call CFG_add(cfg, &
                     "numerics_binned_scatter_rate%E_bin_width", &
                     1.0_dp, &
-                    "Width of bins in \( \omega \) space<br />Units : eV")
+                    "Width of bins in $\omega$ space<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{eV}$</li>"//&
+                     "</ul>")
 
     end subroutine
 

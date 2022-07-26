@@ -503,7 +503,7 @@ a_vecs_Ang += 0, 0, 1
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>v_e_km_per_sec  = 0, 0, 230
 v_e_km_per_sec += 0, 0, 240
 v_e_km_per_sec += 0, 0, 250
-$\vdots$
+⋮
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://github.com/jannisteunissen/config_fortran">https://github.com/jannisteunissen/config_fortran</a> for more details concerning the input format.</p>
@@ -513,17 +513,17 @@ $\vdots$
 <section id="astroph-model">
 <h3>astroph_model<a class="headerlink" href="#astroph-model" title="Permalink to this headline">#</a></h3>
 <ul>
-<li><p>Dark matter SHM velocity distribution parameter, ( v_0 ) <br />Units : km/s</p>
+<li><p>Dark matter SHM velocity distribution parameter, <span class="math notranslate nohighlight">\(v_0\)</span>.<br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{km}/\text{s}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  v_0_km_per_sec = 2.200000E+02
 </pre></div>
 </div>
 </li>
-<li><p>List of Earth velocity vectors in the galactic frame, ( \mathbf{v}_e ). Every three elements defines a ( \mathbf{v}_e ) vector<br />Units : km/sDim : [:, 3]</p>
+<li><p>List of Earth velocity vectors, <span class="math notranslate nohighlight">\(\mathbf{v}_e\)</span>.<br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{km}/\text{s}\)</span></li><li><b>Dim</b>: [ : , 3]</li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  v_e_km_per_sec = 0.000000E+00 0.000000E+00 2.300000E+02
 </pre></div>
 </div>
 </li>
-<li><p>Dark matter SHM velocity distribution parameter, ( v_\mathrm{esc} ) <br />Units : km/s</p>
+<li><p>Dark matter SHM velocity distribution parameter, <span class="math notranslate nohighlight">\(v_\mathrm{esc}\)</span>.<br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{km}/\text{s}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  v_esc_km_per_sec = 6.000000E+02
 </pre></div>
 </div>
@@ -588,22 +588,22 @@ $\vdots$
 </pre></div>
 </div>
 </li>
-<li><p>Dark matter masses, <span class="math notranslate nohighlight">\(m_\chi\)</span><br />Units : eV<br />Dim : [:]</p>
+<li><p>Dark matter masses, <span class="math notranslate nohighlight">\(m_\chi\)</span><br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></li><li><b>Dim</b>: [ : ]</li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  mX = 0.000000E+00
 </pre></div>
 </div>
 </li>
-<li><p>Add linearly spaced dark matter masses. [ N, mX_min, mX_max] (eV)</p>
+<li><p>Add <span class="math notranslate nohighlight">\(N\)</span> linearly spaced dark matter masses between <span class="math notranslate nohighlight">\(m_\text{min}\)</span> and <span class="math notranslate nohighlight">\(m_\text{max}\)</span>: [<span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(m_\text{min}\)</span>, <span class="math notranslate nohighlight">\(m_\text{max}\)</span>]<br /><ul><li><b>Units</b>: [-, <span class="math notranslate nohighlight">\(\text{eV}\)</span>, <span class="math notranslate nohighlight">\(\text{eV}\)</span>]</li><li><b>Dim</b>: [3]</li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  mX_linspace = 0.000000E+00 1.000000E+00 1.000000E+00
 </pre></div>
 </div>
 </li>
-<li><p>Add logarithmically spaced dark matter masses. [ N, mX_min, mX_max] (eV)</p>
+<li><p>Add <span class="math notranslate nohighlight">\(N\)</span> logarithmically spaced dark matter masses between <span class="math notranslate nohighlight">\(m_\text{min}\)</span>and <span class="math notranslate nohighlight">\(m_\text{max}\)</span>: [<span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(m_\text{min}\)</span>, <span class="math notranslate nohighlight">\(m_\text{max}\)</span>]<br /><ul><li><b>Units</b>: [-, <span class="math notranslate nohighlight">\(\text{eV}\)</span>, <span class="math notranslate nohighlight">\(\text{eV}\)</span>]</li><li><b>Dim</b>: [3]</li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  mX_logspace = 0.000000E+00 1.000000E+00 1.000000E+00
 </pre></div>
 </div>
 </li>
-<li><p>Mediator form factor powers, ( \beta )<br />Formula: ( \mathcal{F}_\text{med} = \left( \frac{\alpha m_e}{q} \right)^\beta )<br />Dim : [:]</p>
+<li><p>Mediator form factor powers, <span class="math notranslate nohighlight">\(\beta\)</span><br /><ul><li><b>Formula</b>: <span class="math notranslate nohighlight">\(\mathcal{F}_\text{med} = \left( \frac{\alpha m_e}{q} \right)^\beta\)</span></li><li><b>Dim</b>: [ : ]</li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  med_FF = 0.000000E+00
 </pre></div>
 </div>
@@ -613,7 +613,7 @@ $\vdots$
 </pre></div>
 </div>
 </li>
-<li><p>Local dark matter density (GeV/cm^3)</p>
+<li><p>Local dark matter density<br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{GeV}/\text{cm}^3\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  rho_X_GeV_per_cm3 = 4.000000E-01
 </pre></div>
 </div>
@@ -633,12 +633,12 @@ $\vdots$
 <section id="experiment">
 <h3>experiment<a class="headerlink" href="#experiment" title="Permalink to this headline">#</a></h3>
 <ul>
-<li><p>Mass of the experimental target <br />Units: kg</p>
+<li><p>Mass of the experimental target<br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{kg}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  M_kg = 1.000000E+00
 </pre></div>
 </div>
 </li>
-<li><p>Exposure time of the experimental target <br />Units: yr</p>
+<li><p>Exposure time of the experimental target<br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{yr}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  T_year = 1.000000E+00
 </pre></div>
 </div>
@@ -648,12 +648,12 @@ $\vdots$
 <section id="material">
 <h3>material<a class="headerlink" href="#material" title="Permalink to this headline">#</a></h3>
 <ul>
-<li><p>Lattice vectors of the target material, ( \mathbf{a}_i ). Each row is a different lattice vector<br />Units : ( \mathrm{\AA} )<br />Dim : [3, 3]</p>
+<li><p>Lattice vectors of the target material, <span class="math notranslate nohighlight">\(\mathbf{a}_i\)</span><br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{Å}\)</span></li><li><b>Dim</b>: [3, 3]</li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  a_vecs_Ang = 1.000000E+00 0.000000E+00 0.000000E+00 0.000000E+00 1.000000E+00 0.000000E+00 0.000000E+00 0.000000E+00 1.000000E+00
 </pre></div>
 </div>
 </li>
-<li><p>Band gap of the target material, ( E_g )<br />Units: ( \mathrm{g}/\mathrm{cm}^3 )</p>
+<li><p>Band gap of the target material, <span class="math notranslate nohighlight">\(E_g\)</span><br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  band_gap = 0.000000E+00
 </pre></div>
 </div>
@@ -668,7 +668,7 @@ $\vdots$
 </pre></div>
 </div>
 </li>
-<li><p>Mass density of the target material, ( \rho_T )<br />Units: ( \mathrm{g}/\mathrm{cm}^3 )</p>
+<li><p>Mass density of the target material, <span class="math notranslate nohighlight">\(\rho_T\)</span><br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{g}/\text{cm}^3\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  rho_T_g_per_cm3 = 1.000000E+00
 </pre></div>
 </div>
@@ -678,12 +678,12 @@ $\vdots$
 <section id="numerics-absorption-rate">
 <h3>numerics_absorption_rate<a class="headerlink" href="#numerics-absorption-rate" title="Permalink to this headline">#</a></h3>
 <ul>
-<li><p>Defines broadening behavior for the imaginary part of the Greens function.</p>
+<li><p>Defines broadening behavior for the imaginary part of the Greens function</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  smear_type = &#39;lorentz&#39;
 </pre></div>
 </div>
 </li>
-<li><p>List of widths to compute for<br />Dim : [:, 3]</p>
+<li><p>List of widths, <span class="math notranslate nohighlight">\(\delta \, [\text{eV}]\)</span>, to compute for, parameterized as [<span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(c\)</span>]<br /><ul><li><b>Formula</b>: <span class="math notranslate nohighlight">\(\delta = \text{min}(a + b \omega, c)\)</span></li><li><b>Units</b>: [<span class="math notranslate nohighlight">\(\text{eV}\)</span>, -, <span class="math notranslate nohighlight">\(\text{eV}\)</span>]</li><li><b>Dim</b>: [ : , 3]</li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  widths = 0.000000E+00 1.000000E-01 1.000000E+02
 </pre></div>
 </div>
@@ -693,22 +693,22 @@ $\vdots$
 <section id="numerics-binned-scatter-rate">
 <h3>numerics_binned_scatter_rate<a class="headerlink" href="#numerics-binned-scatter-rate" title="Permalink to this headline">#</a></h3>
 <ul>
-<li><p>Width of bins in ( \omega ) space<br />Units : eV</p>
+<li><p>Width of bins in <span class="math notranslate nohighlight">\(\omega\)</span> space<br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  E_bin_width = 1.000000E+00
 </pre></div>
 </div>
 </li>
-<li><p>Number of bins in ( \omega ) space</p>
+<li><p>Number of bins in <span class="math notranslate nohighlight">\(\omega\)</span> space</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  n_E_bins = 1
 </pre></div>
 </div>
 </li>
-<li><p>Number of bins in ( q ) space</p>
+<li><p>Number of bins in <span class="math notranslate nohighlight">\(q\)</span> space</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  n_q_bins = 1
 </pre></div>
 </div>
 </li>
-<li><p>Width of bins in ( q ) space<br />Units : keV</p>
+<li><p>Width of bins in <span class="math notranslate nohighlight">\(q\)</span> space<br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{keV}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  q_bin_width = 1.000000E+00
 </pre></div>
 </div>
@@ -718,17 +718,17 @@ $\vdots$
 <section id="numerics-dielectric">
 <h3>numerics_dielectric<a class="headerlink" href="#numerics-dielectric" title="Permalink to this headline">#</a></h3>
 <ul>
-<li><p>Width of bins in <span class="math notranslate nohighlight">\(\omega\)</span><br />Units: eV</p>
+<li><p>Width of bins in <span class="math notranslate nohighlight">\(\omega\)</span> space<br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  E_bin_width = 1.000000E+00
 </pre></div>
 </div>
 </li>
-<li><p>Number of bins in <span class="math notranslate nohighlight">\(\omega\)</span></p>
+<li><p>Number of bins in <span class="math notranslate nohighlight">\(\omega\)</span> space</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  n_E_bins = 1
 </pre></div>
 </div>
 </li>
-<li><p>Number of bins in <span class="math notranslate nohighlight">\(q\)</span></p>
+<li><p>Number of bins in <span class="math notranslate nohighlight">\(q\)</span> space</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  n_q_bins = 1
 </pre></div>
 </div>
@@ -743,7 +743,7 @@ $\vdots$
 </pre></div>
 </div>
 </li>
-<li><p>Width of bins in <span class="math notranslate nohighlight">\(q\)</span><br />Units: keV</p>
+<li><p>Width of bins in <span class="math notranslate nohighlight">\(q\)</span> space<br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{keV}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  q_bin_width = 1.000000E+00
 </pre></div>
 </div>
@@ -753,7 +753,7 @@ $\vdots$
 </pre></div>
 </div>
 </li>
-<li><p>List of widths to compute for<br />Dim. - [:, 3]</p>
+<li><p>List of widths, <span class="math notranslate nohighlight">\(\delta \, [\text{eV}]\)</span>, to compute for, parameterized as [<span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(c\)</span>]<br /><ul><li><b>Formula</b>: <span class="math notranslate nohighlight">\(\delta = \text{min}(a + b \omega, c)\)</span></li><li><b>Units</b>: [<span class="math notranslate nohighlight">\(\text{eV}\)</span>, -, <span class="math notranslate nohighlight">\(\text{eV}\)</span>]</li><li><b>Dim</b>: [ : , 3]</li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  widths = 0.000000E+00 1.000000E-01 1.000000E+02
 </pre></div>
 </div>
@@ -763,12 +763,12 @@ $\vdots$
 <section id="screening">
 <h3>screening<a class="headerlink" href="#screening" title="Permalink to this headline">#</a></h3>
 <ul>
-<li><p>Width of the bins in <span class="math notranslate nohighlight">\(\omega\)</span>. Only used for the numeric screening.<br />Units : eV</p>
+<li><p>Width of bins in <span class="math notranslate nohighlight">\(\omega\)</span> space<br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  E_bin_width = 1.000000E+00
 </pre></div>
 </div>
 </li>
-<li><p>Shape parameter for analytic screening, <span class="math notranslate nohighlight">\(\alpha\)</span> in Eq. (6) of <a class="reference external" href="https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892">https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</a><br />Units : None</p>
+<li><p>Shape parameter for analytic screening<ul><li><b>Formula</b>: <span class="math notranslate nohighlight">\(\alpha\)</span>, Eq. (6), <a class="reference external" href="https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892">https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</a></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  alpha = 1.000000E+00
 </pre></div>
 </div>
@@ -778,32 +778,32 @@ $\vdots$
 </pre></div>
 </div>
 </li>
-<li><p>Static dielectric parameter for analytic screening, <span class="math notranslate nohighlight">\(\epsilon(0)\)</span> in Eq. (6) of<a class="reference external" href="https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892">https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</a>&lt;br</p>
+<li><p>Static dielectric parameter for analytic screening<ul><li><b>Formula</b>: <span class="math notranslate nohighlight">\(\epsilon(0)\)</span>, Eq. (6), <a class="reference external" href="https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892">https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</a></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  e0 = 1.000000E+00
 </pre></div>
 </div>
 </li>
-<li><p>Plasma frequency parameter for analytic screening, <span class="math notranslate nohighlight">\(\omega_p\)</span> in Eq. (6) of <a class="reference external" href="https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892">https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</a><br /></p>
+<li><p>Plasma frequency parameter for analytic screening<ul><li><b>Formula</b>: <span class="math notranslate nohighlight">\(\omega_p\)</span>, Eq. (6), <a class="reference external" href="https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892">https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</a></li><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  omega_p = 1.000000E+00
 </pre></div>
 </div>
 </li>
-<li><p>Width of the bins in <span class="math notranslate nohighlight">\(q\)</span>. Only used for the numeric screening.<br />Units : keV</p>
+<li><p>Width of bins in <span class="math notranslate nohighlight">\(q\)</span> space<br /><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{keV}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  q_bin_width = 1.000000E+00
 </pre></div>
 </div>
 </li>
-<li><p>Thomas-Fermi momentum parameter for analytic screening, <span class="math notranslate nohighlight">\(q_\text{TF}\)</span> in Eq. (6) of[https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892](https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</p>
+<li><p>Thomas-Fermi momentum parameter for analytic screening<ul><li><b>Formula</b>: <span class="math notranslate nohighlight">\(q_\text{TF}\)</span>, Eq. (6), <a class="reference external" href="https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892">https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892</a></li><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{keV}\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  q_tf = 1.000000E+00
 </pre></div>
 </div>
 </li>
-<li><p>Model to use for the screening factor. Default is a screening factor of 1.</p>
+<li><p>Model to use for the screening factor. Default is a screening factor of <span class="math notranslate nohighlight">\(1\)</span> (no screening).</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  type = &#39;&#39;
 </pre></div>
 </div>
 </li>
-<li><p>Width ID number to use for the numeric dielectric.</p>
+<li><p>Width ID of the dielectric to use. Dielectric will be taken from ‘dielectric/width_&lt;width_id&gt;’inside ‘dielectric_filename’</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  width_id = 1
 </pre></div>
 </div>

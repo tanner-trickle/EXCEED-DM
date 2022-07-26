@@ -79,23 +79,27 @@ contains
         call CFG_add(cfg,&
                      "astroph_model%v_0_km_per_sec", &
                      220.0_dp, &
-                     "Dark matter SHM velocity distribution parameter, \( v_0 \) <br />"//&
-                     "Units : km/s")
+                     "Dark matter SHM velocity distribution parameter, $v_0$.<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{km}/\text{s}$</li>"//&
+                     "</ul>")
 
         call CFG_add(cfg,&
                      "astroph_model%v_e_km_per_sec", &
                      [ 0.0_dp, 0.0_dp, 230.0_dp ], &
-                     "List of Earth velocity vectors in the galactic frame, \( \mathbf{v}_e \). Every three elements defines a "//&
-                     "\( \mathbf{v}_e \) vector<br />"//&
-                     "Units : km/s"//&
-                     "Dim : [:, 3]", &
-                     dynamic_size = .TRUE.)
+                     "List of Earth velocity vectors, $\mathbf{v}_e$.<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{km}/\text{s}$</li>"//&
+                     "<li><b>Dim</b>: [ : , 3]</li>"//&
+                     "</ul>", dynamic_size = .TRUE.)
 
         call CFG_add(cfg,&
                      "astroph_model%v_esc_km_per_sec", &
                      600.0_dp, &
-                     "Dark matter SHM velocity distribution parameter, \( v_\mathrm{esc} \) <br />"//&
-                     "Units : km/s")
+                     "Dark matter SHM velocity distribution parameter, $v_\mathrm{esc}$.<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{km}/\text{s}$</li>"//&
+                     "</ul>")
 
         call CFG_add(cfg, &
                      "astroph_model%vel_distribution_name", &

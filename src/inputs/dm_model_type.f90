@@ -67,22 +67,27 @@ contains
                      "dm_model%mX",             &
                      [ 0.0_dp ],              &
                      "Dark matter masses, $m_\chi$<br />"//&
-                     "Units : eV<br />"//&
-                     "Dim : [:]", &
-                     dynamic_size = .TRUE.)
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{eV}$</li>"//&
+                     "<li><b>Dim</b>: [ : ]</li>"//&
+                     "</ul>", dynamic_size = .TRUE.)
 
         call CFG_add(cfg,                       &
                      "dm_model%med_FF",             &
                      [ 0.0_dp ],              &
-                     "Mediator form factor powers, \( \beta \)<br />"//&
-                     "Formula: \( \mathcal{F}_\text{med} = \left( \frac{\alpha m_e}{q} \right)^\beta \)<br />"//&
-                     "Dim : [:]", &
-                     dynamic_size = .TRUE.)
+                     "Mediator form factor powers, $\beta$<br />"//&
+                     "<ul>"//&
+                     "<li><b>Formula</b>: $\mathcal{F}_\text{med} = \left( \frac{\alpha m_e}{q} \right)^\beta$</li>"//&
+                     "<li><b>Dim</b>: [ : ]</li>"//&
+                     "</ul>", dynamic_size = .TRUE.)
 
         call CFG_add(cfg,                       &
                      "dm_model%rho_X_GeV_per_cm3",             &
                      0.4_dp,              &
-                     "Local dark matter density (GeV/cm^3)")
+                     "Local dark matter density<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{GeV}/\text{cm}^3$</li>"//&
+                     "</ul>")
 
         call CFG_add(cfg,                       &
                      "dm_model%particle_type",             &
@@ -97,12 +102,22 @@ contains
         call CFG_add(cfg,                       &
                      "dm_model%mX_logspace",             &
                      [ 0.0_dp, 1.0_dp, 1.0_dp ],              &
-                     "Add logarithmically spaced dark matter masses. [ N, mX_min, mX_max] (eV)")
+                     "Add $N$ logarithmically spaced dark matter masses between $m_\text{min}$"//&
+                     "and $m_\text{max}$: [$N$, $m_\text{min}$, $m_\text{max}$]<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: [-, $\text{eV}$, $\text{eV}$]</li>"//&
+                     "<li><b>Dim</b>: [3]</li>"//&
+                     "</ul>")
 
         call CFG_add(cfg,                       &
                      "dm_model%mX_linspace",             &
                      [ 0.0_dp, 1.0_dp, 1.0_dp ],              &
-                     "Add linearly spaced dark matter masses. [ N, mX_min, mX_max] (eV)")
+                     "Add $N$ linearly spaced dark matter masses between $m_\text{min}$"//&
+                     " and $m_\text{max}$: [$N$, $m_\text{min}$, $m_\text{max}$]<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: [-, $\text{eV}$, $\text{eV}$]</li>"//&
+                     "<li><b>Dim</b>: [3]</li>"//&
+                     "</ul>")
 
     end subroutine
 

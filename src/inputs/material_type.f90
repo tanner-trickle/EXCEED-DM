@@ -5,9 +5,6 @@ module material_type
     implicit none
 
     type :: material_t
-        ! .. note: 
-        !   .. math:
-        !       \mathbf{b}_1 = \frac{2 \pi}{\Omega} \mathbf{a}_1 \times \mathbf{a}_2 
 
         character(len=512) :: name
         character(len=512) :: materials_project_ID
@@ -85,19 +82,28 @@ contains
         call CFG_add(cfg, &
                      "material%rho_T_g_per_cm3", &
                      1.0_dp, &
-                     "Mass density of the target material, \( \rho_T \)<br />Units: \( \mathrm{g}/\mathrm{cm}^3 \)")
+                     "Mass density of the target material, $\rho_T$<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{g}/\text{cm}^3$</li>"//&
+                     "</ul>")
+
 
         call CFG_add(cfg, &
                      "material%band_gap", &
                      0.0_dp, &
-                     "Band gap of the target material, \( E_g \)<br />Units: \( \mathrm{g}/\mathrm{cm}^3 \)")
+                     "Band gap of the target material, $E_g$<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{eV}$</li>"//&
+                     "</ul>")
 
         call CFG_add(cfg, &
                      "material%a_vecs_Ang", &
                      [ 1.0_dp, 0.0_dp, 0.0_dp, 0.0_dp, 1.0_dp, 0.0_dp, 0.0_dp, 0.0_dp, 1.0_dp ], &
-                     "Lattice vectors of the target material, \( \mathbf{a}_i \). Each row is a different lattice vector"//&
-                     "<br />Units : \( \mathrm{\AA} \)<br />Dim : [3, 3]", &
-                    dynamic_size = .TRUE.)
+                     "Lattice vectors of the target material, $\mathbf{a}_i$<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{Å}$</li>"//&
+                     "<li><b>Dim</b>: [3, 3]</li>"//&
+                     "</ul>", dynamic_size = .TRUE.)
 
     end subroutine
 

@@ -32,7 +32,7 @@ module m_config
        [character(len=10) :: "storage", "integer", "real", "string ", "logical"]
 
   integer, parameter :: CFG_name_len   = 80  !< Maximum length of variable names
-  integer, parameter :: CFG_string_len = 200 !< Fixed length of string type
+  integer, parameter :: CFG_string_len = 1000 !< Fixed length of string type
 
   !> Maximum number of entries in a variable (if it's an array)
   integer, parameter :: CFG_max_array_size = 1000

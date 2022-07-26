@@ -1,8 +1,3 @@
-```{toctree}
-   :maxdepth: 2
-   :collapse: False
-```
-
 # Input File
 
 ```{contents} Table of Contents
@@ -41,7 +36,7 @@ A mixed dimension, e.g., **Dim: [:, 3]** means that any number of length 3 vecto
     v_e_km_per_sec  = 0, 0, 230
     v_e_km_per_sec += 0, 0, 240
     v_e_km_per_sec += 0, 0, 250
-    $\vdots$
+    ⋮
 
 See <https://github.com/jannisteunissen/config_fortran> for more details concerning the input format.
 

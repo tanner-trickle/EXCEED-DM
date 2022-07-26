@@ -165,7 +165,7 @@ contains
         call CFG_add(cfg, &
             "screening%type", &
             "", &
-            "Model to use for the screening factor. Default is a screening factor of 1.")
+            "Model to use for the screening factor. Default is a screening factor of $1$ (no screening).")
 
         call CFG_add(cfg, &
             "screening%dielectric_filename", &
@@ -175,45 +175,58 @@ contains
         call CFG_add(cfg, &
             "screening%width_id", &
             1, &
-            "Width ID number to use for the numeric dielectric.")
+            "Width ID of the dielectric to use. Dielectric will be taken from 'dielectric/width_<width_id>'"//&
+            "inside 'dielectric_filename'")
 
         call CFG_add(cfg, &
             "screening%e0", &
             1.0_dp, &
-            "Static dielectric parameter for analytic screening, $\epsilon(0)$ in Eq. (6) of"&
-    //"[https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892](https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892)"&
-           //"<br />Units : None")
+            "Static dielectric parameter for analytic screening"//&
+             "<ul>"//&
+             "<li><b>Formula</b>: $\epsilon(0)$, Eq. (6), <https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892></li>"//&
+             "</ul>")
 
         call CFG_add(cfg, &
             "screening%q_tf", &
             1.0_dp, &
-            "Thomas-Fermi momentum parameter for analytic screening, $q_\text{TF}$ in Eq. (6) of"&
-    //"[https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892](https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892)"&
-           //"<br />Units : keV")
+            "Thomas-Fermi momentum parameter for analytic screening"//&
+             "<ul>"//&
+             "<li><b>Formula</b>: $q_\text{TF}$, Eq. (6), <https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892></li>"//&
+             "<li><b>Units</b>: $\text{keV}$</li>"//&
+             "</ul>")
 
         call CFG_add(cfg, &
             "screening%omega_p", &
             1.0_dp, &
-            "Plasma frequency parameter for analytic screening, $\omega_p$ in Eq. (6) of"&
-    //" [https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892](https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892)"&
-           //"<br />Units : eV")
+            "Plasma frequency parameter for analytic screening"//&
+             "<ul>"//&
+             "<li><b>Formula</b>: $\omega_p$, Eq. (6), <https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892></li>"//&
+             "<li><b>Units</b>: $\text{eV}$</li>"//&
+             "</ul>")
 
         call CFG_add(cfg, &
             "screening%alpha", &
             1.0_dp, &
-            "Shape parameter for analytic screening, $\alpha$ in Eq. (6) of"&
-    //" [https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892](https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892)"&
-           //"<br />Units : None")
+            "Shape parameter for analytic screening"//&
+             "<ul>"//&
+             "<li><b>Formula</b>: $\alpha$, Eq. (6), <https://journals.aps.org/prb/pdf/10.1103/PhysRevB.47.9892></li>"//&
+             "</ul>")
 
         call CFG_add(cfg, &
             "screening%q_bin_width", &
             1.0_dp, &
-            "Width of the bins in $q$. Only used for the numeric screening.<br />Units : keV")
+            "Width of bins in $q$ space<br />"//&
+             "<ul>"//&
+             "<li><b>Units</b>: $\text{keV}$</li>"//&
+             "</ul>")
 
         call CFG_add(cfg, &
             "screening%E_bin_width", &
             1.0_dp, &
-            "Width of the bins in $\omega$. Only used for the numeric screening.<br />Units : eV")
+            "Width of bins in $\omega$ space<br />"//&
+             "<ul>"//&
+             "<li><b>Units</b>: $\text{eV}$</li>"//&
+             "</ul>")
 
     end subroutine
 

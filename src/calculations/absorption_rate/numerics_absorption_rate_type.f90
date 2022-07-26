@@ -55,13 +55,17 @@ contains
         call CFG_add(cfg,&
                      "numerics_absorption_rate%widths", &
                      [0.0_dp, 1.0e-1_dp, 100.0_dp], &
-                     "List of widths to compute for<br />Dim : [:, 3]", &
-                     dynamic_size = .TRUE.)
+                     "List of widths, $\delta \, [\text{eV}]$, to compute for, parameterized as [$a$, $b$, $c$]<br />"//&
+                     "<ul>"//&
+                     "<li><b>Formula</b>: $\delta = \text{min}(a + b \omega, c)$</li>"//&
+                     "<li><b>Units</b>: [$\text{eV}$, -, $\text{eV}$]</li>"//&
+                     "<li><b>Dim</b>: [ : , 3]</li>"//&
+                     "</ul>", dynamic_size = .TRUE.)
 
         call CFG_add(cfg,&
                      "numerics_absorption_rate%smear_type", &
                      "lorentz", &
-                     "Defines broadening behavior for the imaginary part of the Greens function.")
+                     "Defines broadening behavior for the imaginary part of the Greens function")
 
     end subroutine
 
