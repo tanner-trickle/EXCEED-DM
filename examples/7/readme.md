@@ -1,4 +1,4 @@
-# Example 7: Si Axion Absorption Rate, core to conduction
+### Example 7: Si Axion Absorption Rate, core to conduction
 
 - Calculation: Absorption rate
 

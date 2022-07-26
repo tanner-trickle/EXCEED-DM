@@ -1,4 +1,4 @@
-# Example 6: Si Axion Absorption Rate, valence to conduction
+### Example 6: Si Axion Absorption Rate, valence to conduction
 
 - Calculation: Absorption rate
 

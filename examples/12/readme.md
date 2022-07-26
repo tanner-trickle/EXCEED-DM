@@ -1,4 +1,4 @@
-# Example 12: Si (Analytic) Screened Binned Scatter Rate, All Transitions Included
+### Example 12: Si (Analytic) Screened Binned Scatter Rate, All Transitions Included
 
 - Calculation: Binned scatter rate
 

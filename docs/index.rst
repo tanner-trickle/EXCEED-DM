@@ -12,7 +12,7 @@ EXCEED-DM Documentation
 
     Getting Started<pages/getting_started.rst>
     Examples<pages/examples_link.md>
-    Configuration Files<pages/file_spec/index.rst>
+    Files<pages/file_spec/index.rst>
 
     Papers<pages/papers.rst>
 

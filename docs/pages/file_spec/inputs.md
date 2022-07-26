@@ -1,5 +1,5 @@
 
-## astroph_model
+### astroph_model
 
 * Dark matter SHM velocity distribution parameter, \( v_0 \) <br />Units : km/s
 
@@ -17,7 +17,7 @@
 
         vel_distribution_name = 'SHM'
 
-## control
+### control
 
 * Which calculation to perform
 
@@ -51,7 +51,7 @@
 
         verbose = T
 
-## dm_model
+### dm_model
 
 * Form factor ID to compute for
 
@@ -81,13 +81,13 @@
 
         rho_X_GeV_per_cm3 = 4.000000E-01
 
-## elec_config_input
+### elec_config_input
 
 * File containing the electronic configuration
 
         filename = ''
 
-## experiment
+### experiment
 
 * Mass of the experimental target <br />Units: kg
 
@@ -97,7 +97,7 @@
 
         T_year = 1.000000E+00
 
-## material
+### material
 
 * Lattice vectors of the target material, \( \mathbf{a}_i \). Each row is a different lattice vector<br />Units : \( \mathrm{\AA} \)<br />Dim : [3, 3]
 
@@ -119,7 +119,7 @@
 
         rho_T_g_per_cm3 = 1.000000E+00
 
-## numerics_absorption_rate
+### numerics_absorption_rate
 
 * Defines broadening behavior for the imaginary part of the Greens function.
 
@@ -129,7 +129,7 @@
 
         widths = 0.000000E+00 1.000000E-01 1.000000E+02
 
-## numerics_binned_scatter_rate
+### numerics_binned_scatter_rate
 
 * Width of bins in \( \omega \) space<br />Units : eV
 
@@ -147,7 +147,7 @@
 
         q_bin_width = 1.000000E+00
 
-## numerics_dielectric
+### numerics_dielectric
 
 * Width of bins in $\omega$<br />Units: eV
 
@@ -181,7 +181,7 @@
 
         widths = 0.000000E+00 1.000000E-01 1.000000E+02
 
-## screening
+### screening
 
 * Width of the bins in $\omega$. Only used for the numeric screening.<br />Units : eV
 

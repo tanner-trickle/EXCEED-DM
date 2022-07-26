@@ -646,7 +646,7 @@ contains
 
        if (category /= prev_category) then
           if (category == "") category = "No category"
-          write(myUnit, ERR=998, FMT="(A)") '## ' // trim(category)
+          write(myUnit, ERR=998, FMT="(A)") '### ' // trim(category)
           write(myUnit, ERR=998, FMT="(A)") ""
           prev_category = category
        end if

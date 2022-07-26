@@ -104,7 +104,7 @@
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="file_spec/index.html">
-   Configuration Files
+   Files
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -114,7 +114,17 @@
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="file_spec/inputs_link.html">
-     Input
+     Input File
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="file_spec/elec_config.html">
+     Electronic Configuration File
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="file_spec/output.html">
+     Output File
     </a>
    </li>
   </ul>
@@ -290,82 +300,92 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Examples
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running">
+   Running
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#running">
-     Running
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#descriptions">
+   Descriptions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-1-si-binned-scatter-rate-valence-to-conduction">
+     Example 1: Si Binned Scatter Rate, valence to conduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-2-si-binned-scatter-rate-core-to-conduction">
+     Example 2: Si Binned Scatter Rate, core to conduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-3-si-binned-scatter-rate-valence-to-free">
+     Example 3: Si Binned Scatter Rate, valence to free
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-4-si-binned-scatter-rate-core-to-free">
+     Example 4: Si Binned Scatter Rate, core to free
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-5-si-binned-scatter-rate-all-transitions-included">
+     Example 5: Si Binned Scatter Rate, All Transitions Included
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-6-si-axion-absorption-rate-valence-to-conduction">
+     Example 6: Si Axion Absorption Rate, valence to conduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-7-si-axion-absorption-rate-core-to-conduction">
+     Example 7: Si Axion Absorption Rate, core to conduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-8-si-axion-absorption-rate-valence-to-free">
+     Example 8: Si Axion Absorption Rate, valence to free
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-9-si-axion-absorption-rate-core-to-free">
+     Example 9: Si Axion Absorption Rate, core to free
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-10-si-axion-absorption-rate-all-transitions-included">
+     Example 10: Si Axion Absorption Rate, All Transitions Included
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-11-si-dielectric">
+     Example 11: Si Dielectric
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-12-si-analytic-screened-binned-scatter-rate-all-transitions-included">
+     Example 12: Si (Analytic) Screened Binned Scatter Rate, All Transitions Included
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-13-si-numeric-screened-binned-scatter-rate-all-transitions-included">
+     Example 13: Si (Numeric) Screened Binned Scatter Rate, All Transitions Included
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-14-si-binned-scatter-rate-valence-to-conduction">
+     Example 14: Si Binned Scatter Rate, valence to conduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-15-si-binned-scatter-rate-v-a-model">
+     Example 15: Si Binned Scatter Rate, V-A model
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-1-si-binned-scatter-rate-valence-to-conduction">
-   Example 1: Si Binned Scatter Rate, valence to conduction
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-2-si-binned-scatter-rate-core-to-conduction">
-   Example 2: Si Binned Scatter Rate, core to conduction
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-3-si-binned-scatter-rate-valence-to-free">
-   Example 3: Si Binned Scatter Rate, valence to free
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-4-si-binned-scatter-rate-core-to-free">
-   Example 4: Si Binned Scatter Rate, core to free
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-5-si-binned-scatter-rate-all-transitions-included">
-   Example 5: Si Binned Scatter Rate, All Transitions Included
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-6-si-axion-absorption-rate-valence-to-conduction">
-   Example 6: Si Axion Absorption Rate, valence to conduction
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-7-si-axion-absorption-rate-core-to-conduction">
-   Example 7: Si Axion Absorption Rate, core to conduction
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-8-si-axion-absorption-rate-valence-to-free">
-   Example 8: Si Axion Absorption Rate, valence to free
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-9-si-axion-absorption-rate-core-to-free">
-   Example 9: Si Axion Absorption Rate, core to free
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-10-si-axion-absorption-rate-all-transitions-included">
-   Example 10: Si Axion Absorption Rate, All Transitions Included
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-11-si-dielectric">
-   Example 11: Si Dielectric
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-12-si-analytic-screened-binned-scatter-rate-all-transitions-included">
-   Example 12: Si (Analytic) Screened Binned Scatter Rate, All Transitions Included
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-13-si-numeric-screened-binned-scatter-rate-all-transitions-included">
-   Example 13: Si (Numeric) Screened Binned Scatter Rate, All Transitions Included
-  </a>
  </li>
 </ul>
 
@@ -386,82 +406,92 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Examples
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running">
+   Running
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#running">
-     Running
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#descriptions">
+   Descriptions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-1-si-binned-scatter-rate-valence-to-conduction">
+     Example 1: Si Binned Scatter Rate, valence to conduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-2-si-binned-scatter-rate-core-to-conduction">
+     Example 2: Si Binned Scatter Rate, core to conduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-3-si-binned-scatter-rate-valence-to-free">
+     Example 3: Si Binned Scatter Rate, valence to free
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-4-si-binned-scatter-rate-core-to-free">
+     Example 4: Si Binned Scatter Rate, core to free
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-5-si-binned-scatter-rate-all-transitions-included">
+     Example 5: Si Binned Scatter Rate, All Transitions Included
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-6-si-axion-absorption-rate-valence-to-conduction">
+     Example 6: Si Axion Absorption Rate, valence to conduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-7-si-axion-absorption-rate-core-to-conduction">
+     Example 7: Si Axion Absorption Rate, core to conduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-8-si-axion-absorption-rate-valence-to-free">
+     Example 8: Si Axion Absorption Rate, valence to free
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-9-si-axion-absorption-rate-core-to-free">
+     Example 9: Si Axion Absorption Rate, core to free
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-10-si-axion-absorption-rate-all-transitions-included">
+     Example 10: Si Axion Absorption Rate, All Transitions Included
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-11-si-dielectric">
+     Example 11: Si Dielectric
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-12-si-analytic-screened-binned-scatter-rate-all-transitions-included">
+     Example 12: Si (Analytic) Screened Binned Scatter Rate, All Transitions Included
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-13-si-numeric-screened-binned-scatter-rate-all-transitions-included">
+     Example 13: Si (Numeric) Screened Binned Scatter Rate, All Transitions Included
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-14-si-binned-scatter-rate-valence-to-conduction">
+     Example 14: Si Binned Scatter Rate, valence to conduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-15-si-binned-scatter-rate-v-a-model">
+     Example 15: Si Binned Scatter Rate, V-A model
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-1-si-binned-scatter-rate-valence-to-conduction">
-   Example 1: Si Binned Scatter Rate, valence to conduction
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-2-si-binned-scatter-rate-core-to-conduction">
-   Example 2: Si Binned Scatter Rate, core to conduction
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-3-si-binned-scatter-rate-valence-to-free">
-   Example 3: Si Binned Scatter Rate, valence to free
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-4-si-binned-scatter-rate-core-to-free">
-   Example 4: Si Binned Scatter Rate, core to free
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-5-si-binned-scatter-rate-all-transitions-included">
-   Example 5: Si Binned Scatter Rate, All Transitions Included
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-6-si-axion-absorption-rate-valence-to-conduction">
-   Example 6: Si Axion Absorption Rate, valence to conduction
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-7-si-axion-absorption-rate-core-to-conduction">
-   Example 7: Si Axion Absorption Rate, core to conduction
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-8-si-axion-absorption-rate-valence-to-free">
-   Example 8: Si Axion Absorption Rate, valence to free
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-9-si-axion-absorption-rate-core-to-free">
-   Example 9: Si Axion Absorption Rate, core to free
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-10-si-axion-absorption-rate-all-transitions-included">
-   Example 10: Si Axion Absorption Rate, All Transitions Included
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-11-si-dielectric">
-   Example 11: Si Dielectric
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-12-si-analytic-screened-binned-scatter-rate-all-transitions-included">
-   Example 12: Si (Analytic) Screened Binned Scatter Rate, All Transitions Included
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-13-si-numeric-screened-binned-scatter-rate-all-transitions-included">
-   Example 13: Si (Numeric) Screened Binned Scatter Rate, All Transitions Included
-  </a>
  </li>
 </ul>
 
@@ -506,26 +536,46 @@ title="Print to PDF"
 <p>Running all of the examples can take some time.</p>
 </div>
 </section>
-</section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="example-1-si-binned-scatter-rate-valence-to-conduction">
-<h1>Example 1: Si Binned Scatter Rate, valence to conduction<a class="headerlink" href="#example-1-si-binned-scatter-rate-valence-to-conduction" title="Permalink to this headline">#</a></h1>
+<section id="descriptions">
+<h2>Descriptions<a class="headerlink" href="#descriptions" title="Permalink to this headline">#</a></h2>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#example-1-si-binned-scatter-rate-valence-to-conduction" id="id1">Example 1: Si Binned Scatter Rate, valence to conduction</a></p></li>
+<li><p><a class="reference internal" href="#example-2-si-binned-scatter-rate-core-to-conduction" id="id2">Example 2: Si Binned Scatter Rate, core to conduction</a></p></li>
+<li><p><a class="reference internal" href="#example-3-si-binned-scatter-rate-valence-to-free" id="id3">Example 3: Si Binned Scatter Rate, valence to free</a></p></li>
+<li><p><a class="reference internal" href="#example-4-si-binned-scatter-rate-core-to-free" id="id4">Example 4: Si Binned Scatter Rate, core to free</a></p></li>
+<li><p><a class="reference internal" href="#example-5-si-binned-scatter-rate-all-transitions-included" id="id5">Example 5: Si Binned Scatter Rate, All Transitions Included</a></p></li>
+<li><p><a class="reference internal" href="#example-6-si-axion-absorption-rate-valence-to-conduction" id="id6">Example 6: Si Axion Absorption Rate, valence to conduction</a></p></li>
+<li><p><a class="reference internal" href="#example-7-si-axion-absorption-rate-core-to-conduction" id="id7">Example 7: Si Axion Absorption Rate, core to conduction</a></p></li>
+<li><p><a class="reference internal" href="#example-8-si-axion-absorption-rate-valence-to-free" id="id8">Example 8: Si Axion Absorption Rate, valence to free</a></p></li>
+<li><p><a class="reference internal" href="#example-9-si-axion-absorption-rate-core-to-free" id="id9">Example 9: Si Axion Absorption Rate, core to free</a></p></li>
+<li><p><a class="reference internal" href="#example-10-si-axion-absorption-rate-all-transitions-included" id="id10">Example 10: Si Axion Absorption Rate, All Transitions Included</a></p></li>
+<li><p><a class="reference internal" href="#example-11-si-dielectric" id="id11">Example 11: Si Dielectric</a></p></li>
+<li><p><a class="reference internal" href="#example-12-si-analytic-screened-binned-scatter-rate-all-transitions-included" id="id12">Example 12: Si (Analytic) Screened Binned Scatter Rate, All Transitions Included</a></p></li>
+<li><p><a class="reference internal" href="#example-13-si-numeric-screened-binned-scatter-rate-all-transitions-included" id="id13">Example 13: Si (Numeric) Screened Binned Scatter Rate, All Transitions Included</a></p></li>
+<li><p><a class="reference internal" href="#example-14-si-binned-scatter-rate-valence-to-conduction" id="id14">Example 14: Si Binned Scatter Rate, valence to conduction</a></p></li>
+<li><p><a class="reference internal" href="#example-15-si-binned-scatter-rate-v-a-model" id="id15">Example 15: Si Binned Scatter Rate, V-A model</a></p></li>
+</ul>
+</div>
+<section id="example-1-si-binned-scatter-rate-valence-to-conduction">
+<h3>Example 1: Si Binned Scatter Rate, valence to conduction<a class="headerlink" href="#example-1-si-binned-scatter-rate-valence-to-conduction" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Binned scatter rate</p></li>
 <li><p>Target: Si</p></li>
 </ul>
 <p>Valence to conduction transitions in Si using an example <span class="math notranslate nohighlight">\(2 \times 2 \times 2\)</span> <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>-mesh. Useful for timing this section of the whole calculation.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-2-si-binned-scatter-rate-core-to-conduction">
-<h1>Example 2: Si Binned Scatter Rate, core to conduction<a class="headerlink" href="#example-2-si-binned-scatter-rate-core-to-conduction" title="Permalink to this headline">#</a></h1>
+<section id="example-2-si-binned-scatter-rate-core-to-conduction">
+<h3>Example 2: Si Binned Scatter Rate, core to conduction<a class="headerlink" href="#example-2-si-binned-scatter-rate-core-to-conduction" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Binned scatter rate</p></li>
 <li><p>Target: Si</p></li>
 </ul>
 <p>Core to conduction transitions in Si. Core states are RHF wave functions with <span class="math notranslate nohighlight">\(1 \leq n \leq 2\)</span> in an STO basis. Conduction states are the same as in example 1; PW basis wave functions on a <span class="math notranslate nohighlight">\(2 \times 2 \times 2\)</span> <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>-mesh.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-3-si-binned-scatter-rate-valence-to-free">
-<h1>Example 3: Si Binned Scatter Rate, valence to free<a class="headerlink" href="#example-3-si-binned-scatter-rate-valence-to-free" title="Permalink to this headline">#</a></h1>
+<section id="example-3-si-binned-scatter-rate-valence-to-free">
+<h3>Example 3: Si Binned Scatter Rate, valence to free<a class="headerlink" href="#example-3-si-binned-scatter-rate-valence-to-free" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Binned scatter rate</p></li>
 <li><p>Target: Si</p></li>
@@ -533,8 +583,8 @@ title="Print to PDF"
 <p>Valence to free transitions in Si. Valence states are identical to example 1; PW basis on a <span class="math notranslate nohighlight">\(2 \times 2 \times 2\)</span> <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>-mesh. Free states have <span class="math notranslate nohighlight">\(p\)</span> log-uniformly sampled on a 10 point grid between [60, 120] <span class="math notranslate nohighlight">\(\mathrm{eV}\)</span>, and <span class="math notranslate nohighlight">\(\theta_\mathbf{p}, \phi_\mathbf{p}\)</span> uniformly sampled on a sphere with <span class="math notranslate nohighlight">\(4 \times 4\)</span> points.</p>
 <p>Additionally we assume <span class="math notranslate nohighlight">\(Z_\mathrm{eff} = 1\)</span>.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-4-si-binned-scatter-rate-core-to-free">
-<h1>Example 4: Si Binned Scatter Rate, core to free<a class="headerlink" href="#example-4-si-binned-scatter-rate-core-to-free" title="Permalink to this headline">#</a></h1>
+<section id="example-4-si-binned-scatter-rate-core-to-free">
+<h3>Example 4: Si Binned Scatter Rate, core to free<a class="headerlink" href="#example-4-si-binned-scatter-rate-core-to-free" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Binned scatter rate</p></li>
 <li><p>Target: Si</p></li>
@@ -542,16 +592,16 @@ title="Print to PDF"
 <p>Core to free transitions in Si. Core states are identical to example 2; STO basis for <span class="math notranslate nohighlight">\(1 \leq n \leq 2\)</span>. Free states are identical to example 3; <span class="math notranslate nohighlight">\(p\)</span> log-uniformly sampled on a 10 point grid between [60, 120] <span class="math notranslate nohighlight">\(\mathrm{eV}\)</span>, and <span class="math notranslate nohighlight">\(\theta_\mathbf{p}, \phi_\mathbf{p}\)</span> uniformly sampled on a sphere with <span class="math notranslate nohighlight">\(4 \times 4\)</span> points.</p>
 <p>Additionally we assume <span class="math notranslate nohighlight">\(Z_\mathrm{eff} = 1\)</span>.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-5-si-binned-scatter-rate-all-transitions-included">
-<h1>Example 5: Si Binned Scatter Rate, All Transitions Included<a class="headerlink" href="#example-5-si-binned-scatter-rate-all-transitions-included" title="Permalink to this headline">#</a></h1>
+<section id="example-5-si-binned-scatter-rate-all-transitions-included">
+<h3>Example 5: Si Binned Scatter Rate, All Transitions Included<a class="headerlink" href="#example-5-si-binned-scatter-rate-all-transitions-included" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Binned scatter rate</p></li>
 <li><p>Target: Si</p></li>
 </ul>
 <p>Complete calculation of transition rates in Si. Initial electronic states are a combination of the valence and core states from examples 1 and 2. Final electronic states are a combination of the conduction and free states from examples 2 and 3. See those example <code class="docutils literal notranslate"><span class="pre">readme</span></code>’s for more details.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-6-si-axion-absorption-rate-valence-to-conduction">
-<h1>Example 6: Si Axion Absorption Rate, valence to conduction<a class="headerlink" href="#example-6-si-axion-absorption-rate-valence-to-conduction" title="Permalink to this headline">#</a></h1>
+<section id="example-6-si-axion-absorption-rate-valence-to-conduction">
+<h3>Example 6: Si Axion Absorption Rate, valence to conduction<a class="headerlink" href="#example-6-si-axion-absorption-rate-valence-to-conduction" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Absorption rate</p></li>
 <li><p>Target: Si</p></li>
@@ -562,40 +612,40 @@ title="Print to PDF"
 <p>This electronic state configuration is identical to Example 1.</p>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-7-si-axion-absorption-rate-core-to-conduction">
-<h1>Example 7: Si Axion Absorption Rate, core to conduction<a class="headerlink" href="#example-7-si-axion-absorption-rate-core-to-conduction" title="Permalink to this headline">#</a></h1>
+<section id="example-7-si-axion-absorption-rate-core-to-conduction">
+<h3>Example 7: Si Axion Absorption Rate, core to conduction<a class="headerlink" href="#example-7-si-axion-absorption-rate-core-to-conduction" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Absorption rate</p></li>
 <li><p>Target: Si</p></li>
 </ul>
 <p>Absorption rate of an axion-like particle, for two <span class="math notranslate nohighlight">\(\delta\)</span>: <span class="math notranslate nohighlight">\(\delta = 1 \, \mathrm{eV}\)</span> and <span class="math notranslate nohighlight">\(\delta = 0.2 + 10^{-1} \omega\)</span>. Only core to conduction transitions are included.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-8-si-axion-absorption-rate-valence-to-free">
-<h1>Example 8: Si Axion Absorption Rate, valence to free<a class="headerlink" href="#example-8-si-axion-absorption-rate-valence-to-free" title="Permalink to this headline">#</a></h1>
+<section id="example-8-si-axion-absorption-rate-valence-to-free">
+<h3>Example 8: Si Axion Absorption Rate, valence to free<a class="headerlink" href="#example-8-si-axion-absorption-rate-valence-to-free" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Absorption rate</p></li>
 <li><p>Target: Si</p></li>
 </ul>
 <p>Absorption rate of an axion-like particle, for two <span class="math notranslate nohighlight">\(\delta\)</span>: <span class="math notranslate nohighlight">\(\delta = 1 \, \mathrm{eV}\)</span> and <span class="math notranslate nohighlight">\(\delta = 0.2 + 10^{-1} \omega\)</span>. Only valence to free transitions are included.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-9-si-axion-absorption-rate-core-to-free">
-<h1>Example 9: Si Axion Absorption Rate, core to free<a class="headerlink" href="#example-9-si-axion-absorption-rate-core-to-free" title="Permalink to this headline">#</a></h1>
+<section id="example-9-si-axion-absorption-rate-core-to-free">
+<h3>Example 9: Si Axion Absorption Rate, core to free<a class="headerlink" href="#example-9-si-axion-absorption-rate-core-to-free" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Absorption rate</p></li>
 <li><p>Target: Si</p></li>
 </ul>
 <p>Absorption rate of an axion-like particle, for two <span class="math notranslate nohighlight">\(\delta\)</span>: <span class="math notranslate nohighlight">\(\delta = 1 \, \mathrm{eV}\)</span> and <span class="math notranslate nohighlight">\(\delta = 0.2 + 10^{-1} \omega\)</span>. Only core to free transitions are included.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-10-si-axion-absorption-rate-all-transitions-included">
-<h1>Example 10: Si Axion Absorption Rate, All Transitions Included<a class="headerlink" href="#example-10-si-axion-absorption-rate-all-transitions-included" title="Permalink to this headline">#</a></h1>
+<section id="example-10-si-axion-absorption-rate-all-transitions-included">
+<h3>Example 10: Si Axion Absorption Rate, All Transitions Included<a class="headerlink" href="#example-10-si-axion-absorption-rate-all-transitions-included" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Absorption rate</p></li>
 <li><p>Target: Si</p></li>
 </ul>
 <p>Absorption rate of an axion-like particle, for two <span class="math notranslate nohighlight">\(\delta\)</span>: <span class="math notranslate nohighlight">\(\delta = 1 \, \mathrm{eV}\)</span> and <span class="math notranslate nohighlight">\(\delta = 0.2 + 10^{-1} \omega\)</span>.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-11-si-dielectric">
-<h1>Example 11: Si Dielectric<a class="headerlink" href="#example-11-si-dielectric" title="Permalink to this headline">#</a></h1>
+<section id="example-11-si-dielectric">
+<h3>Example 11: Si Dielectric<a class="headerlink" href="#example-11-si-dielectric" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Dielectric</p></li>
 <li><p>Target: Si</p></li>
@@ -610,8 +660,8 @@ title="Print to PDF"
 <p>The transition form factors used in this calculation are <strong>not</strong> in the <span class="math notranslate nohighlight">\(q \rightarrow 0\)</span> limit. This is appropriate for screening scattering rate calculations, but not for absorption calculations which, sometimes, may be written in terms of the long wavelength dielectric, <span class="math notranslate nohighlight">\(\varepsilon(\mathbf{q} \rightarrow 0, \omega)\)</span>.</p>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-12-si-analytic-screened-binned-scatter-rate-all-transitions-included">
-<h1>Example 12: Si (Analytic) Screened Binned Scatter Rate, All Transitions Included<a class="headerlink" href="#example-12-si-analytic-screened-binned-scatter-rate-all-transitions-included" title="Permalink to this headline">#</a></h1>
+<section id="example-12-si-analytic-screened-binned-scatter-rate-all-transitions-included">
+<h3>Example 12: Si (Analytic) Screened Binned Scatter Rate, All Transitions Included<a class="headerlink" href="#example-12-si-analytic-screened-binned-scatter-rate-all-transitions-included" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Binned scatter rate</p></li>
 <li><p>Target: Si</p></li>
@@ -622,8 +672,8 @@ title="Print to PDF"
 <p>The electronic configuration used here is identical to Example 5.</p>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-13-si-numeric-screened-binned-scatter-rate-all-transitions-included">
-<h1>Example 13: Si (Numeric) Screened Binned Scatter Rate, All Transitions Included<a class="headerlink" href="#example-13-si-numeric-screened-binned-scatter-rate-all-transitions-included" title="Permalink to this headline">#</a></h1>
+<section id="example-13-si-numeric-screened-binned-scatter-rate-all-transitions-included">
+<h3>Example 13: Si (Numeric) Screened Binned Scatter Rate, All Transitions Included<a class="headerlink" href="#example-13-si-numeric-screened-binned-scatter-rate-all-transitions-included" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Calculation: Binned scatter rate</p></li>
 <li><p>Target: Si</p></li>
@@ -633,6 +683,28 @@ title="Print to PDF"
 <p class="admonition-title">Note</p>
 <p>The electronic configuration used here is identical to Example 5.</p>
 </div>
+</section>
+<section id="example-14-si-binned-scatter-rate-valence-to-conduction">
+<h3>Example 14: Si Binned Scatter Rate, valence to conduction<a class="headerlink" href="#example-14-si-binned-scatter-rate-valence-to-conduction" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Calculation: Binned scatter rate</p></li>
+<li><p>Target: Si</p></li>
+</ul>
+<p>Valence to conduction transitions in Si using an example <span class="math notranslate nohighlight">\(2 \times 2 \times 2\)</span> <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>-mesh. Wave function coefficients have been doubled to produce artifical “spin dependent” wave functions. Scattering rate is determined by the ‘SD’ operator and the results will be idential to Example 1 (by construction). Useful for timing this section of the whole calculation.</p>
+</section>
+<section id="example-15-si-binned-scatter-rate-v-a-model">
+<h3>Example 15: Si Binned Scatter Rate, V-A model<a class="headerlink" href="#example-15-si-binned-scatter-rate-v-a-model" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Calculation: Binned scatter rate</p></li>
+<li><p>Target: Si</p></li>
+</ul>
+<p>Calculation of the binned scatter rate in Si with a model containing <span class="math notranslate nohighlight">\(\mathbf{v}_e\)</span> dependent scattering potential.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The electronic configuration used here is identical to Example 5.</p>
+</div>
+</section>
+</section>
 </section>
 
 

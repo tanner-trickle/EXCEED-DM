@@ -1,4 +1,4 @@
-# Example 13: Si (Numeric) Screened Binned Scatter Rate, All Transitions Included
+### Example 13: Si (Numeric) Screened Binned Scatter Rate, All Transitions Included
 
 - Calculation: Binned scatter rate
 

@@ -1,4 +1,4 @@
-# Example 3: Si Binned Scatter Rate, valence to free
+### Example 3: Si Binned Scatter Rate, valence to free
 
 - Calculation: Binned scatter rate
 

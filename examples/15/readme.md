@@ -1,4 +1,4 @@
-# Example 15: Si Binned Scatter Rate, V-A model
+### Example 15: Si Binned Scatter Rate, V-A model
 
 - Calculation: Binned scatter rate
 

@@ -1,4 +1,4 @@
-# Example 5: Si Binned Scatter Rate, All Transitions Included
+### Example 5: Si Binned Scatter Rate, All Transitions Included
 
 - Calculation: Binned scatter rate
 

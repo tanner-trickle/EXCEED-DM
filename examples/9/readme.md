@@ -1,4 +1,4 @@
-# Example 9: Si Axion Absorption Rate, core to free
+### Example 9: Si Axion Absorption Rate, core to free
 
 - Calculation: Absorption rate
 

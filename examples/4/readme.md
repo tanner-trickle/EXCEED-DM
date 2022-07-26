@@ -1,4 +1,4 @@
-# Example 4: Si Binned Scatter Rate, core to free
+### Example 4: Si Binned Scatter Rate, core to free
 
 - Calculation: Binned scatter rate
 

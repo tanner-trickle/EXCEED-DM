@@ -30,7 +30,13 @@ where `<n_proc>` is the number of processors to run on.
 Running all of the examples can take some time.
 ```
 
----
+## Descriptions
+
+```{contents} Table of Contents
+   :depth: 1
+   :local:
+   :backlinks: none
+```
 
 ```{include} ../../examples/1/readme.md
 ```
@@ -57,4 +63,8 @@ Running all of the examples can take some time.
 ```{include} ../../examples/12/readme.md
 ```
 ```{include} ../../examples/13/readme.md
+```
+```{include} ../../examples/14/readme.md
+```
+```{include} ../../examples/15/readme.md
 ```

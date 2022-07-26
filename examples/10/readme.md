@@ -1,4 +1,4 @@
-# Example 10: Si Axion Absorption Rate, All Transitions Included
+### Example 10: Si Axion Absorption Rate, All Transitions Included
 
 - Calculation: Absorption rate
 

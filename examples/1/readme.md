@@ -1,4 +1,4 @@
-# Example 1: Si Binned Scatter Rate, valence to conduction
+### Example 1: Si Binned Scatter Rate, valence to conduction
 
 - Calculation: Binned scatter rate
 

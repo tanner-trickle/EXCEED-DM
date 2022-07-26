@@ -38,7 +38,7 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Papers using EXCEED-DM" href="../papers.html" />
+    <link rel="next" title="Electronic Configuration File" href="elec_config.html" />
     <link rel="prev" title="Configuration File Specifications" href="index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -104,7 +104,7 @@
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="index.html">
-   Configuration Files
+   Files
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -114,7 +114,17 @@
   <ul class="current">
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Input
+     Input File
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="elec_config.html">
+     Electronic Configuration File
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="output.html">
+     Output File
     </a>
    </li>
   </ul>
@@ -291,54 +301,66 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#astroph-model">
-   astroph_model
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#control">
-   control
+  <a class="reference internal nav-link" href="#groups">
+   Groups
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#dm-model">
-   dm_model
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#elec-config-input">
-   elec_config_input
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#experiment">
-   experiment
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#material">
-   material
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#numerics-absorption-rate">
-   numerics_absorption_rate
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#numerics-binned-scatter-rate">
-   numerics_binned_scatter_rate
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#numerics-dielectric">
-   numerics_dielectric
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#screening">
-   screening
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#astroph-model">
+     astroph_model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#control">
+     control
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dm-model">
+     dm_model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#elec-config-input">
+     elec_config_input
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#experiment">
+     experiment
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#material">
+     material
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numerics-absorption-rate">
+     numerics_absorption_rate
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numerics-binned-scatter-rate">
+     numerics_binned_scatter_rate
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numerics-dielectric">
+     numerics_dielectric
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#screening">
+     screening
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -360,54 +382,66 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#astroph-model">
-   astroph_model
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#control">
-   control
+  <a class="reference internal nav-link" href="#groups">
+   Groups
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#dm-model">
-   dm_model
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#elec-config-input">
-   elec_config_input
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#experiment">
-   experiment
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#material">
-   material
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#numerics-absorption-rate">
-   numerics_absorption_rate
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#numerics-binned-scatter-rate">
-   numerics_binned_scatter_rate
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#numerics-dielectric">
-   numerics_dielectric
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#screening">
-   screening
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#astroph-model">
+     astroph_model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#control">
+     control
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dm-model">
+     dm_model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#elec-config-input">
+     elec_config_input
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#experiment">
+     experiment
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#material">
+     material
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numerics-absorption-rate">
+     numerics_absorption_rate
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numerics-binned-scatter-rate">
+     numerics_binned_scatter_rate
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numerics-dielectric">
+     numerics_dielectric
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#screening">
+     screening
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -421,9 +455,63 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="input-file">
 <h1>Input File<a class="headerlink" href="#input-file" title="Permalink to this headline">#</a></h1>
-<p>Some notes on the input file…</p>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#groups" id="id2">Groups</a></p>
+<ul>
+<li><p><a class="reference internal" href="#astroph-model" id="id3">astroph_model</a></p></li>
+<li><p><a class="reference internal" href="#control" id="id4">control</a></p></li>
+<li><p><a class="reference internal" href="#dm-model" id="id5">dm_model</a></p></li>
+<li><p><a class="reference internal" href="#elec-config-input" id="id6">elec_config_input</a></p></li>
+<li><p><a class="reference internal" href="#experiment" id="id7">experiment</a></p></li>
+<li><p><a class="reference internal" href="#material" id="id8">material</a></p></li>
+<li><p><a class="reference internal" href="#numerics-absorption-rate" id="id9">numerics_absorption_rate</a></p></li>
+<li><p><a class="reference internal" href="#numerics-binned-scatter-rate" id="id10">numerics_binned_scatter_rate</a></p></li>
+<li><p><a class="reference internal" href="#numerics-dielectric" id="id11">numerics_dielectric</a></p></li>
+<li><p><a class="reference internal" href="#screening" id="id12">screening</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
+<p>The <strong>input file</strong> is simply a text file containing runtime variables. Variables are collected in to <em>groups</em> of similar variables. The group name is inside brackets, [], and the corresponding variables are below it. For example, the <strong>control</strong> group might contain,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[control]
+    calculation     = &#39;binned_scatter_rate&#39;
+    run_description = &#39;example_1&#39;
+    out_folder      = &#39;./examples/1/output/&#39;
+</pre></div>
+</div>
+<p>The description of all the groups, along with their their variables and default values, is given below.</p>
+<p>While most variables take a singular value, some accept an array. The dimensions of the input array must match that specified by <strong>Dim</strong> in the variable description. For example, <strong>a_vecs_Ang</strong> in the <strong>material</strong> group has <strong>Dim: [3, 3]</strong>, and therefore the input must be specified as a <span class="math notranslate nohighlight">\(3 \times 3\)</span> matrix. This can be done in two ways: placing the rows side by side, e.g.,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a_vecs_Ang = 1, 0, 0, 0, 1, 0, 0, 0, 1
+</pre></div>
+</div>
+<p>for the identity matrix, or with the <strong>+=</strong> operator (the preferred method for matrix inputs for readability),</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a_vecs_Ang  = 1, 0, 0
+a_vecs_Ang += 0, 1, 0
+a_vecs_Ang += 0, 0, 1
+</pre></div>
+</div>
+<p>A colon in <strong>Dim</strong> signifies that the variable accepts an array of any size. For example, <strong>mX</strong> in the <strong>dm_model</strong> group has <strong>Dim: [:]</strong>, meaning that a list of variables is accepted,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mX = 1e6, 1e7, 1e8, ...
+</pre></div>
+</div>
+<p>A mixed dimension, e.g., <strong>Dim: [:, 3]</strong> means that any number of length 3 vectors may be specified. For example, <strong>v_e_km_per_sec</strong> in the <strong>astroph_model</strong> group may be specified as</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>v_e_km_per_sec  = 0, 0, 230
+v_e_km_per_sec += 0, 0, 240
+v_e_km_per_sec += 0, 0, 250
+$\vdots$
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/jannisteunissen/config_fortran">https://github.com/jannisteunissen/config_fortran</a> for more details concerning the input format.</p>
+</section>
+<section id="groups">
+<h2>Groups<a class="headerlink" href="#groups" title="Permalink to this headline">#</a></h2>
 <section id="astroph-model">
-<h2>astroph_model<a class="headerlink" href="#astroph-model" title="Permalink to this headline">#</a></h2>
+<h3>astroph_model<a class="headerlink" href="#astroph-model" title="Permalink to this headline">#</a></h3>
 <ul>
 <li><p>Dark matter SHM velocity distribution parameter, ( v_0 ) <br />Units : km/s</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  v_0_km_per_sec = 2.200000E+02
@@ -448,7 +536,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="control">
-<h2>control<a class="headerlink" href="#control" title="Permalink to this headline">#</a></h2>
+<h3>control<a class="headerlink" href="#control" title="Permalink to this headline">#</a></h3>
 <ul>
 <li><p>Which calculation to perform</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  calculation = &#39;&#39;
@@ -493,7 +581,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="dm-model">
-<h2>dm_model<a class="headerlink" href="#dm-model" title="Permalink to this headline">#</a></h2>
+<h3>dm_model<a class="headerlink" href="#dm-model" title="Permalink to this headline">#</a></h3>
 <ul>
 <li><p>Form factor ID to compute for</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  FIF_id = &#39;SI&#39;
@@ -533,7 +621,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="elec-config-input">
-<h2>elec_config_input<a class="headerlink" href="#elec-config-input" title="Permalink to this headline">#</a></h2>
+<h3>elec_config_input<a class="headerlink" href="#elec-config-input" title="Permalink to this headline">#</a></h3>
 <ul>
 <li><p>File containing the electronic configuration</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  filename = &#39;&#39;
@@ -543,7 +631,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="experiment">
-<h2>experiment<a class="headerlink" href="#experiment" title="Permalink to this headline">#</a></h2>
+<h3>experiment<a class="headerlink" href="#experiment" title="Permalink to this headline">#</a></h3>
 <ul>
 <li><p>Mass of the experimental target <br />Units: kg</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  M_kg = 1.000000E+00
@@ -558,7 +646,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="material">
-<h2>material<a class="headerlink" href="#material" title="Permalink to this headline">#</a></h2>
+<h3>material<a class="headerlink" href="#material" title="Permalink to this headline">#</a></h3>
 <ul>
 <li><p>Lattice vectors of the target material, ( \mathbf{a}_i ). Each row is a different lattice vector<br />Units : ( \mathrm{\AA} )<br />Dim : [3, 3]</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  a_vecs_Ang = 1.000000E+00 0.000000E+00 0.000000E+00 0.000000E+00 1.000000E+00 0.000000E+00 0.000000E+00 0.000000E+00 1.000000E+00
@@ -588,7 +676,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="numerics-absorption-rate">
-<h2>numerics_absorption_rate<a class="headerlink" href="#numerics-absorption-rate" title="Permalink to this headline">#</a></h2>
+<h3>numerics_absorption_rate<a class="headerlink" href="#numerics-absorption-rate" title="Permalink to this headline">#</a></h3>
 <ul>
 <li><p>Defines broadening behavior for the imaginary part of the Greens function.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  smear_type = &#39;lorentz&#39;
@@ -603,7 +691,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="numerics-binned-scatter-rate">
-<h2>numerics_binned_scatter_rate<a class="headerlink" href="#numerics-binned-scatter-rate" title="Permalink to this headline">#</a></h2>
+<h3>numerics_binned_scatter_rate<a class="headerlink" href="#numerics-binned-scatter-rate" title="Permalink to this headline">#</a></h3>
 <ul>
 <li><p>Width of bins in ( \omega ) space<br />Units : eV</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  E_bin_width = 1.000000E+00
@@ -628,7 +716,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="numerics-dielectric">
-<h2>numerics_dielectric<a class="headerlink" href="#numerics-dielectric" title="Permalink to this headline">#</a></h2>
+<h3>numerics_dielectric<a class="headerlink" href="#numerics-dielectric" title="Permalink to this headline">#</a></h3>
 <ul>
 <li><p>Width of bins in <span class="math notranslate nohighlight">\(\omega\)</span><br />Units: eV</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  E_bin_width = 1.000000E+00
@@ -673,7 +761,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="screening">
-<h2>screening<a class="headerlink" href="#screening" title="Permalink to this headline">#</a></h2>
+<h3>screening<a class="headerlink" href="#screening" title="Permalink to this headline">#</a></h3>
 <ul>
 <li><p>Width of the bins in <span class="math notranslate nohighlight">\(\omega\)</span>. Only used for the numeric screening.<br />Units : eV</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  E_bin_width = 1.000000E+00
@@ -723,6 +811,7 @@ title="Print to PDF"
 </ul>
 </section>
 </section>
+</section>
 
 
               </div>
@@ -739,10 +828,10 @@ title="Print to PDF"
             <p class="prev-next-title">Configuration File Specifications</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../papers.html" title="next page">
+    <a class='right-next' id="next-link" href="elec_config.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Papers using EXCEED-DM</p>
+        <p class="prev-next-title">Electronic Configuration File</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

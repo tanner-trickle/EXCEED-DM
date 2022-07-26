@@ -1,4 +1,4 @@
-# Example 2: Si Binned Scatter Rate, core to conduction
+### Example 2: Si Binned Scatter Rate, core to conduction
 
 - Calculation: Binned scatter rate
 
