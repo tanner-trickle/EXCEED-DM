@@ -210,9 +210,14 @@
           <ul class="simple">
 <li><p><strong>config</strong></p>
 <ul>
-<li><p><code class="code docutils literal notranslate"><span class="pre">G_list_red</span></code> - List of <span class="math notranslate nohighlight">\(\mathbf{G}\)</span> vectors, in reduced coordinates, the Fourier components of the Bloch wave functions, <span class="math notranslate nohighlight">\(\widetilde{u}_\mathbf{G}\)</span>, are computed for.</p>
+<li><p><code class="code docutils literal notranslate"><span class="pre">n_r_vec_grid</span></code> - Number of <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> vectors to keep in each direction. For example, <code class="code docutils literal notranslate"><span class="pre">n_r_vec_grid</span> <span class="pre">=</span> <span class="pre">[3,</span> <span class="pre">3,</span> <span class="pre">3]</span></code> keeps all <span class="math notranslate nohighlight">\(\mathbf{r} \in \{ r_1, r, 2, r_3\}, -1 \leq r_i \leq 1\)</span>.</p>
 <ul>
-<li><p><strong>Dim</strong>: [<span class="math notranslate nohighlight">\(N_\mathbf{G}\)</span>, 3]</p></li>
+<li><p><strong>Dim</strong>: [3]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">n_x_grid</span></code> - Number of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> points in the unit cell to compute the wave functions for (in each direction).  <span class="math notranslate nohighlight">\(\begin{align} \mathbf{x}_{ijk} = \{ \frac{i - 1}{N_1}, \frac{j - 1}{N_2}, \frac{k - 1}{N_3} \} \end{align}\)</span> in reduced coordinates.</p>
+<ul>
+<li><p><strong>Dim</strong>: [3]</p></li>
 </ul>
 </li>
 </ul>
@@ -250,22 +255,24 @@
 <li><p><strong>Dim</strong>: [<span class="math notranslate nohighlight">\(N\)</span>, 3]</p></li>
 </ul>
 </li>
-<li><p><strong>u_FT_c</strong></p>
+<li><p><code class="code docutils literal notranslate"><span class="pre">coeff_list</span></code> - Collection of STO coefficients for each state. Each state is represented by 4 length <span class="math notranslate nohighlight">\(N_j\)</span> vectors, <span class="math notranslate nohighlight">\(\{ \mathbf{n}, \mathbf{Z}, \mathbf{N}, \mathbf{C} \}\)</span>. The <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> coefficients for the nth state are stored in [n, :, 1]. The <span class="math notranslate nohighlight">\(\mathbf{Z}\)</span> coefficients for the nth state are stored in [n, :, 2]. The <span class="math notranslate nohighlight">\(\mathbf{N}\)</span> coefficients for the nth state are stored in [n, :, 3]. The <span class="math notranslate nohighlight">\(\mathbf{C}\)</span> coefficients for the nth state are stored in [n, :, 4].</p>
 <ul>
-<li><p><code class="code docutils literal notranslate"><span class="pre">n_&lt;n&gt;</span></code> - Imaginary part of <span class="math notranslate nohighlight">\(\widetilde{u}_\mathbf{G}\)</span> for the state <code class="code docutils literal notranslate"><span class="pre">&lt;n&gt;</span></code>, <span class="math notranslate nohighlight">\(1 \leq \langle n \rangle \leq N\)</span>. Spin components can be specified by increasing the second dimension of this dataset to 2, i.e., <span class="math notranslate nohighlight">\(N_s = 2\)</span>.</p>
-<ul>
-<li><p><strong>Dim</strong>: [<span class="math notranslate nohighlight">\(N_\mathbf{G}\)</span>, <span class="math notranslate nohighlight">\(N_s\)</span>]</p></li>
+<li><p><strong>Dim</strong>: [<span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(N_j\)</span>, 4]</p></li>
 </ul>
 </li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">eq_pos_red_list</span></code> - Equilibrium position (in reduced coordinates) of the ion each state is associated with.</p>
+<ul>
+<li><p><strong>Dim</strong>: [<span class="math notranslate nohighlight">\(N\)</span>, 3]</p></li>
 </ul>
 </li>
-<li><p><strong>u_FT_r</strong></p>
+<li><p><code class="code docutils literal notranslate"><span class="pre">nj_list</span></code> - Number of expansion coefficients for each state.</p>
 <ul>
-<li><p><code class="code docutils literal notranslate"><span class="pre">n_&lt;n&gt;</span></code> - Real part of <span class="math notranslate nohighlight">\(\widetilde{u}_\mathbf{G}\)</span> for the state <code class="code docutils literal notranslate"><span class="pre">&lt;n&gt;</span></code>, <span class="math notranslate nohighlight">\(1 \leq \langle n \rangle \leq N\)</span>. Spin components can be specified by increasing the second dimension of this dataset to 2, i.e., <span class="math notranslate nohighlight">\(N_s = 2\)</span>.</p>
-<ul>
-<li><p><strong>Dim</strong>: [<span class="math notranslate nohighlight">\(N_\mathbf{G}\)</span>, <span class="math notranslate nohighlight">\(N_s\)</span>]</p></li>
+<li><p><strong>Dim</strong>: [<span class="math notranslate nohighlight">\(N\)</span>]</p></li>
 </ul>
 </li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">nlm_list</span></code> - <span class="math notranslate nohighlight">\(n, \ell, m\)</span> quantum numbers of each state, stored in that order.</p>
+<ul>
+<li><p><strong>Dim</strong>: [<span class="math notranslate nohighlight">\(N\)</span>, 3]</p></li>
 </ul>
 </li>
 </ul>

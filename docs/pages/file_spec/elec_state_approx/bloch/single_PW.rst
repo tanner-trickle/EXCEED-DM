@@ -1,8 +1,8 @@
 * **config**
 
-  * :code:`G_list_red` - List of :math:`\mathbf{G}` vectors, in reduced coordinates, the Fourier components of the Bloch wave functions, :math:`\widetilde{u}_\mathbf{G}`, are computed for.
+  * :code:`n_x_grid` - Number of :math:`\mathbf{x}` points in the unit cell to compute the wave functions for (in each direction).  :math:`\begin{align} \mathbf{x}_{ijk} = \{ \frac{i - 1}{N_1}, \frac{j - 1}{N_2}, \frac{k - 1}{N_3} \} \end{align}` in reduced coordinates.
 
-    * **Dim**: [:math:`N_\mathbf{G}`, 3]
+    * **Dim**: [3]
 
 * **state_info**
 
@@ -28,18 +28,6 @@
 
     * **Dim**: [:math:`N`]
 
-  * :code:`k_vec_red_list` - :math:`\mathbf{k}` vectors for each state in reduced coordinates.
+  * :code:`p_vec_list` - List of :math:`\mathbf{p}` vectors for each state.
 
     * **Dim**: [:math:`N`, 3]
-
-  * **u_FT_c**
-
-    * :code:`n_<n>` - Imaginary part of :math:`\widetilde{u}_\mathbf{G}` for the state :code:`<n>`, :math:`1 \leq \langle n \rangle \leq N`. Spin components can be specified by increasing the second dimension of this dataset to 2, i.e., :math:`N_s = 2`.
-
-      * **Dim**: [:math:`N_\mathbf{G}`, :math:`N_s`]
-
-  * **u_FT_r**
-
-    * :code:`n_<n>` - Real part of :math:`\widetilde{u}_\mathbf{G}` for the state :code:`<n>`, :math:`1 \leq \langle n \rangle \leq N`. Spin components can be specified by increasing the second dimension of this dataset to 2, i.e., :math:`N_s = 2`.
-
-      * **Dim**: [:math:`N_\mathbf{G}`, :math:`N_s`]

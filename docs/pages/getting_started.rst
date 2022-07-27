@@ -6,11 +6,11 @@ Getting Started
 Quick Start
 -----------
 
-After downloading :code:`EXCEED-DMvX.Y.Z` from 
+Download :code:`EXCEED-DMvX.Y.Z.tar.gz` from
 
-- `<https://github.com/tanner-trickle/EXCEED-DM/releases>`_
+- `EXCEED-DM Releases <https://github.com/tanner-trickle/EXCEED-DM/releases>`_
 
-Run
+then
 
 .. code-block:: none
 
@@ -29,7 +29,7 @@ Release
 
 To download release version :code:`vX.Y.Z` directly, simply click on :code:`EXCEED-DMvX.Y.Z.tar.gz` in the Releases section of the Github page 
 
-- `<https://github.com/tanner-trickle/EXCEED-DM/releases>`_.
+- `EXCEED-DM Releases <https://github.com/tanner-trickle/EXCEED-DM/releases>`_
 
 Git Branches
 ============
@@ -46,50 +46,84 @@ The source code will be in the :code:`EXCEED-DM` folder. Available branches are 
 Install
 -------
 
-Before you begin installation, make sure that you have all the necessary pre-requisite software installed. Commands are shown for installation on a Linux machine via :code:`apt`. For more information follow the links.
+Before you begin installation, make sure that you have all the necessary pre-requisite software installed. For more information about each pre-requisite, follow the links.
 
 Pre-requisites
 ==============
 
-* Fortran compiler - `gfortran <https://gcc.gnu.org/wiki/GFortran>`_, ifort, etc.
+* Fortran compiler - `gfortran <https://gcc.gnu.org/wiki/GFortran>`_, ifort, etc. 
 
-.. code-block:: none
+  .. tabs::
 
-   sudo apt install gfortran
+     .. group-tab:: Linux
+
+       .. code-block:: none
+
+          sudo apt install gfortran
 
 **Libraries**
 
 * `OpenMPI <https://www.open-mpi.org/>`_
 
-.. code-block:: none
+  .. tabs::
 
-   sudo apt install libopenmpi-dev
+     .. group-tab:: Linux
+
+       .. code-block:: none
+
+          sudo apt install libopenmpi-dev
 
 * `FFTW3 <https://www.fftw.org/>`_
 
-.. code-block:: none
+  .. tabs::
 
-   sudo apt install libfftw3-dev
+     .. group-tab:: Linux
+
+       .. code-block:: none
+
+          sudo apt install libfftw3-dev
+
 * `HDF5 (serial, with Fortran support) <https://www.hdfgroup.org/downloads/hdf5/>`_
 
-.. code-block:: none
+  .. tabs::
 
-   sudo apt install libhdf5-serial-dev
+     .. group-tab:: Linux
 
-.. note:: The HDF5 library must have been installed with the same compiler that you are compiling :code:`EXCEED-DM` with.
+       .. code-block:: none
+
+          sudo apt install libhdf5-serial-dev
+
+  .. note:: The HDF5 library must have been installed with the same compiler that you are compiling :code:`EXCEED-DM` with.
 
 * `LAPACK <https://netlib.org/lapack/>`_
-.. code-block:: none
 
-   sudo apt install liblapack-dev
+  .. tabs::
+
+     .. group-tab:: Linux
+
+       .. code-block:: none
+
+          sudo apt install liblapack-dev
+
 * `BLAS <https://netlib.org/blas/>`_
-.. code-block:: none
 
-   sudo apt install libblas-dev
+  .. tabs::
+
+     .. group-tab:: Linux
+
+       .. code-block:: none
+
+          sudo apt install libblas-dev
+
 * `CMake <https://cmake.org/>`_
-.. code-block:: none
 
-   sudo apt install cmake
+  .. tabs::
+
+     .. group-tab:: Linux
+
+       .. code-block:: none
+
+          sudo apt install cmake
 
 Build
 =====

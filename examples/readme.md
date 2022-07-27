@@ -32,12 +32,6 @@ Running all of the examples can take some time.
 
 ## Descriptions
 
-```{contents} Table of Contents
-   :depth: 1
-   :local:
-   :backlinks: none
-```
-
 ```{include} ../../examples/1/readme.md
 ```
 ```{include} ../../examples/2/readme.md

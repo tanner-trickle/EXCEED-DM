@@ -1,11 +1,5 @@
 # Input File
 
-```{contents} Table of Contents
-   :depth: 3
-   :local:
-   :backlinks: none
-```
-
 ## Introduction
 
 The **input file** is simply a text file containing runtime variables. Variables are collected in to *groups* of similar variables. The group name is inside brackets, [], and the corresponding variables are below it. For example, the **control** group might contain,

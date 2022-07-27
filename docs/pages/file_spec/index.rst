@@ -1,6 +1,6 @@
-=================================
-Configuration File Specifications
-=================================
+===================
+File Specifications
+===================
 
 .. toctree::
    :maxdepth: 2

@@ -651,10 +651,10 @@ contains
           prev_category = category
        end if
 
-       write(myUnit, ERR=998, FMT="(A)") "* " // trim(cfg%vars(i)%description)
+       write(myUnit, ERR=998, FMT="(A)") "* `" // trim(var_name) // "`: " // trim(cfg%vars(i)%description)
        write(myUnit, ERR=998, FMT="(A)") ""
        write(myUnit, ADVANCE="NO", ERR=998, FMT="(A)") &
-            '        ' // trim(var_name) // " ="
+            '      ' // trim(var_name) // " ="
 
        select case(cfg%vars(i)%var_type)
        case (CFG_integer_type)

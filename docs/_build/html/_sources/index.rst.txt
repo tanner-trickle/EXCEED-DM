@@ -4,19 +4,17 @@
    contain the root `toctree` directive.
 
 EXCEED-DM Documentation
-=================================
+=======================
 
 .. toctree::
     :maxdepth: 2
     :caption: Contents:
 
     Getting Started<pages/getting_started.rst>
+    File Specifications<pages/file_spec/index.rst>
     Examples<pages/examples_link.md>
-    Files<pages/file_spec/index.rst>
-
     Papers<pages/papers.rst>
-
-    Source Code<source/index.rst>
+    Source Documentation<source/index.rst>
 
 
 .. Indices and tables
