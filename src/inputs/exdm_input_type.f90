@@ -107,6 +107,14 @@ contains
         default_cfg = cfg
 
         ! Load all input files
+        if ( command_argument_count() == 0 ) then
+
+            print*, 'No input file specified, aborting.'
+            print*
+
+            stop
+        end if
+
         call CFG_update_from_arguments(cfg)
 
         ! Set all variables

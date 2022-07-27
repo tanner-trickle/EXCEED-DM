@@ -307,6 +307,18 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#download">
    Download
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#release">
+     Release
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#git-branches">
+     Git Branches
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#install">
@@ -330,12 +342,12 @@ title="Print to PDF"
      </li>
     </ul>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test">
+     Test
+    </a>
+   </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#test-installation">
-   Test Installation
-  </a>
  </li>
 </ul>
 
@@ -365,6 +377,18 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#download">
    Download
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#release">
+     Release
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#git-branches">
+     Git Branches
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#install">
@@ -388,12 +412,12 @@ title="Print to PDF"
      </li>
     </ul>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test">
+     Test
+    </a>
+   </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#test-installation">
-   Test Installation
-  </a>
  </li>
 </ul>
 
@@ -409,34 +433,139 @@ title="Print to PDF"
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">#</a></h1>
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">#</a></h2>
-<p>Extract <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> from the release tar to <code class="code docutils literal notranslate"><span class="pre">&lt;exdm_path&gt;</span></code>. Build with <code class="code docutils literal notranslate"><span class="pre">CMake</span></code>:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; tar -xvzf EXCEED-DM-v1.0.0.tar.gz -C &lt;exdm_path&gt;
-&gt; cd &lt;exdm_path&gt;
-&gt; mkdir build &amp;&amp; cd build
-&gt; cmake ..
-&gt; make
+<p>After downloading <code class="code docutils literal notranslate"><span class="pre">EXCEED-DMvX.Y.Z</span></code> from</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/tanner-trickle/EXCEED-DM/releases">https://github.com/tanner-trickle/EXCEED-DM/releases</a></p></li>
+</ul>
+<p>Run</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tar -xvzf EXCEED-DMvX.Y.Z.tar.gz -C EXCEED-DMvX.Y.Z
+cd EXCEED-DMvX.Y.Z
+mkdir build &amp;&amp; cd build
+cmake ..
+make
 </pre></div>
 </div>
 </section>
 <section id="download">
 <h2>Download<a class="headerlink" href="#download" title="Permalink to this headline">#</a></h2>
+<section id="release">
+<h3>Release<a class="headerlink" href="#release" title="Permalink to this headline">#</a></h3>
+<p>To download release version <code class="code docutils literal notranslate"><span class="pre">vX.Y.Z</span></code> directly, simply click on <code class="code docutils literal notranslate"><span class="pre">EXCEED-DMvX.Y.Z.tar.gz</span></code> in the Releases section of the Github page</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/tanner-trickle/EXCEED-DM/releases">https://github.com/tanner-trickle/EXCEED-DM/releases</a>.</p></li>
+</ul>
+</section>
+<section id="git-branches">
+<h3>Git Branches<a class="headerlink" href="#git-branches" title="Permalink to this headline">#</a></h3>
+<p>To download the <code class="code docutils literal notranslate"><span class="pre">&lt;branch&gt;</span></code> branch of the source code from Github,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone -b &lt;branch&gt; https://github.com/tanner-trickle/EXCEED-DM.git ./EXCEED-DM
+</pre></div>
+</div>
+<p>The source code will be in the <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> folder. Available branches are <code class="code docutils literal notranslate"><span class="pre">main</span></code> and <code class="code docutils literal notranslate"><span class="pre">develop</span></code>.</p>
+</section>
 </section>
 <section id="install">
 <h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">#</a></h2>
-<p>To install <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> you must build (compile) it with <code class="code docutils literal notranslate"><span class="pre">CMake</span></code>. Before you begin, make sure that you have all the necessary pre-requisite software installed.</p>
+<p>Before you begin installation, make sure that you have all the necessary pre-requisite software installed. Commands are shown for installation on a Linux machine via <code class="code docutils literal notranslate"><span class="pre">apt</span></code>. For more information follow the links.</p>
 <section id="pre-requisites">
 <h3>Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Fortran compiler - <a class="reference external" href="https://gcc.gnu.org/wiki/GFortran">gfortran</a>, ifort, etc.</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install gfortran
+</pre></div>
+</div>
+<p><strong>Libraries</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.open-mpi.org/">OpenMPI</a></p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libopenmpi-dev
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.fftw.org/">FFTW3</a></p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libfftw3-dev
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.hdfgroup.org/downloads/hdf5/">HDF5 (serial, with Fortran support)</a></p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libhdf5-serial-dev
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://netlib.org/lapack/">LAPACK</a></p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install liblapack-dev
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://netlib.org/blas/">BLAS</a></p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libblas-dev
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cmake.org/">CMake</a></p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install cmake
+</pre></div>
+</div>
 </section>
 <section id="build">
 <h3>Build<a class="headerlink" href="#build" title="Permalink to this headline">#</a></h3>
-<p>Once all of the pre-requisite sofware is installed go to the folder where <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> was downloaded to, e.g., <code class="code docutils literal notranslate"><span class="pre">&lt;exdm_download_path&gt;</span></code>,</p>
+<p>After the pre-requisite sofware has been installed installed go to the folder where <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> was downloaded to (containing the <code class="code docutils literal notranslate"><span class="pre">README.md</span></code> file). From this folder, run</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir build &amp;&amp; cd build
+cmake ..
+make
+</pre></div>
+</div>
+<p>To delete the build simply delete the contents of the build folder,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rm -r build/*
+</pre></div>
+</div>
 <section id="build-options">
 <h4>Build Options<a class="headerlink" href="#build-options" title="Permalink to this headline">#</a></h4>
+<p>Build options are specified with flags when running the <code class="code docutils literal notranslate"><span class="pre">cmake</span></code> command, e.g.,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cmake .. -DCMAKE_BUILD_TYPE=DEBUG
+</pre></div>
+</div>
+<p>The currently configured flags are:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">-DCMAKE_BUILD_TYPE</span></code></dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">RELEASE</span></code>: All optimizations turned on.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">DEBUG</span></code>: No optimizations, maximize the number of errors caught at runtime.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
 </section>
 </section>
+<section id="test">
+<h3>Test<a class="headerlink" href="#test" title="Permalink to this headline">#</a></h3>
+<p>To check that <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> was installed correctly, from the <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> folder run</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./build/exdm
+</pre></div>
+</div>
+<p>The output should read something like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>--------------------------------------------------------------------------------
+
+    EXCEED-DM - v1.0.0
+
+    Running on 1 processors
+    Compiled with GCC version 11.1.0
+
+    Started at 16:52:19.532 7/26/2022
+
+--------------------------------------------------------------------------------
+
+No input file specified, aborting.
+</pre></div>
+</div>
 </section>
-<section id="test-installation">
-<h2>Test Installation<a class="headerlink" href="#test-installation" title="Permalink to this headline">#</a></h2>
 </section>
 </section>
 
