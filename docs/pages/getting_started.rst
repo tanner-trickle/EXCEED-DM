@@ -76,6 +76,8 @@ Pre-requisites
 
    sudo apt install libhdf5-serial-dev
 
+.. note:: The HDF5 library must have been installed with the same compiler that you are compiling :code:`EXCEED-DM` with.
+
 * `LAPACK <https://netlib.org/lapack/>`_
 .. code-block:: none
 
@@ -118,8 +120,14 @@ Build options are specified with flags when running the :code:`cmake` command, e
 The currently configured flags are:
 
 * :code:`-DCMAKE_BUILD_TYPE`
-    * :code:`RELEASE`: All optimizations turned on. 
-    * :code:`DEBUG`: No optimizations, maximize the number of errors caught at runtime. 
+    * :code:`RELEASE` - All optimizations turned on. 
+    * :code:`DEBUG` - No optimizations, maximize the number of errors caught at runtime. 
+
+although any :code:`CMake` flag can be used. For example, the Fortran compiler can be specified with
+
+.. code-block:: none
+
+   cmake .. -DCMAKE_Fortran_COMPILER=...
 
 Test
 ====
