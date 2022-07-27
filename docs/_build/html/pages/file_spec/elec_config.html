@@ -34,6 +34,8 @@
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Output File" href="output.html" />
@@ -104,7 +106,7 @@
   <a class="reference internal" href="index.html">
    Files
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <input checked class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
@@ -136,7 +138,7 @@
   <a class="reference internal" href="../../source/index.html">
    Source Code
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <input checked class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
   <label for="toctree-checkbox-2">
    <i class="fas fa-chevron-down">
    </i>
@@ -230,6 +232,19 @@ title="Fullscreen mode"
   </span>
 
 </button>
+<a href="https://github.com/tanner-trickle/EXCEED-DM"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
 
 <div class="menu-dropdown menu-dropdown-download-buttons">
   <button class="headerbtn menu-dropdown__trigger"
@@ -276,12 +291,55 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#electronic-state-approximations">
+   Electronic State Approximations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bloch-states">
+     Bloch States
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#plane-wave-pw-basis">
+       Plane Wave (PW) basis
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -293,6 +351,38 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#electronic-state-approximations">
+   Electronic State Approximations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bloch-states">
+     Bloch States
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#plane-wave-pw-basis">
+       Plane Wave (PW) basis
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -302,6 +392,54 @@ title="Print to PDF"
                 
   <section id="electronic-configuration-file">
 <h1>Electronic Configuration File<a class="headerlink" href="#electronic-configuration-file" title="Permalink to this headline">#</a></h1>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#electronic-state-approximations" id="id2">Electronic State Approximations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#bloch-states" id="id3">Bloch States</a></p>
+<ul>
+<li><p><a class="reference internal" href="#plane-wave-pw-basis" id="id4">Plane Wave (PW) basis</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
+<p>The electronic configuration file is an <code class="code docutils literal notranslate"><span class="pre">HDF5</span></code> file containing all the information about the electronic states in the target material.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="code docutils literal notranslate"><span class="pre">Fortran</span></code> is a <strong>column-major</strong> language, which affects reading/writing of multi-dimensional datasets with HDF5. For example, for an <span class="math notranslate nohighlight">\(n \times m\)</span> matrix to be read in to <code class="code docutils literal notranslate"><span class="pre">Fortran</span></code>, it must be saved as an <span class="math notranslate nohighlight">\(m \times n\)</span> matrix if the language creating the HDF5 file is <strong>row-major</strong> (e.g., <code class="code docutils literal notranslate"><span class="pre">python</span></code>).</p>
+</div>
+</section>
+<section id="electronic-state-approximations">
+<h2>Electronic State Approximations<a class="headerlink" href="#electronic-state-approximations" title="Permalink to this headline">#</a></h2>
+<section id="bloch-states">
+<h3>Bloch States<a class="headerlink" href="#bloch-states" title="Permalink to this headline">#</a></h3>
+<section id="plane-wave-pw-basis">
+<h4>Plane Wave (PW) basis<a class="headerlink" href="#plane-wave-pw-basis" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p><strong>config</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">G_list_red</span></code> - List of <span class="math notranslate nohighlight">\(\mathbf{G}\)</span> vectors the Fourier components of the Bloch wave functions, <span class="math notranslate nohighlight">\(\widetilde{u}_\mathbf{G}\)</span>, are computed for.</p>
+<ul>
+<li><p><strong>Dim</strong>: [<span class="math notranslate nohighlight">\(N_\mathbf{G}\)</span>, 3]</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>state_info</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">Zeff_list</span></code> -</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
 </section>
 
 

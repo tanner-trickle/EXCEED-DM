@@ -104,7 +104,7 @@
   <a class="reference internal" href="file_spec/index.html">
    Files
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <input checked class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
@@ -136,7 +136,7 @@
   <a class="reference internal" href="../source/index.html">
    Source Code
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <input checked class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
   <label for="toctree-checkbox-2">
    <i class="fas fa-chevron-down">
    </i>
@@ -230,6 +230,19 @@ title="Fullscreen mode"
   </span>
 
 </button>
+<a href="https://github.com/tanner-trickle/EXCEED-DM"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
 
 <div class="menu-dropdown menu-dropdown-download-buttons">
   <button class="headerbtn menu-dropdown__trigger"
@@ -307,7 +320,7 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#download">
    Download
   </a>
-  <ul class="nav section-nav flex-column">
+  <ul class="visible nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#release">
      Release
@@ -324,7 +337,7 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#install">
    Install
   </a>
-  <ul class="nav section-nav flex-column">
+  <ul class="visible nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#pre-requisites">
      Pre-requisites
@@ -377,7 +390,7 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#download">
    Download
   </a>
-  <ul class="nav section-nav flex-column">
+  <ul class="visible nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#release">
      Release
@@ -394,7 +407,7 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#install">
    Install
   </a>
-  <ul class="nav section-nav flex-column">
+  <ul class="visible nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#pre-requisites">
      Pre-requisites
@@ -494,6 +507,10 @@ make
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libhdf5-serial-dev
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The HDF5 library must have been installed with the same compiler that you are compiling <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> with.</p>
+</div>
 <ul class="simple">
 <li><p><a class="reference external" href="https://netlib.org/lapack/">LAPACK</a></p></li>
 </ul>
@@ -535,13 +552,17 @@ make
 <ul class="simple">
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">-DCMAKE_BUILD_TYPE</span></code></dt><dd><ul>
-<li><p><code class="code docutils literal notranslate"><span class="pre">RELEASE</span></code>: All optimizations turned on.</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">DEBUG</span></code>: No optimizations, maximize the number of errors caught at runtime.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">RELEASE</span></code> - All optimizations turned on.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">DEBUG</span></code> - No optimizations, maximize the number of errors caught at runtime.</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
+<p>although any <code class="code docutils literal notranslate"><span class="pre">CMake</span></code> flag can be used. For example, the Fortran compiler can be specified with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cmake .. -DCMAKE_Fortran_COMPILER=...
+</pre></div>
+</div>
 </section>
 </section>
 <section id="test">
