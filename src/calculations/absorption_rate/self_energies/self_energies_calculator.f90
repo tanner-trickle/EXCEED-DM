@@ -74,6 +74,10 @@ contains
         n_tran_all = n_k*n_I_band*n_F_band
         n_tran = get_n_transitions(proc_id, n_proc, n_tran_all)
 
+        ! initialize mask
+        TIF_calculator%mask = .FALSE.
+
+        ! set mask
         call PiIF_mask_to_TIF_mask(PiIF_calculator%mask, TIF_calculator%mask)
 
         prev_init_id = 0

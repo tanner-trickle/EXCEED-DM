@@ -56,6 +56,10 @@ contains
         prev_init_id = 0
         prev_fin_id = 0
 
+        ! initialize mask
+        TIF_calculator%mask = .FALSE.
+
+        ! set mask
         call FIF_calculator%ID_to_TIF_mask(exdm_inputs%dm_model%FIF_id, TIF_calculator%mask)
 
         ! For all the states this processor has to compute for

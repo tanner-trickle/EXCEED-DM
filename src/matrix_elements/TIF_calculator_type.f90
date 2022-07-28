@@ -47,6 +47,8 @@ contains
 
     subroutine TIF_calculator_type_compute_all(self, init_state, fin_state, q0_limit)
 
+        use timer_util
+
         implicit none
 
         class(TIF_calculator_t) :: self
@@ -54,6 +56,8 @@ contains
         class(elec_state_t) :: init_state, fin_state
 
         logical, optional :: q0_limit
+
+        type(timer_t) :: timer
 
         ! compute all relevant TIFs
         if ( self%mask(1) ) then

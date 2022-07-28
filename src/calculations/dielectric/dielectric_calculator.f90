@@ -50,6 +50,8 @@ contains
 
         type(TIF_calculator_t) :: TIF_calculator
 
+        type(timer_t) :: timer
+
         n_tran_all = size(init_states)*size(fin_states)
 
         n_tran = get_n_transitions(proc_id, n_proc, n_tran_all)
@@ -57,6 +59,10 @@ contains
         prev_init_id = 0
         prev_fin_id = 0
 
+        ! initialize mask
+        TIF_calculator%mask = .FALSE.
+
+        ! set mask
         TIF_calculator%mask(1) = .TRUE.
 
         ! For all the states this processor has to compute for

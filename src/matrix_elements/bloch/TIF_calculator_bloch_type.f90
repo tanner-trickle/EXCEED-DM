@@ -206,6 +206,8 @@ contains
 
         use FFT_util
 
+        use timer_util
+
         implicit none
 
         class(TIF_calculator_bloch_t) :: self
@@ -215,6 +217,8 @@ contains
 
         integer :: s, d
 
+        type(timer_t) :: timer
+
         ! Compute u_i
         call init_state%compute_u(self%u_i)
 
@@ -223,10 +227,14 @@ contains
 
             call compute_O_u_1(self%u_i, self%O_u_1, init_state)
 
+            call timer%start()
+
             do s = 1, init_state%spin_dof
                 call zero_pad_FFT_matrix(self%O_u_1(:, :, :, s), self%O_u_1_pad(:, :, :, s), &
                                             init_state%FFT_plans(1, :), self%backward_FFT_plan)
             end do
+
+            call timer%end()
 
         end if
         if ( TIF_mask(2) ) then
@@ -304,14 +312,14 @@ contains
 
     end subroutine
 
-    subroutine compute_TIF_helper_scalar(self, u_f_pad, O_u_pad, init_state, fin_state, TIF)
+    subroutine compute_TIF_helper_scalar(self, u_f_pad, O_u_pad, TIF)
 
         use FFT_util
+        use timer_util
 
         implicit none
 
         class(TIF_calculator_bloch_t) :: self
-        class(elec_state_bloch_t) :: init_state, fin_state
 
         complex(dp) :: u_f_pad(:, :, :, :)
         complex(dp) :: O_u_pad(:, :, :, :)
@@ -320,6 +328,8 @@ contains
 
         complex(dp), allocatable :: TIF_FT_pad(:, :, :)
         complex(dp), allocatable :: TIF_pad(:, :, :)
+
+        type(timer_t) :: timer
 
         integer :: s
 
@@ -330,6 +340,8 @@ contains
 
         ! KEY THAT THIS IS BACKWARDS
         call dfftw_execute_dft(self%backward_FFT_plan, TIF_FT_pad, TIF_pad) 
+
+        call timer%end()
 
         ! normalize
         TIF_pad = (1.0_dp*product(self%n_pad_grid))**(-1)*TIF_pad
@@ -382,12 +394,11 @@ contains
 
     end subroutine
 
-    subroutine compute_TIF_helper_scalar_q0_limit(self, u_f_pad, O_u_pad, init_state, fin_state, TIF)
+    subroutine compute_TIF_helper_scalar_q0_limit(self, u_f_pad, O_u_pad, TIF)
 
         implicit none
 
         class(TIF_calculator_bloch_t) :: self
-        class(elec_state_bloch_t) :: init_state, fin_state
 
         complex(dp) :: u_f_pad(:, :, :, :)
         complex(dp) :: O_u_pad(:, :, :, :)
@@ -436,7 +447,7 @@ contains
 
         else 
 
-            call compute_TIF_helper_scalar(self, self%u_f_pad, self%O_u_1_pad, init_state, fin_state, TIF_1)
+            call compute_TIF_helper_scalar(self, self%u_f_pad, self%O_u_1_pad, TIF_1)
 
         end if
 
@@ -474,11 +485,11 @@ contains
 
         if ( q0_limit ) then
 
-            call compute_TIF_helper_scalar_q0_limit(self, self%u_f_pad, self%O_u_v2_pad, init_state, fin_state, TIF_v2)
+            call compute_TIF_helper_scalar_q0_limit(self, self%u_f_pad, self%O_u_v2_pad, TIF_v2)
 
         else 
 
-            call compute_TIF_helper_scalar(self, self%u_f_pad, self%O_u_v2_pad, init_state, fin_state, TIF_v2)
+            call compute_TIF_helper_scalar(self, self%u_f_pad, self%O_u_v2_pad, TIF_v2)
 
         end if
 
@@ -516,11 +527,11 @@ contains
 
         if ( q0_limit ) then
 
-            call compute_TIF_helper_scalar_q0_limit(self, self%u_f_pad, self%O_u_vds_pad, init_state, fin_state, TIF_vds)
+            call compute_TIF_helper_scalar_q0_limit(self, self%u_f_pad, self%O_u_vds_pad, TIF_vds)
 
         else 
 
-            call compute_TIF_helper_scalar(self, self%u_f_pad, self%O_u_vds_pad, init_state, fin_state, TIF_vds)
+            call compute_TIF_helper_scalar(self, self%u_f_pad, self%O_u_vds_pad, TIF_vds)
 
         end if
 
