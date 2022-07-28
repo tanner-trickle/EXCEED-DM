@@ -109,7 +109,15 @@ contains
         call CFG_get(cfg, "control%calculation", self%calculation)
 
         ! set the output filename
-        self%out_filename = trim(adjustl(self%out_folder))//"EXDM_out_"//trim(adjustl(self%run_description))//".hdf5"
+        if ( trim(adjustl(self%run_description)) == "" ) then
+
+            self%out_filename = trim(adjustl(self%out_folder))//"EXDM_out.hdf5"
+
+        else
+
+            self%out_filename = trim(adjustl(self%out_folder))//"EXDM_out_"//trim(adjustl(self%run_description))//".hdf5"
+
+        end if
 
     end subroutine
 

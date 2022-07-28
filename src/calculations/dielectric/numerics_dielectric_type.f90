@@ -140,6 +140,9 @@ contains
         call hdf_write_dataset(file_id, 'numerics_dielectric/E_bin_width', self%E_bin_width)
         call hdf_write_dataset(file_id, 'numerics_dielectric/q_bin_width', self%q_bin_width)
 
+        call hdf_write_dataset(file_id, 'numerics_dielectric/widths', self%widths)
+        call hdf_write_dataset(file_id, 'numerics_dielectric/smear_type', self%smear_type)
+
         call hdf_close_file(file_id)
 
     end subroutine

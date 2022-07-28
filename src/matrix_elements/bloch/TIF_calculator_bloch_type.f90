@@ -227,14 +227,10 @@ contains
 
             call compute_O_u_1(self%u_i, self%O_u_1, init_state)
 
-            call timer%start()
-
             do s = 1, init_state%spin_dof
                 call zero_pad_FFT_matrix(self%O_u_1(:, :, :, s), self%O_u_1_pad(:, :, :, s), &
                                             init_state%FFT_plans(1, :), self%backward_FFT_plan)
             end do
-
-            call timer%end()
 
         end if
         if ( TIF_mask(2) ) then
@@ -340,8 +336,6 @@ contains
 
         ! KEY THAT THIS IS BACKWARDS
         call dfftw_execute_dft(self%backward_FFT_plan, TIF_FT_pad, TIF_pad) 
-
-        call timer%end()
 
         ! normalize
         TIF_pad = (1.0_dp*product(self%n_pad_grid))**(-1)*TIF_pad

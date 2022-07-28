@@ -136,7 +136,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -201,7 +201,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -209,6 +209,224 @@
         <article role="main">
           <section id="output-file">
 <h1>Output File<a class="headerlink" href="#output-file" title="Permalink to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>The output file is and <code class="code docutils literal notranslate"><span class="pre">HDF5</span></code> file and contains the output of a calculation. Overlap with variables in the input file is minimized, i.e., if a variable is present in the input file it may not be written to the output file.</p>
+<p>Below we discuss all of the variables in each output group hierarchically (groups are in <strong>bold</strong>, datasets are in <code class="code docutils literal notranslate"><span class="pre">code</span></code>). Similar to the input file, if the <strong>Dim</strong> of a variable is <strong>[ : ]</strong>,  this means the array has variable dimension, and may change from calculation to calculation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To further understand the output file, go through this document with the output file open in <code class="code docutils literal notranslate"><span class="pre">HDFView</span></code>, a graphical user interface to <code class="code docutils literal notranslate"><span class="pre">HDF5</span></code> files: <a class="reference external" href="https://www.hdfgroup.org/downloads/hdfview/">download</a></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="code docutils literal notranslate"><span class="pre">Fortran</span></code> is a <strong>column-major</strong> language, which affects reading/writing of multi-dimensional datasets with HDF5. For example, an <span class="math notranslate nohighlight">\(n \times m\)</span> matrix, written to an HDF5 file with <code class="code docutils literal notranslate"><span class="pre">Fortran</span></code>, will be read in to a <strong>row-major</strong> language (e.g., <code class="code docutils literal notranslate"><span class="pre">python</span></code>) as an <span class="math notranslate nohighlight">\(m \times n\)</span> matrix. Dimensions listed below are the variables dimensions when written with <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code></p>
+</div>
+</section>
+<section id="general-groups">
+<h2>General Groups<a class="headerlink" href="#general-groups" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">exdm_version</span></code> - Version number of <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code>.</p></li>
+<li><p><strong>dm_model</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">FIF_id</span></code> - String ID of the scattering form factor used.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">mX</span></code> - Dark matter masses, <span class="math notranslate nohighlight">\(m_\chi\)</span>.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></p></li>
+<li><p><strong>Dim</strong>: [ : ]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">med_FF</span></code> - Mediator form factor powers, <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
+<ul>
+<li><p><strong>Formula</strong>: <span class="math notranslate nohighlight">\(\mathcal{F}_\text{med} = \left( \frac{q_0}{q} \right)^\beta\)</span></p></li>
+<li><p><strong>Dim</strong>: [ : ]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">particle_type</span></code> - Type of DM particle</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">rho_X</span></code> - DM density, <span class="math notranslate nohighlight">\(\rho_\chi\)</span></p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{GeV}/\text{cm}^3\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>experiment</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">M</span></code> - Mass of the target.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{kg}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">T</span></code> - Exposure time of the target.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{year}\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>material</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">band_gap</span></code> - Band gap of the target material.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">name</span></code> - Name of the target material.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">pc_vol</span></code> - Primitive cell/unit cell volume.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{Å}^3\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">rho_T</span></code> - Target density.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{g}/\text{cm}^3\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>timing</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">dt_compute</span></code> - Time taken to perform sums in the calculation.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{s}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">dt_total</span></code> - Total run time of the calculation.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{s}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">start_date</span></code> - Start year/month/day of the calculation.</p>
+<ul>
+<li><p><strong>Dim</strong>: [3]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">end_date</span></code> - End year/month/day of the calculation.</p>
+<ul>
+<li><p><strong>Dim</strong>: [3]</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="calculation-specific-groups">
+<h2>Calculation Specific Groups<a class="headerlink" href="#calculation-specific-groups" title="Permalink to this heading">#</a></h2>
+<section id="binned-scatter-rate">
+<h3>Binned Scatter Rate<a class="headerlink" href="#binned-scatter-rate" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p><strong>binned_scatter_rate</strong></p>
+<ul>
+<li><p><strong>model_&lt;n&gt;/v_e_&lt;v&gt;/mass_&lt;m&gt;</strong> - Folder structure for a <strong>binned_scatter_rate</strong> calculation. Note that if only a single DM model, or Earth velocity vector, is specified these folders will be absent. For example, if only a light mediator with one Earth velocity vector is chosen the folder structure will be <strong>binned_scatter_rate/mass_&lt;m&gt;</strong> for each mass. However if a heavy and light mediator are calculated the folder structure will be <strong>binned_scatter_rate/model_&lt;n&gt;/mass_&lt;m&gt;</strong>. Similarly for mulitple Earth velocity vectors.</p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">total_binned_scatter_rate</span></code> - Total number of events in each <span class="math notranslate nohighlight">\(q, \omega\)</span> bin, assuming <span class="math notranslate nohighlight">\(\overline{\sigma}_e = 1\)</span> and an exposure of <code class="code docutils literal notranslate"><span class="pre">M_kg</span> <span class="pre">x</span> <span class="pre">T_year</span> <span class="pre">(kg-yr)</span></code>, where <code class="code docutils literal notranslate"><span class="pre">M_kg,</span> <span class="pre">T_year</span></code> are specified in the <strong>input file</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note the absence of units on <span class="math notranslate nohighlight">\(\overline{\sigma}_e\)</span> above. To compute the total number of events simply multiply the data by <span class="math notranslate nohighlight">\(\overline{\sigma}_e\)</span> in units of <span class="math notranslate nohighlight">\(\text{cm}^2\)</span>. For example to compute the number of events with <span class="math notranslate nohighlight">\(\overline{\sigma}_e = 10^{-40} \, \text{cm}^2\)</span>, mulitply the data by <span class="math notranslate nohighlight">\(10^{-40}\)</span>.</p>
+</div>
+<p>The event rate, in units of events/kg-year, is then calculated by dividing the entries by the exposure in kg-year. For example, if <strong>M_kg = 1, T_year = 1</strong> (the default) in the <strong>experiment</strong> group in the <strong>input file</strong>, the entries are both, a) the total number of events in a kg-year and b) the number of events/kg-year. If <strong>M_kg = 10, T_year = 1</strong>, the entries are the total number of events in 10 kg-year, and the event rate is easily calculated (simply divide by 10 in this example).</p>
+<ul class="simple">
+<li><p><strong>Dim</strong>: [ :, : ], [<span class="math notranslate nohighlight">\(N_q\)</span>, <span class="math notranslate nohighlight">\(N_\omega\)</span>]</p></li>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{cm}^{-2}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">i_&lt;i&gt;/binned_scatter_rate</span></code> - Total number of events in each <span class="math notranslate nohighlight">\(q, \omega\)</span> bin from each initial state group labelled by <code class="code docutils literal notranslate"><span class="pre">i</span></code>, e.g., the band number for Bloch states. The sum of the entries in each <code class="code docutils literal notranslate"><span class="pre">i</span></code> sum to the <code class="code docutils literal notranslate"><span class="pre">total_binned_scatter_rate</span></code>.</p>
+<ul class="simple">
+<li><p><strong>Dim</strong>: [ :, : ], [<span class="math notranslate nohighlight">\(N_q\)</span>, <span class="math notranslate nohighlight">\(N_\omega\)</span>]</p></li>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{cm}^{-2}\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>numerics_binned_scatter_rate</strong></p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">E_bin_width</span></code> - Width of the bins in <span class="math notranslate nohighlight">\(\omega\)</span> space.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">q_bin_width</span></code> - Width of the bins in <span class="math notranslate nohighlight">\(q\)</span> space.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{keV}\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="absorption-rate">
+<h3>Absorption Rate<a class="headerlink" href="#absorption-rate" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>absorption_rate</strong></p>
+<ul>
+<li><p><strong>width_&lt;i&gt;/mass_&lt;m&gt;</strong> - Folder structure for an <strong>absorption_rate</strong> calculation. Note that if only a single width is specified these folders will be absent. For example, if only a single width is chosen the folder structure will be <strong>absorption_rate/mass_&lt;m&gt;</strong> for each mass. However if multiple widths are calculated the folder structure will be <strong>binned_scatter_rate/width_&lt;i&gt;/mass_&lt;m&gt;</strong>.</p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">absorption_rate</span></code> - Total number of events assuming <span class="math notranslate nohighlight">\(g_e = 1\)</span>, and an exposure of <code class="code docutils literal notranslate"><span class="pre">M_kg</span> <span class="pre">x</span> <span class="pre">T_year</span> <span class="pre">(kg-yr)</span></code>. The event rate, in units of events/kg-year, is then calculated by dividing the entries by the exposure in kg-year. For example, if <strong>M_kg = 1, T_year = 1</strong> (the default) in the <strong>experiment</strong> group in the <strong>input file</strong>, the entries are both, a) the total number of events in a kg-year and b) the number of events/kg-year. If <strong>M_kg = 10, T_year = 1</strong>, the entries are the total number of events in 10 kg-year, and the event rate is easily calculated (simply divide by 10 in this example).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>numerics_absorption_rate</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">widths</span></code> - List of width parameterizations computed for, [<span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(c\)</span>].</p>
+<ul>
+<li><p><strong>Formula</strong>: <span class="math notranslate nohighlight">\(\delta = \text{min}(c, a + b \omega)\)</span></p></li>
+<li><p><strong>Units</strong>: [ : , { <span class="math notranslate nohighlight">\(\text{eV}\)</span>, - , <span class="math notranslate nohighlight">\(\text{eV}\)</span> } ]</p></li>
+<li><p><strong>Dim</strong>: [ : , 3]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">smear_type</span></code> - Defines broadening behavior for the imaginary part of the Greens function.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="dielectric">
+<h3>Dielectric<a class="headerlink" href="#dielectric" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>dielectric</strong></p>
+<ul>
+<li><p><strong>width_&lt;i&gt;</strong> - Folder containing the dielectric for width parameterization <code class="code docutils literal notranslate"><span class="pre">i</span></code></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">dielectric_r</span></code> - Real part of the averaged dielectric, <span class="math notranslate nohighlight">\(\overline{\varepsilon}(\mathbf{q}, \omega)\)</span>.</p>
+<ul>
+<li><p><strong>Dim</strong>: [ : , : , : , : ], [<span class="math notranslate nohighlight">\(N_q\)</span>, <span class="math notranslate nohighlight">\(N_\theta\)</span>, <span class="math notranslate nohighlight">\(N_\phi\)</span>, <span class="math notranslate nohighlight">\(N_\omega\)</span>]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">dielectric_c</span></code> - Imaginary part of the averaged dielectric, <span class="math notranslate nohighlight">\(\overline{\varepsilon}(\mathbf{q}, \omega)\)</span>.</p>
+<ul>
+<li><p><strong>Dim</strong>: [ : , : , : , : ], [<span class="math notranslate nohighlight">\(N_q\)</span>, <span class="math notranslate nohighlight">\(N_\theta\)</span>, <span class="math notranslate nohighlight">\(N_\phi\)</span>, <span class="math notranslate nohighlight">\(N_\omega\)</span>]</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>numerics_dielectric</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">E_bin_width</span></code> - Width of the bins in <span class="math notranslate nohighlight">\(\omega\)</span> space.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">q_bin_width</span></code> - Width of the bins in <span class="math notranslate nohighlight">\(q\)</span> space.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{keV}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">widths</span></code> - List of width parameterizations computed for, [<span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(c\)</span>].</p>
+<ul>
+<li><p><strong>Formula</strong>: <span class="math notranslate nohighlight">\(\delta = \text{min}(c, a + b \omega)\)</span></p></li>
+<li><p><strong>Units</strong>: [ : , { <span class="math notranslate nohighlight">\(\text{eV}\)</span>, - , <span class="math notranslate nohighlight">\(\text{eV}\)</span> } ]</p></li>
+<li><p><strong>Dim</strong>: [ : , 3]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">smear_type</span></code> - Defines broadening behavior for the imaginary part of the Greens function.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
 </section>
 
         </article>
@@ -256,8 +474,34 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Output File</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#general-groups">General Groups</a></li>
+<li><a class="reference internal" href="#calculation-specific-groups">Calculation Specific Groups</a><ul>
+<li><a class="reference internal" href="#binned-scatter-rate">Binned Scatter Rate</a></li>
+<li><a class="reference internal" href="#absorption-rate">Absorption Rate</a></li>
+<li><a class="reference internal" href="#dielectric">Dielectric</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -270,5 +514,7 @@
     <script src="../../_static/scripts/furo.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>
