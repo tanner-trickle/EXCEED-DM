@@ -27,7 +27,7 @@ where `<n_proc>` is the number of processors to run on and `<example_ID>` is the
 where `<n_proc>` is the number of processors to run on. 
 
 ```{warning}
-Running all of the examples can take some time.
+Running all of the examples takes ~5 minutes on 48 cores.
 ```
 
 ## Descriptions
