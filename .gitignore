@@ -5,7 +5,6 @@ __pycache__
 .ipynb*
 
 build/
-output/
 .fortls
 
 ###
