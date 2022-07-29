@@ -12,13 +12,16 @@ contains
                                             exdm_inputs, &
                                             init_states, fin_states, &
                                             jac_I_list, jac_F_list, &
-                                            extra_FF, &
-                                            binned_scatter_rate)
+                                            Zeff_list, &
+                                            binned_scatter_rate, &
+                                            fermi_factor_bool)
 
         use parallel_index_util
 
         use TIF_calculator_type
         use FIF_calculator_type
+
+        use scatter_physics_functions
 
         use binned_scatter_rate_RIF_calculator
 
@@ -34,9 +37,15 @@ contains
         real(dp) :: jac_I_list(:)
         real(dp) :: jac_F_list(:)
 
-        real(dp) :: extra_FF(:, :)
+        real(dp) :: Zeff_list(:)
+
+        real(dp) :: extra_FF
+        real(dp), allocatable :: screen_factor_list(:)
 
         real(dp) :: binned_scatter_rate(:, :, :, :, :, :)
+
+        logical, optional :: fermi_factor_bool
+        logical :: fermi_factor_bool_in
 
         type(TIF_calculator_t) :: TIF_calculator
         type(FIF_calculator_t) :: FIF_calculator
@@ -70,6 +79,7 @@ contains
                 ! initialize
                 call TIF_calculator%setup(exdm_inputs, init_states(i), fin_states(i), q0_limit = .FALSE.)
                 allocate(FIF_calculator%FIF(size(TIF_calculator%q_vec_list, 1)), source = 0.0_dp)
+                allocate(screen_factor_list(size(TIF_calculator%q_vec_list, 1)), source = 1.0_dp)
 
             end if
 
@@ -98,6 +108,24 @@ contains
             ! compute FIF from TIF
             call FIF_calculator%compute(exdm_inputs%dm_model%FIF_id, TIF_calculator)
 
+            ! Optional: Fermi factor 
+            if ( present(fermi_factor_bool) ) then
+                fermi_factor_bool_in = fermi_factor_bool
+            else
+                fermi_factor_bool_in = .FALSE.
+            end if
+
+            if ( fermi_factor_bool_in ) then
+                extra_FF = fermi_factor(Zeff_list(init_id), fin_states(fin_id)%energy)
+            else
+                extra_FF = 1.0_dp
+            end if
+
+            ! Screening factor
+            screen_factor_list = exdm_inputs%screening%screening_factor(&
+                TIF_calculator%q_vec_list, &
+                fin_states(fin_id)%energy - init_states(init_id)%energy)
+
             ! compute RIF from FIF
             call binned_scatter_rate_RIF_compute(&
                 binned_scatter_rate(:, :, :, :, :, init_states(init_id)%i), &
@@ -108,7 +136,8 @@ contains
                 jac_I_list(init_id), &
                 jac_F_list(fin_id), &
                 min( init_states(init_id)%spin_dof, fin_states(fin_id)%spin_dof ), &
-                extra_FF(init_id, fin_id), &
+                extra_FF, &
+                screen_factor_list, &
                 exdm_inputs)
 
         end do

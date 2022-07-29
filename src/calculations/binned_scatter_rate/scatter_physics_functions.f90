@@ -6,35 +6,25 @@ module scatter_physics_functions
 
 contains
 
-    subroutine fermi_factor_extra_FF(extra_FF, Zeff_list, Ef_list)
+    function fermi_factor(Zeff, Ef) result( ff )
 
         use constants_util
 
         implicit none
 
-        real(dp) :: extra_FF(:, :)
-        real(dp) :: Zeff_list(:)
-        real(dp) :: Ef_list(:)
+        real(dp), intent(in) :: Zeff
+        real(dp), intent(in) :: Ef
+
+        real(dp) :: ff
 
         real(dp) :: fermi_val
-        real(dp) :: fermi_factor
 
-        integer :: i, f
+        fermi_val = 2.0_dp*pi*Zeff*&
+            (alpha_EM*m_elec/sqrt(2.0_dp*m_elec*Ef))
 
-        do f = 1, size(Ef_list)
-            do i = 1, size(Zeff_list)
+        ff = fermi_val*( 1.0_dp - exp(-fermi_val) )**(-1)
 
-                fermi_val = 2.0_dp*pi*Zeff_list(i)*&
-                    (alpha_EM*m_elec/sqrt(2.0_dp*m_elec*Ef_list(f)))
-
-                fermi_factor = fermi_val*( 1.0_dp - exp(-fermi_val) )**(-1)
-
-                extra_FF(i, f) = fermi_factor
-
-            end do
-        end do
-
-    end subroutine
+    end function
 
     function compute_v_minus(q_vec_list, q_mag_list, mX, vE_vec, omega) result(v_m_list)
 

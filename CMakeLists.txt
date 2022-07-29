@@ -16,7 +16,7 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(CMAKE_Fortran_FLAGS_DEBUG "-cpp -O0 -Wall -Wextra -fcheck=all")
+set(CMAKE_Fortran_FLAGS_DEBUG "-cpp -O0 -g -Wall -Wextra -fbacktrace -fcheck=all")
 set(CMAKE_Fortran_FLAGS_RELEASE "-cpp -O3 -march=native")
 
 #################################################

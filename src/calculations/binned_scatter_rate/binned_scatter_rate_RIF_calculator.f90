@@ -10,6 +10,7 @@ contains
             jac_I, jac_F, &
             spin_dof, &
             extra_FF, &
+            screen_factor_list, &
             exdm_inputs)
 
         use prec_util, only: dp
@@ -34,6 +35,8 @@ contains
         integer :: spin_dof
         real(dp) :: extra_FF
 
+        real(dp) :: screen_factor_list(:)
+
         type(exdm_inputs_t) :: exdm_inputs
 
         integer :: E_bin
@@ -41,7 +44,6 @@ contains
         real(dp) :: q_bin_width
 
         real(dp) :: q_mag_list(size(q_vec_list, 1))
-        real(dp) :: screen_factor_list(size(q_vec_list, 1))
         real(dp) :: v_m_list(size(q_vec_list, 1))
         logical :: kinematic_mask(size(q_vec_list, 1))
 
@@ -59,7 +61,7 @@ contains
                            size(binned_rate, 3),&
                            size(binned_rate, 4),&
                            size(binned_rate, 5))
-            !* Dim : [ n_q, n_E, n_mX, n_med_FF, n_vE ]
+            ! Dim : [ n_q, n_E, n_mX, n_med_FF, n_vE ]
         real(dp) :: b_rate_q(size(binned_rate, 1))
 
         real(dp) :: norm
@@ -69,6 +71,7 @@ contains
         b_rate = 0.0_dp
 
         E_bin_width = exdm_inputs%numerics_binned_scatter_rate%E_bin_width
+        ! keV -> eV
         q_bin_width = 1.0e3_dp*exdm_inputs%numerics_binned_scatter_rate%q_bin_width
 
         E_bin = clamp_int(&
@@ -76,12 +79,6 @@ contains
             1, exdm_inputs%numerics_binned_scatter_rate%n_E_bins)
 
         q_mag_list = norm2(q_vec_list, 2) + 1.0e-8_dp
-
-        if ( trim(adjustl(exdm_inputs%screening%type)) /= '' ) then
-            screen_factor_list = exdm_inputs%screening%screening_factor(q_vec_list, omega)
-        else 
-            screen_factor_list = 1.0_dp
-        end if
 
         do m = 1, size(exdm_inputs%dm_model%mX)
             do v = 1, size(exdm_inputs%astroph_model%v_e_list, 1)

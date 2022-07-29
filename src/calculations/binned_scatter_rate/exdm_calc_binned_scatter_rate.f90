@@ -40,7 +40,6 @@ contains
 
         class(elec_state_t), allocatable :: init_states(:), fin_states(:)
 
-        real(dp), allocatable :: extra_FF(:, :)
         integer :: n_init
 
         ! initialize 
@@ -101,161 +100,96 @@ contains
         ! simplify this?
 
         ! bloch PW -> bloch PW
-        allocate(extra_FF(size(exdm_elec_config%init_bloch_PW_basis_config%states), &
-                          size(exdm_elec_config%fin_bloch_PW_basis_config%states)), &
-                source = 1.0_dp)
-
         call binned_scatter_rate_compute(n_proc, proc_id, root_proc_id, &
                                             exdm_inputs, &
                                             exdm_elec_config%init_bloch_PW_basis_config%states, &
                                             exdm_elec_config%fin_bloch_PW_basis_config%states, &
                                             exdm_elec_config%init_bloch_PW_basis_config%jac_list, &
                                             exdm_elec_config%fin_bloch_PW_basis_config%jac_list, &
-                                            extra_FF, &
+                                            exdm_elec_config%init_bloch_PW_basis_config%Zeff_list, &
                                             binned_scatter_rate)
-        deallocate(extra_FF)
 
         ! bloch PW -> bloch STO
-        allocate(extra_FF(size(exdm_elec_config%init_bloch_PW_basis_config%states), &
-                          size(exdm_elec_config%fin_bloch_STO_basis_config%states)), &
-                source = 1.0_dp)
-
         call binned_scatter_rate_compute(n_proc, proc_id, root_proc_id, &
                                             exdm_inputs, &
                                             exdm_elec_config%init_bloch_PW_basis_config%states, &
                                             exdm_elec_config%fin_bloch_STO_basis_config%states, &
                                             exdm_elec_config%init_bloch_PW_basis_config%jac_list, &
                                             exdm_elec_config%fin_bloch_STO_basis_config%jac_list, &
-                                            extra_FF, &
+                                            exdm_elec_config%init_bloch_PW_basis_config%Zeff_list, &
                                             binned_scatter_rate)
-        deallocate(extra_FF)
-
         ! bloch PW -> single PW
-        allocate(extra_FF(size(exdm_elec_config%init_bloch_PW_basis_config%states), &
-                          size(exdm_elec_config%fin_bloch_single_PW_config%states)), &
-                source = 1.0_dp)
-
-        if ( product(shape(extra_FF)) > 0 ) then
-
-            call fermi_factor_extra_FF(extra_FF, &
-                exdm_elec_config%init_bloch_PW_basis_config%Zeff_list, &
-                exdm_elec_config%fin_bloch_single_PW_config%states(:)%energy)
-
-        end if
-
         call binned_scatter_rate_compute(n_proc, proc_id, root_proc_id, &
                                             exdm_inputs, &
                                             exdm_elec_config%init_bloch_PW_basis_config%states, &
                                             exdm_elec_config%fin_bloch_single_PW_config%states, &
                                             exdm_elec_config%init_bloch_PW_basis_config%jac_list, &
                                             exdm_elec_config%fin_bloch_single_PW_config%jac_list, &
-                                            extra_FF, &
-                                            binned_scatter_rate)
-        deallocate(extra_FF)
+                                            exdm_elec_config%init_bloch_PW_basis_config%Zeff_list, &
+                                            binned_scatter_rate, &
+                                            fermi_factor_bool = .TRUE.)
 
         ! bloch STO -> bloch PW
-        allocate(extra_FF(size(exdm_elec_config%init_bloch_STO_basis_config%states), &
-                          size(exdm_elec_config%fin_bloch_PW_basis_config%states)), &
-                source = 1.0_dp)
-
         call binned_scatter_rate_compute(n_proc, proc_id, root_proc_id, &
                                             exdm_inputs, &
                                             exdm_elec_config%init_bloch_STO_basis_config%states, &
                                             exdm_elec_config%fin_bloch_PW_basis_config%states, &
                                             exdm_elec_config%init_bloch_STO_basis_config%jac_list, &
                                             exdm_elec_config%fin_bloch_PW_basis_config%jac_list, &
-                                            extra_FF, &
+                                            exdm_elec_config%init_bloch_STO_basis_config%Zeff_list, &
                                             binned_scatter_rate)
-        deallocate(extra_FF)
 
         ! bloch STO -> bloch STO
-        allocate(extra_FF(size(exdm_elec_config%init_bloch_STO_basis_config%states), &
-                          size(exdm_elec_config%fin_bloch_STO_basis_config%states)), &
-                source = 1.0_dp)
-
         call binned_scatter_rate_compute(n_proc, proc_id, root_proc_id, &
                                             exdm_inputs, &
                                             exdm_elec_config%init_bloch_STO_basis_config%states, &
                                             exdm_elec_config%fin_bloch_STO_basis_config%states, &
                                             exdm_elec_config%init_bloch_STO_basis_config%jac_list, &
                                             exdm_elec_config%fin_bloch_STO_basis_config%jac_list, &
-                                            extra_FF, &
+                                            exdm_elec_config%init_bloch_STO_basis_config%Zeff_list, &
                                             binned_scatter_rate)
-        deallocate(extra_FF)
 
         ! bloch STO -> single PW
-        allocate(extra_FF(size(exdm_elec_config%init_bloch_STO_basis_config%states), &
-                          size(exdm_elec_config%fin_bloch_single_PW_config%states)), &
-                source = 1.0_dp)
-
-        if ( product(shape(extra_FF)) > 0 ) then
-
-            call fermi_factor_extra_FF(extra_FF, &
-                exdm_elec_config%init_bloch_STO_basis_config%Zeff_list, &
-                exdm_elec_config%fin_bloch_single_PW_config%states(:)%energy)
-
-        end if
-
         call binned_scatter_rate_compute(n_proc, proc_id, root_proc_id, &
                                             exdm_inputs, &
                                             exdm_elec_config%init_bloch_STO_basis_config%states, &
                                             exdm_elec_config%fin_bloch_single_PW_config%states, &
                                             exdm_elec_config%init_bloch_STO_basis_config%jac_list, &
                                             exdm_elec_config%fin_bloch_single_PW_config%jac_list, &
-                                            extra_FF, &
-                                            binned_scatter_rate)
-        deallocate(extra_FF)
+                                            exdm_elec_config%init_bloch_STO_basis_config%Zeff_list, &
+                                            binned_scatter_rate, &
+                                            fermi_factor_bool = .TRUE.)
 
         ! single PW -> bloch PW
-        allocate(extra_FF(size(exdm_elec_config%init_bloch_single_PW_config%states), &
-                          size(exdm_elec_config%fin_bloch_PW_basis_config%states)), &
-                source = 1.0_dp)
-
         call binned_scatter_rate_compute(n_proc, proc_id, root_proc_id, &
                                             exdm_inputs, &
                                             exdm_elec_config%init_bloch_single_PW_config%states, &
                                             exdm_elec_config%fin_bloch_PW_basis_config%states, &
                                             exdm_elec_config%init_bloch_single_PW_config%jac_list, &
                                             exdm_elec_config%fin_bloch_PW_basis_config%jac_list, &
-                                            extra_FF, &
+                                            exdm_elec_config%init_bloch_single_PW_config%Zeff_list, &
                                             binned_scatter_rate)
-        deallocate(extra_FF)
 
         ! single PW -> bloch STO
-        allocate(extra_FF(size(exdm_elec_config%init_bloch_single_PW_config%states), &
-                          size(exdm_elec_config%fin_bloch_STO_basis_config%states)), &
-                source = 1.0_dp)
-
         call binned_scatter_rate_compute(n_proc, proc_id, root_proc_id, &
                                             exdm_inputs, &
                                             exdm_elec_config%init_bloch_single_PW_config%states, &
                                             exdm_elec_config%fin_bloch_STO_basis_config%states, &
                                             exdm_elec_config%init_bloch_single_PW_config%jac_list, &
                                             exdm_elec_config%fin_bloch_STO_basis_config%jac_list, &
-                                            extra_FF, &
+                                            exdm_elec_config%init_bloch_single_PW_config%Zeff_list, &
                                             binned_scatter_rate)
-        deallocate(extra_FF)
 
         ! single PW -> single PW
-        allocate(extra_FF(size(exdm_elec_config%init_bloch_single_PW_config%states), &
-                          size(exdm_elec_config%fin_bloch_single_PW_config%states)), &
-                source = 1.0_dp)
-
-        if ( product(shape(extra_FF)) > 0 ) then
-            call fermi_factor_extra_FF(extra_FF, &
-                exdm_elec_config%init_bloch_single_PW_config%Zeff_list, &
-                exdm_elec_config%fin_bloch_single_PW_config%states(:)%energy)
-        end if
-
         call binned_scatter_rate_compute(n_proc, proc_id, root_proc_id, &
                                             exdm_inputs, &
                                             exdm_elec_config%init_bloch_single_PW_config%states, &
                                             exdm_elec_config%fin_bloch_single_PW_config%states, &
                                             exdm_elec_config%init_bloch_single_PW_config%jac_list, &
                                             exdm_elec_config%fin_bloch_single_PW_config%jac_list, &
-                                            extra_FF, &
-                                            binned_scatter_rate)
-        deallocate(extra_FF)
+                                            exdm_elec_config%init_bloch_single_PW_config%Zeff_list, &
+                                            binned_scatter_rate, &
+                                            fermi_factor_bool = .TRUE.)
 
         if ( exdm_inputs%control%verbose ) then
             print*, 'Done computing binned scatter rate!'
