@@ -66,6 +66,8 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 #
 
 html_theme = 'furo'
+html_logo = "./media/exdm-prelim-logo-modified.png"
+html_title = "EXCEED-DM v1.0.0"
 
 # html_theme = 'sphinx_rtd_theme'
 
