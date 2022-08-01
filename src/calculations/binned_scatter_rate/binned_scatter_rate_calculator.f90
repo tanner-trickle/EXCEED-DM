@@ -17,6 +17,7 @@ contains
                                             fermi_factor_bool)
 
         use parallel_index_util
+        use timer_util
 
         use TIF_calculator_type
         use FIF_calculator_type
@@ -59,6 +60,8 @@ contains
 
         integer :: i
 
+        type(timer_t) :: timer
+
         n_tran_all = size(init_states)*size(fin_states)
         n_tran = get_n_transitions(proc_id, n_proc, n_tran_all)
 
@@ -91,22 +94,50 @@ contains
 
             if ( prev_init_id /= init_id ) then
                 ! Compute all parts of TIF dependent on the initial state
+
+                ! call timer%start()
+
                 call TIF_calculator%init_initialize(init_states(init_id))
                 prev_init_id = init_id
+                !
+                ! call timer%end()
+                !
+                ! print*, 'init initialize = ', timer%pretty_dt_str()
             end if
 
             if ( prev_fin_id /= fin_id ) then
                 ! Compute all parts of TIF dependent on the final state
+
+                ! call timer%start()
+
                 call TIF_calculator%fin_initialize(fin_states(fin_id))
                 prev_fin_id = fin_id
+                !
+                ! call timer%end()
+                !
+                ! print*, 'fin initialize = ', timer%pretty_dt_str()
             end if
+
+            ! call timer%start()
 
             ! compute all relevant TIFs
             call TIF_calculator%compute_all(init_states(init_id), fin_states(fin_id), &
                 q0_limit = .FALSE.)
 
+            ! call timer%end()
+            !
+            ! print*, 'TIF = ', timer%pretty_dt_str()
+            !
+            ! call timer%start()
+
             ! compute FIF from TIF
             call FIF_calculator%compute(exdm_inputs%dm_model%FIF_id, TIF_calculator)
+
+            ! call timer%end()
+            !
+            ! print*, 'FIF = ', timer%pretty_dt_str()
+            !
+            ! call timer%start()
 
             ! Optional: Fermi factor 
             if ( present(fermi_factor_bool) ) then
@@ -126,6 +157,12 @@ contains
                 TIF_calculator%q_vec_list, &
                 fin_states(fin_id)%energy - init_states(init_id)%energy)
 
+            ! call timer%end()
+            !
+            ! print*, 'FF+screen = ', timer%pretty_dt_str()
+            !
+            ! call timer%start()
+
             ! compute RIF from FIF
             call binned_scatter_rate_RIF_compute(&
                 binned_scatter_rate(:, :, :, :, :, init_states(init_id)%i), &
@@ -139,6 +176,10 @@ contains
                 extra_FF, &
                 screen_factor_list, &
                 exdm_inputs)
+
+            ! call timer%end()
+            !
+            ! print*, 'RIF = ', timer%pretty_dt_str()
 
         end do
 

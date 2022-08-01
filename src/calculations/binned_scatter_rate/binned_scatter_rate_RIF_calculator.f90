@@ -28,33 +28,12 @@ contains
         real(dp) :: omega
         real(dp) :: q_vec_list(:, :)
         real(dp) :: FIF(:)
-
         real(dp) :: jac_q_list(:)
-
         real(dp) :: jac_I, jac_F
         integer :: spin_dof
         real(dp) :: extra_FF
-
         real(dp) :: screen_factor_list(:)
-
         type(exdm_inputs_t) :: exdm_inputs
-
-        integer :: E_bin
-        real(dp) :: E_bin_width
-        real(dp) :: q_bin_width
-
-        real(dp) :: q_mag_list(size(q_vec_list, 1))
-        real(dp) :: v_m_list(size(q_vec_list, 1))
-        logical :: kinematic_mask(size(q_vec_list, 1))
-
-        real(dp), allocatable :: v_m_packed(:)
-        real(dp), allocatable :: q_mag_packed(:)
-        real(dp), allocatable :: F_med_sq_packed(:)
-        real(dp), allocatable :: FIF_packed(:)
-        real(dp), allocatable :: jac_q_packed(:)
-        integer, allocatable :: q_bin_packed(:)
-        real(dp), allocatable :: kinematic_function_packed(:)
-        real(dp), allocatable :: screen_factor_list_packed(:)
 
         real(dp) :: b_rate(size(binned_rate, 1),& 
                            size(binned_rate, 2),&
@@ -62,8 +41,29 @@ contains
                            size(binned_rate, 4),&
                            size(binned_rate, 5))
             ! Dim : [ n_q, n_E, n_mX, n_med_FF, n_vE ]
-        real(dp) :: b_rate_q(size(binned_rate, 1))
 
+        real(dp) :: E_bin_width
+        real(dp) :: q_bin_width
+
+        integer :: E_bin
+
+        real(dp) :: q_mag_list(size(q_vec_list, 1))
+        real(dp) :: half_q2_mag_list(size(q_vec_list, 1))
+        real(dp) :: qm1_mag_list(size(q_vec_list, 1))
+        real(dp) :: screen_factor_m2_list(size(q_vec_list, 1))
+        real(dp) :: jac_FIF_screen_list(size(q_vec_list, 1))
+
+        integer :: q_bin_list(size(q_vec_list, 1))
+
+        real(dp) :: F_med_sq_list(size(q_vec_list, 1), size(exdm_inputs%dm_model%med_FF))
+
+        real(dp) :: q_vE_list(size(q_vec_list, 1))
+        real(dp) :: v_m_list(size(q_vec_list, 1))
+        real(dp) :: kinematic_function_list(size(q_vec_list, 1), & 
+            size(exdm_inputs%dm_model%mX), &
+            size(exdm_inputs%astroph_model%v_e_km_per_sec, 1))
+
+        real(dp) :: b_rate_q(size(binned_rate, 1))
         real(dp) :: norm
 
         integer :: m, f, v
@@ -78,43 +78,55 @@ contains
             1 + floor( (omega - exdm_inputs%material%band_gap)/E_bin_width ), &
             1, exdm_inputs%numerics_binned_scatter_rate%n_E_bins)
 
+        ! variables only depending on q
         q_mag_list = norm2(q_vec_list, 2) + 1.0e-8_dp
+        half_q2_mag_list = 0.5_dp*q_mag_list**2
+        qm1_mag_list = q_mag_list**(-1)
+        screen_factor_m2_list = screen_factor_list**(-2)
+        jac_FIF_screen_list = jac_q_list*FIF*screen_factor_m2_list 
 
-        do m = 1, size(exdm_inputs%dm_model%mX)
-            do v = 1, size(exdm_inputs%astroph_model%v_e_list, 1)
+        q_bin_list = clamp_int(&
+            1 + floor( q_mag_list/q_bin_width ), &
+            1, exdm_inputs%numerics_binned_scatter_rate%n_q_bins) 
 
-                v_m_list = compute_v_minus(q_vec_list, q_mag_list, &
-                    exdm_inputs%dm_model%mX(m), &
-                    exdm_inputs%astroph_model%v_e_list(v, :), omega)
+        ! mediator
+        do f = 1, size(binned_rate, 4)
 
-                kinematic_mask = ( v_m_list < exdm_inputs%astroph_model%v_esc )
+            F_med_sq_list(:, f) = (q_mag_list*(alpha_EM*m_elec)**(-1))&
+                **(-2*exdm_inputs%dm_model%med_FF(f))
 
-                v_m_packed = pack(v_m_list, kinematic_mask)
-                q_mag_packed = pack(q_mag_list, kinematic_mask)
-                FIF_packed = pack(FIF, kinematic_mask) 
-                jac_q_packed = pack(jac_q_list, kinematic_mask)
-                screen_factor_list_packed = pack(screen_factor_list, kinematic_mask)
+        end do
 
-                q_bin_packed = clamp_int(&
-                    1 + floor( q_mag_packed/q_bin_width ), &
-                    1, exdm_inputs%numerics_binned_scatter_rate%n_q_bins) 
+        ! kinematics
+        do v = 1, size(exdm_inputs%astroph_model%v_e_list, 1)
 
-                kinematic_function_packed = &
-                    exdm_inputs%astroph_model%kinematic_function(v_m_packed, q_mag_packed)
+            q_vE_list = matmul(q_vec_list, exdm_inputs%astroph_model%v_e_list(v, :))
 
-                do f = 1, size(binned_rate, 4)
+            do m = 1, size(exdm_inputs%dm_model%mX)
 
-                    F_med_sq_packed = (q_mag_packed*(alpha_EM*m_elec)**(-1))&
-                        **(-2*exdm_inputs%dm_model%med_FF(f))
+                v_m_list = compute_v_minus(q_vE_list, &
+                    half_q2_mag_list, qm1_mag_list, &
+                    exdm_inputs%dm_model%mX(m)**(-1), &
+                    omega, &
+                    exdm_inputs%astroph_model%v_esc)
+
+                kinematic_function_list(:, m, v) = &
+                    exdm_inputs%astroph_model%kinematic_function(v_m_list, qm1_mag_list)
+
+            end do
+
+        end do
+                
+        do v = 1, size(exdm_inputs%astroph_model%v_e_list, 1)
+            do f = 1, size(binned_rate, 4)
+                do m = 1, size(exdm_inputs%dm_model%mX)
 
                     b_rate_q = 0.0_dp
 
-                    b_rate_q(q_bin_packed) = b_rate_q(q_bin_packed) + &
-                                                jac_q_packed*&
-                                                kinematic_function_packed*&
-                                                F_med_sq_packed*&
-                                                FIF_packed*&
-                                                screen_factor_list_packed**(-2)
+                    b_rate_q(q_bin_list) = b_rate_q(q_bin_list) + &
+                                                jac_FIF_screen_list*&
+                                                kinematic_function_list(:, m, v)*&
+                                                F_med_sq_list(:, f)
 
                     b_rate(:, E_bin, m, f, v) = b_rate_q
 

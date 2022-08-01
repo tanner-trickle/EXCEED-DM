@@ -3,11 +3,11 @@
 
 * `v_0_km_per_sec`: Dark matter SHM velocity distribution parameter, $v_0$.<br /><ul><li><b>Units</b>: $\text{km}/\text{s}$</li></ul>
 
-      v_0_km_per_sec = 2.200000E+02
+      v_0_km_per_sec = 2.300000E+02
 
 * `v_e_km_per_sec`: List of Earth velocity vectors, $\mathbf{v}_e$.<br /><ul><li><b>Units</b>: $\text{km}/\text{s}$</li><li><b>Dim</b>: [ : , 3]</li></ul>
 
-      v_e_km_per_sec = 0.000000E+00 0.000000E+00 2.300000E+02
+      v_e_km_per_sec = 0.000000E+00 0.000000E+00 2.400000E+02
 
 * `v_esc_km_per_sec`: Dark matter SHM velocity distribution parameter, $v_\mathrm{esc}$.<br /><ul><li><b>Units</b>: $\text{km}/\text{s}$</li></ul>
 

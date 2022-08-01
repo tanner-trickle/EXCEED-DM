@@ -30,14 +30,14 @@ module astroph_model_type
 
 contains
 
-    function astroph_model_type_kinematic_function(self, v_m_list, q_mag_list) result ( g0 )
+    function astroph_model_type_kinematic_function(self, v_m_list, qm1_mag_list) result ( g0 )
 
         implicit none
 
         class(astroph_model_t) :: self
 
         real(dp), intent(in) :: v_m_list(:)
-        real(dp), intent(in) :: q_mag_list(:)
+        real(dp), intent(in) :: qm1_mag_list(:)
 
         real(dp) :: g0(size(v_m_list))
 
@@ -45,24 +45,24 @@ contains
 
             case ( 'SHM' )
 
-                g0 = kinematic_function_SHM(self, v_m_list, q_mag_list)
+                g0 = kinematic_function_SHM(self, v_m_list, qm1_mag_list)
 
         end select
 
     end function
 
-    function kinematic_function_SHM(self, v_m_list, q_mag_list) result( g0 )
+    function kinematic_function_SHM(self, v_m_list, qm1_mag_list) result( g0 )
 
         implicit none
 
         class(astroph_model_t) :: self
 
         real(dp), intent(in) :: v_m_list(:)
-        real(dp), intent(in) :: q_mag_list(:)
+        real(dp), intent(in) :: qm1_mag_list(:)
 
         real(dp) :: g0(size(v_m_list))
 
-        g0 = self%SHM_kinematic_c1*q_mag_list**(-1)*(exp(-(v_m_list/self%v_0)**2) - self%SHM_kinematic_c2)
+        g0 = self%SHM_kinematic_c1*qm1_mag_list*(exp(-(v_m_list/self%v_0)**2) - self%SHM_kinematic_c2)
 
     end function
 
@@ -78,7 +78,7 @@ contains
 
         call CFG_add(cfg,&
                      "astroph_model%v_0_km_per_sec", &
-                     220.0_dp, &
+                     230.0_dp, &
                      "Dark matter SHM velocity distribution parameter, $v_0$.<br />"//&
                      "<ul>"//&
                      "<li><b>Units</b>: $\text{km}/\text{s}$</li>"//&
@@ -86,7 +86,7 @@ contains
 
         call CFG_add(cfg,&
                      "astroph_model%v_e_km_per_sec", &
-                     [ 0.0_dp, 0.0_dp, 230.0_dp ], &
+                     [ 0.0_dp, 0.0_dp, 240.0_dp ], &
                      "List of Earth velocity vectors, $\mathbf{v}_e$.<br />"//&
                      "<ul>"//&
                      "<li><b>Units</b>: $\text{km}/\text{s}$</li>"//&

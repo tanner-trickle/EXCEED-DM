@@ -23,11 +23,11 @@
 
     mX_logspace = 20, 1e5, 1e10
 
-    med_FF = 0
+    med_FF = 0, 2
 
 [numerics_binned_scatter_rate]
 
     n_q_bins = 1
-    n_E_bins = 400
+    n_E_bins = 4000
     q_bin_width = 1
     E_bin_width = 1

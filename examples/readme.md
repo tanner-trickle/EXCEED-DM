@@ -4,13 +4,13 @@ The `examples` folder contains a pleathora of self-contained examples to get sta
 
 - `readme.md`: explaining in words what calculation is doing. Repeated below for convenience.
 
-- Input file: `input.txt`. This is where the run parameters (dark matter masses, velocity distribution, etc.) are defined. 
+- `input.txt`: input file. This is where the run parameters (dark matter masses, velocity distribution, etc.) are defined. 
 
-- Electronic configuration file: `elec_config.hdf5`. This contains all the information about the electronic states used in the calculation. For example, in example 1 only the valence and conduction bands in Si are included. Other examples will include more, or other, states. 
+- `elec_config.hdf5`: electronic configuration file. This contains all the information about the electronic states used in the calculation. For example, in example 1 only the valence and conduction bands in Si are included. Other examples will include more, or other, states. 
 
-- Analysis Jupyter notebook: `analysis.ipynb`, to study the output in more detail.
+- `analysis.ipynb`: analysis `Jupyter` ntoebook, to study the output in more detail.
 
-- `output` folder, where the `EXCEED-DM` calculation output is stored.
+- **output** folder, where the `EXCEED-DM` output file, `EXDM_out_example_<#>.hdf5`, is stored.
 
 ## Running
 

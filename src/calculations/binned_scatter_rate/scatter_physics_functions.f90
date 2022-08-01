@@ -26,22 +26,21 @@ contains
 
     end function
 
-    function compute_v_minus(q_vec_list, q_mag_list, mX, vE_vec, omega) result(v_m_list)
+    function compute_v_minus(q_vE_list, half_q2_mag_list, qm1_mag_list, &
+            mX_inv, omega, v_esc) result(v_m_list)
 
         implicit none
 
-        real(dp), intent(in) :: q_vec_list(:, :)
-        real(dp), intent(in) :: q_mag_list(:)
-        real(dp), intent(in) :: mX
-        real(dp), intent(in) :: vE_vec(:)
+        real(dp), intent(in) :: q_vE_list(:)
+        real(dp), intent(in) :: half_q2_mag_list(:)
+        real(dp), intent(in) :: qm1_mag_list(:)
+        real(dp), intent(in) :: mX_inv
         real(dp), intent(in) :: omega
+        real(dp), intent(in) :: v_esc
 
-        real(dp) :: v_m_list(size(q_mag_list))
+        real(dp) :: v_m_list(size(half_q2_mag_list))
 
-        v_m_list = q_mag_list**(-1)*&
-            abs(&
-                matmul(q_vec_list, vE_vec) + 0.5_dp*q_mag_list**2/mX + omega &
-                )
+        v_m_list = min(qm1_mag_list*abs(q_vE_list + half_q2_mag_list*mX_inv + omega), v_esc)
 
     end function
 
