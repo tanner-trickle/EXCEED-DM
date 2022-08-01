@@ -2,6 +2,8 @@ module elec_state_bloch_STO_basis_type
 
     use prec_util, only: dp
 
+    use hdf5_utils
+
     use elec_state_bloch_type
 
     implicit none

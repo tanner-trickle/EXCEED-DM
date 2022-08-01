@@ -2,6 +2,8 @@ module exdm_elec_config_type
 
     use prec_util, only: dp
 
+    use hdf5_utils
+
     use elec_config_bloch_PW_basis_type
     use elec_config_bloch_STO_basis_type
     use elec_config_bloch_single_PW_type
@@ -9,6 +11,8 @@ module exdm_elec_config_type
     implicit none
 
     type :: exdm_elec_config_t
+
+        integer(HID_T) :: hdf5_file_id
 
         ! init
         integer :: n_init_groups
@@ -43,17 +47,21 @@ contains
             print*
         end if
 
+        ! open elec config file
+        call hdf_open_file(self%hdf5_file_id, exdm_inputs%elec_config_input%filename, &
+            status='OLD', action='READ')
+
         ! init
-        call self%init_bloch_PW_basis_config%initialize(exdm_inputs, 'init')
-        call self%init_bloch_STO_basis_config%initialize(exdm_inputs, 'init')
-        call self%init_bloch_single_PW_config%initialize(exdm_inputs, 'init')
+        call self%init_bloch_PW_basis_config%initialize(exdm_inputs, 'init', self%hdf5_file_id)
+        call self%init_bloch_STO_basis_config%initialize(exdm_inputs, 'init', self%hdf5_file_id)
+        call self%init_bloch_single_PW_config%initialize(exdm_inputs, 'init', self%hdf5_file_id)
 
         call set_n_init_groups(self)
 
         ! fin
-        call self%fin_bloch_PW_basis_config%initialize(exdm_inputs, 'fin')
-        call self%fin_bloch_STO_basis_config%initialize(exdm_inputs, 'fin')
-        call self%fin_bloch_single_PW_config%initialize(exdm_inputs, 'fin')
+        call self%fin_bloch_PW_basis_config%initialize(exdm_inputs, 'fin', self%hdf5_file_id)
+        call self%fin_bloch_STO_basis_config%initialize(exdm_inputs, 'fin', self%hdf5_file_id)
+        call self%fin_bloch_single_PW_config%initialize(exdm_inputs, 'fin', self%hdf5_file_id)
 
         if ( exdm_inputs%control%verbose ) then
             print*, 'Done initializing electronic configuration!'

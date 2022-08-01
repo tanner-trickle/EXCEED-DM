@@ -309,7 +309,7 @@ contains
 
         call timer%end()
 
-        print*, 'compute u = ', timer%pretty_dt_str()
+        ! print*, 'compute u = ', timer%pretty_dt_str()
 
         call timer%start()
 
@@ -320,7 +320,7 @@ contains
 
         call timer%end()
 
-        print*, 'zero pad = ', timer%pretty_dt_str()
+        ! print*, 'zero pad = ', timer%pretty_dt_str()
 
     end subroutine
 

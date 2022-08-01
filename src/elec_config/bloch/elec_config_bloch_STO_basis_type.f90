@@ -2,6 +2,8 @@ module elec_config_bloch_STO_basis_type
 
     use prec_util, only: dp
 
+    use hdf5_utils
+
     use elec_state_bloch_STO_basis_type
 
     implicit none
@@ -22,9 +24,9 @@ module elec_config_bloch_STO_basis_type
 
 contains
 
-    subroutine elec_config_bloch_STO_basis_type_initialize(self, exdm_inputs, type)
+    subroutine elec_config_bloch_STO_basis_type_initialize(self, exdm_inputs, type, &
+            hdf5_file_id)
 
-        use hdf5_utils
         use exdm_inputs_type
 
         use FFT_util
@@ -35,7 +37,7 @@ contains
         type(exdm_inputs_t) :: exdm_inputs
         character(len=*) :: type
 
-        integer(HID_t) :: file_id
+        integer(HID_t) :: hdf5_file_id
 
         integer :: n_states
         integer :: dims(6)
@@ -59,15 +61,12 @@ contains
         integer :: FFT_plans(2, 8)
         integer :: spin_dof
 
-        call hdf_open_file(file_id, exdm_inputs%elec_config_input%filename, &
-            status='OLD', action='READ')
-
         ! make sure the dataset exists
         data_path = "elec_states/"//trim(adjustl(type))//"/bloch/STO_basis/"
-        if ( hdf_exists(file_id, trim(adjustl(data_path))) ) then
+        if ( hdf_exists(hdf5_file_id, trim(adjustl(data_path))) ) then
 
             ! state info
-            call hdf_get_dims(file_id, trim(adjustl(data_path))//"state_info/energy_list", dims)
+            call hdf_get_dims(hdf5_file_id, trim(adjustl(data_path))//"state_info/energy_list", dims)
             n_states = dims(1)
 
             allocate(self%states(n_states))
@@ -76,33 +75,33 @@ contains
             allocate(self%k_id_list(n_states), source = 1)
 
             allocate(energy_list(n_states), source = 0.0_dp)
-            call hdf_read_dataset(file_id, trim(adjustl(data_path))//"state_info/energy_list", energy_list)
+            call hdf_read_dataset(hdf5_file_id, trim(adjustl(data_path))//"state_info/energy_list", energy_list)
 
             allocate(i_list(n_states), source = 1)
-            call hdf_read_dataset(file_id, trim(adjustl(data_path))//"state_info/i_list", i_list)
+            call hdf_read_dataset(hdf5_file_id, trim(adjustl(data_path))//"state_info/i_list", i_list)
 
             allocate(k_vec_red_list(n_states, 3), source = 0.0_dp)
-            call hdf_read_dataset(file_id, trim(adjustl(data_path))//"state_info/k_vec_red_list", k_vec_red_list)
+            call hdf_read_dataset(hdf5_file_id, trim(adjustl(data_path))//"state_info/k_vec_red_list", k_vec_red_list)
 
             allocate(nlm_list(n_states, 3), source = 0)
-            call hdf_read_dataset(file_id, trim(adjustl(data_path))//"state_info/nlm_list", nlm_list)
+            call hdf_read_dataset(hdf5_file_id, trim(adjustl(data_path))//"state_info/nlm_list", nlm_list)
 
             allocate(nj_list(n_states), source = 0)
-            call hdf_read_dataset(file_id, trim(adjustl(data_path))//"state_info/nj_list", nj_list)
+            call hdf_read_dataset(hdf5_file_id, trim(adjustl(data_path))//"state_info/nj_list", nj_list)
 
             allocate(coeff_list(n_states, maxval(nj_list), 4), source = 0.0_dp)
-            call hdf_read_dataset(file_id, trim(adjustl(data_path))//"state_info/coeff_list", coeff_list)
+            call hdf_read_dataset(hdf5_file_id, trim(adjustl(data_path))//"state_info/coeff_list", coeff_list)
 
             allocate(eq_pos_red_list(n_states, 3), source = 0.0_dp)
-            call hdf_read_dataset(file_id, trim(adjustl(data_path))//"state_info/eq_pos_red_list", eq_pos_red_list)
+            call hdf_read_dataset(hdf5_file_id, trim(adjustl(data_path))//"state_info/eq_pos_red_list", eq_pos_red_list)
 
-            call hdf_read_dataset(file_id, trim(adjustl(data_path))//"state_info/jac_list", self%jac_list)
-            call hdf_read_dataset(file_id, trim(adjustl(data_path))//"state_info/Zeff_list", self%Zeff_list)
-            call hdf_read_dataset(file_id, trim(adjustl(data_path))//"state_info/k_id_list", self%k_id_list)
+            call hdf_read_dataset(hdf5_file_id, trim(adjustl(data_path))//"state_info/jac_list", self%jac_list)
+            call hdf_read_dataset(hdf5_file_id, trim(adjustl(data_path))//"state_info/Zeff_list", self%Zeff_list)
+            call hdf_read_dataset(hdf5_file_id, trim(adjustl(data_path))//"state_info/k_id_list", self%k_id_list)
 
             ! config
-            call hdf_read_dataset(file_id, trim(adjustl(data_path))//"config/n_x_grid", n_x_grid)
-            call hdf_read_dataset(file_id, trim(adjustl(data_path))//"config/n_r_vec_grid", n_r_vec_grid)
+            call hdf_read_dataset(hdf5_file_id, trim(adjustl(data_path))//"config/n_x_grid", n_x_grid)
+            call hdf_read_dataset(hdf5_file_id, trim(adjustl(data_path))//"config/n_r_vec_grid", n_r_vec_grid)
 
             call create_FFT_plan_pair(n_x_grid, FFT_plans)
 
@@ -123,7 +122,7 @@ contains
                 self%states(n)%n_x_grid = n_x_grid
                 self%states(n)%FFT_plans = FFT_plans
 
-                ! PW basis
+                ! STO basis
                 self%states(n)%n = nlm_list(n, 1)
                 self%states(n)%l = nlm_list(n, 2)
                 self%states(n)%m = nlm_list(n, 3)
@@ -176,8 +175,6 @@ contains
             allocate(self%k_id_list(0))
 
         end if
-
-        call hdf_close_file(file_id)
 
     end subroutine
 

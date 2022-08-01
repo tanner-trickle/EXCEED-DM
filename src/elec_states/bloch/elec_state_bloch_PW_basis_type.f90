@@ -2,11 +2,15 @@ module elec_state_bloch_PW_basis_type
 
     use prec_util, only: dp
 
+    use hdf5_utils
+
     use elec_state_bloch_type
 
     implicit none
 
     type, extends(elec_state_bloch_t) :: elec_state_bloch_PW_basis_t
+
+        integer(HID_T) :: hdf5_file_id
 
         character(len=512) :: hdf5_data_filename 
         character(len=512) :: hdf5_G_list_red_path
@@ -26,6 +30,7 @@ contains
         use hdf5_utils
 
         use constants_util
+        use timer_util
         use FFT_util
 
         implicit none
@@ -47,24 +52,34 @@ contains
 
         integer, allocatable :: G_list_red(:, :)
 
+        type(timer_t) :: timer
+
         u = (0.0_dp, 0.0_dp)
 
-        call hdf_open_file(file_id, self%hdf5_data_filename, status='OLD', action='READ')
+        call timer%start()
 
         ! load G_list_red
-        call hdf_get_dims(file_id, self%hdf5_G_list_red_path, dims)
+        call hdf_get_dims(self%hdf5_file_id, self%hdf5_G_list_red_path, dims)
         allocate(G_list_red(dims(1), dims(2)), source = 0)
-        call hdf_read_dataset(file_id, self%hdf5_G_list_red_path, G_list_red)
+        call hdf_read_dataset(self%hdf5_file_id, self%hdf5_G_list_red_path, G_list_red)
 
         allocate(u_wf_FT(dims(1), self%spin_dof), source = ( 0.0_dp, 0.0_dp ))
         allocate(u_wf_FT_r(dims(1), self%spin_dof), source = 0.0_dp)
         allocate(u_wf_FT_c(dims(1), self%spin_dof), source = 0.0_dp)
 
-        ! load u_wf_FT from hdf5 file
-        call hdf_read_dataset(file_id, self%hdf5_u_FT_r_path, u_wf_FT_r)
-        call hdf_read_dataset(file_id, self%hdf5_u_FT_c_path, u_wf_FT_c)
+        call timer%end()
 
-        call hdf_close_file(file_id)
+        ! print*, 'time to load G_list_red = ', timer%pretty_dt_str()
+
+        call timer%start()
+
+        ! load u_wf_FT from hdf5 file
+        call hdf_read_dataset(self%hdf5_file_id, self%hdf5_u_FT_r_path, u_wf_FT_r)
+        call hdf_read_dataset(self%hdf5_file_id, self%hdf5_u_FT_c_path, u_wf_FT_c)
+
+        call timer%end()
+
+        ! print*, 'time to load wf coeff = ', timer%pretty_dt_str()
 
         u_wf_FT = u_wf_FT_r + ii*u_wf_FT_c
 
