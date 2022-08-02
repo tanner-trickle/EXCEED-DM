@@ -90,7 +90,7 @@ contains
             1, exdm_inputs%numerics_binned_scatter_rate%n_q_bins) 
 
         ! mediator
-        do f = 1, size(binned_rate, 4)
+        do f = 1, size(F_med_sq_list, 2)
 
             F_med_sq_list(:, f) = (q_mag_list*(alpha_EM*m_elec)**(-1))&
                 **(-2*exdm_inputs%dm_model%med_FF(f))
@@ -98,7 +98,7 @@ contains
         end do
 
         ! kinematics
-        do v = 1, size(exdm_inputs%astroph_model%v_e_list, 1)
+        do v = 1, size(exdm_inputs%astroph_model%v_e_list, 1) 
 
             q_vE_list = matmul(q_vec_list, exdm_inputs%astroph_model%v_e_list(v, :))
 
@@ -117,9 +117,9 @@ contains
 
         end do
                 
-        do v = 1, size(exdm_inputs%astroph_model%v_e_list, 1)
-            do f = 1, size(binned_rate, 4)
-                do m = 1, size(exdm_inputs%dm_model%mX)
+        do v = 1, size(kinematic_function_list, 3)
+            do f = 1, size(F_med_sq_list, 2)
+                do m = 1, size(kinematic_function_list, 2)
 
                     b_rate_q = 0.0_dp
 
