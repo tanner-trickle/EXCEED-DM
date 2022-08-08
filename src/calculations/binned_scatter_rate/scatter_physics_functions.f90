@@ -40,7 +40,7 @@ contains
 
         real(dp) :: v_m_list(size(half_q2_mag_list))
 
-        v_m_list = min(qm1_mag_list*abs(q_vE_list + half_q2_mag_list*mX_inv + omega), v_esc)
+        v_m_list = qm1_mag_list*abs(q_vE_list + half_q2_mag_list*mX_inv + omega)
 
     end function
 

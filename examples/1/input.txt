@@ -7,8 +7,8 @@
 
     # Create the default input file for the documentation.
 
-    save_default_inputs_markdown    = T
-    default_input_markdown_filename = './docs/pages/file_spec/inputs.md'
+    #save_default_inputs_markdown    = T
+    #default_input_markdown_filename = './docs/pages/file_spec/inputs.md'
 
 [elec_config_input]
     filename = './examples/1/elec_config.hdf5'
@@ -24,11 +24,9 @@
 
 [dm_model]
 
-    mX = 1e6, 1e7, 1e8, 1e9
+    mX = 1e9
 
-    mX_logspace = 20, 1e5, 1e10
-
-    med_FF = 0
+    med_FF = 0, 2
 
 [numerics_binned_scatter_rate]
 

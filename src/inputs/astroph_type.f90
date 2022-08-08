@@ -61,8 +61,19 @@ contains
         real(dp), intent(in) :: qm1_mag_list(:)
 
         real(dp) :: g0(size(v_m_list))
+        integer :: q
 
-        g0 = self%SHM_kinematic_c1*qm1_mag_list*(exp(-(v_m_list/self%v_0)**2) - self%SHM_kinematic_c2)
+        do q = 1, size(v_m_list)
+
+            g0(q) = 0.0_dp
+
+            if ( v_m_list(q) < self%v_esc )  then
+
+                g0(q) = self%SHM_kinematic_c1*qm1_mag_list(q)*(exp(-(v_m_list(q)/self%v_0)**2) - self%SHM_kinematic_c2)
+
+            end if
+
+        end do
 
     end function
 

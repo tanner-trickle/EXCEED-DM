@@ -104,6 +104,15 @@ class EXDMData:
 
     def get_material_band_gap(self):
         return self.hdf5_data['material/band_gap'][...]
+    
+    def get_numerics_dielectric_q_bin_width(self):
+        return self.hdf5_data['numerics_dielectric/q_bin_width'][...]
+    
+    def get_numerics_dielectric_q_bin_width_eV(self):
+        return 10**3*self.get_numerics_dielectric_q_bin_width()
+        
+    def get_numerics_dielectric_E_bin_width(self):
+        return self.hdf5_data['numerics_dielectric/E_bin_width'][...]
         
     def get_numerics_scatter_binned_rate_E_bin_width(self):
         return self.hdf5_data['numerics_binned_scatter_rate/E_bin_width'][...]
@@ -122,11 +131,24 @@ class EXDMData:
         
         if i_list == [0]:
             if len(self.get_med_FF()) > 1:
+                if len(self.get_masses_eV()) > 1:
 
-                binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}'][f'mass_{mass_idx}']['total_binned_scatter_rate'][...]
+                    binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}'][f'mass_{mass_idx}']['total_binned_scatter_rate'][...]
+                    
+                else:
+                    
+                    binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}']['total_binned_scatter_rate'][...]
                 
             else:
-                binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate'][f'mass_{mass_idx}']['total_binned_scatter_rate'][...]
+                
+                if len(self.get_masses_eV()) > 1:
+                    
+                    binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate'][f'mass_{mass_idx}']['total_binned_scatter_rate'][...]
+                    
+                else:
+                    
+                    binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate']['total_binned_scatter_rate'][...]
+                    
 
         return binned_scatter_rate_qE + 10**(-100)
     
@@ -227,6 +249,29 @@ class EXDMData:
             cs_reach.append([ mass, n_cut / total_rate ])
             
         return np.transpose(np.array(sorted(cs_reach , key=lambda ele: ele[0])))
+    
+    def get_dielectric(self, width_param = [0, 0, 0]):
+        """
+            Returns the complex dielectric.
+        """
+        
+        widths = np.transpose(self.hdf5_data['numerics_dielectric']['widths'][...])
+        
+        width_id = get_index_2d(width_param, widths)
+        
+        if len(widths) > 1:
+        
+            di_r = self.hdf5_data['dielectric'][f'width_{width_id}']['dielectric_r'][...]
+            di_c = self.hdf5_data['dielectric'][f'width_{width_id}']['dielectric_c'][...]
+            
+        else:
+            
+            di_r = self.hdf5_data['dielectric']['dielectric_r'][...]
+            di_c = self.hdf5_data['dielectric']['dielectric_c'][...]
+            
+        di = di_r + 1j*di_c
+        
+        return np.transpose(di)
             
             
         
