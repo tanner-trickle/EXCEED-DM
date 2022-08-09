@@ -55,6 +55,7 @@ contains
         integer :: i
 
         type(TIF_calculator_t) :: TIF_calculator
+        type(TIF_calculator_t) :: TIF_v_calculator
 
         real(dp) :: extra_FF
 
@@ -69,9 +70,11 @@ contains
 
         ! initialize mask
         TIF_calculator%mask = .FALSE.
+        TIF_v_calculator%mask = .FALSE.
 
         ! set mask
         TIF_calculator%mask(1) = .TRUE.
+        TIF_v_calculator%mask(2) = .TRUE.
 
         ! For all the states this processor has to compute for
         do i = 1, n_tran
@@ -80,6 +83,8 @@ contains
 
                 ! initialize
                 call TIF_calculator%setup(exdm_inputs, init_states(i), fin_states(i), q0_limit = .FALSE.)
+                ! initialize
+                call TIF_v_calculator%setup(exdm_inputs, init_states(i), fin_states(i), q0_limit = .TRUE.)
 
             end if
 
@@ -92,6 +97,7 @@ contains
             if ( prev_init_id /= init_id ) then
                 ! Compute all parts of TIF dependent on the initial state
                 call TIF_calculator%init_initialize(init_states(init_id))
+                call TIF_v_calculator%init_initialize(init_states(init_id))
                 prev_init_id = init_id
 
             end if
@@ -99,6 +105,7 @@ contains
             if ( prev_fin_id /= fin_id ) then
                 ! Compute all parts of TIF dependent on the final state
                 call TIF_calculator%fin_initialize(fin_states(fin_id))
+                call TIF_v_calculator%fin_initialize(fin_states(fin_id))
                 prev_fin_id = fin_id
 
             end if
@@ -106,6 +113,8 @@ contains
             ! compute all relevant TIFs
             call TIF_calculator%compute_all(init_states(init_id), fin_states(fin_id), &
                 q0_limit = .FALSE.)
+            call TIF_v_calculator%compute_all(init_states(init_id), fin_states(fin_id), &
+                q0_limit = .TRUE.)
 
             ! Optional: Fermi factor 
             if ( present(fermi_factor_bool) ) then
@@ -130,7 +139,8 @@ contains
                 min( init_states(init_id)%spin_dof, fin_states(fin_id)%spin_dof ), &
                 exdm_inputs, &
                 extra_FF, &
-                TIF_calculator%TIF_1)
+                TIF_calculator%TIF_1, &
+                TIF_v_calculator%TIF_v(1, :))
 
         end do
 

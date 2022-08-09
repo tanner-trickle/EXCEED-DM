@@ -10,7 +10,7 @@ contains
 
     subroutine dielectric_suscep_IF_compute(dielectric, omega_IF, &
                                             q_vec_list, jac_I, jac_F, spin_dof, &
-                                            exdm_inputs, extra_FF_IF, TIF_1)
+                                            exdm_inputs, extra_FF_IF, TIF_1, TIF_v_q0)
 
         use abs_physics_functions, only: width_func, green_func
 
@@ -25,6 +25,7 @@ contains
 
         real(dp) :: q_vec_list(:, :)
         complex(dp) :: TIF_1(:)
+        complex(dp) :: TIF_v_q0(3)
 
         real(dp) :: jac_I, jac_F
 
@@ -52,6 +53,13 @@ contains
 
         real(dp) :: V_q_bin, q_mag_bin
 
+        real(dp) :: q_hat(3)
+
+        complex(dp) :: TIF_vq
+
+        real(dp) :: TIF_1_sq
+        real(dp) :: TIF_v_sq
+
         ddi = ( 0.0_dp, 0.0_dp )
         ddi_q = 0.0_dp
 
@@ -62,32 +70,39 @@ contains
 
         do q = 1, size(q_vec_list, 1)
 
-            q_mag = norm2(q_vec_list(q, :))
+            q_mag = norm2(q_vec_list(q, :)) + 1.0e-8_dp
 
-            if ( ( q_mag > 1.0e-8_dp ) .and. &
-                ( q_mag < exdm_inputs%numerics_dielectric%n_q_bins*q_bin_width ) ) then
+            if ( q_mag < exdm_inputs%numerics_dielectric%n_q_bins*q_bin_width ) then
 
-                q_theta = acos(q_vec_list(q, 3)/q_mag)
-                q_phi = mod(atan2( q_vec_list(q, 2)/q_mag, q_vec_list(q, 1)/q_mag ) + 2.0_dp*pi, 2.0_dp*pi)
+                q_hat = q_vec_list(q, :)/q_mag
+
+                q_theta = acos( q_hat(3) )
+                q_phi = mod(atan2( q_hat(2), q_hat(1) ) + 2.0_dp*pi, 2.0_dp*pi)
+
+                q_bin = clamp_int(&
+                    1 + floor( q_mag/q_bin_width ), &
+                    1, exdm_inputs%numerics_dielectric%n_q_bins)
 
                 q_theta_bin = clamp_int( 1 + floor(q_theta/q_theta_bin_width), &
                     1, max( 1, exdm_inputs%numerics_dielectric%n_q_theta ))
                 q_phi_bin = clamp_int( 1 + floor(q_phi/q_phi_bin_width), &
                     1, max( 1, exdm_inputs%numerics_dielectric%n_q_phi ))
 
-                q_bin = clamp_int(&
-                    1 + floor( q_mag/q_bin_width ), &
-                    1, exdm_inputs%numerics_dielectric%n_q_bins)
-
                 V_q_bin = (1.0_dp/3.0_dp)*q_bin_width**3*( q_bin*(3*q_bin - 3) + 1 )*&
                                 ( cos( (q_theta_bin - 1)*q_theta_bin_width ) - cos(q_theta_bin*q_theta_bin_width) )*&
                                 ( q_phi_bin_width )
 
+                TIF_vq = dot_product(q_hat, TIF_v_q0)
+
+                TIF_1_sq = conjg(TIF_1(q))*TIF_1(q)
+                TIF_v_sq = conjg(TIF_vq)*TIF_vq 
+
                 ddi_q(q_phi_bin, q_theta_bin, q_bin) = ddi_q(q_phi_bin, q_theta_bin, q_bin) + &
                                                             (-2.0_dp/spin_dof)*jac_I*jac_F*&
-                                                            (e_EM**2/q_mag**2)*&
+                                                            (e_EM**2)*&
+                                                            ( q_mag**2 + omega_IF**2*TIF_1_sq/TIF_v_sq )**(-1)*&
                                                             exdm_inputs%material%pc_vol**(-2)*&
-                                                            conjg(TIF_1(q))*TIF_1(q)*&
+                                                            TIF_1_sq*&
                                                             V_q_bin**(-1)*&
                                                             extra_FF_IF*&
                                                             (2.0_dp*pi)**3

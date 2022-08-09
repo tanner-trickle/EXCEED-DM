@@ -259,15 +259,8 @@ class EXDMData:
         
         width_id = get_index_2d(width_param, widths)
         
-        if len(widths) > 1:
-        
-            di_r = self.hdf5_data['dielectric'][f'width_{width_id}']['dielectric_r'][...]
-            di_c = self.hdf5_data['dielectric'][f'width_{width_id}']['dielectric_c'][...]
-            
-        else:
-            
-            di_r = self.hdf5_data['dielectric']['dielectric_r'][...]
-            di_c = self.hdf5_data['dielectric']['dielectric_c'][...]
+        di_r = self.hdf5_data['dielectric'][f'width_{width_id}']['dielectric_r'][...]
+        di_c = self.hdf5_data['dielectric'][f'width_{width_id}']['dielectric_c'][...]
             
         di = di_r + 1j*di_c
         

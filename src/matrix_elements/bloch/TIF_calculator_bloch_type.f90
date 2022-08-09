@@ -454,6 +454,7 @@ contains
 
             ! For | I > != | F > this is zero by definition.
             TIF_1 = ( 0.0_dp, 0.0_dp )
+            ! call compute_TIF_helper_scalar_q0_limit(self, self%u_f_pad, self%O_u_1_pad, TIF_1)
 
         else 
 
