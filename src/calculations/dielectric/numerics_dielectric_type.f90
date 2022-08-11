@@ -17,6 +17,8 @@ module numerics_dielectric_type
 
         real(dp), allocatable :: widths(:, :)
 
+        real(dp) :: eta
+
         character(len=512) :: smear_type
 
         contains
@@ -42,6 +44,11 @@ contains
                     "numerics_dielectric%n_q_bins", &
                     1, &
                     "Number of bins in $q$ space")
+
+        call CFG_add(cfg, &
+                    "numerics_dielectric%eta", &
+                    0.1_dp, &
+                    "Parameter controlling the small $q$ approximation for the dielectric.")
 
         call CFG_add(cfg, &
                     "numerics_dielectric%n_E_bins", &
@@ -109,6 +116,8 @@ contains
         call CFG_get(cfg, "numerics_dielectric%n_E_bins", self%n_E_bins)
         call CFG_get(cfg, "numerics_dielectric%q_bin_width", self%q_bin_width)
         call CFG_get(cfg, "numerics_dielectric%E_bin_width", self%E_bin_width)
+
+        call CFG_get(cfg, "numerics_dielectric%eta", self%eta)
 
         call CFG_get_size(cfg, "numerics_dielectric%widths", n)
 

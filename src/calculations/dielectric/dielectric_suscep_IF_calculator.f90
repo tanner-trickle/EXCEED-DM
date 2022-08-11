@@ -57,9 +57,6 @@ contains
 
         complex(dp) :: TIF_vq
 
-        real(dp) :: TIF_1_sq
-        real(dp) :: TIF_v_sq
-
         ddi = ( 0.0_dp, 0.0_dp )
         ddi_q = 0.0_dp
 
@@ -94,18 +91,29 @@ contains
 
                 TIF_vq = dot_product(q_hat, TIF_v_q0)
 
-                TIF_1_sq = conjg(TIF_1(q))*TIF_1(q)
-                TIF_v_sq = conjg(TIF_vq)*TIF_vq 
+                if ( q_mag > exdm_inputs%numerics_dielectric%eta * omega_IF / abs(TIF_vq) ) then
 
-                ddi_q(q_phi_bin, q_theta_bin, q_bin) = ddi_q(q_phi_bin, q_theta_bin, q_bin) + &
+                    ddi_q(q_phi_bin, q_theta_bin, q_bin) = ddi_q(q_phi_bin, q_theta_bin, q_bin) + &
                                                             (-2.0_dp/spin_dof)*jac_I*jac_F*&
-                                                            (e_EM**2)*&
-                                                            ( q_mag**2 + omega_IF**2*TIF_1_sq/TIF_v_sq )**(-1)*&
                                                             exdm_inputs%material%pc_vol**(-2)*&
-                                                            TIF_1_sq*&
+                                                            (e_EM**2/q_mag**2)*&
+                                                            ( conjg(TIF_1(q))*TIF_1(q) )*&
                                                             V_q_bin**(-1)*&
                                                             extra_FF_IF*&
                                                             (2.0_dp*pi)**3
+
+                else 
+
+                    ddi_q(q_phi_bin, q_theta_bin, q_bin) = ddi_q(q_phi_bin, q_theta_bin, q_bin) + &
+                                                            (-2.0_dp/spin_dof)*jac_I*jac_F*&
+                                                            exdm_inputs%material%pc_vol**(-2)*&
+                                                            (e_EM**2/omega_IF**2)*&
+                                                            ( conjg(TIF_vq)*TIF_vq )*&
+                                                            V_q_bin**(-1)*&
+                                                            extra_FF_IF*&
+                                                            (2.0_dp*pi)**3
+
+                end if
 
             end if
 

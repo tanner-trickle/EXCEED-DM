@@ -26,6 +26,6 @@
     widths = 0.2, 1, 0.2
 
     n_E_bins = 1000
-    n_q_bins = 25
-    E_bin_width = 0.1
-    q_bin_width = 2
+    n_q_bins = 500
+    E_bin_width = 1
+    q_bin_width = 1

@@ -153,6 +153,10 @@
 
       E_bin_width = 1.000000E+00
 
+* `eta`: Parameter controlling the small $q$ approximation for the dielectric.
+
+      eta = 1.000000E-01
+
 * `n_E_bins`: Number of bins in $\omega$ space
 
       n_E_bins = 1
