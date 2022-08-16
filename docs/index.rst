@@ -16,7 +16,7 @@ Home
     File Specifications<pages/file_spec/index.rst>
     Examples<pages/examples_link.md>
     Papers<pages/papers.rst>
-    Source Documentation<source/index.rst>
+..  Source Documentation<source/index.rst>
 
 
 .. Indices and tables

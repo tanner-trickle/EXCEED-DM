@@ -32,8 +32,8 @@ release = '1.0.0'
 # ones.
 extensions = [
         'myst_parser',
-        'sphinxfortran.fortran_domain',
-        'sphinxfortran.fortran_autodoc',
+        # 'sphinxfortran.fortran_domain',
+        # 'sphinxfortran.fortran_autodoc',
         'sphinxcontrib.bibtex',
         'sphinx_copybutton',
         'sphinx_tabs.tabs'
@@ -45,10 +45,10 @@ bibtex_bibfiles = ['bibliography.bib']
 bibtex_default_style = 'plain'
 
 # Fortran
-fortran_src = [
-                    "../src/*.f90", 
-                    "../src/utils/*.f90"
-            ]
+# fortran_src = [
+#                     "../src/*.f90", 
+#                     "../src/utils/*.f90"
+#             ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
