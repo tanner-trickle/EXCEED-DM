@@ -93,7 +93,33 @@ Pre-requisites
 
           sudo apt install libhdf5-serial-dev
 
-  .. note:: The HDF5 library must have been installed with the same compiler that you are compiling :code:`EXCEED-DM` with.
+     .. group-tab:: Source
+
+       After downloading the source :code:`.tar.gz` file containing version :code:`X.Y.Z`,
+
+       .. code-block:: none
+
+          gunzip < hdf5-X.Y.Z.tar.gz | tar -xf
+          cd hdf5-X.Y.Z
+          ./configure --enable-fortran --enable-hl
+          make
+          make check           # run test suite
+          make install  
+          make check-install   # verify installation
+
+       .. warning:: 
+          
+           If you receive "Catastrophic error" regarding multibyte chars, simply prepend
+
+           .. code-block:: none
+
+              CFLAGS=-no-multibyte-chars
+
+           at the initial configure step.
+
+       `Further Instructions <https://accserv.lepp.cornell.edu/svn/packages/hdf5/release_docs/INSTALL>`_
+
+  .. note:: The HDF5 library must have been installed with the same compiler that you are compiling :code:`EXCEED-DM` with. If this is not the case try building :code:`HDF5` from source.
 
 * `LAPACK <https://netlib.org/lapack/>`_
 

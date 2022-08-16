@@ -276,13 +276,32 @@ make
 </li>
 <li><p><a class="reference external" href="https://www.hdfgroup.org/downloads/hdf5/">HDF5 (serial, with Fortran support)</a></p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-3-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-3-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libhdf5-serial-dev
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button><button aria-controls="panel-3-U291cmNl" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-3-U291cmNl" name="U291cmNl" role="tab" tabindex="-1">Source</button></div><div aria-labelledby="tab-3-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-3-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libhdf5-serial-dev
 </pre></div>
 </div>
+</div><div aria-labelledby="tab-3-U291cmNl" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-3-U291cmNl" name="U291cmNl" role="tabpanel" tabindex="0"><p>After downloading the source <code class="code docutils literal notranslate"><span class="pre">.tar.gz</span></code> file containing version <code class="code docutils literal notranslate"><span class="pre">X.Y.Z</span></code>,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gunzip &lt; hdf5-X.Y.Z.tar.gz | tar -xf
+cd hdf5-X.Y.Z
+./configure --enable-fortran --enable-hl
+make
+make check           # run test suite
+make install
+make check-install   # verify installation
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you receive “Catastrophic error” regarding multibyte chars, simply prepend</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CFLAGS=-no-multibyte-chars
+</pre></div>
+</div>
+<p>at the initial configure step.</p>
+</div>
+<p><a class="reference external" href="https://accserv.lepp.cornell.edu/svn/packages/hdf5/release_docs/INSTALL">Further Instructions</a></p>
 </div></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The HDF5 library must have been installed with the same compiler that you are compiling <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> with.</p>
+<p>The HDF5 library must have been installed with the same compiler that you are compiling <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> with. If this is not the case try building <code class="code docutils literal notranslate"><span class="pre">HDF5</span></code> from source.</p>
 </div>
 </li>
 <li><p><a class="reference external" href="https://netlib.org/lapack/">LAPACK</a></p>
