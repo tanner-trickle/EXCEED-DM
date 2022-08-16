@@ -129,26 +129,64 @@ class EXDMData:
         mass_idx = get_index(mass_MeV, self.get_masses_MeV())
         med_FF_idx = get_index(med_FF, self.get_med_FF())
         
-        if i_list == [0]:
-            if len(self.get_med_FF()) > 1:
-                if len(self.get_masses_eV()) > 1:
+        if len(self.get_med_FF()) > 1:
+            if len(self.get_masses_eV()) > 1:
+
+                if i_list == [0]:
 
                     binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}'][f'mass_{mass_idx}']['total_binned_scatter_rate'][...]
                     
                 else:
                     
-                    binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}']['total_binned_scatter_rate'][...]
-                
-            else:
-                
-                if len(self.get_masses_eV()) > 1:
+                    binned_scatter_rate_qE = np.zeros(np.shape(self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}'][f'mass_{mass_idx}'][f'i_1']['binned_scatter_rate'][...]))
                     
+                    for i in i_list:
+                        
+                        binned_scatter_rate_qE += self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}'][f'mass_{mass_idx}'][f'i_{i}']['binned_scatter_rate'][...]
+                        
+            else:
+
+                if i_list == [0]:
+
+                    binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}']['total_binned_scatter_rate'][...]
+                    
+                else:
+                    
+                    binned_scatter_rate_qE = np.zeros(np.shape(self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}'][f'i_1']['binned_scatter_rate'][...]))
+                    
+                    for i in i_list:
+
+                        binned_scatter_rate_qE += self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}'][f'i_{i}']['binned_scatter_rate'][...]
+
+        else:
+
+            if len(self.get_masses_eV()) > 1:
+
+                if i_list == [0]:
+
                     binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate'][f'mass_{mass_idx}']['total_binned_scatter_rate'][...]
                     
                 else:
                     
+                    binned_scatter_rate_qE = np.zeros(np.shape(self.hdf5_data['binned_scatter_rate'][f'mass_{mass_idx}'][f'i_1']['binned_scatter_rate'][...]))
+                    
+                    for i in i_list:
+                        
+                        binned_scatter_rate_qE += self.hdf5_data['binned_scatter_rate'][f'mass_{mass_idx}'][f'i_{i}']['binned_scatter_rate'][...]
+                        
+            else:
+
+                if i_list == [0]:
+
                     binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate']['total_binned_scatter_rate'][...]
                     
+                else:
+                    
+                    binned_scatter_rate_qE = np.zeros(np.shape(self.hdf5_data['binned_scatter_rate'][f'i_1']['binned_scatter_rate'][...]))
+                    
+                    for i in i_list:
+                    
+                        binned_scatter_rate_qE += self.hdf5_data['binned_scatter_rate'][f'i_{i}']['binned_scatter_rate'][...]
 
         return binned_scatter_rate_qE + 10**(-100)
     
@@ -200,7 +238,8 @@ class EXDMData:
                           sigma_cm2 = 10**(-40), 
                           expt_M_kg = 1,
                           expt_T_year = 1, 
-                          E_bin_width = 1):
+                          E_bin_width = 1,
+                          i_list = [0]):
         """
             Returns the (dimensionless) binned (in E) scatter rate for a given mass. 
         """
@@ -211,7 +250,8 @@ class EXDMData:
         # sum over the q bins
         binned_scatter_rate_E = np.sum(self.get_binned_scatter_rate_qE(
                                             mass_MeV = mass_MeV, 
-                                            med_FF = med_FF), 
+                                            med_FF = med_FF, 
+                                            i_list = i_list), 
                                 axis = 1)
         
         # rebin to specified width
