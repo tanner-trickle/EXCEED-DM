@@ -15,6 +15,7 @@ Home
     Getting Started<pages/getting_started.rst>
     File Specifications<pages/file_spec/index.rst>
     Examples<pages/examples_link.md>
+    Data<pages/data.rst>
     Papers<pages/papers.rst>
 ..  Source Documentation<source/index.rst>
 

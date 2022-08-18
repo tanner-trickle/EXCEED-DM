@@ -1,6 +1,6 @@
 # Examples
 
-The `examples` folder contains a pleathora of self-contained examples to get started with running (and processing the results of) `EXCEED-DM`. Each folder contains its own: 
+The `examples` folder contains a plethora of self-contained examples to get started with running (and processing the results of) `EXCEED-DM`. Each folder contains its own: 
 
 - `readme.md`: explaining in words what calculation is doing. Repeated below for convenience.
 
@@ -8,19 +8,19 @@ The `examples` folder contains a pleathora of self-contained examples to get sta
 
 - `elec_config.hdf5`: electronic configuration file. This contains all the information about the electronic states used in the calculation. For example, in example 1 only the valence and conduction bands in Si are included. Other examples will include more, or other, states. 
 
-- `analysis.ipynb`: analysis `Jupyter` ntoebook, to study the output in more detail.
+- `analysis.ipynb`: analysis `Jupyter` notebook, to study the output in more detail.
 
 - **output** folder, where the `EXCEED-DM` output file, `EXDM_out_example_<#>.hdf5`, is stored.
 
 ## Running
 
-- To perform an example calculation, go to the main folder and run
+- To perform an example calculation, go to the main folder and run,
 
         mpirun -np <n_proc> ./build/exdm ./examples/<example_ID>/input.txt
 
 where `<n_proc>` is the number of processors to run on and `<example_ID>` is the example ID you want to compute for.
 
-- To run all the examples, from the main folder run
+- To run all the examples, from the main folder run,
 
         ./examples/run_all_examples.sh <n_proc>
 

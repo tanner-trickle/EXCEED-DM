@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Papers using EXCEED-DM" href="papers.html" /><link rel="prev" title="Output File" href="file_spec/output.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Data" href="data.html" /><link rel="prev" title="Output File" href="file_spec/output.html" />
 
     <link rel="shortcut icon" href="../_static/exdm-favicon2.png"/><meta name="generator" content="sphinx-5.1.1, furo 2022.04.07"/>
         <title>Examples - EXCEED-DM v1.0.0</title>
@@ -168,6 +168,7 @@
 </ul>
 </li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="papers.html">Papers</a></li>
 </ul>
 
@@ -203,18 +204,18 @@
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h1>
-<p>The <code class="docutils literal notranslate"><span class="pre">examples</span></code> folder contains a pleathora of self-contained examples to get started with running (and processing the results of) <code class="docutils literal notranslate"><span class="pre">EXCEED-DM</span></code>. Each folder contains its own:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">examples</span></code> folder contains a plethora of self-contained examples to get started with running (and processing the results of) <code class="docutils literal notranslate"><span class="pre">EXCEED-DM</span></code>. Each folder contains its own:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">readme.md</span></code>: explaining in words what calculation is doing. Repeated below for convenience.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">input.txt</span></code>: input file. This is where the run parameters (dark matter masses, velocity distribution, etc.) are defined.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">elec_config.hdf5</span></code>: electronic configuration file. This contains all the information about the electronic states used in the calculation. For example, in example 1 only the valence and conduction bands in Si are included. Other examples will include more, or other, states.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">analysis.ipynb</span></code>: analysis <code class="docutils literal notranslate"><span class="pre">Jupyter</span></code> ntoebook, to study the output in more detail.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">analysis.ipynb</span></code>: analysis <code class="docutils literal notranslate"><span class="pre">Jupyter</span></code> notebook, to study the output in more detail.</p></li>
 <li><p><strong>output</strong> folder, where the <code class="docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> output file, <code class="docutils literal notranslate"><span class="pre">EXDM_out_example_&lt;#&gt;.hdf5</span></code>, is stored.</p></li>
 </ul>
 <section id="running">
 <h2>Running<a class="headerlink" href="#running" title="Permalink to this heading">#</a></h2>
 <ul>
-<li><p>To perform an example calculation, go to the main folder and run</p>
+<li><p>To perform an example calculation, go to the main folder and run,</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  mpirun -np &lt;n_proc&gt; ./build/exdm ./examples/&lt;example_ID&gt;/input.txt
 </pre></div>
 </div>
@@ -222,7 +223,7 @@
 </ul>
 <p>where <code class="docutils literal notranslate"><span class="pre">&lt;n_proc&gt;</span></code> is the number of processors to run on and <code class="docutils literal notranslate"><span class="pre">&lt;example_ID&gt;</span></code> is the example ID you want to compute for.</p>
 <ul>
-<li><p>To run all the examples, from the main folder run</p>
+<li><p>To run all the examples, from the main folder run,</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  ./examples/run_all_examples.sh &lt;n_proc&gt;
 </pre></div>
 </div>
@@ -390,12 +391,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="papers.html">
+          <a class="next-page" href="data.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Papers using EXCEED-DM</div>
+                <div class="title">Data</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
