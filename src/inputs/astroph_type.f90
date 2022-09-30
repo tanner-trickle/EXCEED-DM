@@ -25,10 +25,37 @@ module astroph_model_type
             procedure :: set_defaults => astroph_model_type_set_defaults
             procedure :: get_values => astroph_model_type_get_values
             procedure :: kinematic_function => astroph_model_type_kinematic_function
+            procedure :: save => astroph_model_type_save
 
     end type
 
 contains
+
+    subroutine astroph_model_type_save(self, filename)
+
+        use hdf5_utils
+
+        implicit none
+
+        class(astroph_model_t) :: self
+
+        character(len=*) :: filename
+        integer(HID_T) :: file_id
+
+        call hdf_open_file(file_id, filename, status='OLD', action='WRITE')
+
+        call hdf_create_group(file_id, 'astroph_model')
+
+        call hdf_write_dataset(file_id, 'astroph_model/v_0', self%v_0_km_per_sec)
+        call hdf_write_dataset(file_id, 'astroph_model/v_esc', self%v_esc_km_per_sec)
+
+        call hdf_write_dataset(file_id, 'astroph_model/vel_dist_name', self%vel_distribution_name)
+
+        call hdf_write_dataset(file_id, 'astroph_model/v_e_list', self%v_e_km_per_sec)
+
+        call hdf_close_file(file_id)
+
+    end subroutine
 
     function astroph_model_type_kinematic_function(self, v_m_list, qm1_mag_list) result ( g0 )
 

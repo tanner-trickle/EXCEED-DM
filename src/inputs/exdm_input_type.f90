@@ -63,6 +63,7 @@ contains
         call self%dm_model%save(self%control%out_filename)
         call self%experiment%save(self%control%out_filename)
         call self%material%save(self%control%out_filename)
+        call self%astroph_model%save(self%control%out_filename)
         
         call self%numerics_binned_scatter_rate%save(self%control%out_filename)
         call self%numerics_absorption_rate%save(self%control%out_filename)

@@ -119,6 +119,8 @@ class EXDMData:
     
     def get_numerics_absorption_rate_widths(self):
         return np.transpose(self.hdf5_data['numerics_absorption_rate/widths'][...])
+    
+    def get_v_e_list
 
     def get_binned_scatter_rate_qE(self, 
                           mass_MeV = 1, 
@@ -128,6 +130,8 @@ class EXDMData:
         
         mass_idx = get_index(mass_MeV, self.get_masses_MeV())
         med_FF_idx = get_index(med_FF, self.get_med_FF())
+        
+        v_e_idx = get_index_2d(vE, self.get_v_e_list())
         
         if len(self.get_med_FF()) > 1:
             if len(self.get_masses_eV()) > 1:
