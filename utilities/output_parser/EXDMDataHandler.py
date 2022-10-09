@@ -120,77 +120,47 @@ class EXDMData:
     def get_numerics_absorption_rate_widths(self):
         return np.transpose(self.hdf5_data['numerics_absorption_rate/widths'][...])
     
-    def get_v_e_list
+    def get_v_e_list(self):
+        
+        if 'astroph_model' in self.hdf5_data.keys():
+            
+            return np.transpose(self.hdf5_data['astroph_model']['v_e_list'][...])
+        
+        else:
+            
+            return []
 
     def get_binned_scatter_rate_qE(self, 
                           mass_MeV = 1, 
                           med_FF = 2., 
-                          vE = [0, 0, 240], 
+                          v_e = [0, 0, 240], 
                           i_list = [0]):
         
-        mass_idx = get_index(mass_MeV, self.get_masses_MeV())
-        med_FF_idx = get_index(med_FF, self.get_med_FF())
-        
-        v_e_idx = get_index_2d(vE, self.get_v_e_list())
+        data_location = 'binned_scatter_rate/'
         
         if len(self.get_med_FF()) > 1:
-            if len(self.get_masses_eV()) > 1:
+            med_FF_idx = get_index(med_FF, self.get_med_FF())
+            data_location += f'model_{med_FF_idx}/'
+            
+        if len(self.get_v_e_list()) > 1:
+            v_e_idx = get_index_2d(v_e, self.get_v_e_list())
+            data_location += f'v_e_{v_e_idx}/'
+            
+        if len(self.get_masses_eV()) > 1:
+            mass_idx = get_index(mass_MeV, self.get_masses_MeV())
+            data_location += f'mass_{mass_idx}/'
+            
+        if i_list == [0]:
 
-                if i_list == [0]:
-
-                    binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}'][f'mass_{mass_idx}']['total_binned_scatter_rate'][...]
+            binned_scatter_rate_qE = self.hdf5_data[data_location+'total_binned_scatter_rate'][...]
                     
-                else:
-                    
-                    binned_scatter_rate_qE = np.zeros(np.shape(self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}'][f'mass_{mass_idx}'][f'i_1']['binned_scatter_rate'][...]))
-                    
-                    for i in i_list:
-                        
-                        binned_scatter_rate_qE += self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}'][f'mass_{mass_idx}'][f'i_{i}']['binned_scatter_rate'][...]
-                        
-            else:
-
-                if i_list == [0]:
-
-                    binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}']['total_binned_scatter_rate'][...]
-                    
-                else:
-                    
-                    binned_scatter_rate_qE = np.zeros(np.shape(self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}'][f'i_1']['binned_scatter_rate'][...]))
-                    
-                    for i in i_list:
-
-                        binned_scatter_rate_qE += self.hdf5_data['binned_scatter_rate'][f'model_{med_FF_idx}'][f'i_{i}']['binned_scatter_rate'][...]
-
         else:
-
-            if len(self.get_masses_eV()) > 1:
-
-                if i_list == [0]:
-
-                    binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate'][f'mass_{mass_idx}']['total_binned_scatter_rate'][...]
                     
-                else:
+            binned_scatter_rate_qE = np.zeros(np.shape(self.hdf5_data[data_location][f'i_1']['binned_scatter_rate'][...]))
                     
-                    binned_scatter_rate_qE = np.zeros(np.shape(self.hdf5_data['binned_scatter_rate'][f'mass_{mass_idx}'][f'i_1']['binned_scatter_rate'][...]))
-                    
-                    for i in i_list:
+            for i in i_list:
                         
-                        binned_scatter_rate_qE += self.hdf5_data['binned_scatter_rate'][f'mass_{mass_idx}'][f'i_{i}']['binned_scatter_rate'][...]
-                        
-            else:
-
-                if i_list == [0]:
-
-                    binned_scatter_rate_qE = self.hdf5_data['binned_scatter_rate']['total_binned_scatter_rate'][...]
-                    
-                else:
-                    
-                    binned_scatter_rate_qE = np.zeros(np.shape(self.hdf5_data['binned_scatter_rate'][f'i_1']['binned_scatter_rate'][...]))
-                    
-                    for i in i_list:
-                    
-                        binned_scatter_rate_qE += self.hdf5_data['binned_scatter_rate'][f'i_{i}']['binned_scatter_rate'][...]
+                binned_scatter_rate_qE += self.hdf5_data[data_location][f'i_{i}']['binned_scatter_rate'][...]
 
         return binned_scatter_rate_qE + 10**(-100)
     
@@ -243,6 +213,7 @@ class EXDMData:
                           expt_M_kg = 1,
                           expt_T_year = 1, 
                           E_bin_width = 1,
+                          v_e = [0, 0, 240],
                           i_list = [0]):
         """
             Returns the (dimensionless) binned (in E) scatter rate for a given mass. 
@@ -255,7 +226,8 @@ class EXDMData:
         binned_scatter_rate_E = np.sum(self.get_binned_scatter_rate_qE(
                                             mass_MeV = mass_MeV, 
                                             med_FF = med_FF, 
-                                            i_list = i_list), 
+                                            i_list = i_list, 
+                                            v_e = v_e), 
                                 axis = 1)
         
         # rebin to specified width
@@ -267,6 +239,39 @@ class EXDMData:
               
         return [ E_bin_LHS, norm*rebin_scatter_rate_E ]
     
+    def get_scatter_rate(self, 
+                        med_FF = 2., 
+                        expt_M_kg = 1, 
+                        expt_T_year = 1, 
+                        expt_E_threshold = 0.,
+                        v_e = [0, 0, 240],
+                        i_list = [0], 
+                        sigma_cm2 = 10**(-40)):
+        
+        band_gap = self.get_material_band_gap()
+        E_width = self.get_numerics_scatter_binned_rate_E_bin_width()
+        
+        threshold_idx = int(max(0., np.floor( 
+            ( expt_E_threshold - band_gap ) / E_width )))
+        
+        rate = []
+        
+        for m, mass in enumerate(self.get_masses_MeV()):
+            
+            total_rate = np.sum(self.get_binned_scatter_rate_E( 
+                          mass_MeV = mass, 
+                          med_FF = med_FF,
+                          i_list = i_list, 
+                          sigma_cm2 = sigma_cm2, 
+                          expt_M_kg = expt_M_kg,
+                          expt_T_year = expt_T_year,
+                          E_bin_width = E_width,
+                          v_e = v_e)[1][threshold_idx:])
+            
+            rate.append([ mass, total_rate ])
+            
+        return np.transpose(np.array(sorted(rate, key=lambda ele: ele[0])))
+        
     def get_cs_reach(self, 
                      med_FF = 2., 
                      n_cut = 3,

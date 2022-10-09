@@ -86,13 +86,19 @@ contains
 
                 omega = exdm_inputs%dm_model%mX(m)
 
-                pi_mat = e_EM**2*(omega/m_elec)**2*Pi_1_1_mat(:, :, m, w)
+                pi_mat = (omega/m_elec)**2*Pi_1_1_mat(:, :, m, w)
 
                 pi_eigvals = calc_eigvals_33(pi_mat)
 
-                gam = (-1.0_dp)*e_EM**(-2)*omega**2*&
-                    (4.0_dp*m_elec**2*omega)**(-1)*&
-                    aimag(sum(pi_eigvals))
+                gam = 0.0_dp
+
+                do j = 1, 3
+
+                    gam = gam + (-1.0_dp/omega)*&
+                        (omega**2/(4.0_dp*m_elec**2))*&
+                        aimag(pi_mat(j, j))
+
+                end do
 
                 absorption_rate(m, w) = (exdm_inputs%dm_model%rho_X/exdm_inputs%material%rho_T)*&
                     exdm_inputs%dm_model%mX(m)**(-1)*&
@@ -155,7 +161,8 @@ contains
         do w = 1, size(absorption_rate, 2)
             do m = 1, size(absorption_rate, 1)
 
-                gam = -(exdm_inputs%dm_model%mX(m))**(-1)*aimag(Pi_v2_v2(m, w))
+                gam = -(exdm_inputs%dm_model%mX(m))**(-1)*(1.0_dp/4.0_dp)*&
+                    aimag(Pi_v2_v2(m, w))
 
                 absorption_rate(m, w) = (exdm_inputs%dm_model%rho_X/exdm_inputs%material%rho_T)*&
                     exdm_inputs%dm_model%mX(m)**(-1)*&
@@ -197,7 +204,7 @@ contains
 
                 do j = 1, 3
                     gam = gam + (-1.0_dp)*e_EM**(-2)*(3.0_dp*exdm_inputs%dm_model%mX(m))**(-1)*&
-                        aimag( exdm_inputs%dm_model%mX(m)**2*pi_eigvals(j) / (exdm_inputs% dm_model%mX(m)**2 - pi_eigvals(j) ) )
+                        aimag( exdm_inputs%dm_model%mX(m)**2*pi_eigvals(j) / (exdm_inputs%dm_model%mX(m)**2 - pi_eigvals(j) ) )
                 end do
 
                 absorption_rate(m, w) = (exdm_inputs%dm_model%rho_X/exdm_inputs%material%rho_T)*&

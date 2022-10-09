@@ -338,7 +338,7 @@ contains
                 delta = width_func(mX(m), widths(i, 1), widths(i, 2), widths(i, 3))
                 
                 Pi_v2_v2(m, i) = Pi_v2_v2(m, i) + &
-                    (0.25_dp)*(2.0_dp/spin_dof)*jac_k*pc_vol**(-1)*&
+                    (2.0_dp/spin_dof)*jac_k*pc_vol**(-1)*&
                     Pi_scaling_func(mX(m), omega_IF)*green_func(mX(m), omega_IF, delta, smear_type)*&
                     conjg(TIF_v2(1))*TIF_v2(1)
 
@@ -374,7 +374,7 @@ contains
                 delta = width_func(mX(m), widths(i, 1), widths(i, 2), widths(i, 3))
                 
                 Pi_vds_vds(m, i) = Pi_vds_vds(m, i) + &
-                    (0.25_dp)*(2.0_dp/spin_dof)*jac_k*pc_vol**(-1)*&
+                    (2.0_dp/spin_dof)*jac_k*pc_vol**(-1)*&
                     Pi_scaling_func(mX(m), omega_IF)*green_func(mX(m), omega_IF, delta, smear_type)*&
                     conjg(TIF_vds(1))*TIF_vds(1)
 
