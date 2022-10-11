@@ -51,18 +51,18 @@ contains
             call timer_compute%start()
         end if
 
-        if ( proc_id == root_proc_id ) then
+        ! if ( proc_id == root_proc_id ) then
 
-            allocate(total_dielectric(&
-                        exdm_inputs%numerics_dielectric%n_q_bins, &
-                        exdm_inputs%numerics_dielectric%n_q_theta, &
-                        exdm_inputs%numerics_dielectric%n_q_phi, &
-                        exdm_inputs%numerics_dielectric%n_E_bins, &
-                        size(exdm_inputs%numerics_dielectric%widths, 1) &
-                        ), &
-                source = ( 0.0_dp, 0.0_dp ))
+        allocate(total_dielectric(&
+                    exdm_inputs%numerics_dielectric%n_q_bins, &
+                    exdm_inputs%numerics_dielectric%n_q_theta, &
+                    exdm_inputs%numerics_dielectric%n_q_phi, &
+                    exdm_inputs%numerics_dielectric%n_E_bins, &
+                    size(exdm_inputs%numerics_dielectric%widths, 1) &
+                    ), &
+            source = ( 0.0_dp, 0.0_dp ))
 
-        end if
+        ! end if
 
         allocate(dielectric(&
                         exdm_inputs%numerics_dielectric%n_q_bins, &

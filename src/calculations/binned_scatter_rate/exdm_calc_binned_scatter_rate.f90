@@ -52,18 +52,18 @@ contains
             call timer_compute%start()
         end if
 
-        if ( proc_id == root_proc_id ) then
+        ! if ( proc_id == root_proc_id ) then
 
-            allocate(total_binned_scatter_rate(&
-                        exdm_inputs%numerics_binned_scatter_rate%n_q_bins, &
-                        exdm_inputs%numerics_binned_scatter_rate%n_E_bins, &
-                        size(exdm_inputs%dm_model%mX), &
-                        size(exdm_inputs%dm_model%med_FF), &
-                        size(exdm_inputs%astroph_model%v_e_list, 1), &
-                        exdm_elec_config%n_init_groups), &
-                source = 0.0_dp)
+        allocate(total_binned_scatter_rate(&
+                    exdm_inputs%numerics_binned_scatter_rate%n_q_bins, &
+                    exdm_inputs%numerics_binned_scatter_rate%n_E_bins, &
+                    size(exdm_inputs%dm_model%mX), &
+                    size(exdm_inputs%dm_model%med_FF), &
+                    size(exdm_inputs%astroph_model%v_e_list, 1), &
+                    exdm_elec_config%n_init_groups), &
+            source = 0.0_dp)
 
-        end if
+        ! end if
 
         allocate(binned_scatter_rate(&
                     exdm_inputs%numerics_binned_scatter_rate%n_q_bins, &

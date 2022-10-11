@@ -83,14 +83,14 @@ contains
             size(exdm_inputs%numerics_absorption_rate%widths, 1))
 
         ! allocate summed Pi's on main processor
-        if ( proc_id == root_proc_id ) then
+        ! if ( proc_id == root_proc_id ) then
 
-            total_PiIF_calculator%mask = PiIF_calculator%mask
+        total_PiIF_calculator%mask = PiIF_calculator%mask
 
-            call total_PiIF_calculator%setup(size(exdm_inputs%dm_model%mX), &
-                size(exdm_inputs%numerics_absorption_rate%widths, 1))
+        call total_PiIF_calculator%setup(size(exdm_inputs%dm_model%mX), &
+            size(exdm_inputs%numerics_absorption_rate%widths, 1))
 
-        end if
+        ! end if
 
         if ( exdm_inputs%control%verbose ) then
             print*, 'Done initializing absorption rate calculation!'
