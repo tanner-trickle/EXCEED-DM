@@ -89,4 +89,15 @@
   publisher = {American Physical Society ({APS})},
 }
 
+@Article{Dutta2022,
+  author        = {Dutta, Bhaskar and Ghosh, Sumit and Li, Tianjun and Thompson, Adrian and Verma, Ankur},
+  title         = {Non-standard neutrino interactions in light mediator models at reactor experiments},
+  year          = {2022},
+  month         = {9},
+  archiveprefix = {arXiv},
+  eprint        = {2209.13566},
+  primaryclass  = {hep-ph},
+  reportnumber  = {MI-HET-775, KIAS-P22043},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
