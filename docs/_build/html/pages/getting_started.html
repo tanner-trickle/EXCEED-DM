@@ -206,13 +206,9 @@
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h1>
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this heading">#</a></h2>
-<p>Download <code class="code docutils literal notranslate"><span class="pre">EXCEED-DMvX.Y.Z.tar.gz</span></code> from</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/tanner-trickle/EXCEED-DM/releases">EXCEED-DM Releases</a></p></li>
-</ul>
-<p>then</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tar -xvzf EXCEED-DMvX.Y.Z.tar.gz -C EXCEED-DMvX.Y.Z
-cd EXCEED-DMvX.Y.Z
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>curl -LO https://github.com/tanner-trickle/EXCEED-DM/releases/latest/download/EXCEED-DM.tar.gz
+mkdir EXCEED-DM &amp;&amp; cd EXCEED-DM
+tar -xvzf ../EXCEED-DM.tar.gz
 mkdir build &amp;&amp; cd build
 cmake ..
 make
@@ -221,21 +217,26 @@ make
 </section>
 <section id="download">
 <h2>Download<a class="headerlink" href="#download" title="Permalink to this heading">#</a></h2>
-<section id="release">
-<h3>Release<a class="headerlink" href="#release" title="Permalink to this heading">#</a></h3>
-<p>To download release version <code class="code docutils literal notranslate"><span class="pre">vX.Y.Z</span></code> directly, simply click on <code class="code docutils literal notranslate"><span class="pre">EXCEED-DMvX.Y.Z.tar.gz</span></code> in the Releases section of the Github page</p>
+<p><code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> is hosted on Github and releases are stored in <code class="code docutils literal notranslate"><span class="pre">.tar.gz</span></code> files. This file can be downloaded in a variety of ways,</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-Q0xJ" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-Q0xJ" name="Q0xJ" role="tab" tabindex="0">CLI</button><button aria-controls="panel-0-R2l0aHViIC0gV2Vi" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-R2l0aHViIC0gV2Vi" name="R2l0aHViIC0gV2Vi" role="tab" tabindex="-1">Github - Web</button></div><div aria-labelledby="tab-0-Q0xJ" class="sphinx-tabs-panel group-tab" id="panel-0-Q0xJ" name="Q0xJ" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>curl -LO https://github.com/tanner-trickle/EXCEED-DM/releases/latest/download/EXCEED-DM.tar.gz
+</pre></div>
+</div>
+<p>Specific versions (&gt;=v1.0.0) can be downloaded with,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>curl -LO https://github.com/tanner-trickle/EXCEED-DM/releases/download/vX.Y.Z/EXCEED-DM.tar.gz
+</pre></div>
+</div>
+<p>where X.Y.Z is the version number.</p>
+</div><div aria-labelledby="tab-0-R2l0aHViIC0gV2Vi" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-R2l0aHViIC0gV2Vi" name="R2l0aHViIC0gV2Vi" role="tabpanel" tabindex="0"><p>Simply click on <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM.tar.gz</span></code> in the Releases section on the Github page</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/tanner-trickle/EXCEED-DM/releases">EXCEED-DM Releases</a></p></li>
 </ul>
-</section>
-<section id="git-branches">
-<h3>Git Branches<a class="headerlink" href="#git-branches" title="Permalink to this heading">#</a></h3>
-<p>To download the <code class="code docutils literal notranslate"><span class="pre">&lt;branch&gt;</span></code> branch of the source code from Github,</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone -b &lt;branch&gt; https://github.com/tanner-trickle/EXCEED-DM.git ./EXCEED-DM
+</div></div>
+<p>For <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> development, the whole Github repository can be cloned with,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/tanner-trickle/EXCEED-DM.git ./EXCEED-DM
 </pre></div>
 </div>
-<p>The source code will be in the <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> folder. Available branches are <code class="code docutils literal notranslate"><span class="pre">main</span></code> and <code class="code docutils literal notranslate"><span class="pre">develop</span></code>.</p>
-</section>
+<p>and will have already extracted the <code class="code docutils literal notranslate"><span class="pre">.tar.gz</span></code> file in to the <cite>EXCEED-DM</cite> folder.</p>
 </section>
 <section id="install">
 <h2>Install<a class="headerlink" href="#install" title="Permalink to this heading">#</a></h2>
@@ -245,7 +246,7 @@ make
 <ul>
 <li><p>Fortran compiler - <a class="reference external" href="https://gcc.gnu.org/wiki/GFortran">gfortran</a>, ifort, etc.</p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-0-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-0-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install gfortran
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-1-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-1-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install gfortran
 </pre></div>
 </div>
 </div></div>
@@ -255,24 +256,24 @@ make
 <ul>
 <li><p><a class="reference external" href="https://www.open-mpi.org/">OpenMPI</a></p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-1-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-1-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libopenmpi-dev
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-2-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-2-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libopenmpi-dev
 </pre></div>
 </div>
 </div></div>
 </li>
 <li><p><a class="reference external" href="https://www.fftw.org/">FFTW3</a></p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-2-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-2-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libfftw3-dev
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-3-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-3-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libfftw3-dev
 </pre></div>
 </div>
 </div></div>
 </li>
 <li><p><a class="reference external" href="https://www.hdfgroup.org/downloads/hdf5/">HDF5 (serial, with Fortran support)</a></p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button><button aria-controls="panel-3-U291cmNl" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-3-U291cmNl" name="U291cmNl" role="tab" tabindex="-1">Source</button></div><div aria-labelledby="tab-3-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-3-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libhdf5-serial-dev
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-4-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-4-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button><button aria-controls="panel-4-U291cmNl" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-4-U291cmNl" name="U291cmNl" role="tab" tabindex="-1">Source</button></div><div aria-labelledby="tab-4-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-4-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libhdf5-serial-dev
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-3-U291cmNl" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-3-U291cmNl" name="U291cmNl" role="tabpanel" tabindex="0"><p>After downloading the source <code class="code docutils literal notranslate"><span class="pre">.tar.gz</span></code> file containing version <code class="code docutils literal notranslate"><span class="pre">X.Y.Z</span></code>,</p>
+</div><div aria-labelledby="tab-4-U291cmNl" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-4-U291cmNl" name="U291cmNl" role="tabpanel" tabindex="0"><p>After downloading the source <code class="code docutils literal notranslate"><span class="pre">.tar.gz</span></code> file containing version <code class="code docutils literal notranslate"><span class="pre">X.Y.Z</span></code>,</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gunzip &lt; hdf5-X.Y.Z.tar.gz | tar -xf
 cd hdf5-X.Y.Z
 ./configure --enable-fortran --enable-hl
@@ -299,21 +300,21 @@ make check-install   # verify installation
 </li>
 <li><p><a class="reference external" href="https://netlib.org/lapack/">LAPACK</a></p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-4-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-4-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-4-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-4-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install liblapack-dev
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-5-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-5-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-5-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-5-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install liblapack-dev
 </pre></div>
 </div>
 </div></div>
 </li>
 <li><p><a class="reference external" href="https://netlib.org/blas/">BLAS</a></p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-5-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-5-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-5-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-5-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libblas-dev
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-6-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-6-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-6-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-6-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install libblas-dev
 </pre></div>
 </div>
 </div></div>
 </li>
 <li><p><a class="reference external" href="https://cmake.org/">CMake</a></p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-6-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-6-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-6-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-6-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install cmake
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-7-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-7-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button></div><div aria-labelledby="tab-7-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-7-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install cmake
 </pre></div>
 </div>
 </div></div>
@@ -322,7 +323,16 @@ make check-install   # verify installation
 </section>
 <section id="build">
 <h3>Build<a class="headerlink" href="#build" title="Permalink to this heading">#</a></h3>
-<p>After the pre-requisite sofware has been installed installed go to the folder where <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> was downloaded to (containing the <code class="code docutils literal notranslate"><span class="pre">README.md</span></code> file). From this folder, run</p>
+<p>After the pre-requisite sofware has been installed, the <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM.tar.gz</span></code> file needs to be extracted, and placed in a folder of your choosing.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir EXCEED-DM &amp;&amp; cd EXCEED-DM
+tar -xzvf &lt;path to EXCEED-DM.tar.gz&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can skip this step if you cloned the Github repository in the Download section.</p>
+</div>
+<p>With all of the code extracted, <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> just has to be compiled. Starting in your <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> folder simply create a <code class="code docutils literal notranslate"><span class="pre">build</span></code> folder and let CMake/make do the rest.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir build &amp;&amp; cd build
 cmake ..
 make
@@ -439,11 +449,7 @@ No input file specified, aborting.
             <ul>
 <li><a class="reference internal" href="#">Getting Started</a><ul>
 <li><a class="reference internal" href="#quick-start">Quick Start</a></li>
-<li><a class="reference internal" href="#download">Download</a><ul>
-<li><a class="reference internal" href="#release">Release</a></li>
-<li><a class="reference internal" href="#git-branches">Git Branches</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#download">Download</a></li>
 <li><a class="reference internal" href="#install">Install</a><ul>
 <li><a class="reference internal" href="#pre-requisites">Pre-requisites</a></li>
 <li><a class="reference internal" href="#build">Build</a><ul>

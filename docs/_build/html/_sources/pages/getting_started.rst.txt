@@ -6,16 +6,11 @@ Getting Started
 Quick Start
 -----------
 
-Download :code:`EXCEED-DMvX.Y.Z.tar.gz` from
-
-- `EXCEED-DM Releases <https://github.com/tanner-trickle/EXCEED-DM/releases>`_
-
-then
-
 .. code-block:: none
 
-    tar -xvzf EXCEED-DMvX.Y.Z.tar.gz -C EXCEED-DMvX.Y.Z 
-    cd EXCEED-DMvX.Y.Z
+    curl -LO https://github.com/tanner-trickle/EXCEED-DM/releases/latest/download/EXCEED-DM.tar.gz 
+    mkdir EXCEED-DM && cd EXCEED-DM
+    tar -xvzf ../EXCEED-DM.tar.gz
     mkdir build && cd build
     cmake ..
     make
@@ -24,23 +19,37 @@ then
 Download
 --------
 
-Release
-=======
+:code:`EXCEED-DM` is hosted on Github and releases are stored in :code:`.tar.gz` files. This file can be downloaded in a variety of ways,
 
-To download release version :code:`vX.Y.Z` directly, simply click on :code:`EXCEED-DMvX.Y.Z.tar.gz` in the Releases section of the Github page 
+.. tabs::
 
-- `EXCEED-DM Releases <https://github.com/tanner-trickle/EXCEED-DM/releases>`_
+ .. group-tab:: CLI
 
-Git Branches
-============
+   .. code-block:: none
 
-To download the :code:`<branch>` branch of the source code from Github,
+      curl -LO https://github.com/tanner-trickle/EXCEED-DM/releases/latest/download/EXCEED-DM.tar.gz 
+
+   Specific versions (>=v1.0.0) can be downloaded with,
+
+   .. code-block:: none
+
+      curl -LO https://github.com/tanner-trickle/EXCEED-DM/releases/download/vX.Y.Z/EXCEED-DM.tar.gz
+
+   where X.Y.Z is the version number.
+
+ .. group-tab:: Github - Web
+
+    Simply click on :code:`EXCEED-DM.tar.gz` in the Releases section on the Github page 
+
+    - `EXCEED-DM Releases <https://github.com/tanner-trickle/EXCEED-DM/releases>`_
+
+For :code:`EXCEED-DM` development, the whole Github repository can be cloned with,
 
 .. code-block:: none
-    
-    git clone -b <branch> https://github.com/tanner-trickle/EXCEED-DM.git ./EXCEED-DM
 
-The source code will be in the :code:`EXCEED-DM` folder. Available branches are :code:`main` and :code:`develop`.
+    git clone https://github.com/tanner-trickle/EXCEED-DM.git ./EXCEED-DM
+
+and will have already extracted the :code:`.tar.gz` file in to the `EXCEED-DM` folder.
 
 -------
 Install
@@ -154,7 +163,18 @@ Pre-requisites
 Build
 =====
 
-After the pre-requisite sofware has been installed installed go to the folder where :code:`EXCEED-DM` was downloaded to (containing the :code:`README.md` file). From this folder, run
+After the pre-requisite sofware has been installed, the :code:`EXCEED-DM.tar.gz` file needs to be extracted, and placed in a folder of your choosing.
+
+.. code-block:: none
+
+   mkdir EXCEED-DM && cd EXCEED-DM
+   tar -xzvf <path to EXCEED-DM.tar.gz>
+
+.. note::
+
+   You can skip this step if you cloned the Github repository in the Download section.
+
+With all of the code extracted, :code:`EXCEED-DM` just has to be compiled. Starting in your :code:`EXCEED-DM` folder simply create a :code:`build` folder and let CMake/make do the rest.
 
 .. code-block:: none
 
