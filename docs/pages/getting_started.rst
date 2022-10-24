@@ -171,14 +171,14 @@ Build
 
 After the pre-requisite sofware has been installed, the :code:`EXCEED-DM.tar.gz` file needs to be extracted, and placed in a folder of your choosing.
 
+.. note::
+
+   You can skip this step if you cloned the Github repository in the Download section.
+
 .. code-block:: none
 
    mkdir EXCEED-DM && cd EXCEED-DM
    tar -xzvf <path to EXCEED-DM.tar.gz>
-
-.. note::
-
-   You can skip this step if you cloned the Github repository in the Download section.
 
 With all of the code extracted, :code:`EXCEED-DM` just has to be compiled. Starting in your :code:`EXCEED-DM` folder simply create a :code:`build` folder and let CMake/make do the rest.
 
