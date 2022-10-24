@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="File Specifications" href="file_spec/index.html" /><link rel="prev" title="Home" href="../index.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Examples" href="examples_link.html" /><link rel="prev" title="Home" href="../index.html" />
 
     <link rel="shortcut icon" href="../_static/exdm-favicon2.png"/><meta name="generator" content="sphinx-5.1.1, furo 2022.04.07"/>
         <title>Getting Started - EXCEED-DM v1.0.0</title>
@@ -161,13 +161,13 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples_link.html">Examples</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="file_spec/index.html">File Specifications</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="file_spec/inputs_link.html">Input File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_spec/elec_config.html">Electronic Configuration File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_spec/output.html">Output File</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="examples_link.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="papers.html">Papers</a></li>
 </ul>
@@ -214,6 +214,10 @@ cmake ..
 make
 </pre></div>
 </div>
+<p>To run <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> on <code class="code docutils literal notranslate"><span class="pre">N_P</span></code> processors, with input file <code class="code docutils literal notranslate"><span class="pre">INPUT_FILE</span></code>,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mpirun -np N_P ./build/exdm INPUT_FILE
+</pre></div>
+</div>
 </section>
 <section id="download">
 <h2>Download<a class="headerlink" href="#download" title="Permalink to this heading">#</a></h2>
@@ -236,7 +240,7 @@ make
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/tanner-trickle/EXCEED-DM.git ./EXCEED-DM
 </pre></div>
 </div>
-<p>and will have already extracted the <code class="code docutils literal notranslate"><span class="pre">.tar.gz</span></code> file in to the <cite>EXCEED-DM</cite> folder.</p>
+<p>and will have already extracted the <code class="code docutils literal notranslate"><span class="pre">.tar.gz</span></code> file in to the <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM/</span></code> folder.</p>
 </section>
 <section id="install">
 <h2>Install<a class="headerlink" href="#install" title="Permalink to this heading">#</a></h2>
@@ -386,6 +390,7 @@ make
 No input file specified, aborting.
 </pre></div>
 </div>
+<p>If this is working move on to the Examples section!</p>
 </section>
 </section>
 </section>
@@ -395,12 +400,12 @@ No input file specified, aborting.
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="file_spec/index.html">
+          <a class="next-page" href="examples_link.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">File Specifications</div>
+                <div class="title">Examples</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>

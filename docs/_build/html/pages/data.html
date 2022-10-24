@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Papers using EXCEED-DM" href="papers.html" /><link rel="prev" title="Examples" href="examples_link.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Published Papers using EXCEED-DM" href="papers.html" /><link rel="prev" title="Output File" href="file_spec/output.html" />
 
     <link rel="shortcut icon" href="../_static/exdm-favicon2.png"/><meta name="generator" content="sphinx-5.1.1, furo 2022.04.07"/>
         <title>Data - EXCEED-DM v1.0.0</title>
@@ -161,13 +161,13 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples_link.html">Examples</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="file_spec/index.html">File Specifications</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="file_spec/inputs_link.html">Input File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_spec/elec_config.html">Electronic Configuration File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_spec/output.html">Output File</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="examples_link.html">Examples</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="papers.html">Papers</a></li>
 </ul>
@@ -213,28 +213,285 @@
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Remember to cite the associated reference if you use these publically available electronic configuration files.</p>
+<p>Remember to cite the associated Zenodo repository if you use these publically available electronic configuration files.</p>
 </div>
 <section id="si">
 <h3>Si<a class="headerlink" href="#si" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Short Description:</p></li>
-<li><p>Link:</p></li>
-<li><p>Ref:</p></li>
+<li><dl class="simple">
+<dt>Link: (add Zenodo link when available)</dt><dd><ul>
+<li><p>File: <code class="code docutils literal notranslate"><span class="pre">Si/scatter/Si_scatter_elec_config.hdf5</span></code></p></li>
+<li><dl class="simple">
+<dt>Description:</dt><dd><ul>
+<li><p>Electronic states assumed to be spin-degenerate, i.e., one-component wave functions. Used for binned scattering rate and dielectric calculations.</p></li>
+<li><dl class="simple">
+<dt>Initial States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>STO basis</strong> states and <strong>PW basis</strong> states. <strong>STO basis</strong> is used for the low energy, “core” states, while <strong>PW basis</strong> is used for the valence states.</p></li>
+<li><dl class="simple">
+<dt>STO basis</dt><dd><ul>
+<li><p>10 states (1 <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> point (<span class="math notranslate nohighlight">\(\mathbf{k} = 0\)</span>), 10 bands). States are the electrons in the <span class="math notranslate nohighlight">\(1s \rightarrow 2p\)</span> orbitals, for both Si in the unit cell. The sum over lattice vectors, <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> extends to cells <span class="math notranslate nohighlight">\(\pm 1\)</span> away from the center, i.e., includes 27 cells in total. Each state is sampled on a <span class="math notranslate nohighlight">\(128 \times 128 \times 128\)</span> uniform grid in the unit cell. STO basis coefficients, e.g., <span class="math notranslate nohighlight">\(C_{j, l, n, \kappa}\)</span> are taken from the tabulated values <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0092640X8371003X">here</a>. Energy of each state is taken from the Materials Project database, material ID mp-149.</p></li>
+<li><p>Notes: The reason for the small number of <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> points is due to runtime considerations, one has to choose between a larger sampling grid, i.e., sample the high momentum contributions in the unit cell, or more <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> points. Since the main features of these states are at high momentum, this is prioritized.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id1">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Final States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>PW basis</strong> and <strong>single PW basis</strong> states. <strong>PW basis</strong> is used for the lower energy “conduction” bands, <strong>single PW basis</strong> is used for higher energy states being approximated as “free”.</p></li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>60000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 60 bands). Computed with DFT (VASP), see Ref. <span id="id2">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(1.11 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>single PW basis</strong></dt><dd><ul>
+<li><p>40000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 400\)</span> grid in <span class="math notranslate nohighlight">\((\theta, \phi, p)\)</span> space). Uniformly sampled on the sphere in <span class="math notranslate nohighlight">\((\theta, \phi)\)</span>, logarithmically sampled in <span class="math notranslate nohighlight">\(E = p^2/2m_e\)</span> between <span class="math notranslate nohighlight">\(E_\text{min} = 60 \, \text{eV}\)</span> and <span class="math notranslate nohighlight">\(E_\text{max} = 400 \, \text{eV}\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Link: (add Zenodo link when available)</dt><dd><ul>
+<li><p>File: <code class="code docutils literal notranslate"><span class="pre">Si/abs/Si_abs_elec_config.hdf5</span></code></p></li>
+<li><dl class="simple">
+<dt>Description:</dt><dd><ul>
+<li><p>Electronic states assumed to be spin-degenerate, i.e., one-component wave functions. Used for absorption rate calculations.</p></li>
+<li><dl class="simple">
+<dt>Initial States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>STO basis</strong> states and <strong>PW basis</strong> states. <strong>STO basis</strong> is used for the low energy, “core” states, while <strong>PW basis</strong> is used for the valence states.</p></li>
+<li><dl class="simple">
+<dt>STO basis</dt><dd><ul>
+<li><p>10000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 10 bands). States are the electrons in the <span class="math notranslate nohighlight">\(1s \rightarrow 2p\)</span> orbitals, for both Si in the unit cell. <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> grid is uniformly sampled over the 1BZ. The sum over lattice vectors, <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> extends to cells <span class="math notranslate nohighlight">\(\pm 1\)</span> away from the center, i.e., includes 27 cells in total. Each state is sampled on a <span class="math notranslate nohighlight">\(128 \times 128 \times 128\)</span> uniform grid in the unit cell. STO basis coefficients, e.g., <span class="math notranslate nohighlight">\(C_{j, l, n, \kappa}\)</span> are taken from the tabulated values <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0092640X8371003X">here</a>. Energy of each state is taken from the Materials Project database, material ID mp-149.</p></li>
+<li><p>Notes: A larger number of <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> vectors can, and must be, used here is because transitions must be vertical. This limits the number of transitions, relative to a scattering rate calculation.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id4">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Final States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>PW basis</strong> and <strong>single PW basis</strong> states. <strong>PW basis</strong> is used for the lower energy “conduction” bands, <strong>single PW basis</strong> is used for higher energy states being approximated as “free”.</p></li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>60000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 60 bands). Computed with DFT (VASP), see Ref. <span id="id5">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(1.11 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>single PW basis</strong></dt><dd><ul>
+<li><p>2152000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> grid). <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> points are sampled uniformly in the 1BZ. For each <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, all <span class="math notranslate nohighlight">\(\mathbf{G}\)</span> were included such that <span class="math notranslate nohighlight">\(60 \, \text{eV} &lt; |\mathbf{k} + \mathbf{G}|^2/2m_e &lt; \text{keV}\)</span>. Different <span class="math notranslate nohighlight">\(\mathbf{G}\)</span> correspond to different bands when the parabolic dispersion relation gets folded in to the 1BZ.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </section>
 <section id="ge">
 <h3>Ge<a class="headerlink" href="#ge" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Short Description:</p></li>
-<li><p>Link:</p></li>
-<li><p>Ref:</p></li>
+<li><dl class="simple">
+<dt>Link: (add Zenodo link when available)</dt><dd><ul>
+<li><p>File: <code class="code docutils literal notranslate"><span class="pre">Ge/scatter/Ge_scatter_elec_config.hdf5</span></code></p></li>
+<li><dl class="simple">
+<dt>Description:</dt><dd><ul>
+<li><p>Electronic states assumed to be spin-degenerate, i.e., one-component wave functions. Used for binned scattering rate and dielectric calculations.</p></li>
+<li><dl class="simple">
+<dt>Initial States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>STO basis</strong> states and <strong>PW basis</strong> states. <strong>STO basis</strong> is used for the low energy, “core” states, while <strong>PW basis</strong> is used for the valence states.</p></li>
+<li><dl class="simple">
+<dt>STO basis</dt><dd><ul>
+<li><p>28 states (1 <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> point (<span class="math notranslate nohighlight">\(\mathbf{k} = 0\)</span>), 28 bands). States are the electrons in the <span class="math notranslate nohighlight">\(1s \rightarrow 3d\)</span> orbitals, for both Ge in the unit cell. The sum over lattice vectors, <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> extends to cells <span class="math notranslate nohighlight">\(\pm 1\)</span> away from the center, i.e., includes 27 cells in total. Each state is sampled on a <span class="math notranslate nohighlight">\(128 \times 128 \times 128\)</span> uniform grid in the unit cell. STO basis coefficients, e.g., <span class="math notranslate nohighlight">\(C_{j, l, n, \kappa}\)</span> are taken from the tabulated values <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0092640X8371003X">here</a>. Energy of each state is taken from the Materials Project database, material ID mp-32.</p></li>
+<li><p>Notes: The reason for the small number of <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> points is due to runtime considerations, one has to choose between a larger sampling grid, i.e., sample the high momentum contributions in the unit cell, or more <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> points. Since the main features of these states are at high momentum, this is prioritized.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id7">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Final States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>PW basis</strong> and <strong>single PW basis</strong> states. <strong>PW basis</strong> is used for the lower energy “conduction” bands, <strong>single PW basis</strong> is used for higher energy states being approximated as “free”.</p></li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>82000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 82 bands). Computed with DFT (VASP), see Ref. <span id="id8">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(0.67 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>single PW basis</strong></dt><dd><ul>
+<li><p>40000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 400\)</span> grid in <span class="math notranslate nohighlight">\((\theta, \phi, p)\)</span> space). Uniformly sampled on the sphere in <span class="math notranslate nohighlight">\((\theta, \phi)\)</span>, logarithmically sampled in <span class="math notranslate nohighlight">\(E = p^2/2m_e\)</span> between <span class="math notranslate nohighlight">\(E_\text{min} = 60 \, \text{eV}\)</span> and <span class="math notranslate nohighlight">\(E_\text{max} = 400 \, \text{eV}\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Link: (add Zenodo link when available)</dt><dd><ul>
+<li><p>File: <code class="code docutils literal notranslate"><span class="pre">Ge/abs/Ge_abs_elec_config.hdf5</span></code></p></li>
+<li><dl class="simple">
+<dt>Description:</dt><dd><ul>
+<li><p>Electronic states assumed to be spin-degenerate, i.e., one-component wave functions. Used for absorption rate calculations.</p></li>
+<li><dl class="simple">
+<dt>Initial States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>STO basis</strong> states and <strong>PW basis</strong> states. <strong>STO basis</strong> is used for the low energy, “core” states, while <strong>PW basis</strong> is used for the valence states.</p></li>
+<li><dl class="simple">
+<dt>STO basis</dt><dd><ul>
+<li><p>28000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 28 bands). States are the electrons in the <span class="math notranslate nohighlight">\(1s \rightarrow 3d\)</span> orbitals, for both Ge in the unit cell. <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> grid is uniformly sampled over the 1BZ. The sum over lattice vectors, <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> extends to cells <span class="math notranslate nohighlight">\(\pm 1\)</span> away from the center, i.e., includes 27 cells in total. Each state is sampled on a <span class="math notranslate nohighlight">\(128 \times 128 \times 128\)</span> uniform grid in the unit cell. STO basis coefficients, e.g., <span class="math notranslate nohighlight">\(C_{j, l, n, \kappa}\)</span> are taken from the tabulated values <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0092640X8371003X">here</a>. Energy of each state is taken from the Materials Project database, material ID mp-32.</p></li>
+<li><p>Notes: A larger number of <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> vectors can, and must be, used here is because transitions must be vertical. This limits the number of transitions, relative to a scattering rate calculation.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id10">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Final States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>PW basis</strong> and <strong>single PW basis</strong> states. <strong>PW basis</strong> is used for the lower energy “conduction” bands, <strong>single PW basis</strong> is used for higher energy states being approximated as “free”.</p></li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>82000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 82 bands). Computed with DFT (VASP), see Ref. <span id="id11">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(1.11 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>single PW basis</strong></dt><dd><ul>
+<li><p>2586000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> grid). <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> points are sampled uniformly in the 1BZ. For each <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, all <span class="math notranslate nohighlight">\(\mathbf{G}\)</span> were included such that <span class="math notranslate nohighlight">\(60 \, \text{eV} &lt; |\mathbf{k} + \mathbf{G}|^2/2m_e &lt; \text{keV}\)</span>. Different <span class="math notranslate nohighlight">\(\mathbf{G}\)</span> correspond to different bands when the parabolic dispersion relation gets folded in to the 1BZ.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </section>
 <p></p>
 </section>
-<section id="previously-performed-calculations">
-<h2>Previously Performed Calculations<a class="headerlink" href="#previously-performed-calculations" title="Permalink to this heading">#</a></h2>
+<section id="exceed-dm-results">
+<h2><code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> Results<a class="headerlink" href="#exceed-dm-results" title="Permalink to this heading">#</a></h2>
+<p>Below are links to datasets used for previously published results. See the refereces for more details.</p>
+<section id="exceed-dmv1-0-0-extended-calculation-of-electronic-excitations-for-direct-detection-of-dark-matter">
+<h3>EXCEED-DMv1.0.0: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter<a class="headerlink" href="#exceed-dmv1-0-0-extended-calculation-of-electronic-excitations-for-direct-detection-of-dark-matter" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Ref: (add arXiv link when available)</dt><dd><ul>
+<li><p>Link: (add Zenodo link when available)</p></li>
+<li><dl class="simple">
+<dt>Description:</dt><dd><dl class="simple">
+<dt>Output of all the calculations performed in the <code class="code docutils literal notranslate"><span class="pre">v1.0.0</span></code> user manual. Specifically, for Si and Ge targets,</dt><dd><ul>
+<li><p>Numerically computed dielectric (to be used to screen the scattering rate calculation).</p></li>
+<li><p>Binned scatter rate of DM fermion in kinetically mixed dark photon model with different screenings: no screening, an analytic model of screening, and screened with the aforementioned numerically computed dielectric.</p></li>
+<li><p>Binned scatter rate of DM fermion in a model where the scattering potential depends on the electron velocity (light mediator).</p></li>
+<li><p>Extended absorption rate calculation for scalar, pseudoscalar, and vector DM.</p></li>
+<li><p>Annual modulation of binned scatter rate of DM fermion in kinetically mixed dark photon model.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="docutils container" id="id12">
+<div class="citation" id="id17" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a href="#id1" role="doc-backlink">1</a>,<a href="#id2" role="doc-backlink">2</a>,<a href="#id4" role="doc-backlink">3</a>,<a href="#id5" role="doc-backlink">4</a>,<a href="#id7" role="doc-backlink">5</a>,<a href="#id8" role="doc-backlink">6</a>,<a href="#id10" role="doc-backlink">7</a>,<a href="#id11" role="doc-backlink">8</a>)</span>
+<p>Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. <em>Phys. Rev. D</em>, 104(9):095015, 5 2021. <a class="reference external" href="https://arxiv.org/abs/2105.05253">arXiv:2105.05253</a>, <a class="reference external" href="https://doi.org/10.1103/PhysRevD.104.095015">doi:10.1103/PhysRevD.104.095015</a>.</p>
+</div>
+</div>
+
+</section>
 </section>
 </section>
 
@@ -248,18 +505,18 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Papers using EXCEED-DM</div>
+                <div class="title">Published Papers using EXCEED-DM</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="examples_link.html">
+          <a class="prev-page" href="file_spec/output.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Examples</div>
+                <div class="title">Output File</div>
                 
               </div>
             </a>
@@ -301,7 +558,10 @@
 <li><a class="reference internal" href="#ge">Ge</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#previously-performed-calculations">Previously Performed Calculations</a></li>
+<li><a class="reference internal" href="#exceed-dm-results"><code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> Results</a><ul>
+<li><a class="reference internal" href="#exceed-dmv1-0-0-extended-calculation-of-electronic-excitations-for-direct-detection-of-dark-matter">EXCEED-DMv1.0.0: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

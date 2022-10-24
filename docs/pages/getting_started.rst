@@ -15,6 +15,12 @@ Quick Start
     cmake ..
     make
 
+To run :code:`EXCEED-DM` on :code:`N_P` processors, with input file :code:`INPUT_FILE`,
+
+.. code-block:: none
+
+   mpirun -np N_P ./build/exdm INPUT_FILE
+
 --------
 Download
 --------
@@ -49,7 +55,7 @@ For :code:`EXCEED-DM` development, the whole Github repository can be cloned wit
 
     git clone https://github.com/tanner-trickle/EXCEED-DM.git ./EXCEED-DM
 
-and will have already extracted the :code:`.tar.gz` file in to the `EXCEED-DM` folder.
+and will have already extracted the :code:`.tar.gz` file in to the :code:`EXCEED-DM/` folder.
 
 -------
 Install
@@ -234,3 +240,5 @@ The output should read something like
      --------------------------------------------------------------------------------
 
      No input file specified, aborting.
+
+If this is working move on to the Examples section!
