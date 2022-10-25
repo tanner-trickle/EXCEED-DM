@@ -64,13 +64,13 @@
 If you use `EXCEED-DM` in your work, please cite,
 
     @misc{exdmv030,
-      doi = {10.5281/ZENODO.6097642},
-      url = {https://zenodo.org/record/6097642},
-      author = {Trickle,  Tanner and {Kinzani}},
-      title = {tanner-trickle/EXCEED-DM: EXCEED-DM-v0.3.0},
-      publisher = {Zenodo},
-      year = {2022},
-      copyright = {Open Access}
+        doi = {10.5281/ZENODO.6097642},
+        url = {https://zenodo.org/record/6097642},
+        author = {Trickle,  Tanner and {Kinzani}},
+        title = {tanner-trickle/EXCEED-DM: EXCEED-DM-v0.3.0},
+        publisher = {Zenodo},
+        year = {2022},
+        copyright = {Open Access}
     }
 
 
