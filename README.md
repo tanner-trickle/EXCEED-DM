@@ -63,9 +63,16 @@
 
 If you use `EXCEED-DM` in your work, please cite,
 
-[![DOI](https://zenodo.org/badge/354900532.svg)](https://zenodo.org/badge/latestdoi/354900532)
+    @misc{exdmv030,
+      doi = {10.5281/ZENODO.6097642},
+      url = {https://zenodo.org/record/6097642},
+      author = {Trickle,  Tanner and {Kinzani}},
+      title = {tanner-trickle/EXCEED-DM: EXCEED-DM-v0.3.0},
+      publisher = {Zenodo},
+      year = {2022},
+      copyright = {Open Access}
+    }
 
-along with,
 
     @article{Griffin:2021znd,
         author = "Griffin, Sin\'ead M. and Inzani, Katherine and Trickle, Tanner and Zhang, Zhengkang and Zurek, Kathryn M.",
