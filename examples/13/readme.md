@@ -1,7 +1,11 @@
-## ID: 13
+### Example 13: Si (Numeric) Screened Binned Scatter Rate, All Transitions Included
+
+- Calculation: Binned scatter rate
 
 - Target: Si
 
-- Process: absorption
+Complete calculation of transition rates in Si with the numerically computed dielectric (Example 11) used for the screening factor. 
 
-- Description: Spin dependent pseudoscalar DM absorption rate via valence to conduction transitions. Computed with \( \Pi_{ \mathbf{v} \cdot \sigma, \mathbf{v} \cdot \sigma} \) operator, which reduces to \( \Pi_{ \mathbf{v}^i, \mathbf{v}^i } \) computed in example 12. Since the Si wave functions have been artificially extended the results of this example are identical to example 12.
+```{note}
+The electronic configuration used here is identical to Example 5.
+```

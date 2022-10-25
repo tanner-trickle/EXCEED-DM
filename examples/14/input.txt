@@ -1,60 +1,35 @@
-! v0.2.8
+# Input file for EXCEED-DMv1.0.0
 
-&control
-    process          = 'dielectric',
-    calc_mode        = '',
-    overwrite_output = .TRUE.,
-    timer            = .TRUE.,
-    quiet            = .FALSE.
-/
+[control]
+    calculation                     = 'binned_scatter_rate'
+    run_description                 = 'example_14'
+    out_folder                      = './examples/14/output/'
 
-&io
-    out_folder                = './examples/14/output',
-    run_description           = '14',
-    PW_data_filename          = './examples/data/Si/dft/Si_2x2x2_AE.hdf5',
-/
+[elec_config_input]
+    filename = './examples/14/elec_config.hdf5'
 
-&material
+[material]
     name            = 'Si'
-    pc_vol_A        = 40.888 
-    rho_T_g_per_cm3 = 2.281  
-    band_gap        = 1.11 
-/
+    rho_T_g_per_cm3 = 2.281
+    band_gap        = 1.11
 
-&experiment
-    E_threshold = 0,
-    m_T_kg      = 1,
-    exposure_yr = 1,
-    n_time      = 1,
-    theta_E     = 7.33D-1
-/
+    a_vecs_Ang      = 0.00000, 2.73437, 2.73437
+    a_vecs_Ang     += 2.73437, 0.00000, 2.73437
+    a_vecs_Ang     += 2.73437, 2.73437, 0.00000
 
-&bins_dielectric
-    q_width = 100,
-    E_width = 0.1,
-    n_E    = 100,
-    n_q    = 500, 
-    n_q_theta = 1,
-    n_q_phi = 1
-/
+[dm_model]
 
-&numerics_dielectric
-    n_val_max = 0,
-    n_cond_max = 0, 
-    n_k_vec = 2, 2, 2
-/
+    FIF_id = 'SD'
 
-&widths
-    n_a       = 1,
-    n_b       = 1,
-    n_m       = 1
-    a_min     = 0.2,
-    a_max     = 0.2,
-    log_b_min = 0,
-    log_b_max = 0,
-    m_min     = 0.2,
-    m_max     = 0.2,
-    sigma     = 1D10
-/
+    mX = 1e6, 1e7, 1e8, 1e9
 
-!
+    mX_logspace = 20, 1e5, 1e10
+
+    med_FF = 0
+
+[numerics_binned_scatter_rate]
+
+    n_q_bins = 1
+    n_E_bins = 100
+    q_bin_width = 1
+    E_bin_width = 1

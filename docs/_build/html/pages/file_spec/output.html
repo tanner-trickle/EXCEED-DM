@@ -1,0 +1,515 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Data" href="../data.html" /><link rel="prev" title="Electronic Configuration File" href="elec_config.html" />
+
+    <link rel="shortcut icon" href="../../_static/exdm-favicon2.png"/><meta name="generator" content="sphinx-5.1.1, furo 2022.04.07"/>
+        <title>Output File - EXCEED-DM v1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">EXCEED-DM v1.0.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/exdm-prelim-logo-modified.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">EXCEED-DM v1.0.0</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples_link.html">Examples</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">File Specifications</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="inputs_link.html">Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="elec_config.html">Electronic Configuration File</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Output File</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../data.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../papers.html">Papers</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="output-file">
+<h1>Output File<a class="headerlink" href="#output-file" title="Permalink to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>The output file is and <code class="code docutils literal notranslate"><span class="pre">HDF5</span></code> file and contains the output of a calculation. Overlap with variables in the input file is minimized, i.e., if a variable is present in the input file it may not be written to the output file.</p>
+<p>Below we discuss all of the variables in each output group hierarchically (groups are in <strong>bold</strong>, datasets are in <code class="code docutils literal notranslate"><span class="pre">code</span></code>). Similar to the input file, if the <strong>Dim</strong> of a variable is <strong>[ : ]</strong>,  this means the array has variable dimension, and may change from calculation to calculation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To further understand the output file, go through this document with the output file open in <code class="code docutils literal notranslate"><span class="pre">HDFView</span></code>, a graphical user interface to <code class="code docutils literal notranslate"><span class="pre">HDF5</span></code> files: <a class="reference external" href="https://www.hdfgroup.org/downloads/hdfview/">download</a></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="code docutils literal notranslate"><span class="pre">Fortran</span></code> is a <strong>column-major</strong> language, which affects reading/writing of multi-dimensional datasets with HDF5. For example, an <span class="math notranslate nohighlight">\(n \times m\)</span> matrix, written to an HDF5 file with <code class="code docutils literal notranslate"><span class="pre">Fortran</span></code>, will be read in to a <strong>row-major</strong> language (e.g., <code class="code docutils literal notranslate"><span class="pre">python</span></code>) as an <span class="math notranslate nohighlight">\(m \times n\)</span> matrix. Dimensions listed below are the variables dimensions when written with <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code></p>
+</div>
+</section>
+<section id="general-groups">
+<h2>General Groups<a class="headerlink" href="#general-groups" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">exdm_version</span></code> - Version number of <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code>.</p></li>
+<li><p><strong>dm_model</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">FIF_id</span></code> - String ID of the scattering form factor used.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">mX</span></code> - Dark matter masses, <span class="math notranslate nohighlight">\(m_\chi\)</span>.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></p></li>
+<li><p><strong>Dim</strong>: [ : ]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">med_FF</span></code> - Mediator form factor powers, <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
+<ul>
+<li><p><strong>Formula</strong>: <span class="math notranslate nohighlight">\(\mathcal{F}_\text{med} = \left( \frac{q_0}{q} \right)^\beta\)</span></p></li>
+<li><p><strong>Dim</strong>: [ : ]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">particle_type</span></code> - Type of DM particle</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">rho_X</span></code> - DM density, <span class="math notranslate nohighlight">\(\rho_\chi\)</span></p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{GeV}/\text{cm}^3\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>experiment</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">M</span></code> - Mass of the target.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{kg}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">T</span></code> - Exposure time of the target.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{year}\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>material</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">band_gap</span></code> - Band gap of the target material.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">name</span></code> - Name of the target material.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">pc_vol</span></code> - Primitive cell/unit cell volume.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{Å}^3\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">rho_T</span></code> - Target density.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{g}/\text{cm}^3\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>timing</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">dt_compute</span></code> - Time taken to perform sums in the calculation.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{s}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">dt_total</span></code> - Total run time of the calculation.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{s}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">start_date</span></code> - Start year/month/day of the calculation.</p>
+<ul>
+<li><p><strong>Dim</strong>: [3]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">end_date</span></code> - End year/month/day of the calculation.</p>
+<ul>
+<li><p><strong>Dim</strong>: [3]</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="calculation-specific-groups">
+<h2>Calculation Specific Groups<a class="headerlink" href="#calculation-specific-groups" title="Permalink to this heading">#</a></h2>
+<section id="binned-scatter-rate">
+<h3>Binned Scatter Rate<a class="headerlink" href="#binned-scatter-rate" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p><strong>binned_scatter_rate</strong></p>
+<ul>
+<li><p><strong>model_&lt;n&gt;/v_e_&lt;v&gt;/mass_&lt;m&gt;</strong> - Folder structure for a <strong>binned_scatter_rate</strong> calculation. Note that if only a single DM model, or Earth velocity vector, is specified these folders will be absent. For example, if only a light mediator with one Earth velocity vector is chosen the folder structure will be <strong>binned_scatter_rate/mass_&lt;m&gt;</strong> for each mass. However if a heavy and light mediator are calculated the folder structure will be <strong>binned_scatter_rate/model_&lt;n&gt;/mass_&lt;m&gt;</strong>. Similarly for mulitple Earth velocity vectors.</p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">total_binned_scatter_rate</span></code> - Total number of events in each <span class="math notranslate nohighlight">\(q, \omega\)</span> bin, assuming <span class="math notranslate nohighlight">\(\overline{\sigma}_e = 1\)</span> and an exposure of <code class="code docutils literal notranslate"><span class="pre">M_kg</span> <span class="pre">x</span> <span class="pre">T_year</span> <span class="pre">(kg-yr)</span></code>, where <code class="code docutils literal notranslate"><span class="pre">M_kg,</span> <span class="pre">T_year</span></code> are specified in the <strong>input file</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note the absence of units on <span class="math notranslate nohighlight">\(\overline{\sigma}_e\)</span> above. To compute the total number of events simply multiply the data by <span class="math notranslate nohighlight">\(\overline{\sigma}_e\)</span> in units of <span class="math notranslate nohighlight">\(\text{cm}^2\)</span>. For example to compute the number of events with <span class="math notranslate nohighlight">\(\overline{\sigma}_e = 10^{-40} \, \text{cm}^2\)</span>, mulitply the data by <span class="math notranslate nohighlight">\(10^{-40}\)</span>.</p>
+</div>
+<p>The event rate, in units of events/kg-year, is then calculated by dividing the entries by the exposure in kg-year. For example, if <strong>M_kg = 1, T_year = 1</strong> (the default) in the <strong>experiment</strong> group in the <strong>input file</strong>, the entries are both, a) the total number of events in a kg-year and b) the number of events/kg-year. If <strong>M_kg = 10, T_year = 1</strong>, the entries are the total number of events in 10 kg-year, and the event rate is easily calculated (simply divide by 10 in this example).</p>
+<ul class="simple">
+<li><p><strong>Dim</strong>: [ :, : ], [<span class="math notranslate nohighlight">\(N_q\)</span>, <span class="math notranslate nohighlight">\(N_\omega\)</span>]</p></li>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{cm}^{-2}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">i_&lt;i&gt;/binned_scatter_rate</span></code> - Total number of events in each <span class="math notranslate nohighlight">\(q, \omega\)</span> bin from each initial state group labelled by <code class="code docutils literal notranslate"><span class="pre">i</span></code>, e.g., the band number for Bloch states. The sum of the entries in each <code class="code docutils literal notranslate"><span class="pre">i</span></code> sum to the <code class="code docutils literal notranslate"><span class="pre">total_binned_scatter_rate</span></code>.</p>
+<ul class="simple">
+<li><p><strong>Dim</strong>: [ :, : ], [<span class="math notranslate nohighlight">\(N_q\)</span>, <span class="math notranslate nohighlight">\(N_\omega\)</span>]</p></li>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{cm}^{-2}\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>numerics_binned_scatter_rate</strong></p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">E_bin_width</span></code> - Width of the bins in <span class="math notranslate nohighlight">\(\omega\)</span> space.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">q_bin_width</span></code> - Width of the bins in <span class="math notranslate nohighlight">\(q\)</span> space.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{keV}\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="absorption-rate">
+<h3>Absorption Rate<a class="headerlink" href="#absorption-rate" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>absorption_rate</strong></p>
+<ul>
+<li><p><strong>width_&lt;i&gt;/mass_&lt;m&gt;</strong> - Folder structure for an <strong>absorption_rate</strong> calculation. Note that if only a single width is specified these folders will be absent. For example, if only a single width is chosen the folder structure will be <strong>absorption_rate/mass_&lt;m&gt;</strong> for each mass. However if multiple widths are calculated the folder structure will be <strong>binned_scatter_rate/width_&lt;i&gt;/mass_&lt;m&gt;</strong>.</p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">absorption_rate</span></code> - Total number of events assuming <span class="math notranslate nohighlight">\(g_e = 1\)</span>, and an exposure of <code class="code docutils literal notranslate"><span class="pre">M_kg</span> <span class="pre">x</span> <span class="pre">T_year</span> <span class="pre">(kg-yr)</span></code>. The event rate, in units of events/kg-year, is then calculated by dividing the entries by the exposure in kg-year. For example, if <strong>M_kg = 1, T_year = 1</strong> (the default) in the <strong>experiment</strong> group in the <strong>input file</strong>, the entries are both, a) the total number of events in a kg-year and b) the number of events/kg-year. If <strong>M_kg = 10, T_year = 1</strong>, the entries are the total number of events in 10 kg-year, and the event rate is easily calculated (simply divide by 10 in this example).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>numerics_absorption_rate</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">widths</span></code> - List of width parameterizations computed for, [<span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(c\)</span>].</p>
+<ul>
+<li><p><strong>Formula</strong>: <span class="math notranslate nohighlight">\(\delta = \text{min}(c, a + b \omega)\)</span></p></li>
+<li><p><strong>Units</strong>: [ : , { <span class="math notranslate nohighlight">\(\text{eV}\)</span>, - , <span class="math notranslate nohighlight">\(\text{eV}\)</span> } ]</p></li>
+<li><p><strong>Dim</strong>: [ : , 3]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">smear_type</span></code> - Defines broadening behavior for the imaginary part of the Greens function.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="dielectric">
+<h3>Dielectric<a class="headerlink" href="#dielectric" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>dielectric</strong></p>
+<ul>
+<li><p><strong>width_&lt;i&gt;</strong> - Folder containing the dielectric for width parameterization <code class="code docutils literal notranslate"><span class="pre">i</span></code></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">dielectric_r</span></code> - Real part of the averaged dielectric, <span class="math notranslate nohighlight">\(\overline{\varepsilon}(\mathbf{q}, \omega)\)</span>.</p>
+<ul>
+<li><p><strong>Dim</strong>: [ : , : , : , : ], [<span class="math notranslate nohighlight">\(N_q\)</span>, <span class="math notranslate nohighlight">\(N_\theta\)</span>, <span class="math notranslate nohighlight">\(N_\phi\)</span>, <span class="math notranslate nohighlight">\(N_\omega\)</span>]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">dielectric_c</span></code> - Imaginary part of the averaged dielectric, <span class="math notranslate nohighlight">\(\overline{\varepsilon}(\mathbf{q}, \omega)\)</span>.</p>
+<ul>
+<li><p><strong>Dim</strong>: [ : , : , : , : ], [<span class="math notranslate nohighlight">\(N_q\)</span>, <span class="math notranslate nohighlight">\(N_\theta\)</span>, <span class="math notranslate nohighlight">\(N_\phi\)</span>, <span class="math notranslate nohighlight">\(N_\omega\)</span>]</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>numerics_dielectric</strong></p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">E_bin_width</span></code> - Width of the bins in <span class="math notranslate nohighlight">\(\omega\)</span> space.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{eV}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">q_bin_width</span></code> - Width of the bins in <span class="math notranslate nohighlight">\(q\)</span> space.</p>
+<ul>
+<li><p><strong>Units</strong>: <span class="math notranslate nohighlight">\(\text{keV}\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">widths</span></code> - List of width parameterizations computed for, [<span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(c\)</span>].</p>
+<ul>
+<li><p><strong>Formula</strong>: <span class="math notranslate nohighlight">\(\delta = \text{min}(c, a + b \omega)\)</span></p></li>
+<li><p><strong>Units</strong>: [ : , { <span class="math notranslate nohighlight">\(\text{eV}\)</span>, - , <span class="math notranslate nohighlight">\(\text{eV}\)</span> } ]</p></li>
+<li><p><strong>Dim</strong>: [ : , 3]</p></li>
+</ul>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">smear_type</span></code> - Defines broadening behavior for the imaginary part of the Greens function.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../data.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Data</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="elec_config.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Electronic Configuration File</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Tanner Trickle
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Output File</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#general-groups">General Groups</a></li>
+<li><a class="reference internal" href="#calculation-specific-groups">Calculation Specific Groups</a><ul>
+<li><a class="reference internal" href="#binned-scatter-rate">Binned Scatter Rate</a></li>
+<li><a class="reference internal" href="#absorption-rate">Absorption Rate</a></li>
+<li><a class="reference internal" href="#dielectric">Dielectric</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

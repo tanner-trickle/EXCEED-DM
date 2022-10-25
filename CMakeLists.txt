@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.16)
 # Project information ###########################
 
 project(EXCEED-DM
-        VERSION 0.3.0
-        DESCRIPTION "OpenMPI Fortran program to compute Dark Matter (DM) induced electronic transition rates in gapped crystal targets."
+        VERSION 1.0.0
+        DESCRIPTION "OpenMPI Fortran program to compute Dark Matter (DM) induced electronic transition rates."
         HOMEPAGE_URL "https://exceed-dm.caltech.edu"
         LANGUAGES Fortran)
 
@@ -16,8 +16,17 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -Wall -Wextra")
-set(CMAKE_Fortran_FLAGS_RELEASE "-O3")
+if(CMAKE_Fortran_COMPILER_ID MATCHES Intel)
+    message("Optimizing for Intel compiler.")
+    set(CMAKE_Fortran_FLAGS_DEBUG "-cpp -O0 -g -debug extended -traceback")
+    set(CMAKE_Fortran_FLAGS_RELEASE "-cpp -O3")
+endif()
+
+if(CMAKE_Fortran_COMPILER_ID MATCHES GNU)
+    message("Optimizing for GFortran compiler.")
+    set(CMAKE_Fortran_FLAGS_DEBUG "-cpp -O0 -Wall -Wextra -fbacktrace -fcheck=all")
+    set(CMAKE_Fortran_FLAGS_RELEASE "-cpp -O3 -march=native")
+endif()
 
 #################################################
 
@@ -27,6 +36,18 @@ set(CMAKE_Fortran_MODULE_DIRECTORY "${PROJECT_SOURCE_DIR}/build/mod")
 
 file(GLOB_RECURSE sources src/*.f90)
 add_executable(exdm ${sources})
+
+##################################################
+
+# Preprocessing ##################################
+
+# add version number
+target_compile_definitions(exdm PRIVATE _cmake_version='${CMAKE_PROJECT_VERSION}')
+
+# Documentation
+configure_file("${PROJECT_SOURCE_DIR}/docs/conf.py.in" "${PROJECT_SOURCE_DIR}/docs/conf.py")
+
+##################################################
 
 # External Libraries ############################
 

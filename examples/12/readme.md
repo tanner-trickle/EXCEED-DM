@@ -1,7 +1,11 @@
-## ID: 12
+### Example 12: Si (Analytic) Screened Binned Scatter Rate, All Transitions Included
+
+- Calculation: Binned scatter rate
 
 - Target: Si
 
-- Process: absorption
+Complete calculation of transition rates in Si with an analytic model used for the screening factor. 
 
-- Description: Spin independent pseudoscalar DM absorption rate via valence to conduction transitions.
+```{note}
+The electronic configuration used here is identical to Example 5.
+```

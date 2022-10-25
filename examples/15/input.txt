@@ -1,59 +1,33 @@
-! v0.2.8
+# Input file for EXCEED-DMv1.0.0
 
-&control
-    process          = 'scatter',
-    calc_mode        = 'vc',
-    overwrite_output = .TRUE.,
-    timer            = .TRUE.,
-    quiet            = .FALSE.
-/
+[control]
+    calculation                     = 'binned_scatter_rate'
+    run_description                 = 'example_15_3'
+    out_folder                      = './examples/15/output/'
 
-&io
-    out_folder                = './examples/15/output',
-    run_description           = '15',
-    PW_data_filename          = './examples/data/Ge/dft/Ge_2x2x2_AE.hdf5'
-/
+[elec_config_input]
+    filename = './examples/15/elec_config.hdf5'
 
-&material
-    name            = 'Ge'
-    pc_vol_A        = 47.847 
-    rho_T_g_per_cm3 = 5.042 
-    band_gap        = 0.67
-/
+[material]
+    name            = 'Si'
+    rho_T_g_per_cm3 = 2.281
+    band_gap        = 1.11
 
-&experiment
-    E_threshold = 0,
-    m_T_kg      = 1,
-    exposure_yr = 1,
-    n_time      = 1,
-    theta_E     = 7.33D-1
-/
+    a_vecs_Ang      = 0.00000, 2.73437, 2.73437
+    a_vecs_Ang     += 2.73437, 0.00000, 2.73437
+    a_vecs_Ang     += 2.73437, 2.73437, 0.00000
 
-&dm_model
-	n_mX             = 1,
-    log_mX_min       = 10,
-    log_mX_max       = 10,
-    n_extra_mX       = 0,
-    n_med_FF         = 1,
-    med_FF_min       = 0,
-    med_FF_max       = 0,
-    rhoX_GeV_per_cm3 = 0.4,
-    v0_km_per_sec    = 230,
-    vE_km_per_sec    = 240,
-    vEsc_km_per_sec  = 600,
-    tff_id           = 1, 1
-/
+[dm_model]
 
-&bins_scatter
-    q_width = 1D3,
-    E_width = 1,
-    n_E    = 100,
-    n_q    = 100
-/
+    FIF_id = 'VA1'
 
-&numerics_s_vc
-    n_val_max = 1,
-    n_cond_max = 1
-/
+    mX = 1e6, 1e7, 1e8, 1e9
 
-!
+    med_FF = 2
+
+[numerics_binned_scatter_rate]
+
+    n_q_bins = 1
+    n_E_bins = 400
+    q_bin_width = 1
+    E_bin_width = 1

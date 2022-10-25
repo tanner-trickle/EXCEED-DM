@@ -1,7 +1,11 @@
-## ID: 15
+### Example 15: Si Binned Scatter Rate, V-A model
 
-- Target: Ge
+- Calculation: Binned scatter rate
 
-- Process: scattering
+- Target: Si
 
-- Description: Spin independent valence to conduction transition from highest valence band to lowest conduction band. Single dark matter mass and form factor. Useful for timing the total calculation.
+Calculation of the binned scatter rate in Si with a model containing $\mathbf{v}_e$ dependent scattering potential.
+
+```{note}
+The electronic configuration used here is identical to Example 5.
+```

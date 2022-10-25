@@ -1,0 +1,591 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Published Papers using EXCEED-DM" href="papers.html" /><link rel="prev" title="Output File" href="file_spec/output.html" />
+
+    <link rel="shortcut icon" href="../_static/exdm-favicon2.png"/><meta name="generator" content="sphinx-5.1.1, furo 2022.04.07"/>
+        <title>Data - EXCEED-DM v1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">EXCEED-DM v1.0.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/exdm-prelim-logo-modified.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">EXCEED-DM v1.0.0</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples_link.html">Examples</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="file_spec/index.html">File Specifications</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_spec/inputs_link.html">Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_spec/elec_config.html">Electronic Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_spec/output.html">Output File</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="papers.html">Papers</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="data">
+<h1>Data<a class="headerlink" href="#data" title="Permalink to this heading">#</a></h1>
+<section id="electronic-configuration-files">
+<h2>Electronic Configuration Files<a class="headerlink" href="#electronic-configuration-files" title="Permalink to this heading">#</a></h2>
+<p>While the <code class="code docutils literal notranslate"><span class="pre">examples</span></code> folder contains many example electronic configuration files useful for testing and learning what <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> can do, they are not suitable for publication quality results. The datasets are simply too small; they do no adequately represent the collection of electronic states in the target. The publication quality electronic configuration files are too big to host on the Github repository, typically being <span class="math notranslate nohighlight">\(\mathcal{O}(\text{GB})\)</span> in size. There are two ways around this:</p>
+<ol class="arabic simple">
+<li><p>Create your own electronic configuration file to the specifications given in <a class="reference internal" href="file_spec/elec_config.html"><span class="doc">File Specifications - Electronic Configuration File</span></a>. This is the best option if you are studying a novel target.</p></li>
+<li><p>Use a publicly available electronic configuration file. The files for Si and Ge are hosted on <a class="reference external" href="https://zenodo.org/">Zenodo</a>, with links given below. It is <strong>highly recommeded</strong> that you make your electronic configuration files public so that results can be easily reproduced.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Remember to cite the associated Zenodo repository if you use these publically available electronic configuration files.</p>
+</div>
+<section id="si">
+<h3>Si<a class="headerlink" href="#si" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Link: (add Zenodo link when available)</dt><dd><ul>
+<li><p>File: <code class="code docutils literal notranslate"><span class="pre">Si/scatter/Si_scatter_elec_config.hdf5</span></code></p></li>
+<li><dl class="simple">
+<dt>Description:</dt><dd><ul>
+<li><p>Electronic states assumed to be spin-degenerate, i.e., one-component wave functions. Used for binned scattering rate and dielectric calculations.</p></li>
+<li><dl class="simple">
+<dt>Initial States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>STO basis</strong> states and <strong>PW basis</strong> states. <strong>STO basis</strong> is used for the low energy, “core” states, while <strong>PW basis</strong> is used for the valence states.</p></li>
+<li><dl class="simple">
+<dt>STO basis</dt><dd><ul>
+<li><p>10 states (1 <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> point (<span class="math notranslate nohighlight">\(\mathbf{k} = 0\)</span>), 10 bands). States are the electrons in the <span class="math notranslate nohighlight">\(1s \rightarrow 2p\)</span> orbitals, for both Si in the unit cell. The sum over lattice vectors, <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> extends to cells <span class="math notranslate nohighlight">\(\pm 1\)</span> away from the center, i.e., includes 27 cells in total. Each state is sampled on a <span class="math notranslate nohighlight">\(128 \times 128 \times 128\)</span> uniform grid in the unit cell. STO basis coefficients, e.g., <span class="math notranslate nohighlight">\(C_{j, l, n, \kappa}\)</span> are taken from the tabulated values <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0092640X8371003X">here</a>. Energy of each state is taken from the Materials Project database, material ID mp-149.</p></li>
+<li><p>Notes: The reason for the small number of <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> points is due to runtime considerations, one has to choose between a larger sampling grid, i.e., sample the high momentum contributions in the unit cell, or more <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> points. Since the main features of these states are at high momentum, this is prioritized.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id1">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Final States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>PW basis</strong> and <strong>single PW basis</strong> states. <strong>PW basis</strong> is used for the lower energy “conduction” bands, <strong>single PW basis</strong> is used for higher energy states being approximated as “free”.</p></li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>60000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 60 bands). Computed with DFT (VASP), see Ref. <span id="id2">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(1.11 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>single PW basis</strong></dt><dd><ul>
+<li><p>40000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 400\)</span> grid in <span class="math notranslate nohighlight">\((\theta, \phi, p)\)</span> space). Uniformly sampled on the sphere in <span class="math notranslate nohighlight">\((\theta, \phi)\)</span>, logarithmically sampled in <span class="math notranslate nohighlight">\(E = p^2/2m_e\)</span> between <span class="math notranslate nohighlight">\(E_\text{min} = 60 \, \text{eV}\)</span> and <span class="math notranslate nohighlight">\(E_\text{max} = 400 \, \text{eV}\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Link: (add Zenodo link when available)</dt><dd><ul>
+<li><p>File: <code class="code docutils literal notranslate"><span class="pre">Si/abs/Si_abs_elec_config.hdf5</span></code></p></li>
+<li><dl class="simple">
+<dt>Description:</dt><dd><ul>
+<li><p>Electronic states assumed to be spin-degenerate, i.e., one-component wave functions. Used for absorption rate calculations.</p></li>
+<li><dl class="simple">
+<dt>Initial States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>STO basis</strong> states and <strong>PW basis</strong> states. <strong>STO basis</strong> is used for the low energy, “core” states, while <strong>PW basis</strong> is used for the valence states.</p></li>
+<li><dl class="simple">
+<dt>STO basis</dt><dd><ul>
+<li><p>10000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 10 bands). States are the electrons in the <span class="math notranslate nohighlight">\(1s \rightarrow 2p\)</span> orbitals, for both Si in the unit cell. <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> grid is uniformly sampled over the 1BZ. The sum over lattice vectors, <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> extends to cells <span class="math notranslate nohighlight">\(\pm 1\)</span> away from the center, i.e., includes 27 cells in total. Each state is sampled on a <span class="math notranslate nohighlight">\(128 \times 128 \times 128\)</span> uniform grid in the unit cell. STO basis coefficients, e.g., <span class="math notranslate nohighlight">\(C_{j, l, n, \kappa}\)</span> are taken from the tabulated values <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0092640X8371003X">here</a>. Energy of each state is taken from the Materials Project database, material ID mp-149.</p></li>
+<li><p>Notes: A larger number of <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> vectors can, and must be, used here is because transitions must be vertical. This limits the number of transitions, relative to a scattering rate calculation.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id4">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Final States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>PW basis</strong> and <strong>single PW basis</strong> states. <strong>PW basis</strong> is used for the lower energy “conduction” bands, <strong>single PW basis</strong> is used for higher energy states being approximated as “free”.</p></li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>60000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 60 bands). Computed with DFT (VASP), see Ref. <span id="id5">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(1.11 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>single PW basis</strong></dt><dd><ul>
+<li><p>2152000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> grid). <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> points are sampled uniformly in the 1BZ. For each <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, all <span class="math notranslate nohighlight">\(\mathbf{G}\)</span> were included such that <span class="math notranslate nohighlight">\(60 \, \text{eV} &lt; |\mathbf{k} + \mathbf{G}|^2/2m_e &lt; \text{keV}\)</span>. Different <span class="math notranslate nohighlight">\(\mathbf{G}\)</span> correspond to different bands when the parabolic dispersion relation gets folded in to the 1BZ.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="ge">
+<h3>Ge<a class="headerlink" href="#ge" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Link: (add Zenodo link when available)</dt><dd><ul>
+<li><p>File: <code class="code docutils literal notranslate"><span class="pre">Ge/scatter/Ge_scatter_elec_config.hdf5</span></code></p></li>
+<li><dl class="simple">
+<dt>Description:</dt><dd><ul>
+<li><p>Electronic states assumed to be spin-degenerate, i.e., one-component wave functions. Used for binned scattering rate and dielectric calculations.</p></li>
+<li><dl class="simple">
+<dt>Initial States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>STO basis</strong> states and <strong>PW basis</strong> states. <strong>STO basis</strong> is used for the low energy, “core” states, while <strong>PW basis</strong> is used for the valence states.</p></li>
+<li><dl class="simple">
+<dt>STO basis</dt><dd><ul>
+<li><p>28 states (1 <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> point (<span class="math notranslate nohighlight">\(\mathbf{k} = 0\)</span>), 28 bands). States are the electrons in the <span class="math notranslate nohighlight">\(1s \rightarrow 3d\)</span> orbitals, for both Ge in the unit cell. The sum over lattice vectors, <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> extends to cells <span class="math notranslate nohighlight">\(\pm 1\)</span> away from the center, i.e., includes 27 cells in total. Each state is sampled on a <span class="math notranslate nohighlight">\(128 \times 128 \times 128\)</span> uniform grid in the unit cell. STO basis coefficients, e.g., <span class="math notranslate nohighlight">\(C_{j, l, n, \kappa}\)</span> are taken from the tabulated values <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0092640X8371003X">here</a>. Energy of each state is taken from the Materials Project database, material ID mp-32.</p></li>
+<li><p>Notes: The reason for the small number of <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> points is due to runtime considerations, one has to choose between a larger sampling grid, i.e., sample the high momentum contributions in the unit cell, or more <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> points. Since the main features of these states are at high momentum, this is prioritized.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id7">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Final States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>PW basis</strong> and <strong>single PW basis</strong> states. <strong>PW basis</strong> is used for the lower energy “conduction” bands, <strong>single PW basis</strong> is used for higher energy states being approximated as “free”.</p></li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>82000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 82 bands). Computed with DFT (VASP), see Ref. <span id="id8">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(0.67 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>single PW basis</strong></dt><dd><ul>
+<li><p>40000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 400\)</span> grid in <span class="math notranslate nohighlight">\((\theta, \phi, p)\)</span> space). Uniformly sampled on the sphere in <span class="math notranslate nohighlight">\((\theta, \phi)\)</span>, logarithmically sampled in <span class="math notranslate nohighlight">\(E = p^2/2m_e\)</span> between <span class="math notranslate nohighlight">\(E_\text{min} = 60 \, \text{eV}\)</span> and <span class="math notranslate nohighlight">\(E_\text{max} = 400 \, \text{eV}\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Link: (add Zenodo link when available)</dt><dd><ul>
+<li><p>File: <code class="code docutils literal notranslate"><span class="pre">Ge/abs/Ge_abs_elec_config.hdf5</span></code></p></li>
+<li><dl class="simple">
+<dt>Description:</dt><dd><ul>
+<li><p>Electronic states assumed to be spin-degenerate, i.e., one-component wave functions. Used for absorption rate calculations.</p></li>
+<li><dl class="simple">
+<dt>Initial States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>STO basis</strong> states and <strong>PW basis</strong> states. <strong>STO basis</strong> is used for the low energy, “core” states, while <strong>PW basis</strong> is used for the valence states.</p></li>
+<li><dl class="simple">
+<dt>STO basis</dt><dd><ul>
+<li><p>28000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 28 bands). States are the electrons in the <span class="math notranslate nohighlight">\(1s \rightarrow 3d\)</span> orbitals, for both Ge in the unit cell. <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> grid is uniformly sampled over the 1BZ. The sum over lattice vectors, <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> extends to cells <span class="math notranslate nohighlight">\(\pm 1\)</span> away from the center, i.e., includes 27 cells in total. Each state is sampled on a <span class="math notranslate nohighlight">\(128 \times 128 \times 128\)</span> uniform grid in the unit cell. STO basis coefficients, e.g., <span class="math notranslate nohighlight">\(C_{j, l, n, \kappa}\)</span> are taken from the tabulated values <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0092640X8371003X">here</a>. Energy of each state is taken from the Materials Project database, material ID mp-32.</p></li>
+<li><p>Notes: A larger number of <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> vectors can, and must be, used here is because transitions must be vertical. This limits the number of transitions, relative to a scattering rate calculation.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id10">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Final States:</dt><dd><ul>
+<li><p>Modelled with a combination of <strong>PW basis</strong> and <strong>single PW basis</strong> states. <strong>PW basis</strong> is used for the lower energy “conduction” bands, <strong>single PW basis</strong> is used for higher energy states being approximated as “free”.</p></li>
+<li><dl class="simple">
+<dt><strong>PW basis</strong></dt><dd><ul>
+<li><p>82000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 82 bands). Computed with DFT (VASP), see Ref. <span id="id11">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(0.67 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>single PW basis</strong></dt><dd><ul>
+<li><p>2586000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> grid). <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> points are sampled uniformly in the 1BZ. For each <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, all <span class="math notranslate nohighlight">\(\mathbf{G}\)</span> were included such that <span class="math notranslate nohighlight">\(60 \, \text{eV} &lt; |\mathbf{k} + \mathbf{G}|^2/2m_e &lt; \text{keV}\)</span>. Different <span class="math notranslate nohighlight">\(\mathbf{G}\)</span> correspond to different bands when the parabolic dispersion relation gets folded in to the 1BZ.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<p></p>
+</section>
+<section id="exceed-dm-results">
+<h2><code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> Results<a class="headerlink" href="#exceed-dm-results" title="Permalink to this heading">#</a></h2>
+<p>Below are links to datasets used for previously published results. See the refereces for more details.</p>
+<section id="exceed-dmv1-0-0-extended-calculation-of-electronic-excitations-for-direct-detection-of-dark-matter">
+<h3>EXCEED-DMv1.0.0: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter<a class="headerlink" href="#exceed-dmv1-0-0-extended-calculation-of-electronic-excitations-for-direct-detection-of-dark-matter" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Ref: (add arXiv link when available)</dt><dd><ul>
+<li><p>Link: (add Zenodo link when available)</p></li>
+<li><dl class="simple">
+<dt>Description:</dt><dd><dl class="simple">
+<dt>Output of all the calculations performed in the <code class="code docutils literal notranslate"><span class="pre">v1.0.0</span></code> user manual. Specifically, for Si and Ge targets,</dt><dd><ul>
+<li><p>Numerically computed dielectric (to be used to screen the scattering rate calculation).</p></li>
+<li><p>Binned scatter rate of DM fermion in kinetically mixed dark photon model with different screenings: no screening, an analytic model of screening, and screened with the aforementioned numerically computed dielectric.</p></li>
+<li><p>Binned scatter rate of DM fermion in a model where the scattering potential depends on the electron velocity (light mediator).</p></li>
+<li><p>Extended absorption rate calculation for scalar, pseudoscalar, and vector DM.</p></li>
+<li><p>Annual modulation of binned scatter rate of DM fermion in kinetically mixed dark photon model.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="docutils container" id="id12">
+<div class="citation" id="id17" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a href="#id1" role="doc-backlink">1</a>,<a href="#id2" role="doc-backlink">2</a>,<a href="#id4" role="doc-backlink">3</a>,<a href="#id5" role="doc-backlink">4</a>,<a href="#id7" role="doc-backlink">5</a>,<a href="#id8" role="doc-backlink">6</a>,<a href="#id10" role="doc-backlink">7</a>,<a href="#id11" role="doc-backlink">8</a>)</span>
+<p>Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. <em>Phys. Rev. D</em>, 104(9):095015, 5 2021. <a class="reference external" href="https://arxiv.org/abs/2105.05253">arXiv:2105.05253</a>, <a class="reference external" href="https://doi.org/10.1103/PhysRevD.104.095015">doi:10.1103/PhysRevD.104.095015</a>.</p>
+</div>
+<div class="citation" id="id19" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<p>Tanner Trickle and Kinzani. Tanner-trickle/exceed-dm: exceed-dm-v0.3.0. 2022. URL: <a class="reference external" href="https://zenodo.org/record/6097642">https://zenodo.org/record/6097642</a>, <a class="reference external" href="https://doi.org/10.5281/ZENODO.6097642">doi:10.5281/ZENODO.6097642</a>.</p>
+</div>
+</div>
+
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="papers.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Published Papers using EXCEED-DM</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="file_spec/output.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Output File</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Tanner Trickle
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Data</a><ul>
+<li><a class="reference internal" href="#electronic-configuration-files">Electronic Configuration Files</a><ul>
+<li><a class="reference internal" href="#si">Si</a></li>
+<li><a class="reference internal" href="#ge">Ge</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exceed-dm-results"><code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> Results</a><ul>
+<li><a class="reference internal" href="#exceed-dmv1-0-0-extended-calculation-of-electronic-excitations-for-direct-detection-of-dark-matter">EXCEED-DMv1.0.0: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

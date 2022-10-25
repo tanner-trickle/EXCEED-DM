@@ -1,93 +1,33 @@
-! v0.2.8
+# Input file for EXCEED-DMv1.0.0
 
-&control
-    process          = 'scatter',
-    calc_mode        = 'vc',
-    overwrite_output = .TRUE.,
-    timer            = .TRUE.,
-    quiet            = .FALSE.
-/
+[control]
+    calculation                     = 'binned_scatter_rate'
+    run_description                 = 'example_5'
+    out_folder                      = './examples/5/output/'
 
-&io
-    out_folder                = './examples/5/output',
-    run_description           = '5',
-    PW_data_filename          = './examples/data/Si/dft/Si_2x2x2_AE.hdf5'
-    dielectric_filename       = './examples/5/output/dielectric.hdf5'
-/
+[elec_config_input]
+    filename = './examples/5/elec_config.hdf5'
 
-&material
+[material]
     name            = 'Si'
-    pc_vol_A        = 40.888 
-    rho_T_g_per_cm3 = 2.281  
-    band_gap        = 1.11 
-/
+    rho_T_g_per_cm3 = 2.281
+    band_gap        = 1.11
 
-&experiment
-    E_threshold = 0,
-    m_T_kg      = 1,
-    exposure_yr = 1,
-    n_time      = 1,
-    theta_E     = 7.33D-1
-/
+    a_vecs_Ang      = 0.00000, 2.73437, 2.73437
+    a_vecs_Ang     += 2.73437, 0.00000, 2.73437
+    a_vecs_Ang     += 2.73437, 2.73437, 0.00000
 
-&dm_model
-	n_mX             = 1,
-    log_mX_min       = 10,
-    log_mX_max       = 10,
-    n_extra_mX       = 0,
-    n_med_FF         = 1,
-    med_FF_min       = 0,
-    med_FF_max       = 0,
-    rhoX_GeV_per_cm3 = 0.4,
-    v0_km_per_sec    = 230,
-    vE_km_per_sec    = 240,
-    vEsc_km_per_sec  = 600,
-    tff_id           = 1, 1
-/
+[dm_model]
 
-&bins_scatter
-    q_width = 1D3,
-    E_width = 1,
-    n_E    = 100,
-    n_q    = 100
-/
+    mX = 1e6, 1e7, 1e8, 1e9
 
-&numerics_s_vc
-    n_val_max = 1,
-    n_cond_max = 1
-/
+    mX_logspace = 20, 1e5, 1e10
 
-&in_med_scr
-    include_screen = .TRUE.,
-    type           = 'numeric'
-/
+    med_FF = 0, 2
 
-&bins_dielectric
-    q_width = 100,
-    E_width = 0.1,
-    n_E    = 100,
-    n_q    = 100, 
-    n_q_theta = 1,
-    n_q_phi = 1
-/
+[numerics_binned_scatter_rate]
 
-&numerics_dielectric
-    n_val_max = 0,
-    n_cond_max = 0, 
-    n_k_vec = 2, 2, 2
-/
-
-&widths
-    n_a       = 1,
-    n_b       = 1,
-    n_m       = 1
-    a_min     = 0.2,
-    a_max     = 0.2,
-    log_b_min = 0,
-    log_b_max = 0,
-    m_min     = 0.2,
-    m_max     = 0.2,
-    sigma     = 1D10
-/
-
-!
+    n_q_bins = 1
+    n_E_bins = 4000
+    q_bin_width = 1
+    E_bin_width = 1

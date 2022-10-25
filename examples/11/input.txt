@@ -1,66 +1,31 @@
-! v0.2.8
+# Input file for EXCEED-DMv1.0.0
 
-&control
-    process          = 'absorption',
-    calc_mode        = 'LO',
-    overwrite_output = .TRUE.,
-    timer            = .TRUE.,
-    quiet            = .FALSE.
-/
+[control]
+    calculation                     = 'dielectric'
+    run_description                 = 'example_11'
+    out_folder                      = './examples/11/output/'
+    save_default_inputs_markdown = T
+    default_input_markdown_filename = './docs/pages/file_spec/inputs.md'
 
-&io
-    out_folder                = './examples/11/output',
-    run_description           = '11',
-    PW_data_filename          = './examples/data/Si/dft/Si_2x2x2_AE.hdf5',
-/
+[elec_config_input]
+    filename = './examples/11/elec_config.hdf5'
 
-&material
+[material]
     name            = 'Si'
-    pc_vol_A        = 40.888 
-    rho_T_g_per_cm3 = 2.281  
-    band_gap        = 1.11 
-/
+    rho_T_g_per_cm3 = 2.281
+    band_gap        = 1.11
 
-&experiment
-    E_threshold = 0,
-    m_T_kg      = 1,
-    exposure_yr = 1,
-    n_time      = 1,
-    theta_E     = 7.33D-1
-/
+    a_vecs_Ang      = 0.00000, 2.73437, 2.73437
+    a_vecs_Ang     += 2.73437, 0.00000, 2.73437
+    a_vecs_Ang     += 2.73437, 2.73437, 0.00000
 
-&dm_model
-	n_mX             = 100,
-    log_mX_min       = 0,
-    log_mX_max       = 2,
-    n_extra_mX       = 0,
-    rhoX_GeV_per_cm3 = 0.4,
-    v0_km_per_sec    = 230,
-    vE_km_per_sec    = 240,
-    vEsc_km_per_sec  = 600, 
-    particle_type    = 'scalar'
-/
+[numerics_dielectric]
 
-&widths
-    n_a       = 1,
-    n_b       = 1,
-    n_m       = 1
-    a_min     = 0.2,
-    a_max     = 0.2,
-    log_b_min = 0,
-    log_b_max = 0,
-    m_min     = 0.2,
-    m_max     = 0.2,
-    sigma     = 1D10
-/
+    smear_type = 'gauss'
 
-&numerics_abs
-    n_v            = 100,
-    n_v_theta      = 10,
-    n_v_phi        = 10,
-    n_val_max      = 0,
-    n_cond_max     = 0,
-    save_tran_form = .FALSE.
-/
+    widths = 0.2, 1, 0.2
 
-!
+    n_E_bins = 1000
+    n_q_bins = 500
+    E_bin_width = 1
+    q_bin_width = 1
