@@ -51,7 +51,6 @@ Features
    - :code:`EXCEED-DM` provides a variety of different bases to specify the initial, and final, electronic states to accurately characterize the target. For example, plane wave (PW) (spin-dependent) bases and Slate type orbital (STO) bases.
 
 - **Calculations**
-
     - **Scattering**: Given a DM model (DM masses, interaction potential, etc.) :code:`EXCEED-DM` computes the expected number of interactions per kg-year binned in energy and momentum deposition.
         - With the electronic state approximations separated from the scattering rate calculation, new transition form factors can be easily added as functions of the electronic matrix elements.
     - **Absorption**: Given a DM model (e.g., scalar, pseudoscalar, vector DM) :code:`EXCEED-DM` computes the expected number of interactions per kg-year.
