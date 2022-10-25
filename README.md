@@ -16,11 +16,13 @@
 
 `EXCEED-DM` provides a complete framework for computing DM-electron interaction rates. Given an electronic configuration, `EXCEED-DM` computes the relevant electronic matrix elements, then particle physics specific rates from these matrix elements. This allows for separation between approximations regarding the electronic state configuration, and the specific calculation being performed. 
 
-- For detailed information on installing `EXCEED-DM` and running examples, see the [documentation](https://tanner-trickle.github.io/EXCEED-DM).
+- To lean how to install and run `EXCEED-DM`, see the documentation [documentation](https://tanner-trickle.github.io/EXCEED-DM).
 
 - For more detailed information about what `EXCEED-DM` is computing, and to see it used for new physics results, see the [user manual]().
 
-- For the large electronic configuration files for Si and Ge targets, see the [Zenodo repository](https://zenodo.org/record/7246141#.Y1cKIbaSnZc).
+    - Results from the [user manual]() can be found in a [Zenodo repository](https://zenodo.org/record/7250090#.Y1gwxLaSnZc) 
+
+    - For the large Si and Ge electronic configuration files, used in the [user manual](), see this [Zenodo repository](https://zenodo.org/record/7246141#.Y1cKIbaSnZc).
 
 ## Features
 
