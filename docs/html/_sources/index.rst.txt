@@ -68,6 +68,6 @@ Features
 Attribution
 ===========
 
-If you use :code:`EXCEED-DM` in your work, please cite: :cite:`github-zenodo, Griffin:2021znd`
+If you use :code:`EXCEED-DM` in your work, please cite: :cite:`exdmv030, Griffin:2021znd`
 
 .. bibliography:: bibliography.bib
