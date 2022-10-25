@@ -17,7 +17,7 @@ While the :code:`examples` folder contains many example electronic configuration
 Si
 **
 
-- Link: (add Zenodo link when available)
+- Link: https://zenodo.org/record/7246141#.Y1g31raSnZc
     - File: :code:`Si/scatter/Si_scatter_elec_config.hdf5`
     - Description: 
         - Electronic states assumed to be spin-degenerate, i.e., one-component wave functions. Used for binned scattering rate and dielectric calculations.
@@ -38,7 +38,7 @@ Si
                 - 40000 states (:math:`10 \times 10 \times 400` grid in :math:`(\theta, \phi, p)` space). Uniformly sampled on the sphere in :math:`(\theta, \phi)`, logarithmically sampled in :math:`E = p^2/2m_e` between :math:`E_\text{min} = 60 \, \text{eV}` and :math:`E_\text{max} = 400 \, \text{eV}`.
 
 
-- Link: (add Zenodo link when available)
+- Link: https://zenodo.org/record/7246141#.Y1g31raSnZc
     - File: :code:`Si/abs/Si_abs_elec_config.hdf5`
     - Description: 
         - Electronic states assumed to be spin-degenerate, i.e., one-component wave functions. Used for absorption rate calculations.
@@ -62,7 +62,7 @@ Si
 Ge
 **
 
-- Link: (add Zenodo link when available)
+- Link: https://zenodo.org/record/7246141#.Y1g31raSnZc
     - File: :code:`Ge/scatter/Ge_scatter_elec_config.hdf5`
     - Description: 
         - Electronic states assumed to be spin-degenerate, i.e., one-component wave functions. Used for binned scattering rate and dielectric calculations.
@@ -82,7 +82,7 @@ Ge
             - **single PW basis**
                 - 40000 states (:math:`10 \times 10 \times 400` grid in :math:`(\theta, \phi, p)` space). Uniformly sampled on the sphere in :math:`(\theta, \phi)`, logarithmically sampled in :math:`E = p^2/2m_e` between :math:`E_\text{min} = 60 \, \text{eV}` and :math:`E_\text{max} = 400 \, \text{eV}`.
 
-- Link: (add Zenodo link when available)
+- Link: https://zenodo.org/record/7246141#.Y1g31raSnZc
     - File: :code:`Ge/abs/Ge_abs_elec_config.hdf5`
     - Description: 
         - Electronic states assumed to be spin-degenerate, i.e., one-component wave functions. Used for absorption rate calculations.
@@ -112,7 +112,7 @@ EXCEED-DMv1.0.0: Extended Calculation of Electronic Excitations for Direct Detec
 ***************************************************************************************************
 
 - Ref: (add arXiv link when available)
-    - Link: (add Zenodo link when available)
+    - Link: https://zenodo.org/record/7250090#.Y1g4J7aSnZc
     - Description:
         Output of all the calculations performed in the :code:`v1.0.0` user manual. Specifically, for Si and Ge targets,
             - Numerically computed dielectric (to be used to screen the scattering rate calculation).
