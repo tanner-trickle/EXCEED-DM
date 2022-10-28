@@ -31,7 +31,7 @@ Welcome to the :code:`EXCEED-DM` documentation!
 
 :code:`EXCEED-DM` is an OpenMPI Fortran program that computes Dark Matter (DM) induced electronic transition rates. 
 
-`User Manual <>`_
+`User Manual <https://arxiv.org/abs/2210.14917>`_
 
 ========
 Overview
@@ -39,7 +39,7 @@ Overview
 
 :code:`EXCEED-DM` provides a complete framework for computing DM-electron interaction rates. Given an electronic configuration, :code:`EXCEED-DM` computes the relevant electronic matrix elements, then particle physics specific rates from these matrix elements. This allows for separation between approximations regarding the electronic state configuration, and the specific calculation being performed. 
 
-- For more detailed information about what :code:`EXCEED-DM` is computing, and to see it used for new physics results, see the `user manual <>`_.
+- For more detailed information about what :code:`EXCEED-DM` is computing, and to see it used for new physics results, see the `user manual <https://arxiv.org/abs/2210.14917>`_.
 
 - For the large electronic configuration files for Si and Ge targets, see the `Zenodo repository <https://zenodo.org/record/7246141#.Y1cKIbaSnZc>`_.
 
@@ -67,6 +67,37 @@ Features
 Attribution
 ===========
 
-If you use :code:`EXCEED-DM` in your work, please cite: :cite:`exdmv030, Griffin:2021znd`
+If you use :code:`EXCEED-DM` in your work, please cite,
 
-.. bibliography:: bibliography.bib
+.. code-block:: none
+
+   @misc{exdmv1,
+      doi = {10.5281/ZENODO.7250321},
+      url = {https://zenodo.org/record/7250321},
+      author = {Trickle,  Tanner and {Kinzani}},
+      title = {tanner-trickle/EXCEED-DM: EXCEED-DMv1.0.0},
+      publisher = {Zenodo},
+      year = {2022},
+      copyright = {Open Access}
+   }
+
+   @article{Trickle2022,
+      author = "Trickle, Tanner",
+      title = "{EXCEED-DM: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter}",
+      eprint = "https://arxiv.org/abs/2210.14917",
+      archivePrefix = "arXiv",
+      primaryClass = "hep-ph",
+      month = "10",
+      year = "2022"
+   }
+
+   @article{Griffin:2021znd,
+      author = "Griffin, Sin\'ead M. and Inzani, Katherine and Trickle, Tanner and Zhang, Zhengkang and Zurek, Kathryn M.",
+      title = "{Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets}",
+      eprint = "2105.05253",
+      archivePrefix = "arXiv",
+      primaryClass = "hep-ph",
+      month = "5",
+      year = "2021"
+   }
+

@@ -1,3 +1,8 @@
+v1.0.0
+---
+
+- Release of v1.0.0 to accompany the user manual: https://arxiv.org/abs/2210.14917.
+
 v1.0.0-beta
 ---
 

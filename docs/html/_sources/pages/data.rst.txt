@@ -111,7 +111,7 @@ Below are links to datasets used for previously published results. See the refer
 EXCEED-DMv1.0.0: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter 
 ***************************************************************************************************
 
-- Ref: (add arXiv link when available)
+- Ref: https://arxiv.org/abs/2210.14917
     - Link: https://zenodo.org/record/7250090#.Y1g4J7aSnZc
     - Description:
         Output of all the calculations performed in the :code:`v1.0.0` user manual. Specifically, for Si and Ge targets,

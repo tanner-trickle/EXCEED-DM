@@ -235,12 +235,12 @@
 <a class="reference external image-reference" href="https://doi.org/10.5281/zenodo.6097642"><img alt="https://zenodo.org/badge/DOI/10.5281/zenodo.6097642.svg" src="https://zenodo.org/badge/DOI/10.5281/zenodo.6097642.svg"/></a>
 <p>Welcome to the <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> documentation!</p>
 <p><code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> is an OpenMPI Fortran program that computes Dark Matter (DM) induced electronic transition rates.</p>
-<p><a href="#id10"><span class="problematic" id="id11">`User Manual &lt;&gt;`_</span></a></p>
+<p><a class="reference external" href="https://arxiv.org/abs/2210.14917">User Manual</a></p>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p><code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> provides a complete framework for computing DM-electron interaction rates. Given an electronic configuration, <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> computes the relevant electronic matrix elements, then particle physics specific rates from these matrix elements. This allows for separation between approximations regarding the electronic state configuration, and the specific calculation being performed.</p>
 <ul class="simple">
-<li><p>For more detailed information about what <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> is computing, and to see it used for new physics results, see the <a href="#id12"><span class="problematic" id="id13">`user manual &lt;&gt;`_</span></a>.</p></li>
+<li><p>For more detailed information about what <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> is computing, and to see it used for new physics results, see the <a class="reference external" href="https://arxiv.org/abs/2210.14917">user manual</a>.</p></li>
 <li><p>For the large electronic configuration files for Si and Ge targets, see the <a class="reference external" href="https://zenodo.org/record/7246141#.Y1cKIbaSnZc">Zenodo repository</a>.</p></li>
 </ul>
 </section>
@@ -279,18 +279,38 @@
 </section>
 <section id="attribution">
 <h2>Attribution<a class="headerlink" href="#attribution" title="Permalink to this heading">#</a></h2>
-<p>If you use <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> in your work, please cite: <span id="id1">[<a class="reference internal" href="pages/data.html#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>, <a class="reference internal" href="pages/data.html#id19" title="Tanner Trickle and Kinzani. Tanner-trickle/exceed-dm: exceed-dm-v0.3.0. 2022. URL: https://zenodo.org/record/6097642, doi:10.5281/ZENODO.6097642.">2</a>]</span></p>
-<div class="docutils container" id="id2">
-<div class="citation" id="id7" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a href="#id1" role="doc-backlink">1</a><span class="fn-bracket">]</span></span>
-<p>Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. <em>Phys. Rev. D</em>, 104(9):095015, 5 2021. <a class="reference external" href="https://arxiv.org/abs/2105.05253">arXiv:2105.05253</a>, <a class="reference external" href="https://doi.org/10.1103/PhysRevD.104.095015">doi:10.1103/PhysRevD.104.095015</a>.</p>
-</div>
-<div class="citation" id="id9" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a href="#id1" role="doc-backlink">2</a><span class="fn-bracket">]</span></span>
-<p>Tanner Trickle and Kinzani. Tanner-trickle/exceed-dm: exceed-dm-v0.3.0. 2022. URL: <a class="reference external" href="https://zenodo.org/record/6097642">https://zenodo.org/record/6097642</a>, <a class="reference external" href="https://doi.org/10.5281/ZENODO.6097642">doi:10.5281/ZENODO.6097642</a>.</p>
-</div>
-</div>
+<p>If you use <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> in your work, please cite,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@misc{exdmv1,
+   doi = {10.5281/ZENODO.7250321},
+   url = {https://zenodo.org/record/7250321},
+   author = {Trickle,  Tanner and {Kinzani}},
+   title = {tanner-trickle/EXCEED-DM: EXCEED-DMv1.0.0},
+   publisher = {Zenodo},
+   year = {2022},
+   copyright = {Open Access}
+}
 
+@article{Trickle2022,
+   author = "Trickle, Tanner",
+   title = "{EXCEED-DM: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter}",
+   eprint = "https://arxiv.org/abs/2210.14917",
+   archivePrefix = "arXiv",
+   primaryClass = "hep-ph",
+   month = "10",
+   year = "2022"
+}
+
+@article{Griffin:2021znd,
+   author = "Griffin, Sin\'ead M. and Inzani, Katherine and Trickle, Tanner and Zhang, Zhengkang and Zurek, Kathryn M.",
+   title = "{Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets}",
+   eprint = "2105.05253",
+   archivePrefix = "arXiv",
+   primaryClass = "hep-ph",
+   month = "5",
+   year = "2021"
+}
+</pre></div>
+</div>
 </section>
 </section>
 

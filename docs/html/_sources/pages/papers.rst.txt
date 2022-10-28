@@ -1,6 +1,6 @@
-================================
-Published Papers using EXCEED-DM
-================================
+======================
+Papers using EXCEED-DM
+======================
 
 .. bibliography::
    :list: bullet
