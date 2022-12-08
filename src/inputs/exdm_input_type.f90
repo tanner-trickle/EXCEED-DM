@@ -21,6 +21,9 @@ module exdm_inputs_type
     use numerics_absorption_rate_type
     use numerics_dielectric_type
 
+    ! TIF specific
+    use numerics_TIF_calculator_atomic_type
+
     implicit none
 
     type :: exdm_inputs_t
@@ -45,6 +48,8 @@ module exdm_inputs_type
         type(numerics_absorption_rate_t) :: numerics_absorption_rate
         type(numerics_dielectric_t) :: numerics_dielectric
 
+        type(numerics_TIF_calculator_atomic_t) :: numerics_TIF_calculator_atomic
+
         contains
 
             procedure :: load => exdm_inputs_load
@@ -68,6 +73,8 @@ contains
         call self%numerics_binned_scatter_rate%save(self%control%out_filename)
         call self%numerics_absorption_rate%save(self%control%out_filename)
         call self%numerics_dielectric%save(self%control%out_filename)
+
+        call self%numerics_TIF_calculator_atomic%save(self%control%out_filename)
 
     end subroutine
 
@@ -104,6 +111,8 @@ contains
         call self%numerics_absorption_rate%set_defaults(cfg)
         call self%numerics_dielectric%set_defaults(cfg)
 
+        call self%numerics_TIF_calculator_atomic%set_defaults(cfg)
+
         ! set the default configuration
         default_cfg = cfg
 
@@ -130,6 +139,8 @@ contains
         call self%numerics_binned_scatter_rate%get_values(cfg)
         call self%numerics_absorption_rate%get_values(cfg)
         call self%numerics_dielectric%get_values(cfg)
+
+        call self%numerics_TIF_calculator_atomic%get_values(cfg)
 
         ! Print
         if ( self%control%verbose ) then

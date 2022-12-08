@@ -15,6 +15,9 @@ module material_type
         real(dp) :: rho_T_g_per_cm3
         real(dp) :: rho_T
 
+        real(dp) :: n_T_g_per_cm3_per_AMU
+        real(dp) :: n_T
+
         real(dp) :: band_gap
 
         real(dp) :: a_vecs_Ang(3, 3)
@@ -54,6 +57,7 @@ contains
         call hdf_write_dataset(file_id, 'material/name', self%name)
         call hdf_write_dataset(file_id, 'material/pc_vol', self%pc_vol_A)
         call hdf_write_dataset(file_id, 'material/rho_T', self%rho_T_g_per_cm3)
+        call hdf_write_dataset(file_id, 'material/n_T', self%n_T_g_per_cm3_per_AMU)
         call hdf_write_dataset(file_id, 'material/band_gap', self%band_gap)
 
         call hdf_close_file(file_id)
@@ -87,6 +91,13 @@ contains
                      "<li><b>Units</b>: $\text{g}/\text{cm}^3$</li>"//&
                      "</ul>")
 
+        call CFG_add(cfg, &
+                     "material%n_T_g_per_cm3_per_AMU", &
+                     1.0_dp, &
+                     "Number density of the target material, $n_T$<br />"//&
+                     "<ul>"//&
+                     "<li><b>Units</b>: $\text{g}/\text{cm}^3/\text{AMU}$</li>"//&
+                     "</ul>")
 
         call CFG_add(cfg, &
                      "material%band_gap", &
@@ -130,6 +141,9 @@ contains
 
         call CFG_get(cfg, "material%rho_T_g_per_cm3", self%rho_T_g_per_cm3)
         self%rho_T = self%rho_T_g_per_cm3*inv_cm_to_eV**3*g_to_eV
+
+        call CFG_get(cfg, "material%n_T_g_per_cm3_per_AMU", self%n_T_g_per_cm3_per_AMU)
+        self%n_T = self%n_T_g_per_cm3_per_AMU*inv_cm_to_eV**3*g_to_eV*inv_AMU_to_inv_eV
 
         call CFG_get(cfg, "material%band_gap", self%band_gap)
 

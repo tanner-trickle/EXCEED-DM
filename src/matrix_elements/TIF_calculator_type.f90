@@ -6,14 +6,17 @@ module TIF_calculator_type
 
     use elec_state_type
     use elec_state_bloch_type
+    use elec_state_atomic_type
 
     use TIF_calculator_bloch_type
+    use TIF_calculator_atomic_type
 
     implicit none
 
     type :: TIF_calculator_t
 
         type(TIF_calculator_bloch_t) :: TIF_calculator_bloch
+        type(TIF_calculator_atomic_t) :: TIF_calculator_atomic
 
         integer :: n_TIF = 6 ! The number of matrix element operators
         logical :: mask(6) ! Which matrix element operators to compute
@@ -98,6 +101,23 @@ contains
             end select
         end select
 
+        select type ( init_state )
+        class is ( elec_state_atomic_t )
+
+            select type ( fin_state )
+            class is ( elec_state_atomic_t )
+
+                if ( .not. q0_limit ) then
+
+                    print*, 'ERROR: q /= 0 not implemented for transitions between atomic states.'
+
+                end if
+
+                self%jac_q_list = 1.0_dp
+
+            end select
+        end select
+
     end subroutine
 
     subroutine TIF_calculator_type_setup(self, exdm_inputs, init_state, fin_state, q0_limit)
@@ -121,6 +141,18 @@ contains
 
                 call self%TIF_calculator_bloch%setup(exdm_inputs, self%mask, init_state, fin_state, q0_limit = q0_limit)
                 n_q = self%TIF_calculator_bloch%n_q
+
+            end select
+        end select
+
+        select type ( init_state )
+        class is ( elec_state_atomic_t )
+
+            select type ( fin_state )
+            class is ( elec_state_atomic_t )
+
+                call self%TIF_calculator_atomic%setup(exdm_inputs, self%mask, init_state, fin_state, q0_limit = q0_limit)
+                n_q = self%TIF_calculator_atomic%n_q
 
             end select
         end select
@@ -168,6 +200,10 @@ contains
 
             call self%TIF_calculator_bloch%init_initialize(init_state, self%mask)
 
+        class is ( elec_state_atomic_t )
+
+            call self%TIF_calculator_atomic%init_initialize(init_state, self%mask)
+
         end select
 
     end subroutine
@@ -184,6 +220,10 @@ contains
         class is ( elec_state_bloch_t )
 
             call self%TIF_calculator_bloch%fin_initialize(fin_state)
+
+        class is ( elec_state_atomic_t )
+
+            call self%TIF_calculator_atomic%fin_initialize(fin_state)
 
         end select
 
@@ -206,6 +246,17 @@ contains
             class is ( elec_state_bloch_t )
 
                 call self%TIF_calculator_bloch%compute_TIF_1(self%TIF_1, init_state, fin_state, q0_limit = q0_limit)
+
+            end select
+        end select
+
+        select type ( init_state )
+        class is ( elec_state_atomic_t )
+
+            select type ( fin_state )
+            class is ( elec_state_atomic_t )
+
+                call self%TIF_calculator_atomic%compute_TIF_1(self%TIF_1, init_state, fin_state, q0_limit = q0_limit)
 
             end select
         end select
@@ -233,6 +284,17 @@ contains
             end select
         end select
 
+        select type ( init_state )
+        class is ( elec_state_atomic_t )
+
+            select type ( fin_state )
+            class is ( elec_state_atomic_t )
+
+                call self%TIF_calculator_atomic%compute_TIF_v(self%TIF_v, init_state, fin_state, q0_limit = q0_limit)
+
+            end select
+        end select
+
     end subroutine
 
     subroutine TIF_calculator_type_compute_TIF_v2(self, init_state, fin_state, q0_limit)
@@ -252,6 +314,17 @@ contains
             class is ( elec_state_bloch_t )
 
                 call self%TIF_calculator_bloch%compute_TIF_v2(self%TIF_v2, init_state, fin_state, q0_limit = q0_limit)
+
+            end select
+        end select
+
+        select type ( init_state )
+        class is ( elec_state_atomic_t )
+
+            select type ( fin_state )
+            class is ( elec_state_atomic_t )
+
+                call self%TIF_calculator_atomic%compute_TIF_v2(self%TIF_v2, init_state, fin_state, q0_limit = q0_limit)
 
             end select
         end select
@@ -279,6 +352,17 @@ contains
             end select
         end select
 
+        select type ( init_state )
+        class is ( elec_state_atomic_t )
+
+            select type ( fin_state )
+            class is ( elec_state_atomic_t )
+
+                call self%TIF_calculator_atomic%compute_TIF_s(self%TIF_s, init_state, fin_state, q0_limit = q0_limit)
+
+            end select
+        end select
+
     end subroutine
 
     subroutine TIF_calculator_type_compute_TIF_vds(self, init_state, fin_state, q0_limit)
@@ -302,6 +386,17 @@ contains
             end select
         end select
 
+        select type ( init_state )
+        class is ( elec_state_atomic_t )
+
+            select type ( fin_state )
+            class is ( elec_state_atomic_t )
+
+                call self%TIF_calculator_atomic%compute_TIF_vds(self%TIF_vds, init_state, fin_state, q0_limit = q0_limit)
+
+            end select
+        end select
+
     end subroutine
 
     subroutine TIF_calculator_type_compute_TIF_vxs(self, init_state, fin_state, q0_limit)
@@ -321,6 +416,17 @@ contains
             class is ( elec_state_bloch_t )
 
                 call self%TIF_calculator_bloch%compute_TIF_vxs(self%TIF_vxs, init_state, fin_state, q0_limit = q0_limit)
+
+            end select
+        end select
+
+        select type ( init_state )
+        class is ( elec_state_atomic_t )
+
+            select type ( fin_state )
+            class is ( elec_state_atomic_t )
+
+                call self%TIF_calculator_atomic%compute_TIF_vxs(self%TIF_vxs, init_state, fin_state, q0_limit = q0_limit)
 
             end select
         end select

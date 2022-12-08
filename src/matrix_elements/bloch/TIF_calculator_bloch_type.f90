@@ -302,25 +302,13 @@ contains
 
         type(timer_t) :: timer
 
-        call timer%start()
-
         ! Compute u_f
         call fin_state%compute_u(self%u_f)
-
-        call timer%end()
-
-        ! print*, 'compute u = ', timer%pretty_dt_str()
-
-        call timer%start()
 
         do s = 1, fin_state%spin_dof
             call zero_pad_FFT_matrix(self%u_f(:, :, :, s), self%u_f_pad(:, :, :, s), &
                                         fin_state%FFT_plans(1, :), self%backward_FFT_plan)
         end do
-
-        call timer%end()
-
-        ! print*, 'zero pad = ', timer%pretty_dt_str()
 
     end subroutine
 

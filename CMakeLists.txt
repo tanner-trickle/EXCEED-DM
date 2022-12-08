@@ -34,7 +34,7 @@ endif()
 
 set(CMAKE_Fortran_MODULE_DIRECTORY "${PROJECT_SOURCE_DIR}/build/mod")
 
-file(GLOB_RECURSE sources src/*.f90)
+file(GLOB_RECURSE sources src/*.f90 src/*.f)
 add_executable(exdm ${sources})
 
 ##################################################

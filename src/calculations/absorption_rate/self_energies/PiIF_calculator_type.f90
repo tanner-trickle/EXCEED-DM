@@ -21,6 +21,7 @@ module PiIF_calculator_type
 
             procedure :: setup => setup_PiIF_calculator
             procedure :: compute_all => compute_all_PiIF_calculator
+            procedure :: compute_all_atomic_continuum => compute_all_atomic_continuum_PiIF_calculator
 
     end type
 
@@ -74,7 +75,7 @@ contains
 
             if ( spin_dof == 1 ) then
 
-                mask(1) = .TRUE.
+                mask(2) = .TRUE.
 
             else
 
@@ -85,6 +86,14 @@ contains
         case( 'scalar' )
 
             mask(3) = .TRUE.
+
+        case( 'edm' )
+
+            mask(3) = .TRUE.
+
+        case( 'mdm' )
+
+            mask(2) = .TRUE.
 
         end select
 
@@ -129,6 +138,58 @@ contains
             call compute_Pi_vds_vds(self%Pi_vds_vds, TIF_calculator%TIF_vds, &
                 omega_IF, mX, widths, &
                 jac_k, pc_vol, spin_dof, smear_type)
+        end if
+
+    end subroutine
+
+    subroutine compute_all_atomic_continuum_PiIF_calculator(self, TIF_calculator, num_density, &
+            mX, mX_id, omega_I, ell)
+
+        use TIF_calculator_type
+
+        implicit none
+
+        class(PiIF_calculator_t) :: self
+        class(TIF_calculator_t) :: TIF_calculator
+
+        real(dp) :: num_density
+        real(dp) :: omega_I
+        real(dp) :: omega_F, k_F
+        integer :: ell
+        
+        real(dp) :: mX
+        integer :: mX_id
+
+        integer :: i, j, s
+
+        omega_F = omega_I + mX
+        k_F = sqrt(2*m_elec*omega_F)
+
+        if ( self%mask(1) ) then
+            self%Pi_1_1_mat = ( 0.0_dp, 0.0_dp )
+            print*, 'Pi_1_1 mat not implemented yet.'
+            print*
+        end if
+        if ( self%mask(2) ) then
+
+            do i = 1, 3
+                do j = 1, 3
+
+                    self%Pi_v_v(i, j, mX_id, 1) = self%Pi_v_v(i, j, mX_id, 1) + &
+                        -ii*(num_density*m_elec)*k_F**(-1)*conjg(TIF_calculator%TIF_v(1, i))*TIF_calculator%TIF_v(1, j)
+
+                end do
+            end do
+
+        end if
+        if ( self%mask(3) ) then
+
+            self%Pi_v2_v2(mX_id, 1) = self%Pi_v2_v2(mX_id, 1) + &
+                -ii*(num_density*m_elec)*k_F**(-1)*conjg(TIF_calculator%TIF_v2(1))*TIF_calculator%TIF_v2(1)
+
+        end if
+        if ( self%mask(4) ) then
+            self%Pi_vds_vds = ( 0.0_dp, 0.0_dp )
         end if
 
     end subroutine
@@ -218,6 +279,32 @@ contains
         end if
 
     end subroutine
+
+    ! subroutine compute_Pi_v2_v2_atomic_continuum(Pi_v2_v2, TIF_v2, &
+    !         num_density, mX, mX_id, omega_I, ell)
+    !
+    !     use constants_util
+    !
+    !     complex(dp) :: Pi_v2_v2(:, :)
+    !     complex(dp) :: TIF_v2(:)
+    !
+    !     real(dp) :: num_density, mX
+    !     integer :: mX_id
+    !     real(dp) :: omega_I
+    !     integer :: ell
+    !
+    !     real(dp) :: omega_F
+    !     real(dp) :: k_F
+    !
+    !     omega_F = mX + omega_I
+    !     k_F = sqrt(2.0_dp*m_elec*omega_F)
+    !
+    !     Pi_v2_v2(mX_id, 1) = Pi_v2_v2(mX_id, 1) + &
+    !         -ii*(num_density*m_elec/pi)*&
+    !         (k_F)**(-1)*&
+    !         conjg(TIF_v2(1))*TIF_v2(1)
+    !
+    ! end subroutine
 
     subroutine compute_Pi_1_1_mat(Pi_1_1, TIF_v, &
             omega_IF, mX, widths, &

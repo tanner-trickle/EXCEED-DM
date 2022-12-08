@@ -108,25 +108,6 @@ contains
 
     end subroutine
 
-    function STO_radial(r_list, n, N0, Z) result( wf )
-        ! Radial part of a Slater Type Orbital (STO) basis function.
-        !
-        ! Units : eV^(3/2)
-
-        use constants_util
-
-        implicit none
-
-        real(dp) :: n
-        real(dp) :: N0, Z
-        real(dp) :: r_list(:)
-
-        real(dp) :: wf(size(r_list))
-
-        wf = a0**(-1.5_dp)*N0*(r_list/a0)**(n - 1.0_dp)*exp(-Z*r_list/a0)
-
-    end function
-
     subroutine n_x_grid_to_x_vec_list(n_x_grid, red_to_xyz, x_vec_list)
 
         implicit none
