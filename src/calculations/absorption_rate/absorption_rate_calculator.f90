@@ -51,6 +51,16 @@ contains
 
                 end if
 
+            case ( 'mdm' )
+
+                call absorption_rate_compute_mdm(exdm_inputs, &
+                    PiIF_calculator%Pi_v_v, absorption_rate)
+
+            case ( 'edm' )
+
+                call absorption_rate_compute_edm(exdm_inputs, &
+                    PiIF_calculator%Pi_v2_v2, absorption_rate)
+
         end select
 
         if ( exdm_inputs%control%verbose ) then
@@ -161,6 +171,70 @@ contains
 
                 absorption_rate(m, w) = (exdm_inputs%dm_model%rho_X/exdm_inputs%material%rho_T)*&
                     exdm_inputs%dm_model%mX(m)**(-1)*&
+                    exdm_inputs%experiment%M*exdm_inputs%experiment%T*&
+                    gam
+
+            end do
+        end do
+
+    end subroutine
+
+    subroutine absorption_rate_compute_edm(exdm_inputs, Pi_v2_v2, absorption_rate)
+
+        use math_util
+        use constants_util
+
+        implicit none
+
+        type(exdm_inputs_t) :: exdm_inputs
+        complex(dp) :: Pi_v2_v2(:, :)
+
+        real(dp) :: absorption_rate(:, :)
+
+        integer :: w, m
+
+        real(dp) :: gam
+
+        absorption_rate = (exdm_inputs%dm_model%rho_X/exdm_inputs%material%rho_T)*&
+                    exdm_inputs%experiment%M*exdm_inputs%experiment%T*&
+                    aimag( Pi_v2_v2 )
+
+    end subroutine
+
+    subroutine absorption_rate_compute_mdm(exdm_inputs, Pi_v_v, absorption_rate)
+
+        use math_util
+        use constants_util
+
+        implicit none
+
+        type(exdm_inputs_t) :: exdm_inputs
+        complex(dp) :: Pi_v_v(:, :, :, :)
+
+        real(dp) :: absorption_rate(:, :)
+
+        integer :: w, m, j
+
+        real(dp) :: gam
+
+        complex(dp) :: pi_mat(3, 3)
+
+        real(dp) :: omega
+
+        do w = 1, size(absorption_rate, 2)
+            do m = 1, size(absorption_rate, 1)
+
+                omega = exdm_inputs%dm_model%mX(m)
+
+                gam = 0.0_dp
+
+                do j = 1, 3
+
+                    gam = gam + (-2.0_dp/3.0_dp)*aimag(Pi_v_v(j, j, m, w))
+
+                end do
+
+                absorption_rate(m, w) = (exdm_inputs%dm_model%rho_X/exdm_inputs%material%rho_T)*&
                     exdm_inputs%experiment%M*exdm_inputs%experiment%T*&
                     gam
 
