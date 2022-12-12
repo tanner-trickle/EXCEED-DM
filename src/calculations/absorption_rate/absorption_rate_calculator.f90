@@ -195,7 +195,7 @@ contains
 
         real(dp) :: gam
 
-        absorption_rate = (exdm_inputs%dm_model%rho_X/exdm_inputs%material%rho_T)*&
+        absorption_rate = -(exdm_inputs%dm_model%rho_X/exdm_inputs%material%rho_T)*&
                     exdm_inputs%experiment%M*exdm_inputs%experiment%T*&
                     aimag( Pi_v2_v2 )
 

@@ -17,7 +17,7 @@
 
     particle_type = 'ps'
 
-    mX_logspace = 50, 1D3, 1D6
+    mX_logspace = 4, 1D3, 1D6
 
 [numerics_TIF_calculator_atomic]
 
