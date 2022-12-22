@@ -13,6 +13,7 @@ contains
     subroutine self_energies_compute_continuum_atomic(n_proc, proc_id, root_proc_id, &
                                         exdm_inputs, &
                                         init_states, &
+                                        Zeff_list, &
                                         PiIF_calculator)
 
         use elec_state_atomic_STO_basis_type
@@ -33,6 +34,8 @@ contains
         
         class(elec_state_atomic_STO_basis_t) :: init_states(:)
         type(elec_state_atomic_continuum_t) :: fin_state
+
+        real(dp) :: Zeff_list(:)
 
         type(TIF_calculator_t) :: TIF_calculator
 
@@ -107,8 +110,9 @@ contains
                 ! set up the final state
                 k_F = sqrt(2.0_dp*m_elec*(exdm_inputs%dm_model%mX(mX_id) + init_states(init_id)%energy))
                 fin_state%k = k_F
-                fin_state%energy = k_F**2/(2.0_dp*m_elec)
-                fin_state%Z_eff = init_states(init_id)%n*sqrt(-init_states(init_id)%energy/13.6)
+                fin_state%energy = (k_F**2)/(2.0_dp*m_elec)
+                fin_state%Z_eff = Zeff_list(init_id)
+                ! fin_state%Z_eff = init_states(init_id)%n*sqrt(-init_states(init_id)%energy/13.6)
                 fin_state%i = 1
                 fin_state%spin_dof = 1
                 fin_state%sph_x_list = init_states(init_id)%sph_x_list
