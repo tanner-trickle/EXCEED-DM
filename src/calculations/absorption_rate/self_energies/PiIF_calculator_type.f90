@@ -9,13 +9,14 @@ module PiIF_calculator_type
 
     type :: PiIF_calculator_t
 
-        integer :: n = 4
-        logical :: mask(4)
+        integer :: n = 5
+        logical :: mask(5)
 
         complex(dp), allocatable :: Pi_1_1_mat(:, :, :, :) ! Dim : [3, 3, n_mX, n_widths]
         complex(dp), allocatable :: Pi_v_v(:, :, :, :)
         complex(dp), allocatable :: Pi_v2_v2(:, :) ! Dim : [n_mX, n_widths]
         complex(dp), allocatable :: Pi_vds_vds(:, :)
+        complex(dp), allocatable :: Pi_vivj_vivj_sum(:, :) ! Dim : [n_mX, n_widths]
 
         contains
 
@@ -50,6 +51,10 @@ contains
 
         if ( Pi_mask(4) ) then
             TIF_mask(5) = .TRUE.
+        end if
+
+        if ( Pi_mask(5) ) then
+            TIF_mask(7) = .TRUE.
         end if
 
     end subroutine
@@ -89,7 +94,7 @@ contains
 
         case( 'edm' )
 
-            mask(3) = .TRUE.
+            mask(5) = .TRUE.
 
         case( 'mdm' )
 
@@ -162,6 +167,8 @@ contains
 
         integer :: i, j, s
 
+        complex(dp) :: TIF_v2
+
         omega_F = omega_I + mX
         k_F = sqrt(2*m_elec*omega_F)
 
@@ -181,6 +188,7 @@ contains
                 end do
             end do
 
+
         end if
         if ( self%mask(3) ) then
 
@@ -190,6 +198,30 @@ contains
         end if
         if ( self%mask(4) ) then
             self%Pi_vds_vds = ( 0.0_dp, 0.0_dp )
+        end if
+
+        if ( self%mask(5) ) then 
+
+            do i = 1, 3
+                do j = 1, 3
+
+                    self%Pi_vivj_vivj_sum(mX_id, 1) = self%Pi_vivj_vivj_sum(mX_id, 1) + &
+                -ii*(num_density*m_elec)*k_F**(-1)*conjg(TIF_calculator%TIF_vivj(1, i, j))*TIF_calculator%TIF_vivj(1, i, j)
+
+                end do 
+            end do
+
+            ! TIF_v2 = (0.0_dp, 0.0_dp)
+            !
+            ! do i = 1, 3
+            !
+            !     TIF_v2 = TIF_calculator%TIF_vivj(1, i, i)
+            !
+            ! end do
+            !
+            ! self%Pi_vivj_vivj_sum(mX_id, 1) = self%Pi_vivj_vivj_sum(mX_id, 1) + &
+            !     -ii*(num_density*m_elec)*k_F**(-1)*conjg(TIF_v2)*TIF_v2
+
         end if
 
     end subroutine
@@ -216,6 +248,10 @@ contains
         end if
         if ( self%mask(4) ) then
             allocate(self%Pi_vds_vds(n_mX, n_widths), &
+                     source = (0.0_dp, 0.0_dp))
+        end if
+        if ( self%mask(5) ) then
+            allocate(self%Pi_vivj_vivj_sum(n_mX, n_widths), &
                      source = (0.0_dp, 0.0_dp))
         end if
 
@@ -278,33 +314,18 @@ contains
                             err)
         end if
 
-    end subroutine
+        if ( PiIF%mask(5) ) then
+            call MPI_Reduce(PiIF%Pi_vivj_vivj_sum, &
+                            sum_Pi%Pi_vivj_vivj_sum, &
+                            size(PiIF%Pi_vivj_vivj_sum), &
+                            MPI_DOUBLE_COMPLEX, &
+                            MPI_SUM, &
+                            root_process, &
+                            MPI_COMM_WORLD, &
+                            err)
+        end if
 
-    ! subroutine compute_Pi_v2_v2_atomic_continuum(Pi_v2_v2, TIF_v2, &
-    !         num_density, mX, mX_id, omega_I, ell)
-    !
-    !     use constants_util
-    !
-    !     complex(dp) :: Pi_v2_v2(:, :)
-    !     complex(dp) :: TIF_v2(:)
-    !
-    !     real(dp) :: num_density, mX
-    !     integer :: mX_id
-    !     real(dp) :: omega_I
-    !     integer :: ell
-    !
-    !     real(dp) :: omega_F
-    !     real(dp) :: k_F
-    !
-    !     omega_F = mX + omega_I
-    !     k_F = sqrt(2.0_dp*m_elec*omega_F)
-    !
-    !     Pi_v2_v2(mX_id, 1) = Pi_v2_v2(mX_id, 1) + &
-    !         -ii*(num_density*m_elec/pi)*&
-    !         (k_F)**(-1)*&
-    !         conjg(TIF_v2(1))*TIF_v2(1)
-    !
-    ! end subroutine
+    end subroutine
 
     subroutine compute_Pi_1_1_mat(Pi_1_1, TIF_v, &
             omega_IF, mX, widths, &

@@ -18,8 +18,8 @@ module TIF_calculator_type
         type(TIF_calculator_bloch_t) :: TIF_calculator_bloch
         type(TIF_calculator_atomic_t) :: TIF_calculator_atomic
 
-        integer :: n_TIF = 6 ! The number of matrix element operators
-        logical :: mask(6) ! Which matrix element operators to compute
+        integer :: n_TIF = 7 ! The number of matrix element operators
+        logical :: mask(7) ! Which matrix element operators to compute
 
         real(dp), allocatable :: q_vec_list(:, :)
         real(dp), allocatable :: jac_q_list(:)
@@ -30,6 +30,7 @@ module TIF_calculator_type
         complex(dp), allocatable :: TIF_s(:, :)
         complex(dp), allocatable :: TIF_vds(:)
         complex(dp), allocatable :: TIF_vxs(:, :)
+        complex(dp), allocatable :: TIF_vivj(:, :, :)
 
         contains
 
@@ -42,6 +43,7 @@ module TIF_calculator_type
             procedure :: compute_TIF_s => TIF_calculator_type_compute_TIF_s
             procedure :: compute_TIF_vds => TIF_calculator_type_compute_TIF_vds
             procedure :: compute_TIF_vxs => TIF_calculator_type_compute_TIF_vxs
+            procedure :: compute_TIF_vivj => TIF_calculator_type_compute_TIF_vivj
             procedure :: compute_all => TIF_calculator_type_compute_all
 
     end type
@@ -80,6 +82,9 @@ contains
         end if
         if ( self%mask(6) ) then
             call self%compute_TIF_vxs(init_state, fin_state, q0_limit)
+        end if
+        if ( self%mask(7) ) then
+            call self%compute_TIF_vivj(init_state, fin_state, q0_limit)
         end if
 
         ! set q_vec_list and jac_q_list
@@ -183,6 +188,9 @@ contains
         end if
         if ( self%mask(6) ) then
             allocate(self%TIF_vxs(n_q, 3), source = ( 0.0_dp, 0.0_dp ))
+        end if
+        if ( self%mask(7) ) then
+            allocate(self%TIF_vivj(n_q, 3, 3), source = ( 0.0_dp, 0.0_dp ))
         end if
 
     end subroutine
@@ -291,6 +299,42 @@ contains
             class is ( elec_state_atomic_t )
 
                 call self%TIF_calculator_atomic%compute_TIF_v(self%TIF_v, init_state, fin_state, q0_limit = q0_limit)
+
+            end select
+        end select
+
+    end subroutine
+
+    subroutine TIF_calculator_type_compute_TIF_vivj(self, init_state, fin_state, q0_limit)
+
+        implicit none
+
+        class(TIF_calculator_t) :: self
+
+        class(elec_state_t) :: init_state, fin_state
+
+        logical, optional :: q0_limit
+
+        select type ( init_state )
+        class is ( elec_state_bloch_t )
+
+            select type ( fin_state )
+            class is ( elec_state_bloch_t )
+
+                print*, 'TODO: implement bloch T_vivj'
+
+                ! call self%TIF_calculator_bloch%compute_TIF_vivj(self%TIF_vivj, init_state, fin_state, q0_limit = q0_limit)
+
+            end select
+        end select
+
+        select type ( init_state )
+        class is ( elec_state_atomic_t )
+
+            select type ( fin_state )
+            class is ( elec_state_atomic_t )
+
+                call self%TIF_calculator_atomic%compute_TIF_vivj(self%TIF_vivj, init_state, fin_state, q0_limit = q0_limit)
 
             end select
         end select

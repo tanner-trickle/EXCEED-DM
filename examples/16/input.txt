@@ -15,13 +15,13 @@
 
 [dm_model]
 
-    particle_type = 'ps'
+    particle_type = 'edm'
 
-    mX_logspace = 4, 1D3, 1D6
+    mX_logspace = 10, 1D2, 1D6
 
 [numerics_TIF_calculator_atomic]
 
     n_r = 100
 
-    r_min_a0 = 1D-6
+    r_min_a0 = 1D-3
     r_max_a0 = 1D3

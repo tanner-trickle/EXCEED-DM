@@ -20,7 +20,8 @@ module constants_util
     real(real64), parameter :: inv_AMU_to_inv_eV  = 1.074e-9_real64
 
     ! Constants
-    real(real64), parameter :: m_elec = 511.0e3_real64 ! Electron mass, :math:`m_e`, eV
+    real(real64), parameter :: m_elec = 511.0e3_real64 
+        !! Electron mass, :math:`m_e`, eV
 
     real(real64), parameter :: alpha_EM = 1.0_real64/137.0_real64 ! Fine structure constant, :math:`\alpha`
 

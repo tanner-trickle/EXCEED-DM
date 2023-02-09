@@ -17,7 +17,7 @@ Home
     File Specifications<pages/file_spec/index.rst>
     Data<pages/data.rst>
     Papers<pages/papers.rst>
-..  Source Documentation<source/index.rst>
+.. Source Documentation<source/index.rst>
 
 ----
 

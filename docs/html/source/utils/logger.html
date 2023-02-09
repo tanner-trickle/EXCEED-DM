@@ -170,6 +170,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../pages/data.html">Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../pages/papers.html">Papers</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../index.html">Source Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="index.html"> Utilities</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="constants.html"> Constants</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -202,8 +209,86 @@
           </label>
         </div>
         <article role="main">
-          <section id="logger">
-<h1>Logger<a class="headerlink" href="#logger" title="Permalink to this heading">#</a></h1>
+          <section id="f/logger_util">
+<span id="logger"></span><h1>Logger<a class="headerlink" href="#f/logger_util" title="Permalink to this heading">#</a></h1>
+<p class="rubric">Description</p>
+<p>A utility for logging messages to the user through a new type, <code class="code docutils literal notranslate"><span class="pre">logger_t</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>No external dependancies.</p>
+</div>
+<p class="rubric">Quick access</p>
+<dl class="field-list simple">
+<dt class="field-odd">Routines<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/logger_util/logger_util_shutdown_message" title="f/logger_util/logger_util_shutdown_message"><code class="xref f f-func docutils literal notranslate"><span class="pre">logger_util_shutdown_message()</span></code></a>, <a class="reference internal" href="#f/logger_util/logger_util_startup_message" title="f/logger_util/logger_util_startup_message"><code class="xref f f-func docutils literal notranslate"><span class="pre">logger_util_startup_message()</span></code></a>, <a class="reference internal" href="#f/logger_util/pretty_date_and_time" title="f/logger_util/pretty_date_and_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">pretty_date_and_time()</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Types</p>
+<ul>
+<li><dl>
+<dt class="sig sig-object f" id="f/logger_util/unknown_type">
+<em class="property"><span class="pre">type</span>  </em><span class="sig-prename descclassname"><span class="pre">logger_util/</span></span><span class="sig-name descname"><span class="pre">unknown_type</span></span><a class="headerlink" href="#f/logger_util/unknown_type" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="sig-name descname">% </span><span class="sig-name descname">section_length</span><em> [</em><em>integer </em><em>,</em><em>optional/default=80</em><em>]</em></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+</li>
+</ul>
+<p class="rubric">Subroutines and functions</p>
+<dl>
+<dt class="sig sig-object f" id="f/logger_util/logger_util_shutdown_message">
+<em class="property"><span class="pre">subroutine</span>  </em><span class="sig-prename descclassname"><span class="pre">logger_util/</span></span><span class="sig-name descname"><span class="pre">logger_util_shutdown_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self</span></em>, <em class="sig-param"><span class="pre">exec_time_str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/logger_util/logger_util_shutdown_message" title="Permalink to this definition">#</a></dt>
+<dd><p>Prints a shutdown message about the program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong></p></li>
+<li><p><strong>exec_time_str</strong><em> [</em><em>character(len=*)</em><em>,</em><em>in</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Call to<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/logger_util/pretty_date_and_time" title="f/logger_util/pretty_date_and_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">pretty_date_and_time()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl>
+<dt class="sig sig-object f" id="f/logger_util/logger_util_startup_message">
+<em class="property"><span class="pre">subroutine</span>  </em><span class="sig-prename descclassname"><span class="pre">logger_util/</span></span><span class="sig-name descname"><span class="pre">logger_util_startup_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self</span></em>, <em class="sig-param"><span class="pre">prog_name</span></em>, <em class="sig-param"><span class="pre">version</span></em>, <em class="sig-param"><span class="pre">n_proc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/logger_util/logger_util_startup_message" title="Permalink to this definition">#</a></dt>
+<dd><p>Prints a startup message about the program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong></p></li>
+<li><p><strong>prog_name</strong><em> [</em><em>character(len=*)</em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>version</strong><em> [</em><em>character(len=*)</em><em>,</em><em>in</em><em>]</em></p></li>
+<li><p><strong>n_proc</strong><em> [</em><em>integer </em><em>,</em><em>in</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Use <span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref f f-mod docutils literal notranslate"><span class="pre">iso_fortran_env</span></code></p>
+</dd>
+<dt class="field-odd">Call to<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/logger_util/pretty_date_and_time" title="f/logger_util/pretty_date_and_time"><code class="xref f f-func docutils literal notranslate"><span class="pre">pretty_date_and_time()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl>
+<dt class="sig sig-object f" id="f/logger_util/pretty_date_and_time">
+<em class="property"><span class="pre">function</span>  </em><span class="sig-prename descclassname"><span class="pre">logger_util/</span></span><span class="sig-name descname"><span class="pre">pretty_date_and_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#f/logger_util/pretty_date_and_time" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a nicely formatted string of the current date and time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt_str</strong><em> [</em><em>character(len=:)</em><em>,</em><em>allocatable</em><em>]</em></p>
+</dd>
+<dt class="field-even">Called from<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/logger_util/logger_util_shutdown_message" title="f/logger_util/logger_util_shutdown_message"><code class="xref f f-func docutils literal notranslate"><span class="pre">logger_util_shutdown_message()</span></code></a>, <a class="reference internal" href="#f/logger_util/logger_util_startup_message" title="f/logger_util/logger_util_startup_message"><code class="xref f f-func docutils literal notranslate"><span class="pre">logger_util_startup_message()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 </section>
 
         </article>
