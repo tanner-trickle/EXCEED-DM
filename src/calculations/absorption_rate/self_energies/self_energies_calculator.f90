@@ -111,8 +111,8 @@ contains
                 k_F = sqrt(2.0_dp*m_elec*(exdm_inputs%dm_model%mX(mX_id) + init_states(init_id)%energy))
                 fin_state%k = k_F
                 fin_state%energy = (k_F**2)/(2.0_dp*m_elec)
-                ! fin_state%Z_eff = Zeff_list(init_id)
-                fin_state%Z_eff = init_states(init_id)%n*sqrt(-init_states(init_id)%energy/13.6)
+                fin_state%Z_eff = Zeff_list(init_id)
+                ! fin_state%Z_eff = init_states(init_id)%n*sqrt(-init_states(init_id)%energy/13.6)
                 fin_state%i = 1
                 fin_state%spin_dof = 1
                 fin_state%sph_x_list = init_states(init_id)%sph_x_list
