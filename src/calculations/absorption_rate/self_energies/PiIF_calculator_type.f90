@@ -144,6 +144,11 @@ contains
                 omega_IF, mX, widths, &
                 jac_k, pc_vol, spin_dof, smear_type)
         end if
+        if ( self%mask(5) ) then
+            call compute_Pi_vivj_vivj_sum(self%Pi_vivj_vivj_sum, TIF_calculator%TIF_vivj, &
+                omega_IF, mX, widths, &
+                jac_k, pc_vol, spin_dof, smear_type)
+        end if
 
     end subroutine
 
@@ -210,17 +215,6 @@ contains
 
                 end do 
             end do
-
-            ! TIF_v2 = (0.0_dp, 0.0_dp)
-            !
-            ! do i = 1, 3
-            !
-            !     TIF_v2 = TIF_calculator%TIF_vivj(1, i, i)
-            !
-            ! end do
-            !
-            ! self%Pi_vivj_vivj_sum(mX_id, 1) = self%Pi_vivj_vivj_sum(mX_id, 1) + &
-            !     -ii*(num_density*m_elec)*k_F**(-1)*conjg(TIF_v2)*TIF_v2
 
         end if
 
@@ -367,6 +361,56 @@ contains
                     (2.0_dp/spin_dof)*jac_k*pc_vol**(-1)*&
                     (m_elec/omega_IF)**2*green_func(mX(m), omega_IF, delta, smear_type)*&
                     outer_TIF_v
+
+            end do
+        end do
+
+    end subroutine
+
+    subroutine compute_Pi_vivj_vivj_sum(Pi_vivj_vivj_sum, TIF_vivj, &
+            omega_IF, mX, widths, &
+            jac_k, pc_vol, spin_dof, smear_type)
+
+        implicit none
+
+        complex(dp) :: Pi_vivj_vivj_sum(:, :)
+        complex(dp) :: TIF_vivj(:, :, :)
+        real(dp) :: omega_IF
+        real(dp) :: mX(:)
+        real(dp) :: widths(:, :)
+        real(dp) :: jac_k
+        real(dp) :: pc_vol
+        integer :: spin_dof
+
+        integer :: i, j, m
+
+        real(dp) :: delta
+
+        ! complex(dp) :: outer_TIF_v(3, 3)
+
+        complex(dp) :: TIF_vivj_vivj_sum
+
+        character(len=*) :: smear_type
+
+        TIF_vivj_vivj_sum = ( 0.0_dp, 0.0_dp )
+
+        do j = 1, 3
+            do i = 1, 3
+
+                TIF_vivj_vivj_sum = TIF_vivj_vivj_sum + conjg(TIF_vivj(1, i, j))*TIF_vivj(1, i, j)
+
+            end do
+        end do
+
+        do i = 1, size(widths, 1)
+            do m = 1, size(mX)
+
+                delta = width_func(mX(m), widths(i, 1), widths(i, 2), widths(i, 3))
+                
+                Pi_vivj_vivj_sum(m, i) = Pi_vivj_vivj_sum(m, i) + &
+                    (2.0_dp/spin_dof)*jac_k*pc_vol**(-1)*&
+                    Pi_scaling_func(mX(m), omega_IF)*green_func(mX(m), omega_IF, delta, smear_type)*&
+                    TIF_vivj_vivj_sum
 
             end do
         end do

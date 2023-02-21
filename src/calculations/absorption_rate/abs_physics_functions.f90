@@ -9,7 +9,9 @@ contains
 
     function Pi_scaling_func(omega, omega_IF) result ( scaling )
         ! As $\omega \rightarrow 0$, $\Pi \propto \omega^2$ such that $\Gamma \propto \frac{\Pi}{\omega} \rightarrow 0$. 
-        ! This function guarantees that scaling behavior.
+        ! This function guarantees that scaling behavior. Note that in the $\delta \rightarrow 0$ limit
+        ! that the imaginary part of any self energy using this function is "unaffected" since
+        ! $\omega = \omega_{IF}$ in the $\delta \rightarrow 0$ limit.
 
         implicit none
 

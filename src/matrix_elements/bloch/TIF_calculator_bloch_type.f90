@@ -28,6 +28,7 @@ module TIF_calculator_bloch_type
         complex(dp), allocatable :: O_u_s(:, :, :, :, :)
         complex(dp), allocatable :: O_u_vds(:, :, :, :)
         complex(dp), allocatable :: O_u_vxs(:, :, :, :, :)
+        complex(dp), allocatable :: O_u_vivj(:, :, :, :, :, :)
 
         ! padded to size of FFT variables
         integer :: n_pad_grid(3)
@@ -38,6 +39,7 @@ module TIF_calculator_bloch_type
         complex(dp), allocatable :: O_u_s_pad(:, :, :, :, :)
         complex(dp), allocatable :: O_u_vds_pad(:, :, :, :)
         complex(dp), allocatable :: O_u_vxs_pad(:, :, :, :, :)
+        complex(dp), allocatable :: O_u_vivj_pad(:, :, :, :, :, :)
 
         contains
 
@@ -50,6 +52,7 @@ module TIF_calculator_bloch_type
             procedure :: compute_TIF_s => TIF_calculator_bloch_type_compute_TIF_s
             procedure :: compute_TIF_vds => TIF_calculator_bloch_type_compute_TIF_vds
             procedure :: compute_TIF_vxs => TIF_calculator_bloch_type_compute_TIF_vxs
+            procedure :: compute_TIF_vivj => TIF_calculator_bloch_type_compute_TIF_vivj
 
     end type
 
@@ -197,6 +200,17 @@ contains
                                 self%n_pad_grid(3), &
                                 init_state%spin_dof, 3), source = ( 0.0_dp, 0.0_dp ))
         end if
+        if ( TIF_mask(7) ) then
+            allocate(self%O_u_vivj(init_state%n_x_grid(1), &
+                                init_state%n_x_grid(2), &
+                                init_state%n_x_grid(3), &
+                                init_state%spin_dof, 3, 3), source = ( 0.0_dp, 0.0_dp ))
+
+            allocate(self%O_u_vivj_pad(self%n_pad_grid(1), &
+                                self%n_pad_grid(2), &
+                                self%n_pad_grid(3), &
+                                init_state%spin_dof, 3, 3), source = ( 0.0_dp, 0.0_dp ))
+        end if
 
     end subroutine
 
@@ -215,7 +229,7 @@ contains
 
         logical :: TIF_mask(:)
 
-        integer :: s, d
+        integer :: s, d, i, j
 
         type(timer_t) :: timer
 
@@ -280,6 +294,36 @@ contains
                 do s = 1, init_state%spin_dof
                     call zero_pad_FFT_matrix(self%O_u_vxs(:, :, :, s, d), self%O_u_vxs_pad(:, :, :, s, d), &
                                             init_state%FFT_plans(1, :), self%backward_FFT_plan)
+                end do
+            end do
+
+        end if
+        if ( TIF_mask(7) ) then
+            call compute_O_u_vivj(self%u_i, self%O_u_vivj, self%init_G_grid, init_state)
+
+            do j = 1, 3
+                do i = j, 3 
+
+                    do s = 1, init_state%spin_dof
+
+                        call zero_pad_FFT_matrix(self%O_u_vivj(:, :, :, s, i, j), self%O_u_vivj_pad(:, :, :, s, i, j), &
+                                                init_state%FFT_plans(1, :), self%backward_FFT_plan)
+
+                    end do
+
+                end do
+            end do
+
+            ! symmetrize
+            do j = 1, 3 
+                do i = j, 3
+
+                    if ( i /= j ) then
+
+                        self%O_u_vivj_pad(:, :, :, :, j, i) = self%O_u_vivj_pad(:, :, :, :, i, j)
+
+                    end if
+
                 end do
             end do
 
@@ -429,6 +473,30 @@ contains
 
     end subroutine
 
+    subroutine compute_TIF_helper_tensor_q0_limit(self, u_f_pad, O_u_pad, init_state, fin_state, TIF)
+
+        ! use elec_config_bloch_single_PW_type
+
+        implicit none
+
+        class(TIF_calculator_bloch_t) :: self
+        class(elec_state_bloch_t) :: init_state, fin_state
+
+        complex(dp) :: u_f_pad(:, :, :, :)
+        complex(dp) :: O_u_pad(:, :, :, :, :, :)
+
+        complex(dp) :: TIF(:, :, :)
+
+        integer :: i, j
+
+        do j = 1, 3
+            do i = 1, 3
+                TIF(1, i, j) = (1.0_dp*product(self%n_pad_grid))**(-1)*sum( conjg(u_f_pad)*O_u_pad(:, :, :, :, i, j) )
+            end do 
+        end do
+
+    end subroutine
+
     subroutine TIF_calculator_bloch_type_compute_TIF_1(self, TIF_1, init_state, fin_state, q0_limit)
 
         implicit none
@@ -468,6 +536,29 @@ contains
         else 
 
             call compute_TIF_helper_vector(self, self%u_f_pad, self%O_u_v_pad, init_state, fin_state, TIF_v)
+
+        end if
+
+    end subroutine
+
+    subroutine TIF_calculator_bloch_type_compute_TIF_vivj(self, TIF_vivj, init_state, fin_state, q0_limit)
+
+        implicit none
+
+        class(TIF_calculator_bloch_t) :: self
+        complex(dp) :: TIF_vivj(:, :, :)
+        class(elec_state_bloch_t) :: init_state, fin_state
+        logical, optional :: q0_limit
+
+        if ( q0_limit ) then
+
+            call compute_TIF_helper_tensor_q0_limit(self, self%u_f_pad, self%O_u_vivj_pad, init_state, fin_state, TIF_vivj)
+
+        else 
+
+            print*, 'ERROR: TIF_vivj for elec_state_bloch_t NOT implemented.'
+
+            ! call compute_TIF_helper_vector(self, self%u_f_pad, self%O_u_v_pad, init_state, fin_state, TIF_v)
 
         end if
 

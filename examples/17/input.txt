@@ -1,0 +1,31 @@
+# Input file for EXCEED-DMv1.0.0
+
+[control]
+    calculation                     = 'absorption_rate'
+    run_description                 = 'example_17'
+    out_folder                      = './examples/17/output/'
+
+[elec_config_input]
+    filename = './examples/17/elec_config.hdf5'
+
+[material]
+    name            = 'Si'
+    rho_T_g_per_cm3 = 2.281
+    band_gap        = 1.11
+
+    a_vecs_Ang      = 0.00000, 2.73437, 2.73437
+    a_vecs_Ang     += 2.73437, 0.00000, 2.73437
+    a_vecs_Ang     += 2.73437, 2.73437, 0.00000
+
+[dm_model]
+
+    particle_type = 'edm'
+
+    mX_logspace = 100, 1, 1000
+
+[numerics_absorption_rate]
+
+    smear_type = 'gauss'
+
+    widths = 0.2, 0.1, 1000
+    widths += 1, 1, 1

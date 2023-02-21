@@ -321,9 +321,7 @@ contains
             select type ( fin_state )
             class is ( elec_state_bloch_t )
 
-                print*, 'TODO: implement bloch T_vivj'
-
-                ! call self%TIF_calculator_bloch%compute_TIF_vivj(self%TIF_vivj, init_state, fin_state, q0_limit = q0_limit)
+                call self%TIF_calculator_bloch%compute_TIF_vivj(self%TIF_vivj, init_state, fin_state, q0_limit = q0_limit)
 
             end select
         end select
