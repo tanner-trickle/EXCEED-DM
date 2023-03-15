@@ -23,5 +23,5 @@
 
     n_r = 100
 
-    r_min_a0 = 1D-3
+    r_min_a0 = 1D-6
     r_max_a0 = 1D3

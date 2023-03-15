@@ -71,33 +71,41 @@ If you use :code:`EXCEED-DM` in your work, please cite,
 
 .. code-block:: none
 
-   @misc{exdmv1,
-      doi = {10.5281/ZENODO.7250321},
-      url = {https://zenodo.org/record/7250321},
-      author = {Trickle,  Tanner and {Kinzani}},
-      title = {tanner-trickle/EXCEED-DM: EXCEED-DMv1.0.0},
-      publisher = {Zenodo},
-      year = {2022},
-      copyright = {Open Access}
-   }
+    @misc{exdmv1,
+        doi = {10.5281/ZENODO.7250321},
+        url = {https://zenodo.org/record/7250321},
+        author = {Trickle,  Tanner and {Kinzani}},
+        title = {tanner-trickle/EXCEED-DM: EXCEED-DMv1.0.0},
+        publisher = {Zenodo},
+        year = {2022},
+        copyright = {Open Access}
+    }
 
-   @article{Trickle2022,
-      author = "Trickle, Tanner",
-      title = "{EXCEED-DM: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter}",
-      eprint = "https://arxiv.org/abs/2210.14917",
-      archivePrefix = "arXiv",
-      primaryClass = "hep-ph",
-      month = "10",
-      year = "2022"
-   }
+    @article{Trickle:2022fwt,
+        author = "Trickle, Tanner",
+        title = "{Extended calculation of electronic excitations for direct detection of dark matter}",
+        eprint = "2210.14917",
+        archivePrefix = "arXiv",
+        primaryClass = "hep-ph",
+        reportNumber = "FERMILAB-PUB-22-767-T",
+        doi = "10.1103/PhysRevD.107.035035",
+        journal = "Phys. Rev. D",
+        volume = "107",
+        number = "3",
+        pages = "035035",
+        year = "2023"
+    }
 
-   @article{Griffin:2021znd,
-      author = "Griffin, Sin\'ead M. and Inzani, Katherine and Trickle, Tanner and Zhang, Zhengkang and Zurek, Kathryn M.",
-      title = "{Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets}",
-      eprint = "2105.05253",
-      archivePrefix = "arXiv",
-      primaryClass = "hep-ph",
-      month = "5",
-      year = "2021"
-   }
-
+    @article{Griffin:2021znd,
+        author = "Griffin, Sin\'ead M. and Inzani, Katherine and Trickle, Tanner and Zhang, Zhengkang and Zurek, Kathryn M.",
+        title = "{Extended calculation of dark matter-electron scattering in crystal targets}",
+        eprint = "2105.05253",
+        archivePrefix = "arXiv",
+        primaryClass = "hep-ph",
+        doi = "10.1103/PhysRevD.104.095015",
+        journal = "Phys. Rev. D",
+        volume = "104",
+        number = "9",
+        pages = "095015",
+        year = "2021"
+    }

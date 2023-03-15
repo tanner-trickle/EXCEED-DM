@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.16)
 # Project information ###########################
 
 project(EXCEED-DM
-        VERSION 1.0.0
+        VERSION 1.1.0
         DESCRIPTION "OpenMPI Fortran program to compute Dark Matter (DM) induced electronic transition rates."
-        HOMEPAGE_URL "https://exceed-dm.caltech.edu"
+        HOMEPAGE_URL "https://tanner-trickle.github.io/EXCEED-DM/html/index.html"
         LANGUAGES Fortran)
 
 #################################################

@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Papers using EXCEED-DM" href="papers.html" /><link rel="prev" title="Output File" href="file_spec/output.html" />
 
     <link rel="shortcut icon" href="../_static/exdm-favicon2.png"/><meta name="generator" content="sphinx-5.1.1, furo 2022.04.07"/>
-        <title>Data - EXCEED-DM v1.0.0</title>
+        <title>Data - EXCEED-DM v1.1.0</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
@@ -125,7 +125,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">EXCEED-DM v1.0.0</div></a>
+      <a href="../index.html"><div class="brand">EXCEED-DM v1.1.0</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -151,7 +151,7 @@
     <img class="sidebar-logo" src="../_static/exdm-prelim-logo-modified.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">EXCEED-DM v1.0.0</span>
+  <span class="sidebar-brand-text">EXCEED-DM v1.1.0</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
@@ -170,13 +170,6 @@
 </li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="papers.html">Papers</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../source/index.html">Source Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../source/utils/index.html"> Utilities</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../source/utils/constants.html"> Constants</a></li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 
 </div>
@@ -244,7 +237,7 @@
 </li>
 <li><dl class="simple">
 <dt><strong>PW basis</strong></dt><dd><ul>
-<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id1">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
+<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id1">[<a class="reference internal" href="#id16" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -258,7 +251,7 @@
 <li><p>Modelled with a combination of <strong>PW basis</strong> and <strong>single PW basis</strong> states. <strong>PW basis</strong> is used for the lower energy “conduction” bands, <strong>single PW basis</strong> is used for higher energy states being approximated as “free”.</p></li>
 <li><dl class="simple">
 <dt><strong>PW basis</strong></dt><dd><ul>
-<li><p>60000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 60 bands). Computed with DFT (VASP), see Ref. <span id="id2">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(1.11 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
+<li><p>60000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 60 bands). Computed with DFT (VASP), see Ref. <span id="id2">[<a class="reference internal" href="#id16" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(1.11 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
 </ul>
 </dd>
 </dl>
@@ -301,7 +294,7 @@
 </li>
 <li><dl class="simple">
 <dt><strong>PW basis</strong></dt><dd><ul>
-<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id4">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
+<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id4">[<a class="reference internal" href="#id16" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -315,7 +308,7 @@
 <li><p>Modelled with a combination of <strong>PW basis</strong> and <strong>single PW basis</strong> states. <strong>PW basis</strong> is used for the lower energy “conduction” bands, <strong>single PW basis</strong> is used for higher energy states being approximated as “free”.</p></li>
 <li><dl class="simple">
 <dt><strong>PW basis</strong></dt><dd><ul>
-<li><p>60000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 60 bands). Computed with DFT (VASP), see Ref. <span id="id5">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(1.11 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
+<li><p>60000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 60 bands). Computed with DFT (VASP), see Ref. <span id="id5">[<a class="reference internal" href="#id16" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(1.11 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
 </ul>
 </dd>
 </dl>
@@ -363,7 +356,7 @@
 </li>
 <li><dl class="simple">
 <dt><strong>PW basis</strong></dt><dd><ul>
-<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id7">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
+<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id7">[<a class="reference internal" href="#id16" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -377,7 +370,7 @@
 <li><p>Modelled with a combination of <strong>PW basis</strong> and <strong>single PW basis</strong> states. <strong>PW basis</strong> is used for the lower energy “conduction” bands, <strong>single PW basis</strong> is used for higher energy states being approximated as “free”.</p></li>
 <li><dl class="simple">
 <dt><strong>PW basis</strong></dt><dd><ul>
-<li><p>82000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 82 bands). Computed with DFT (VASP), see Ref. <span id="id8">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(0.67 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
+<li><p>82000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 82 bands). Computed with DFT (VASP), see Ref. <span id="id8">[<a class="reference internal" href="#id16" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(0.67 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
 </ul>
 </dd>
 </dl>
@@ -420,7 +413,7 @@
 </li>
 <li><dl class="simple">
 <dt><strong>PW basis</strong></dt><dd><ul>
-<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id10">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
+<li><p>4000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 4 bands). Computed with DFT (VASP), see Ref. <span id="id10">[<a class="reference internal" href="#id16" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(-11.814 \, \text{eV}\)</span>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -434,7 +427,7 @@
 <li><p>Modelled with a combination of <strong>PW basis</strong> and <strong>single PW basis</strong> states. <strong>PW basis</strong> is used for the lower energy “conduction” bands, <strong>single PW basis</strong> is used for higher energy states being approximated as “free”.</p></li>
 <li><dl class="simple">
 <dt><strong>PW basis</strong></dt><dd><ul>
-<li><p>82000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 82 bands). Computed with DFT (VASP), see Ref. <span id="id11">[<a class="reference internal" href="#id17" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(0.67 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
+<li><p>82000 states (<span class="math notranslate nohighlight">\(10 \times 10 \times 10 \, \mathbf{k}\)</span> points, 82 bands). Computed with DFT (VASP), see Ref. <span id="id11">[<a class="reference internal" href="#id16" title="Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. Phys. Rev. D, 104(9):095015, 5 2021. arXiv:2105.05253, doi:10.1103/PhysRevD.104.095015.">1</a>]</span> for more details. Uniform sampling in the 1BZ. Each state was expanded to an <span class="math notranslate nohighlight">\(E_\text{cut} = \text{keV}\)</span> and then all-electron reconstructed with <code class="code docutils literal notranslate"><span class="pre">pawpyseed</span></code> to <span class="math notranslate nohighlight">\(E_\text{cut} = 2 \, \text{keV}\)</span>. Lowest energy state at <span class="math notranslate nohighlight">\(0.67 \, \text{eV}\)</span>. All bands which have an <span class="math notranslate nohighlight">\(E_{i \mathbf{k}} &lt; 60 \, \text{eV}\)</span>, for any <span class="math notranslate nohighlight">\(\mathbf{k}\)</span>, are included.</p></li>
 </ul>
 </dd>
 </dl>
@@ -491,7 +484,7 @@
 </li>
 </ul>
 <div class="docutils container" id="id12">
-<div class="citation" id="id17" role="doc-biblioentry">
+<div class="citation" id="id16" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a href="#id1" role="doc-backlink">1</a>,<a href="#id2" role="doc-backlink">2</a>,<a href="#id4" role="doc-backlink">3</a>,<a href="#id5" role="doc-backlink">4</a>,<a href="#id7" role="doc-backlink">5</a>,<a href="#id8" role="doc-backlink">6</a>,<a href="#id10" role="doc-backlink">7</a>,<a href="#id11" role="doc-backlink">8</a>)</span>
 <p>Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. <em>Phys. Rev. D</em>, 104(9):095015, 5 2021. <a class="reference external" href="https://arxiv.org/abs/2105.05253">arXiv:2105.05253</a>, <a class="reference external" href="https://doi.org/10.1103/PhysRevD.104.095015">doi:10.1103/PhysRevD.104.095015</a>.</p>

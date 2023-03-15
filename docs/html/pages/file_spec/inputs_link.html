@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Electronic Configuration File" href="elec_config.html" /><link rel="prev" title="File Specifications" href="index.html" />
 
     <link rel="shortcut icon" href="../../_static/exdm-favicon2.png"/><meta name="generator" content="sphinx-5.1.1, furo 2022.04.07"/>
-        <title>Input File - EXCEED-DM v1.0.0</title>
+        <title>Input File - EXCEED-DM v1.1.0</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
@@ -125,7 +125,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">EXCEED-DM v1.0.0</div></a>
+      <a href="../../index.html"><div class="brand">EXCEED-DM v1.1.0</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -151,7 +151,7 @@
     <img class="sidebar-logo" src="../../_static/exdm-prelim-logo-modified.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">EXCEED-DM v1.0.0</span>
+  <span class="sidebar-brand-text">EXCEED-DM v1.1.0</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
@@ -170,13 +170,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../data.html">Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../papers.html">Papers</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../source/index.html">Source Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../source/utils/index.html"> Utilities</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../source/utils/constants.html"> Constants</a></li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 
 </div>
@@ -399,6 +392,11 @@ v_e_km_per_sec += 0, 0, 250
 </pre></div>
 </div>
 </li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_T_g_per_cm3_per_AMU</span></code>: Number density of the target material, <span class="math notranslate nohighlight">\(n_T\)</span><br/><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{g}/\text{cm}^3/\text{AMU}\)</span></li></ul></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>n_T_g_per_cm3_per_AMU = 1.000000E+00
+</pre></div>
+</div>
+</li>
 <li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Name of the target material</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>name = ''
 </pre></div>
@@ -406,6 +404,31 @@ v_e_km_per_sec += 0, 0, 250
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">rho_T_g_per_cm3</span></code>: Mass density of the target material, <span class="math notranslate nohighlight">\(\rho_T\)</span><br/><ul><li><b>Units</b>: <span class="math notranslate nohighlight">\(\text{g}/\text{cm}^3\)</span></li></ul></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rho_T_g_per_cm3 = 1.000000E+00
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="numerics-tif-calculator-atomic">
+<h3>numerics_TIF_calculator_atomic<a class="headerlink" href="#numerics-tif-calculator-atomic" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">integration_scheme</span></code>: Specific method of sampling the radial direction.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>integration_scheme = 'log'
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_r</span></code>: Number of radial points to integrate with.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>n_r = 1
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">r_max_a0</span></code>: Maximum radius to use in the integration, in units of the Bohr radius, <span class="math notranslate nohighlight">\(a_0\)</span>.<ul><li><b>[<span class="math notranslate nohighlight">\(a_0\)</span>]</b></li></ul></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>r_max_a0 = 1.000000E+03
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">r_min_a0</span></code>: Minimum radius to use in the integration, in units of the Bohr radius, <span class="math notranslate nohighlight">\(a_0\)</span>.<ul><li><b>[<span class="math notranslate nohighlight">\(a_0\)</span>]</b></li></ul></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>r_min_a0 = 1.000000E-03
 </pre></div>
 </div>
 </li>
@@ -620,6 +643,7 @@ v_e_km_per_sec += 0, 0, 250
 <li><a class="reference internal" href="#elec-config-input">elec_config_input</a></li>
 <li><a class="reference internal" href="#experiment">experiment</a></li>
 <li><a class="reference internal" href="#material">material</a></li>
+<li><a class="reference internal" href="#numerics-tif-calculator-atomic">numerics_TIF_calculator_atomic</a></li>
 <li><a class="reference internal" href="#numerics-absorption-rate">numerics_absorption_rate</a></li>
 <li><a class="reference internal" href="#numerics-binned-scatter-rate">numerics_binned_scatter_rate</a></li>
 <li><a class="reference internal" href="#numerics-dielectric">numerics_dielectric</a></li>
