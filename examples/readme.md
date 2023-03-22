@@ -62,3 +62,7 @@ Running all of the examples takes ~5 minutes on 48 cores.
 ```
 ```{include} ../../examples/15/readme.md
 ```
+```{include} ../../examples/16/readme.md
+```
+```{include} ../../examples/17/readme.md
+```

@@ -1,3 +1,17 @@
+v1.1.0
+---
+
+- Update to compute results shown in: https://arxiv.org/abs/2303.11344 .
+    - Added particle_type = 'mdm', 'edm' options for calculation of the absorption rate of DM coupling to electron MDM/EDM.
+    - Added a new type of electronic state approximation, 'elec_state_atomic_type', which has two sub-types corresponding to bound states expanded in an STO basis, 'elec_state_atomic_STO_basis_type', and proper continuum, Coloumb wave function states which solve V = -Z/r, 'elec_state_atomic_continuum_type'. These are suitable for describing an 'atomic target', see the above paper for more details.
+        - These states are defined by the property that they can be written as \psi(x) = R(r) Y(\theta, \phi), where Y are spherical harmonics. Future subtypes may be incorporated if they provide a 'compute_radial_wf' and 'compute_wf' procedure.
+        - These are currently only used in absorption rate calculations.
+    - Added a new method for computing transition matrix elements between atomic states, in the q -> 0 limit.
+        - Currently, only transitions from atomic states to atomic states are supported, i.e., there is no way to calculation bloch state -> atomic state, or vice versa. Additionally, only initial STO -> final continuum is supported since the STO basis provides a nice analytic formula for the first and second derivatives. Initial atomic STO -> final atomic STO may be added with relative ease, whereas initial continuum -> continuum would be more difficult (although it is unclear what circumstance that would be important).  
+    - Added new self-energy, and corresponding absorption rate, calculations for the MDM/EDM models. 
+    - Added atomic target and crystal target EDM absorption examples.
+    - Updated input file documentation.
+
 v1.0.0
 ---
 
