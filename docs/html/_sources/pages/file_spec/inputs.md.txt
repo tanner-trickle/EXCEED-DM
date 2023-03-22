@@ -111,6 +111,10 @@
 
       materials_project_ID = ''
 
+* `n_T_g_per_cm3_per_AMU`: Number density of the target material, $n_T$<br /><ul><li><b>Units</b>: $\text{g}/\text{cm}^3/\text{AMU}$</li></ul>
+
+      n_T_g_per_cm3_per_AMU = 1.000000E+00
+
 * `name`: Name of the target material
 
       name = ''
@@ -118,6 +122,24 @@
 * `rho_T_g_per_cm3`: Mass density of the target material, $\rho_T$<br /><ul><li><b>Units</b>: $\text{g}/\text{cm}^3$</li></ul>
 
       rho_T_g_per_cm3 = 1.000000E+00
+
+### numerics_TIF_calculator_atomic
+
+* `integration_scheme`: Specific method of sampling the radial direction.
+
+      integration_scheme = 'log'
+
+* `n_r`: Number of radial points to integrate with.
+
+      n_r = 1
+
+* `r_max_a0`: Maximum radius to use in the integration, in units of the Bohr radius, $a_0$.<ul><li><b>[$a_0$]</b></li></ul>
+
+      r_max_a0 = 1.000000E+03
+
+* `r_min_a0`: Minimum radius to use in the integration, in units of the Bohr radius, $a_0$.<ul><li><b>[$a_0$]</b></li></ul>
+
+      r_min_a0 = 1.000000E-03
 
 ### numerics_absorption_rate
 

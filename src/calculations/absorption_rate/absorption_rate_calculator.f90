@@ -42,7 +42,7 @@ contains
                 if ( spin_dof == 1 ) then
 
                     call absorption_rate_compute_ps_SI(exdm_inputs, &
-                        PiIF_calculator%Pi_1_1_mat, absorption_rate)
+                        PiIF_calculator%Pi_v_v, absorption_rate)
 
                 else 
 
@@ -50,6 +50,16 @@ contains
                         PiIF_calculator%Pi_vds_vds, absorption_rate)
 
                 end if
+
+            case ( 'mdm' )
+
+                call absorption_rate_compute_mdm(exdm_inputs, &
+                    PiIF_calculator%Pi_v_v, absorption_rate)
+
+            case ( 'edm' )
+
+                call absorption_rate_compute_edm(exdm_inputs, &
+                    PiIF_calculator%Pi_vivj_vivj_sum, absorption_rate)
 
         end select
 
@@ -60,7 +70,7 @@ contains
 
     end subroutine
 
-    subroutine absorption_rate_compute_ps_SI(exdm_inputs, Pi_1_1_mat, absorption_rate)
+    subroutine absorption_rate_compute_ps_SI(exdm_inputs, Pi_v_v, absorption_rate)
 
         use math_util
         use constants_util
@@ -68,7 +78,7 @@ contains
         implicit none
 
         type(exdm_inputs_t) :: exdm_inputs
-        complex(dp) :: Pi_1_1_mat(:, :, :, :)
+        complex(dp) :: Pi_v_v(:, :, :, :)
 
         real(dp) :: absorption_rate(:, :)
 
@@ -76,7 +86,6 @@ contains
 
         real(dp) :: gam
 
-        complex(dp) :: pi_eigvals(3)
         complex(dp) :: pi_mat(3, 3)
 
         real(dp) :: omega
@@ -86,17 +95,13 @@ contains
 
                 omega = exdm_inputs%dm_model%mX(m)
 
-                pi_mat = (omega/m_elec)**2*Pi_1_1_mat(:, :, m, w)
-
-                pi_eigvals = calc_eigvals_33(pi_mat)
-
                 gam = 0.0_dp
 
                 do j = 1, 3
 
                     gam = gam + (-1.0_dp/omega)*&
                         (omega**2/(4.0_dp*m_elec**2))*&
-                        aimag(pi_mat(j, j))
+                        aimag(Pi_v_v(j, j, m, w))
 
                 end do
 
@@ -168,6 +173,76 @@ contains
                     exdm_inputs%dm_model%mX(m)**(-1)*&
                     exdm_inputs%experiment%M*exdm_inputs%experiment%T*&
                     gam
+
+            end do
+        end do
+
+    end subroutine
+
+    subroutine absorption_rate_compute_edm(exdm_inputs, Pi_vivj_vivj_sum, absorption_rate)
+
+        use math_util
+        use constants_util
+
+        implicit none
+
+        type(exdm_inputs_t) :: exdm_inputs
+        complex(dp) :: Pi_vivj_vivj_sum(:, :)
+
+        real(dp) :: absorption_rate(:, :)
+
+        integer :: w, m
+
+        real(dp) :: dE_hat
+
+        ! GeV^{-1}
+        dE_hat = (10.0_dp**9)**(-1)
+
+        absorption_rate = -(dE_hat**2)*(1.0_dp/3.0_dp)*(exdm_inputs%dm_model%rho_X/exdm_inputs%material%rho_T)*&
+                    exdm_inputs%experiment%M*exdm_inputs%experiment%T*&
+                    aimag( Pi_vivj_vivj_sum )
+
+    end subroutine
+
+    subroutine absorption_rate_compute_mdm(exdm_inputs, Pi_v_v, absorption_rate)
+
+        use math_util
+        use constants_util
+
+        implicit none
+
+        type(exdm_inputs_t) :: exdm_inputs
+        complex(dp) :: Pi_v_v(:, :, :, :)
+
+        real(dp) :: absorption_rate(:, :)
+
+        integer :: w, m, j
+
+        real(dp) :: tr_Pi_vv
+
+        real(dp) :: omega
+
+        real(dp) :: dM_hat
+
+        ! GeV^{-1}
+        dM_hat = (10.0_dp**9)**(-1)
+
+        do w = 1, size(absorption_rate, 2)
+            do m = 1, size(absorption_rate, 1)
+
+                omega = exdm_inputs%dm_model%mX(m)
+
+                tr_Pi_vv = 0.0_dp
+
+                do j = 1, 3
+
+                    tr_Pi_vv = tr_Pi_vv + aimag(Pi_v_v(j, j, m, w))
+
+                end do
+
+                absorption_rate(m, w) = -(2.0_dp/3.0_dp)*dM_hat**2*(exdm_inputs%dm_model%rho_X/exdm_inputs%material%rho_T)*&
+                    exdm_inputs%experiment%M*exdm_inputs%experiment%T*&
+                    tr_Pi_vv
 
             end do
         end do

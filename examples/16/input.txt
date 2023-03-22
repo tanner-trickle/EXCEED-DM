@@ -1,0 +1,27 @@
+# Input file for EXCEED-DMv1.0.0
+
+[control]
+    calculation                     = 'absorption_rate'
+    run_description                 = 'example_16'
+    out_folder                      = './examples/16/output/'
+
+[elec_config_input]
+    filename = './examples/16/elec_config.hdf5'
+
+[material]
+    name            = 'Xe'
+    rho_T_g_per_cm3 = 3.1
+    n_T_g_per_cm3_per_AMU = 2.36D-2
+
+[dm_model]
+
+    particle_type = 'edm'
+
+    mX_logspace = 10, 1D2, 1D6
+
+[numerics_TIF_calculator_atomic]
+
+    n_r = 100
+
+    r_min_a0 = 1D-6
+    r_max_a0 = 1D3

@@ -21,8 +21,8 @@ copyright = '2022, Tanner Trickle'
 author = 'Tanner Trickle'
 
 # The full version, including alpha/beta/rc tags
-version = '1.0.0'
-release = '1.0.0'
+version = '1.1.0'
+release = '1.1.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -46,7 +46,7 @@ bibtex_default_style = 'plain'
 
 # Fortran
 # fortran_src = [
-#                     "../src/*.f90", 
+#                     # "../src/*.f90", 
 #                     "../src/utils/*.f90"
 #             ]
 
@@ -67,7 +67,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_theme = 'furo'
 html_logo = "./media/exdm-prelim-logo-modified.png"
-html_title = "EXCEED-DM v1.0.0"
+html_title = "EXCEED-DM v1.1.0"
 html_favicon = "./media/exdm-favicon2.png"
 
 # html_theme = 'sphinx_rtd_theme'

@@ -235,6 +235,99 @@ contains
 
     end subroutine
 
+    subroutine compute_O_u_vivj(u, O_u_vivj, G_grid, init_state)
+
+        use math_util 
+        use FFT_util 
+        use constants_util
+
+        complex(dp) :: u(:, :, :, :)
+        complex(dp) :: O_u_vivj(:, :, :, :, :, :)
+        real(dp) :: G_grid(:, :, :, :)
+        class(elec_state_bloch_t) :: init_state
+
+        complex(dp), allocatable :: u_FT(:, :, :, :)
+        real(dp), allocatable :: vivj_vec_array(:, :, :, :, :)
+
+        integer :: d, s, i, j
+
+        integer :: g1, g2, g3
+
+        real(dp) :: G_vec(3)
+        real(dp) :: k_vec(3)
+        real(dp) :: v_vec(3)
+
+        allocate(u_FT(size(u, 1), size(u, 2), size(u, 3), size(u, 4)), source = ( 0.0_dp, 0.0_dp ))
+        allocate(vivj_vec_array(size(u, 1), size(u, 2), size(u, 3), 3, 3), source = 0.0_dp)
+
+        k_vec = init_state%k_vec
+
+        do j = 1, 3
+            do i = j, 3
+
+                do g3 = 1, init_state%n_x_grid(3)
+                    do g2 = 1, init_state%n_x_grid(2)
+                        do g1 = 1, init_state%n_x_grid(1)
+
+                            G_vec = G_grid(g1, g2, g3, :)
+                            v_vec = (k_vec + G_vec)/m_elec
+
+                            vivj_vec_array(g1, g2, g3, i, j) = v_vec(i)*v_vec(j)
+
+                        end do
+                    end do
+                end do
+
+            end do 
+        end do
+
+        ! do j = 1, 3 
+        !     do i = j, 3
+        !
+        !         if ( i /= j ) then
+        !
+        !             vivj_vec_array(g1, g2, g3, j, i) = vivj_vec_array(g1, g2, g3, i, j)
+        !
+        !         end if
+        !
+        !     end do
+        ! end do
+
+        ! compute FFT
+        do s = 1, size(u, 4)
+            call dfftw_execute_dft(init_state%FFT_plans(1, :), u(:, :, :, s), u_FT(:, :, :, s)) 
+        end do
+
+        ! Normalize
+        u_FT = (1.0_dp*size(u, 1)*size(u, 2)*size(u, 3))**(-1)*u_FT
+
+        do j = 1, 3
+            do i = j, 3
+                do s = 1, size(u, 4)
+
+                    call dfftw_execute_dft(init_state%FFT_plans(2, :),&
+                        vivj_vec_array(:, :, :, i, j)*u_FT(:, :, :, s),& 
+                        O_u_vivj(:, :, :, s, i, j)) 
+
+                end do 
+            end do
+        end do
+
+        ! symmetrize
+        do j = 1, 3 
+            do i = j, 3
+
+                if ( i /= j ) then
+
+                    O_u_vivj(:, :, :, :, j, i) = O_u_vivj(:, :, :, :, i, j)
+
+                end if
+
+            end do
+        end do
+
+    end subroutine
+
     subroutine compute_O_u_vxs(u, O_u_vxs, G_grid, init_state)
 
         use math_util

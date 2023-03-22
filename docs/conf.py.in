@@ -46,7 +46,7 @@ bibtex_default_style = 'plain'
 
 # Fortran
 # fortran_src = [
-#                     "../src/*.f90", 
+#                     # "../src/*.f90", 
 #                     "../src/utils/*.f90"
 #             ]
 

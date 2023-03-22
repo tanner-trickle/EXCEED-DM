@@ -8,6 +8,25 @@ module math_util
 
 contains
 
+    function STO_radial(r_list, n, N0, Z) result( wf )
+        ! Radial part of a Slater Type Orbital (STO) basis function.
+        !
+        ! Units : eV^(3/2)
+
+        use constants_util
+
+        implicit none
+
+        real(dp) :: n
+        real(dp) :: N0, Z
+        real(dp) :: r_list(:)
+
+        real(dp) :: wf(size(r_list))
+
+        wf = a0**(-1.5_dp)*N0*(r_list/a0)**(n - 1.0_dp)*exp(-Z*r_list/a0)
+
+    end function
+
     function pauli_spin_matrix(i) result(mat)
         ! Returns the \(i\)th Pauli spin matrix, \( \sigma^i\). Identity matrix is defined as the
         ! \( 0 \)th component.

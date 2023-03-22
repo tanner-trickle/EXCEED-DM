@@ -102,6 +102,13 @@ contains
             print*
         end if
 
+        ! atomic STO -> continuum
+        call self_energies_compute_continuum_atomic(n_proc, proc_id, root_proc_id, &
+            exdm_inputs, &
+            exdm_elec_config%init_atomic_STO_basis_config%states, &
+            exdm_elec_config%init_atomic_STO_basis_config%Zeff_list, &
+            PiIF_calculator)
+
         ! bloch PW -> bloch PW
         call self_energies_compute(n_proc, proc_id, root_proc_id, &
             exdm_inputs, &

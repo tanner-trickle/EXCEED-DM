@@ -45,6 +45,7 @@
 
 ## Papers using `EXCEED-DM`
 
+- G. Krnjaic, T. Trickle [Absorption of Vector Dark Matter Beyond Kinetic Mixing]
 - T. Trickle [EXCEED-DM: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter]
 - B. Dutta, S. Ghosh, T. Li, A. Thompson, A. Verma [Non-standard neutrino interactions in light mediator models at reactor experiments]
 - CDEX Collaboration, [Constraints on Sub-GeV Dark Matter-Electron Scattering from the CDEX-10 Experiment]
@@ -54,6 +55,7 @@
 - T. Trickle, Z. Zhang, K. M. Zurek, K. Inzani and S. Griffin, [Multi-Channel Direct Detection of Light Dark Matter: Theoretical Framework]
 - S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek, [Multichannel direct detection of light dark matter: Target comparison]
 
+[Absorption of Vector Dark Matter Beyond Kinetic Mixing]: https://arxiv.org/abs/2303.11344 
 [EXCEED-DM: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter]: https://arxiv.org/abs/2210.14917
 [Non-standard neutrino interactions in light mediator models at reactor experiments]: https://arxiv.org/abs/2209.13566 
 [Constraints on Sub-GeV Dark Matter-Electron Scattering from the CDEX-10 Experiment]: https://arxiv.org/abs/2206.04128 
@@ -77,22 +79,31 @@ If you use `EXCEED-DM` in your work, please cite,
         copyright = {Open Access}
     }
 
-    @article{Trickle2022,
+    @article{Trickle:2022fwt,
         author = "Trickle, Tanner",
-        title = "{EXCEED-DM: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter}",
-        eprint = "https://arxiv.org/abs/2210.14917",
+        title = "{Extended calculation of electronic excitations for direct detection of dark matter}",
+        eprint = "2210.14917",
         archivePrefix = "arXiv",
         primaryClass = "hep-ph",
-        month = "10",
-        year = "2022"
+        reportNumber = "FERMILAB-PUB-22-767-T",
+        doi = "10.1103/PhysRevD.107.035035",
+        journal = "Phys. Rev. D",
+        volume = "107",
+        number = "3",
+        pages = "035035",
+        year = "2023"
     }
 
     @article{Griffin:2021znd,
         author = "Griffin, Sin\'ead M. and Inzani, Katherine and Trickle, Tanner and Zhang, Zhengkang and Zurek, Kathryn M.",
-        title = "{Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets}",
+        title = "{Extended calculation of dark matter-electron scattering in crystal targets}",
         eprint = "2105.05253",
         archivePrefix = "arXiv",
         primaryClass = "hep-ph",
-        month = "5",
+        doi = "10.1103/PhysRevD.104.095015",
+        journal = "Phys. Rev. D",
+        volume = "104",
+        number = "9",
+        pages = "095015",
         year = "2021"
     }

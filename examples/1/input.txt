@@ -7,8 +7,8 @@
 
     # Create the default input file for the documentation.
 
-    #save_default_inputs_markdown    = T
-    #default_input_markdown_filename = './docs/pages/file_spec/inputs.md'
+    save_default_inputs_markdown    = T
+    default_input_markdown_filename = './docs/pages/file_spec/inputs.md'
 
 [elec_config_input]
     filename = './examples/1/elec_config.hdf5'

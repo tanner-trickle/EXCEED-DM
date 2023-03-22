@@ -9,18 +9,20 @@ module PiIF_calculator_type
 
     type :: PiIF_calculator_t
 
-        integer :: n = 4
-        logical :: mask(4)
+        integer :: n = 5
+        logical :: mask(5)
 
         complex(dp), allocatable :: Pi_1_1_mat(:, :, :, :) ! Dim : [3, 3, n_mX, n_widths]
         complex(dp), allocatable :: Pi_v_v(:, :, :, :)
         complex(dp), allocatable :: Pi_v2_v2(:, :) ! Dim : [n_mX, n_widths]
         complex(dp), allocatable :: Pi_vds_vds(:, :)
+        complex(dp), allocatable :: Pi_vivj_vivj_sum(:, :) ! Dim : [n_mX, n_widths]
 
         contains
 
             procedure :: setup => setup_PiIF_calculator
             procedure :: compute_all => compute_all_PiIF_calculator
+            procedure :: compute_all_atomic_continuum => compute_all_atomic_continuum_PiIF_calculator
 
     end type
 
@@ -51,6 +53,10 @@ contains
             TIF_mask(5) = .TRUE.
         end if
 
+        if ( Pi_mask(5) ) then
+            TIF_mask(7) = .TRUE.
+        end if
+
     end subroutine
 
     subroutine particle_type_to_PiIF_mask(particle_type, spin_dof, mask, n)
@@ -74,7 +80,7 @@ contains
 
             if ( spin_dof == 1 ) then
 
-                mask(1) = .TRUE.
+                mask(2) = .TRUE.
 
             else
 
@@ -85,6 +91,14 @@ contains
         case( 'scalar' )
 
             mask(3) = .TRUE.
+
+        case( 'edm' )
+
+            mask(5) = .TRUE.
+
+        case( 'mdm' )
+
+            mask(2) = .TRUE.
 
         end select
 
@@ -130,6 +144,79 @@ contains
                 omega_IF, mX, widths, &
                 jac_k, pc_vol, spin_dof, smear_type)
         end if
+        if ( self%mask(5) ) then
+            call compute_Pi_vivj_vivj_sum(self%Pi_vivj_vivj_sum, TIF_calculator%TIF_vivj, &
+                omega_IF, mX, widths, &
+                jac_k, pc_vol, spin_dof, smear_type)
+        end if
+
+    end subroutine
+
+    subroutine compute_all_atomic_continuum_PiIF_calculator(self, TIF_calculator, num_density, &
+            mX, mX_id, omega_I, ell)
+
+        use TIF_calculator_type
+
+        implicit none
+
+        class(PiIF_calculator_t) :: self
+        class(TIF_calculator_t) :: TIF_calculator
+
+        real(dp) :: num_density
+        real(dp) :: omega_I
+        real(dp) :: omega_F, k_F
+        integer :: ell
+        
+        real(dp) :: mX
+        integer :: mX_id
+
+        integer :: i, j, s
+
+        complex(dp) :: TIF_v2
+
+        omega_F = omega_I + mX
+        k_F = sqrt(2*m_elec*omega_F)
+
+        if ( self%mask(1) ) then
+            self%Pi_1_1_mat = ( 0.0_dp, 0.0_dp )
+            print*, 'Pi_1_1 mat not implemented yet.'
+            print*
+        end if
+        if ( self%mask(2) ) then
+
+            do i = 1, 3
+                do j = 1, 3
+
+                    self%Pi_v_v(i, j, mX_id, 1) = self%Pi_v_v(i, j, mX_id, 1) + &
+                        -ii*(num_density*m_elec)*k_F**(-1)*conjg(TIF_calculator%TIF_v(1, i))*TIF_calculator%TIF_v(1, j)
+
+                end do
+            end do
+
+
+        end if
+        if ( self%mask(3) ) then
+
+            self%Pi_v2_v2(mX_id, 1) = self%Pi_v2_v2(mX_id, 1) + &
+                -ii*(num_density*m_elec)*k_F**(-1)*conjg(TIF_calculator%TIF_v2(1))*TIF_calculator%TIF_v2(1)
+
+        end if
+        if ( self%mask(4) ) then
+            self%Pi_vds_vds = ( 0.0_dp, 0.0_dp )
+        end if
+
+        if ( self%mask(5) ) then 
+
+            do i = 1, 3
+                do j = 1, 3
+
+                    self%Pi_vivj_vivj_sum(mX_id, 1) = self%Pi_vivj_vivj_sum(mX_id, 1) + &
+                -ii*(num_density*m_elec)*k_F**(-1)*conjg(TIF_calculator%TIF_vivj(1, i, j))*TIF_calculator%TIF_vivj(1, i, j)
+
+                end do 
+            end do
+
+        end if
 
     end subroutine
 
@@ -155,6 +242,10 @@ contains
         end if
         if ( self%mask(4) ) then
             allocate(self%Pi_vds_vds(n_mX, n_widths), &
+                     source = (0.0_dp, 0.0_dp))
+        end if
+        if ( self%mask(5) ) then
+            allocate(self%Pi_vivj_vivj_sum(n_mX, n_widths), &
                      source = (0.0_dp, 0.0_dp))
         end if
 
@@ -217,6 +308,17 @@ contains
                             err)
         end if
 
+        if ( PiIF%mask(5) ) then
+            call MPI_Reduce(PiIF%Pi_vivj_vivj_sum, &
+                            sum_Pi%Pi_vivj_vivj_sum, &
+                            size(PiIF%Pi_vivj_vivj_sum), &
+                            MPI_DOUBLE_COMPLEX, &
+                            MPI_SUM, &
+                            root_process, &
+                            MPI_COMM_WORLD, &
+                            err)
+        end if
+
     end subroutine
 
     subroutine compute_Pi_1_1_mat(Pi_1_1, TIF_v, &
@@ -259,6 +361,56 @@ contains
                     (2.0_dp/spin_dof)*jac_k*pc_vol**(-1)*&
                     (m_elec/omega_IF)**2*green_func(mX(m), omega_IF, delta, smear_type)*&
                     outer_TIF_v
+
+            end do
+        end do
+
+    end subroutine
+
+    subroutine compute_Pi_vivj_vivj_sum(Pi_vivj_vivj_sum, TIF_vivj, &
+            omega_IF, mX, widths, &
+            jac_k, pc_vol, spin_dof, smear_type)
+
+        implicit none
+
+        complex(dp) :: Pi_vivj_vivj_sum(:, :)
+        complex(dp) :: TIF_vivj(:, :, :)
+        real(dp) :: omega_IF
+        real(dp) :: mX(:)
+        real(dp) :: widths(:, :)
+        real(dp) :: jac_k
+        real(dp) :: pc_vol
+        integer :: spin_dof
+
+        integer :: i, j, m
+
+        real(dp) :: delta
+
+        ! complex(dp) :: outer_TIF_v(3, 3)
+
+        complex(dp) :: TIF_vivj_vivj_sum
+
+        character(len=*) :: smear_type
+
+        TIF_vivj_vivj_sum = ( 0.0_dp, 0.0_dp )
+
+        do j = 1, 3
+            do i = 1, 3
+
+                TIF_vivj_vivj_sum = TIF_vivj_vivj_sum + conjg(TIF_vivj(1, i, j))*TIF_vivj(1, i, j)
+
+            end do
+        end do
+
+        do i = 1, size(widths, 1)
+            do m = 1, size(mX)
+
+                delta = width_func(mX(m), widths(i, 1), widths(i, 2), widths(i, 3))
+                
+                Pi_vivj_vivj_sum(m, i) = Pi_vivj_vivj_sum(m, i) + &
+                    (2.0_dp/spin_dof)*jac_k*pc_vol**(-1)*&
+                    Pi_scaling_func(mX(m), omega_IF)*green_func(mX(m), omega_IF, delta, smear_type)*&
+                    TIF_vivj_vivj_sum
 
             end do
         end do
