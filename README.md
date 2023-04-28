@@ -45,6 +45,7 @@
 
 ## Papers using `EXCEED-DM`
 
+- DAMIC-M Collaboration [First Constraints from DAMIC-M on Sub-GeV Dark-Matter Particles Interacting with Electrons]
 - G. Krnjaic, T. Trickle [Absorption of Vector Dark Matter Beyond Kinetic Mixing]
 - T. Trickle [EXCEED-DM: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter]
 - B. Dutta, S. Ghosh, T. Li, A. Thompson, A. Verma [Non-standard neutrino interactions in light mediator models at reactor experiments]
@@ -55,6 +56,7 @@
 - T. Trickle, Z. Zhang, K. M. Zurek, K. Inzani and S. Griffin, [Multi-Channel Direct Detection of Light Dark Matter: Theoretical Framework]
 - S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek, [Multichannel direct detection of light dark matter: Target comparison]
 
+[First Constraints from DAMIC-M on Sub-GeV Dark-Matter Particles Interacting with Electrons]: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.130.171003
 [Absorption of Vector Dark Matter Beyond Kinetic Mixing]: https://arxiv.org/abs/2303.11344 
 [EXCEED-DM: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter]: https://arxiv.org/abs/2210.14917
 [Non-standard neutrino interactions in light mediator models at reactor experiments]: https://arxiv.org/abs/2209.13566 
