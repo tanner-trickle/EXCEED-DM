@@ -45,11 +45,16 @@
 
 ## Papers using `EXCEED-DM`
 
+### Experiment
+
 - DAMIC-M Collaboration [First Constraints from DAMIC-M on Sub-GeV Dark-Matter Particles Interacting with Electrons]
+- CDEX Collaboration, [Constraints on Sub-GeV Dark Matter-Electron Scattering from the CDEX-10 Experiment]
+
+### Theory
+
 - G. Krnjaic, T. Trickle [Absorption of Vector Dark Matter Beyond Kinetic Mixing]
 - T. Trickle [EXCEED-DM: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter]
 - B. Dutta, S. Ghosh, T. Li, A. Thompson, A. Verma [Non-standard neutrino interactions in light mediator models at reactor experiments]
-- CDEX Collaboration, [Constraints on Sub-GeV Dark Matter-Electron Scattering from the CDEX-10 Experiment]
 - H-Y. Chen, A. Mitridate, T. Trickle, Z. Zhang, M. Bernardi, K. M. Zurek, [Dark Matter Direct Detection in Materials with Spin-Orbit Coupling]
 - A. Mitridate, T. Trickle, Z. Zhang, K. M. Zurek, [Dark Matter Absorption via Electronic Excitations]
 - S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek, [Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets]
