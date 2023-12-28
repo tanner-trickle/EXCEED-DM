@@ -1,17 +1,17 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Output File" href="output.html" /><link rel="prev" title="Input File" href="inputs_link.html" />
 
-    <link rel="shortcut icon" href="../../_static/exdm-favicon2.png"/><meta name="generator" content="sphinx-5.1.1, furo 2022.04.07"/>
+    <link rel="shortcut icon" href="../../_static/exdm-favicon2.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>Electronic Configuration File - EXCEED-DM v1.1.0</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=a5c4661c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -145,7 +145,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../../_static/exdm-prelim-logo-modified.png" alt="Logo"/>
@@ -154,7 +154,7 @@
   <span class="sidebar-brand-text">EXCEED-DM v1.1.0</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -162,7 +162,7 @@
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples_link.html">Examples</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">File Specifications</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">File Specifications</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of File Specifications</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="inputs_link.html">Input File</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Electronic Configuration File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="output.html">Output File</a></li>
@@ -188,7 +188,9 @@
           </svg>
           <span>Back to top</span>
         </a>
-        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -203,9 +205,9 @@
         </div>
         <article role="main">
           <section id="electronic-configuration-file">
-<h1>Electronic Configuration File<a class="headerlink" href="#electronic-configuration-file" title="Permalink to this heading">#</a></h1>
+<h1>Electronic Configuration File<a class="headerlink" href="#electronic-configuration-file" title="Link to this heading">#</a></h1>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
 <p>The electronic configuration file is an <code class="code docutils literal notranslate"><span class="pre">HDF5</span></code> file containing all the information about the electronic states in the target material. Available electronic states are shown below. These data must be kept inside the HDF5 folder specified, e.g., to add initial electronic states in the plane wave basis, put the data specified below in the, <code class="code docutils literal notranslate"><span class="pre">init/bloch/PW_basis/</span></code> folder inside the HDF5 file.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -213,14 +215,16 @@
 </div>
 </section>
 <section id="electronic-state-approximations">
-<h2>Electronic State Approximations<a class="headerlink" href="#electronic-state-approximations" title="Permalink to this heading">#</a></h2>
+<h2>Electronic State Approximations<a class="headerlink" href="#electronic-state-approximations" title="Link to this heading">#</a></h2>
 <section id="bloch-states">
-<h3>Bloch States<a class="headerlink" href="#bloch-states" title="Permalink to this heading">#</a></h3>
+<h3>Bloch States<a class="headerlink" href="#bloch-states" title="Link to this heading">#</a></h3>
 <section id="bloch-pw-basis-plane-wave-pw-basis">
-<h4><code class="code docutils literal notranslate"><span class="pre">bloch/PW_basis</span></code>: Plane Wave (PW) basis<a class="headerlink" href="#bloch-pw-basis-plane-wave-pw-basis" title="Permalink to this heading">#</a></h4>
+<h4><code class="code docutils literal notranslate"><span class="pre">bloch/PW_basis</span></code>: Plane Wave (PW) basis<a class="headerlink" href="#bloch-pw-basis-plane-wave-pw-basis" title="Link to this heading">#</a></h4>
 <p><strong>Equations</strong></p>
-<div class="math-wrapper"><div class="math notranslate nohighlight">
-\[u_{i, \mathbf{k}, s}(\mathbf{x}) = \sum_{\mathbf{G}} \, e^{i \mathbf{G} \cdot \mathbf{x}} \widetilde{u}_{i, \mathbf{k}, \mathbf{G}, s}\]</div></div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[u_{i, \mathbf{k}, s}(\mathbf{x}) = \sum_{\mathbf{G}} \, e^{i \mathbf{G} \cdot \mathbf{x}} \widetilde{u}_{i, \mathbf{k}, \mathbf{G}, s}\]</div>
+</div>
 <ul class="simple">
 <li><p><strong>config</strong></p>
 <ul>
@@ -287,11 +291,13 @@
 </ul>
 </section>
 <section id="bloch-sto-basis-slater-type-orbital-sto-basis">
-<h4><code class="code docutils literal notranslate"><span class="pre">bloch/STO_basis</span></code>: Slater Type Orbital (STO) basis<a class="headerlink" href="#bloch-sto-basis-slater-type-orbital-sto-basis" title="Permalink to this heading">#</a></h4>
+<h4><code class="code docutils literal notranslate"><span class="pre">bloch/STO_basis</span></code>: Slater Type Orbital (STO) basis<a class="headerlink" href="#bloch-sto-basis-slater-type-orbital-sto-basis" title="Link to this heading">#</a></h4>
 <p><strong>Equations</strong></p>
-<div class="math-wrapper"><div class="math notranslate nohighlight">
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
 \[\begin{split}u_{\kappa, n, \ell, m, \mathbf{k}}(\mathbf{x}) &amp; = \sqrt{\Omega} \sum_{\mathbf{r}} e^{- i \mathbf{k} \cdot         \mathbf{y}_{\mathbf{r}, \kappa}} \sum_j C_{j, \ell, n, \kappa} R_\text{STO}(y_{\mathbf{r}; \kappa}, Z_{j, \ell,        \kappa}, n_{j, \ell, \kappa}) Y_l^m(\hat{\mathbf{y}}_{\mathbf{r}, \kappa})\, , \\
-R_\text{STO}(r; Z, n) &amp; = a_0^{-3/2} \frac{(2Z)^{n + \frac{1}{2}}}{\sqrt{(2n)!}} \left( \frac{r}{a_0}              \right)^{n - 1} e^{-Zr / a_0}\end{split}\]</div></div>
+R_\text{STO}(r; Z, n) &amp; = a_0^{-3/2} \frac{(2Z)^{n + \frac{1}{2}}}{\sqrt{(2n)!}} \left( \frac{r}{a_0}              \right)^{n - 1} e^{-Zr / a_0}\end{split}\]</div>
+</div>
 <ul class="simple">
 <li><p><strong>config</strong></p>
 <ul>
@@ -365,10 +371,12 @@ R_\text{STO}(r; Z, n) &amp; = a_0^{-3/2} \frac{(2Z)^{n + \frac{1}{2}}}{\sqrt{(2n
 </ul>
 </section>
 <section id="bloch-single-pw-single-pw">
-<h4><code class="code docutils literal notranslate"><span class="pre">bloch/single_PW</span></code>: Single PW<a class="headerlink" href="#bloch-single-pw-single-pw" title="Permalink to this heading">#</a></h4>
+<h4><code class="code docutils literal notranslate"><span class="pre">bloch/single_PW</span></code>: Single PW<a class="headerlink" href="#bloch-single-pw-single-pw" title="Link to this heading">#</a></h4>
 <p><strong>Equations</strong></p>
-<div class="math-wrapper"><div class="math notranslate nohighlight">
-\[u_{\mathbf{p}}(\mathbf{x}) = e^{i \mathbf{G}(\mathbf{p}) \cdot \mathbf{x}}\]</div></div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[u_{\mathbf{p}}(\mathbf{x}) = e^{i \mathbf{G}(\mathbf{p}) \cdot \mathbf{x}}\]</div>
+</div>
 <ul class="simple">
 <li><p><strong>config</strong></p>
 <ul>
@@ -432,10 +440,10 @@ R_\text{STO}(r; Z, n) &amp; = a_0^{-3/2} \frac{(2Z)^{n + \frac{1}{2}}}{\sqrt{(2n
                 </div>
                 <div class="title">Output File</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="inputs_link.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -457,9 +465,7 @@ R_\text{STO}(r; Z, n) &amp; = a_0^{-3/2} \frac{(2Z)^{n + \frac{1}{2}}}{\sqrt{(2n
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         
@@ -471,7 +477,7 @@ R_\text{STO}(r; Z, n) &amp; = a_0^{-3/2} \frac{(2Z)^{n + \frac{1}{2}}}{\sqrt{(2n
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">
@@ -499,14 +505,12 @@ R_\text{STO}(r; Z, n) &amp; = a_0^{-3/2} \frac{(2Z)^{n + \frac{1}{2}}}{\sqrt{(2n
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/scripts/furo.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
+</div><script src="../../_static/documentation_options.js?v=fc837d61"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>

@@ -71,16 +71,6 @@ If you use :code:`EXCEED-DM` in your work, please cite,
 
 .. code-block:: none
 
-    @misc{exdmv1,
-        doi = {10.5281/ZENODO.7250321},
-        url = {https://zenodo.org/record/7250321},
-        author = {Trickle,  Tanner and {Kinzani}},
-        title = {tanner-trickle/EXCEED-DM: EXCEED-DMv1.0.0},
-        publisher = {Zenodo},
-        year = {2022},
-        copyright = {Open Access}
-    }
-
     @article{Trickle:2022fwt,
         author = "Trickle, Tanner",
         title = "{Extended calculation of electronic excitations for direct detection of dark matter}",

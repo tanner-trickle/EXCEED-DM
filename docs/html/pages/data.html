@@ -1,17 +1,17 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Papers using EXCEED-DM" href="papers.html" /><link rel="prev" title="Output File" href="file_spec/output.html" />
 
-    <link rel="shortcut icon" href="../_static/exdm-favicon2.png"/><meta name="generator" content="sphinx-5.1.1, furo 2022.04.07"/>
+    <link rel="shortcut icon" href="../_static/exdm-favicon2.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>Data - EXCEED-DM v1.1.0</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=a5c4661c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -145,7 +145,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../_static/exdm-prelim-logo-modified.png" alt="Logo"/>
@@ -154,7 +154,7 @@
   <span class="sidebar-brand-text">EXCEED-DM v1.1.0</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -162,7 +162,7 @@
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples_link.html">Examples</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="file_spec/index.html">File Specifications</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="file_spec/index.html">File Specifications</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of File Specifications</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="file_spec/inputs_link.html">Input File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_spec/elec_config.html">Electronic Configuration File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_spec/output.html">Output File</a></li>
@@ -188,7 +188,9 @@
           </svg>
           <span>Back to top</span>
         </a>
-        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -203,9 +205,9 @@
         </div>
         <article role="main">
           <section id="data">
-<h1>Data<a class="headerlink" href="#data" title="Permalink to this heading">#</a></h1>
+<h1>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h1>
 <section id="electronic-configuration-files">
-<h2>Electronic Configuration Files<a class="headerlink" href="#electronic-configuration-files" title="Permalink to this heading">#</a></h2>
+<h2>Electronic Configuration Files<a class="headerlink" href="#electronic-configuration-files" title="Link to this heading">#</a></h2>
 <p>While the <code class="code docutils literal notranslate"><span class="pre">examples</span></code> folder contains many example electronic configuration files useful for testing and learning what <code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> can do, they are not suitable for publication quality results. The datasets are simply too small; they do no adequately represent the collection of electronic states in the target. The publication quality electronic configuration files are too big to host on the Github repository, typically being <span class="math notranslate nohighlight">\(\mathcal{O}(\text{GB})\)</span> in size. There are two ways around this:</p>
 <ol class="arabic simple">
 <li><p>Create your own electronic configuration file to the specifications given in <a class="reference internal" href="file_spec/elec_config.html"><span class="doc">File Specifications - Electronic Configuration File</span></a>. This is the best option if you are studying a novel target.</p></li>
@@ -216,7 +218,7 @@
 <p>Remember to cite the associated Zenodo repository if you use these publically available electronic configuration files.</p>
 </div>
 <section id="si">
-<h3>Si<a class="headerlink" href="#si" title="Permalink to this heading">#</a></h3>
+<h3>Si<a class="headerlink" href="#si" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><dl class="simple">
 <dt>Link: <a class="reference external" href="https://zenodo.org/record/7246141#.Y1g31raSnZc">https://zenodo.org/record/7246141#.Y1g31raSnZc</a></dt><dd><ul>
@@ -335,7 +337,7 @@
 </ul>
 </section>
 <section id="ge">
-<h3>Ge<a class="headerlink" href="#ge" title="Permalink to this heading">#</a></h3>
+<h3>Ge<a class="headerlink" href="#ge" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><dl class="simple">
 <dt>Link: <a class="reference external" href="https://zenodo.org/record/7246141#.Y1g31raSnZc">https://zenodo.org/record/7246141#.Y1g31raSnZc</a></dt><dd><ul>
@@ -456,10 +458,10 @@
 <p></p>
 </section>
 <section id="exceed-dm-results">
-<h2><code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> Results<a class="headerlink" href="#exceed-dm-results" title="Permalink to this heading">#</a></h2>
+<h2><code class="code docutils literal notranslate"><span class="pre">EXCEED-DM</span></code> Results<a class="headerlink" href="#exceed-dm-results" title="Link to this heading">#</a></h2>
 <p>Below are links to datasets used for previously published results. See the refereces for more details.</p>
 <section id="exceed-dmv1-0-0-extended-calculation-of-electronic-excitations-for-direct-detection-of-dark-matter">
-<h3>EXCEED-DMv1.0.0: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter<a class="headerlink" href="#exceed-dmv1-0-0-extended-calculation-of-electronic-excitations-for-direct-detection-of-dark-matter" title="Permalink to this heading">#</a></h3>
+<h3>EXCEED-DMv1.0.0: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter<a class="headerlink" href="#exceed-dmv1-0-0-extended-calculation-of-electronic-excitations-for-direct-detection-of-dark-matter" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><dl class="simple">
 <dt>Ref: <a class="reference external" href="https://arxiv.org/abs/2210.14917">https://arxiv.org/abs/2210.14917</a></dt><dd><ul>
@@ -484,13 +486,14 @@
 </li>
 </ul>
 <div class="docutils container" id="id12">
+<div role="list" class="citation-list">
 <div class="citation" id="id16" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a href="#id1" role="doc-backlink">1</a>,<a href="#id2" role="doc-backlink">2</a>,<a href="#id4" role="doc-backlink">3</a>,<a href="#id5" role="doc-backlink">4</a>,<a href="#id7" role="doc-backlink">5</a>,<a href="#id8" role="doc-backlink">6</a>,<a href="#id10" role="doc-backlink">7</a>,<a href="#id11" role="doc-backlink">8</a>)</span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>,<a role="doc-backlink" href="#id4">3</a>,<a role="doc-backlink" href="#id5">4</a>,<a role="doc-backlink" href="#id7">5</a>,<a role="doc-backlink" href="#id8">6</a>,<a role="doc-backlink" href="#id10">7</a>,<a role="doc-backlink" href="#id11">8</a>)</span>
 <p>Sinéad M. Griffin, Katherine Inzani, Tanner Trickle, Zhengkang Zhang, and Kathryn M. Zurek. Extended calculation of dark matter-electron scattering in crystal targets. <em>Phys. Rev. D</em>, 104(9):095015, 5 2021. <a class="reference external" href="https://arxiv.org/abs/2105.05253">arXiv:2105.05253</a>, <a class="reference external" href="https://doi.org/10.1103/PhysRevD.104.095015">doi:10.1103/PhysRevD.104.095015</a>.</p>
 </div>
 </div>
-
+</div>
 </section>
 </section>
 </section>
@@ -507,10 +510,10 @@
                 </div>
                 <div class="title">Papers using EXCEED-DM</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="file_spec/output.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -532,9 +535,7 @@
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         
@@ -546,7 +547,7 @@
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">
@@ -573,14 +574,12 @@
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/scripts/furo.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
+</div><script src="../_static/documentation_options.js?v=fc837d61"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
