@@ -47,6 +47,7 @@
 
 ### Experiment
 
+- SENSEI Collaboration [SENSEI: First Direct-Detection Results on sub-GeV Dark Matter from SENSEI at SNOLAB]
 - DAMIC-M Collaboration [First Constraints from DAMIC-M on Sub-GeV Dark-Matter Particles Interacting with Electrons]
 - CDEX Collaboration, [Constraints on Sub-GeV Dark Matter-Electron Scattering from the CDEX-10 Experiment]
 
@@ -63,6 +64,7 @@
 - T. Trickle, Z. Zhang, K. M. Zurek, K. Inzani and S. Griffin, [Multi-Channel Direct Detection of Light Dark Matter: Theoretical Framework]
 - S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek, [Multichannel direct detection of light dark matter: Target comparison]
 
+[SENSEI: First Direct-Detection Results on sub-GeV Dark Matter from SENSEI at SNOLAB]: https://arxiv.org/abs/2312.13342
 [Fully ab-initio all-electron calculation of dark matter--electron scattering in crystals with evaluation of systematic uncertainties]: https://arxiv.org/abs/2306.14944
 [Low-Energy Compton Scattering in Materials]: https://arxiv.org/abs/2310.02316
 [First Constraints from DAMIC-M on Sub-GeV Dark-Matter Particles Interacting with Electrons]: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.130.171003
@@ -78,17 +80,7 @@
 
 ## Attribution
 
-If you use `EXCEED-DM` in your work, please cite,
-
-    @misc{exdmv1,
-        doi = {10.5281/ZENODO.7250321},
-        url = {https://zenodo.org/record/7250321},
-        author = {Trickle,  Tanner and {Kinzani}},
-        title = {tanner-trickle/EXCEED-DM: EXCEED-DMv1.0.0},
-        publisher = {Zenodo},
-        year = {2022},
-        copyright = {Open Access}
-    }
+If you use `EXCEED-DM` in your work please cite,
 
     @article{Trickle:2022fwt,
         author = "Trickle, Tanner",
