@@ -47,9 +47,11 @@
 
 ### Experiment
 
+
+- DAMIC-M Collaboration (2025) [Probing Benchmark Models of Hidden-Sector Dark Matter with DAMIC-M]
 - SENSEI Collaboration [SENSEI: First Direct-Detection Results on sub-GeV Dark Matter from SENSEI at SNOLAB]
-- DAMIC-M Collaboration [First Constraints from DAMIC-M on Sub-GeV Dark-Matter Particles Interacting with Electrons]
-- CDEX Collaboration, [Constraints on Sub-GeV Dark Matter-Electron Scattering from the CDEX-10 Experiment]
+- DAMIC-M Collaboration (2023) [First Constraints from DAMIC-M on Sub-GeV Dark-Matter Particles Interacting with Electrons]
+- CDEX Collaboration [Constraints on Sub-GeV Dark Matter-Electron Scattering from the CDEX-10 Experiment]
 
 ### Theory
 
@@ -59,20 +61,21 @@
 - T. Trickle [EXCEED-DM: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter]
 - B. Dutta, S. Ghosh, T. Li, A. Thompson, A. Verma [Non-standard neutrino interactions in light mediator models at reactor experiments]
 - H-Y. Chen, A. Mitridate, T. Trickle, Z. Zhang, M. Bernardi, K. M. Zurek, [Dark Matter Direct Detection in Materials with Spin-Orbit Coupling]
-- A. Mitridate, T. Trickle, Z. Zhang, K. M. Zurek, [Dark Matter Absorption via Electronic Excitations]
-- S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek, [Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets]
-- T. Trickle, Z. Zhang, K. M. Zurek, K. Inzani and S. Griffin, [Multi-Channel Direct Detection of Light Dark Matter: Theoretical Framework]
-- S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek, [Multichannel direct detection of light dark matter: Target comparison]
+- A. Mitridate, T. Trickle, Z. Zhang, K. M. Zurek [Dark Matter Absorption via Electronic Excitations]
+- S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek [Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets]
+- T. Trickle, Z. Zhang, K. M. Zurek, K. Inzani and S. Griffin [Multi-Channel Direct Detection of Light Dark Matter: Theoretical Framework]
+- S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek [Multichannel direct detection of light dark matter: Target comparison]
 
-[SENSEI: First Direct-Detection Results on sub-GeV Dark Matter from SENSEI at SNOLAB]: https://arxiv.org/abs/2312.13342
-[Fully ab-initio all-electron calculation of dark matter--electron scattering in crystals with evaluation of systematic uncertainties]: https://arxiv.org/abs/2306.14944
-[Low-Energy Compton Scattering in Materials]: https://arxiv.org/abs/2310.02316
+[Probing Benchmark Models of Hidden-Sector Dark Matter with DAMIC-M]: https://arxiv.org/abs/2503.14617
+[SENSEI: First Direct-Detection Results on sub-GeV Dark Matter from SENSEI at SNOLAB]: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.134.011804
+[Fully ab-initio all-electron calculation of dark matter--electron scattering in crystals with evaluation of systematic uncertainties]: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.109.115008
+[Low-Energy Compton Scattering in Materials]: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.109.116011
 [First Constraints from DAMIC-M on Sub-GeV Dark-Matter Particles Interacting with Electrons]: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.130.171003
-[Absorption of Vector Dark Matter Beyond Kinetic Mixing]: https://arxiv.org/abs/2303.11344 
-[EXCEED-DM: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter]: https://arxiv.org/abs/2210.14917
-[Non-standard neutrino interactions in light mediator models at reactor experiments]: https://arxiv.org/abs/2209.13566 
-[Constraints on Sub-GeV Dark Matter-Electron Scattering from the CDEX-10 Experiment]: https://arxiv.org/abs/2206.04128 
-[Dark Matter Direct Detection in Materials with Spin-Orbit Coupling]: https://arxiv.org/abs/2202.11716
+[Absorption of Vector Dark Matter Beyond Kinetic Mixing]: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.108.015024
+[EXCEED-DM: Extended Calculation of Electronic Excitations for Direct Detection of Dark Matter]: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.107.035035
+[Non-standard neutrino interactions in light mediator models at reactor experiments]: https://link.springer.com/article/10.1007/JHEP03(2023)163
+[Constraints on Sub-GeV Dark Matter-Electron Scattering from the CDEX-10 Experiment]: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.129.221301
+[Dark Matter Direct Detection in Materials with Spin-Orbit Coupling]: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.106.015024
 [Dark Matter Absorption via Electronic Excitations]: https://link.springer.com/article/10.1007/JHEP09(2021)123 
 [Extended Calculation of Dark Matter-Electron Scattering in Crystal Targets]: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.104.095015
 [Multi-Channel Direct Detection of Light Dark Matter: Theoretical Framework]: https://doi.org/10.1007/JHEP03(2020)036
