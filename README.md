@@ -47,7 +47,7 @@
 
 ### Experiment
 
-
+- CDEX Collaboartion (2026) [Search for Cosmic Ray Electron Boosted Dark Matter with the CDEX-10 Experiment]
 - DAMIC-M Collaboration (2025) [Probing Benchmark Models of Hidden-Sector Dark Matter with DAMIC-M]
 - SENSEI Collaboration [SENSEI: First Direct-Detection Results on sub-GeV Dark Matter from SENSEI at SNOLAB]
 - DAMIC-M Collaboration (2023) [First Constraints from DAMIC-M on Sub-GeV Dark-Matter Particles Interacting with Electrons]
@@ -66,6 +66,7 @@
 - T. Trickle, Z. Zhang, K. M. Zurek, K. Inzani and S. Griffin [Multi-Channel Direct Detection of Light Dark Matter: Theoretical Framework]
 - S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek [Multichannel direct detection of light dark matter: Target comparison]
 
+[Search for Cosmic Ray Electron Boosted Dark Matter with the CDEX-10 Experiment]: https://arxiv.org/abs/2601.08746
 [Probing Benchmark Models of Hidden-Sector Dark Matter with DAMIC-M]: https://arxiv.org/abs/2503.14617
 [SENSEI: First Direct-Detection Results on sub-GeV Dark Matter from SENSEI at SNOLAB]: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.134.011804
 [Fully ab-initio all-electron calculation of dark matter--electron scattering in crystals with evaluation of systematic uncertainties]: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.109.115008
