@@ -21,8 +21,8 @@ copyright = '2022, Tanner Trickle'
 author = 'Tanner Trickle'
 
 # The full version, including alpha/beta/rc tags
-version = '1.1.0'
-release = '1.1.0'
+version = '1.2.0'
+release = '1.2.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -36,7 +36,7 @@ extensions = [
         # 'sphinxfortran.fortran_autodoc',
         'sphinxcontrib.bibtex',
         'sphinx_copybutton',
-        'sphinx_tabs.tabs'
+        'sphinx_design'
 ]
 
 # bibtex
@@ -67,7 +67,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_theme = 'furo'
 html_logo = "./media/exdm-prelim-logo-modified.png"
-html_title = "EXCEED-DM v1.1.0"
+html_title = "EXCEED-DM v1.2.0"
 html_favicon = "./media/exdm-favicon2.png"
 
 # html_theme = 'sphinx_rtd_theme'
@@ -84,5 +84,6 @@ html_favicon = "./media/exdm-favicon2.png"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = ['custom.css']
 
 myst_enable_extensions = ["dollarmath", "smartquotes"]

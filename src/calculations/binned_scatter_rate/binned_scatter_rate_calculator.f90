@@ -43,7 +43,7 @@ contains
         real(dp) :: extra_FF
         real(dp), allocatable :: screen_factor_list(:)
 
-        real(dp) :: binned_scatter_rate(:, :, :, :, :, :)
+        real(dp) :: binned_scatter_rate(:, :, :, :, :, :) ! Add dimension for m_A
 
         logical, optional :: fermi_factor_bool
         logical :: fermi_factor_bool_in
@@ -165,7 +165,7 @@ contains
 
             ! compute RIF from FIF
             call binned_scatter_rate_RIF_compute(&
-                binned_scatter_rate(:, :, :, :, :, init_states(init_id)%i), &
+                binned_scatter_rate(:, :, :, :, :, init_states(init_id)%i), & ! Add dimension for mA
                 fin_states(fin_id)%energy - init_states(init_id)%energy, &
                 TIF_calculator%q_vec_list, &
                 FIF_calculator%FIF, &

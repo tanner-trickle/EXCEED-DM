@@ -27,9 +27,9 @@ Download
 
 :code:`EXCEED-DM` is hosted on Github and releases are stored in :code:`.tar.gz` files. This file can be downloaded in a variety of ways,
 
-.. tabs::
+.. tab-set::
 
- .. group-tab:: CLI
+ .. tab-item:: CLI
 
    .. code-block:: none
 
@@ -43,7 +43,7 @@ Download
 
    where X.Y.Z is the version number.
 
- .. group-tab:: Github - Web
+ .. tab-item:: Github - Web
 
     Simply click on :code:`EXCEED-DM.tar.gz` in the Releases section on the Github page 
 
@@ -68,9 +68,9 @@ Pre-requisites
 
 * Fortran compiler - `gfortran <https://gcc.gnu.org/wiki/GFortran>`_, ifort, etc. 
 
-  .. tabs::
+  .. tab-set::
 
-     .. group-tab:: Linux
+     .. tab-item:: Linux
 
        .. code-block:: none
 
@@ -80,9 +80,9 @@ Pre-requisites
 
 * `OpenMPI <https://www.open-mpi.org/>`_
 
-  .. tabs::
+  .. tab-set::
 
-     .. group-tab:: Linux
+     .. tab-item:: Linux
 
        .. code-block:: none
 
@@ -90,9 +90,9 @@ Pre-requisites
 
 * `FFTW3 <https://www.fftw.org/>`_
 
-  .. tabs::
+  .. tab-set::
 
-     .. group-tab:: Linux
+     .. tab-item:: Linux
 
        .. code-block:: none
 
@@ -100,15 +100,15 @@ Pre-requisites
 
 * `HDF5 (serial, with Fortran support) <https://www.hdfgroup.org/downloads/hdf5/>`_
 
-  .. tabs::
+  .. tab-set::
 
-     .. group-tab:: Linux
+     .. tab-item:: Linux
 
        .. code-block:: none
 
           sudo apt install libhdf5-serial-dev
 
-     .. group-tab:: Source
+     .. tab-item:: Source
 
        After downloading the source :code:`.tar.gz` file containing version :code:`X.Y.Z`,
 
@@ -138,9 +138,9 @@ Pre-requisites
 
 * `LAPACK <https://netlib.org/lapack/>`_
 
-  .. tabs::
+  .. tab-set::
 
-     .. group-tab:: Linux
+     .. tab-item:: Linux
 
        .. code-block:: none
 
@@ -148,9 +148,9 @@ Pre-requisites
 
 * `BLAS <https://netlib.org/blas/>`_
 
-  .. tabs::
+  .. tab-set::
 
-     .. group-tab:: Linux
+     .. tab-item:: Linux
 
        .. code-block:: none
 
@@ -158,9 +158,9 @@ Pre-requisites
 
 * `CMake <https://cmake.org/>`_
 
-  .. tabs::
+  .. tab-set::
 
-     .. group-tab:: Linux
+     .. tab-item:: Linux
 
        .. code-block:: none
 

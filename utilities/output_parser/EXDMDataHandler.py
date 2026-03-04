@@ -93,6 +93,13 @@ class EXDMData:
     def get_masses_MeV(self):
         return 10.**(-6)*self.get_masses_eV()
     
+    ###### mediator mass
+    def get_mediator_masses_eV(self):
+        return self.hdf5_data['dm_model/mA'][...]
+    
+    def get_mediator_masses_MeV(self):
+        return 10.**(-6) * self.get_mediator_masses_eV()
+    #####
     def get_med_FF(self):
         return self.hdf5_data['dm_model/med_FF'][...]
     
@@ -132,15 +139,26 @@ class EXDMData:
 
     def get_binned_scatter_rate_qE(self, 
                           mass_MeV = 1, 
+                          mass_A = 0,
                           med_FF = 2., 
                           v_e = [0, 0, 240], 
                           i_list = [0]):
         
         data_location = 'binned_scatter_rate/'
-        
-        if len(self.get_med_FF()) > 1:
-            med_FF_idx = get_index(med_FF, self.get_med_FF())
-            data_location += f'model_{med_FF_idx}/'
+
+        # If a mediator mass is specified, will override med_FF input
+        if mass_A != 0:
+
+            # Add mediator mass to data location, and get index
+            if len(self.get_mediator_masses_eV()) > 0:
+                mediator_mass_idx = get_index(mass_A,self.get_mediator_masses_eV())
+                data_location += f'model_{mediator_mass_idx+len(self.get_med_FF())}/'
+                # location of med_mass is its index + number of limiting cases(heavy/light) being considered
+        else:
+            if len(self.get_med_FF()) >= 1:
+                med_FF_idx = get_index(med_FF, self.get_med_FF())
+                data_location += f'model_{med_FF_idx}/'
+
             
         if len(self.get_v_e_list()) > 1:
             v_e_idx = get_index_2d(v_e, self.get_v_e_list())
@@ -151,13 +169,10 @@ class EXDMData:
             data_location += f'mass_{mass_idx}/'
             
         if i_list == [0]:
-
             binned_scatter_rate_qE = self.hdf5_data[data_location+'total_binned_scatter_rate'][...]
-                    
         else:
                     
             binned_scatter_rate_qE = np.zeros(np.shape(self.hdf5_data[data_location][f'i_1']['binned_scatter_rate'][...]))
-                    
             for i in i_list:
                         
                 binned_scatter_rate_qE += self.hdf5_data[data_location][f'i_{i}']['binned_scatter_rate'][...]
@@ -208,7 +223,8 @@ class EXDMData:
         
     def get_binned_scatter_rate_E(self, 
                           mass_MeV = 1, 
-                          med_FF = 2., 
+                          med_FF = 2.,
+                          mass_A = 0., 
                           sigma_cm2 = 10**(-40), 
                           expt_M_kg = 1,
                           expt_T_year = 1, 
@@ -226,6 +242,7 @@ class EXDMData:
         binned_scatter_rate_E = np.sum(self.get_binned_scatter_rate_qE(
                                             mass_MeV = mass_MeV, 
                                             med_FF = med_FF, 
+                                            mass_A=mass_A,
                                             i_list = i_list, 
                                             v_e = v_e), 
                                 axis = 1)
@@ -241,6 +258,7 @@ class EXDMData:
     
     def get_scatter_rate(self, 
                         med_FF = 2., 
+                        mass_A = 0,
                         expt_M_kg = 1, 
                         expt_T_year = 1, 
                         expt_E_threshold = 0.,
@@ -261,6 +279,7 @@ class EXDMData:
             total_rate = np.sum(self.get_binned_scatter_rate_E( 
                           mass_MeV = mass, 
                           med_FF = med_FF,
+                          mass_A = mass_A,
                           i_list = i_list, 
                           sigma_cm2 = sigma_cm2, 
                           expt_M_kg = expt_M_kg,
@@ -273,7 +292,8 @@ class EXDMData:
         return np.transpose(np.array(sorted(rate, key=lambda ele: ele[0])))
         
     def get_cs_reach(self, 
-                     med_FF = 2., 
+                     med_FF = 2.,
+                     mass_A = 0,
                      n_cut = 3,
                      expt_M_kg = 1,
                      expt_T_year = 1,
@@ -293,11 +313,43 @@ class EXDMData:
             total_rate = (expt_M_kg/self.get_expt_M())*(expt_T_year/self.get_expt_T())*np.sum(self.get_binned_scatter_rate_qE( 
                           mass_MeV = mass, 
                           med_FF = med_FF,
+                          mass_A = mass_A,
                           i_list = i_list)[threshold_idx:, :])
             
             cs_reach.append([ mass, n_cut / total_rate ])
             
         return np.transpose(np.array(sorted(cs_reach , key=lambda ele: ele[0])))
+    
+    # gets cross section for fixed mX and varying mediator mass mA
+    def get_cs_reach_mA(self, 
+                     med_FF = 2.,
+                     mass_MeV = 0,
+                     n_cut = 3,
+                     expt_M_kg = 1,
+                     expt_T_year = 1,
+                     expt_E_threshold = 0., 
+                     i_list = [0]):
+        
+        band_gap = self.get_material_band_gap()
+        E_width = self.get_numerics_scatter_binned_rate_E_bin_width()
+        
+        threshold_idx = int(max(0., np.floor( 
+            ( expt_E_threshold - band_gap ) / E_width )))
+        
+        cs_reach = []
+        
+        for m, mass_A in enumerate(self.get_mediator_masses_eV()):
+            
+            total_rate = (expt_M_kg/self.get_expt_M())*(expt_T_year/self.get_expt_T())*np.sum(self.get_binned_scatter_rate_qE( 
+                          mass_MeV = mass_MeV, 
+                          mass_A = mass_A,
+                          med_FF = med_FF,
+                          i_list = i_list)[threshold_idx:, :])
+            
+            cs_reach.append([ mass_A, n_cut / total_rate ])
+            
+        return np.transpose(np.array(sorted(cs_reach , key=lambda ele: ele[0])))
+
     
     def get_dielectric(self, width_param = [0, 0, 0]):
         """

@@ -11,6 +11,11 @@ module dm_model_type
             ! DM masses
             !
             ! Units : eV
+
+        real(dp), allocatable :: mA(:)
+            ! mediator masses
+            ! Units: eV
+
         real(dp), allocatable :: med_FF(:)
 
         real(dp) :: rho_X_GeV_per_cm3
@@ -44,7 +49,9 @@ contains
 
         call hdf_create_group(file_id, 'dm_model')
 
+
         call hdf_write_dataset(file_id, 'dm_model/mX', self%mX)
+        call hdf_write_dataset(file_id, 'dm_model/mA',self%mA)
         call hdf_write_dataset(file_id, 'dm_model/med_FF', self%med_FF)
         call hdf_write_dataset(file_id, 'dm_model/rho_X', self%rho_X_GeV_per_cm3)
         call hdf_write_dataset(file_id, 'dm_model/particle_type', self%particle_type)
@@ -71,6 +78,15 @@ contains
                      "<li><b>Units</b>: $\text{eV}$</li>"//&
                      "<li><b>Dim</b>: [ : ]</li>"//&
                      "</ul>", dynamic_size = .TRUE.)
+
+        call CFG_add(cfg,                       &
+                    "dm_model%mA",             &
+                    [ 0.0_dp ],              &
+                    "Mediator masses, $m_{A'}$<br />"//&
+                    "<ul>"//&
+                    "<li><b>Units</b>: $\text{eV}$</li>"//&
+                    "<li><b>Dim</b>: [ : ]</li>"//&
+                    "</ul>", dynamic_size = .TRUE.)
 
         call CFG_add(cfg,                       &
                      "dm_model%med_FF",             &
@@ -119,6 +135,26 @@ contains
                      "<li><b>Dim</b>: [3]</li>"//&
                      "</ul>")
 
+         call CFG_add(cfg,                       &
+                    "dm_model%mA_logspace",             &
+                    [ 0.0_dp, 1.0_dp, 1.0_dp ],              &
+                    "Add $N$ logarithmically spaced mediator masses between $m_{A'\text{,min}}$"//&
+                    "and $m_{A'\text{,max}}$: [$N$, $m_{A'\text{,min}}$, $m_{A'\text{,max}}$]<br />"//&
+                    "<ul>"//&
+                    "<li><b>Units</b>: [-, $\text{eV}$, $\text{eV}$]</li>"//&
+                    "<li><b>Dim</b>: [3]</li>"//&
+                    "</ul>")
+
+        call CFG_add(cfg,                       &
+                    "dm_model%mA_linspace",             &
+                    [ 0.0_dp, 1.0_dp, 1.0_dp ],              &
+                   "Add $N$ linearly spaced mediator masses between $m_{A'\text{,min}}$"//&
+                    "and $m_{A'\text{,max}}$: [$N$, $m_{A'\text{,min}}$, $m_{A'\text{,max}}$]<br />"//&
+                    "<ul>"//&
+                    "<li><b>Units</b>: [-, $\text{eV}$, $\text{eV}$]</li>"//&
+                    "<li><b>Dim</b>: [3]</li>"//&
+                    "</ul>")
+
     end subroutine
 
     subroutine dm_model_type_get_values(self, cfg)
@@ -138,6 +174,9 @@ contains
 
         real(dp) :: mX_logspace(3)
         real(dp) :: mX_linspace(3)
+
+        real(dp) :: mA_logspace(3)
+        real(dp) :: mA_linspace(3)
 
         call CFG_get_size(cfg, "dm_model%mX", n)
         call CFG_get(cfg, "dm_model%mX_logspace", mX_logspace)
@@ -163,6 +202,34 @@ contains
 
         ! Get rid of 0 or negative values
         self%mX = pack(self%mX, self%mX > 1.0e-8_dp)
+
+        ! -------------------------------------------
+        ! Do same for mA as for mX, assuming same types of inputs
+
+        call CFG_get_size(cfg, "dm_model%mA", n)
+        call CFG_get(cfg, "dm_model%mA_logspace", mA_logspace)
+        call CFG_get(cfg, "dm_model%mA_linspace", mA_linspace)
+
+        allocate(self%mA(n + int(mA_logspace(1)) + int(mA_linspace(1))))
+
+        call CFG_get(cfg, "dm_model%mA", self%mA(:n))
+
+        do i = 1, int(mA_logspace(1))
+            self%mA(n + i) = 10.0_dp**(&
+                log10(mA_logspace(2)) + &
+                ( log10(mA_logspace(3)) - log10(mA_logspace(2)) )*(i - 1.0_dp)/&
+                max(1, int(mA_logspace(1)) - 1)&
+                )
+        end do
+
+        do i = 1, int(mA_linspace(1))
+            self%mA(n + int(mA_logspace(1)) + i) = mA_linspace(2) + &
+                ( mA_linspace(3) - mA_linspace(2) )*(i - 1.0_dp)/&
+                max(1, int(mA_linspace(1)) - 1)
+        end do
+
+        ! Get rid of 0 or negative values
+        self%mA = pack(self%mA, self%mA > 1.0e-8_dp)
 
         call CFG_get_size(cfg, "dm_model%med_FF", n)
         allocate(self%med_FF(n))
