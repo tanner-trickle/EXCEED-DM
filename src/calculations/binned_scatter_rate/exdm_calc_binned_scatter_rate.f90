@@ -58,7 +58,7 @@ contains
                     exdm_inputs%numerics_binned_scatter_rate%n_q_bins, &
                     exdm_inputs%numerics_binned_scatter_rate%n_E_bins, &
                     size(exdm_inputs%dm_model%mX), &
-                    size(exdm_inputs%dm_model%med_FF), &
+                    size(exdm_inputs%dm_model%med_FF) + size(exdm_inputs%dm_model%mA), &
                     size(exdm_inputs%astroph_model%v_e_list, 1), &
                     exdm_elec_config%n_init_groups), &
             source = 0.0_dp)
@@ -69,7 +69,7 @@ contains
                     exdm_inputs%numerics_binned_scatter_rate%n_q_bins, &
                     exdm_inputs%numerics_binned_scatter_rate%n_E_bins, &
                     size(exdm_inputs%dm_model%mX), &
-                    size(exdm_inputs%dm_model%med_FF), &
+                    size(exdm_inputs%dm_model%med_FF) + size(exdm_inputs%dm_model%mA), &
                     size(exdm_inputs%astroph_model%v_e_list, 1), &
                     exdm_elec_config%n_init_groups), &
             source = 0.0_dp)

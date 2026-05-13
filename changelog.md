@@ -1,3 +1,17 @@
+v1.2.0
+---
+
+- Added ability to compute scattering rate for explicitly specified mediator masses.
+    - Added new type to `dm_model` for the mediator mass `mA` (which is inputted identically to the DM mass `mX`).
+    - Modified form factor in `binned_scatter_rate_RIF_calculator.f90` to include explicit mediator mass m_A in the propagator.
+    - Created example 18 to demonstrate how to perform computations with mediator mass. 
+    - Updated example file documentation.
+    - Updated input file documentation.
+
+
+
+
+
 v1.1.0
 ---
 

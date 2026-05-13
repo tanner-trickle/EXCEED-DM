@@ -31,6 +31,12 @@ General Groups
 
     * **Dim**: [ : ]
 
+  * :code:`mA` - Mediator masses, :math:`m_{A^{\prime}}`.
+
+    * **Units**: :math:`\text{eV}`
+
+    * **Dim**: [ : ]
+
   * :code:`med_FF` - Mediator form factor powers, :math:`\beta`.
 
     * **Formula**: :math:`\mathcal{F}_\text{med} = \left( \frac{q_0}{q} \right)^\beta` 
