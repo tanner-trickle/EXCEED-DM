@@ -40,7 +40,7 @@ contains
                            size(binned_rate, 3),&
                            size(binned_rate, 4),&
                            size(binned_rate, 5))
-            ! Dim : [ n_q, n_E, n_mX, n_med_FF, n_vE ]
+            ! Dim : [ n_q, n_E, n_mX, n_med_FF, n_vE, n_mA]
 
         real(dp) :: E_bin_width
         real(dp) :: q_bin_width
@@ -55,7 +55,11 @@ contains
 
         integer :: q_bin_list(size(q_vec_list, 1))
 
-        real(dp) :: F_med_sq_list(size(q_vec_list, 1), size(exdm_inputs%dm_model%med_FF))
+        real(dp) :: F_med_sq_list(size(q_vec_list, 1), &
+                    size(exdm_inputs%dm_model%med_FF) + size(exdm_inputs%dm_model%mA))
+                    ! F_med list will be indexed in the second dimension as the first two based on beta,
+                    ! and the rest based on inputted values of mA [(light/heavy), mA_1, mA_2,....],
+                    ! if beta = 0,2 (light,heavy) are included as inputs
 
         real(dp) :: q_vE_list(size(q_vec_list, 1))
         real(dp) :: v_m_list(size(q_vec_list, 1))
@@ -66,7 +70,7 @@ contains
         real(dp) :: b_rate_q(size(binned_rate, 1))
         real(dp) :: norm
 
-        integer :: m, f, v
+        integer :: m, f, v, s
 
         b_rate = 0.0_dp
 
@@ -90,11 +94,20 @@ contains
             1, exdm_inputs%numerics_binned_scatter_rate%n_q_bins) 
 
         ! mediator
-        do f = 1, size(F_med_sq_list, 2)
-
+        ! first two inputs are based on beta (heavy/light limits)
+        s = size(exdm_inputs%dm_model%med_FF) ! number of mediator limits
+        do f = 1, s
             F_med_sq_list(:, f) = (q_mag_list*(alpha_EM*m_elec)**(-1))&
                 **(-2*exdm_inputs%dm_model%med_FF(f))
+            ! Form factor for beta limits
+        end do
 
+        ! Add values to F_med_sq_list based on mediator mass mA 
+        do f = 1, (size(F_med_sq_list,2)-s)
+
+            F_med_sq_list(:, f+s) = ((exdm_inputs%dm_model%mA(f)**2 + (alpha_EM*m_elec)**2)&
+                *(exdm_inputs%dm_model%mA(f)**2 + q_mag_list**2)**(-1))**2
+            ! Full form factor
         end do
 
         ! kinematics

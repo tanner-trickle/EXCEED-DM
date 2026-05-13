@@ -31,7 +31,7 @@
 
 - **Calculations**
 
-    - **Scattering**: Given a DM model (DM masses, interaction potential, etc.) `EXCEED-DM` computes the expected number of interactions per kg-year binned in energy and momentum deposition.
+    - **Scattering**: Given a DM model (DM masses, interaction potential, mediator masses, etc.) `EXCEED-DM` computes the expected number of interactions per kg-year binned in energy and momentum deposition.
         - With the electronic state approximations separated from the scattering rate calculation, new transition form factors can be easily added as functions of the electronic matrix elements.
     - **Absorption**: Given a DM model (e.g., scalar, pseudoscalar, vector DM) `EXCEED-DM` computes the expected number of interactions per kg-year.
     - **Dielectric**: For some processes the dielectric will screen the interaction rate. The complex dielectric can be computed and subsequently used in scattering rate calculations.
@@ -55,6 +55,7 @@
 
 ### Theory
 
+- C. Stratman, T. Trickle [Electronic Direct Detection of Light Dark Matter with Intermediate-Mass Mediators]
 - R. Essig, Y. Hochberg, Y. Shoji, A. Singal, G. Suczewski [Low-Energy Compton Scattering in Materials]
 - C. E. Dreyer, R. Essig, M. Fernandez-Serra, A. Singal, C. Zhen [Fully ab-initio all-electron calculation of dark matter--electron scattering in crystals with evaluation of systematic uncertainties] 
 - G. Krnjaic, T. Trickle [Absorption of Vector Dark Matter Beyond Kinetic Mixing]
@@ -66,6 +67,7 @@
 - T. Trickle, Z. Zhang, K. M. Zurek, K. Inzani and S. Griffin [Multi-Channel Direct Detection of Light Dark Matter: Theoretical Framework]
 - S. M. Griffin, K. Inzani, T. Trickle, Z. Zhang and K. M. Zurek [Multichannel direct detection of light dark matter: Target comparison]
 
+[Electronic Direct Detection of Light Dark Matter with Intermediate-Mass Mediators]: https://arxiv.org/abs/2605.11063
 [Search for Cosmic Ray Electron Boosted Dark Matter with the CDEX-10 Experiment]: https://arxiv.org/abs/2601.08746
 [Probing Benchmark Models of Hidden-Sector Dark Matter with DAMIC-M]: https://arxiv.org/abs/2503.14617
 [SENSEI: First Direct-Detection Results on sub-GeV Dark Matter from SENSEI at SNOLAB]: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.134.011804

@@ -57,6 +57,18 @@
 
       FIF_id = 'SI'
 
+* `mA`: Mediator masses, $m_{A'}$<br /><ul><li><b>Units</b>: $\text{eV}$</li><li><b>Dim</b>: [ : ]</li></ul>
+
+      mA = 0.000000E+00
+
+* `mA_linspace`: Add $N$ linearly spaced mediator masses between $m_{A'\text{,min}}$and $m_{A'\text{,max}}$: [$N$, $m_{A'\text{,min}}$, $m_{A'\text{,max}}$]<br /><ul><li><b>Units</b>: [-, $\text{eV}$, $\text{eV}$]</li><li><b>Dim</b>: [3]</li></ul>
+
+      mA_linspace = 0.000000E+00 1.000000E+00 1.000000E+00
+
+* `mA_logspace`: Add $N$ logarithmically spaced mediator masses between $m_{A'\text{,min}}$and $m_{A'\text{,max}}$: [$N$, $m_{A'\text{,min}}$, $m_{A'\text{,max}}$]<br /><ul><li><b>Units</b>: [-, $\text{eV}$, $\text{eV}$]</li><li><b>Dim</b>: [3]</li></ul>
+
+      mA_logspace = 0.000000E+00 1.000000E+00 1.000000E+00
+
 * `mX`: Dark matter masses, $m_\chi$<br /><ul><li><b>Units</b>: $\text{eV}$</li><li><b>Dim</b>: [ : ]</li></ul>
 
       mX = 0.000000E+00
